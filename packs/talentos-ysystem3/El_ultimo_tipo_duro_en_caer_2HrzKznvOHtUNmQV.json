@@ -1,0 +1,35 @@
+{
+  "name": "El último tipo duro en caer",
+  "type": "talento",
+  "_id": "2HrzKznvOHtUNmQV",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>No tiras por Resistencia Física de forma normal ni sufres penalizaciones tras perder Salud. Al llegar a 0 Salud, en lugar de morir tiras Resistencia Física cada turno con penalizador acumulativo de -1; mientras superes las tiradas sigues activo, pero al fallar o terminar el combate caes muerto.</p><p><strong>Categoría:</strong> Combate</p>",
+    "usos": {
+      "valor": 1,
+      "max": 1
+    },
+    "equipado": false,
+    "automatismo": "",
+    "habilidadUso": "",
+    "dificultadUso": 9
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

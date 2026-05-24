@@ -1,0 +1,227 @@
+{
+  "name": "Aamir al-Yasin",
+  "type": "personaje",
+  "_id": "LtlDNW8RvuamFPhW",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "datos": {
+      "jugador": "",
+      "lugarNacimiento": "Granada",
+      "edad": "25",
+      "profesion": "Artesano de la Alhambra",
+      "perfil": "",
+      "motivacion": "Disfrutar de la vida en Granada y de todos sus placeres.",
+      "descripcionFisica": "Complexión atlética, rostro atractivo y casi siempre adornado con una cautivadora sonrisa, vestido con ropas humildes pero limpias.",
+      "situacionFamiliar": "Soltero aunque con múltiples amantes.",
+      "arquetipo": "",
+      "talento": "Sonrisa de djinn",
+      "historia": "«No hay hueco en Granada que se me resista. Y sí, puedes interpretarlo como quieras».",
+      "pertenencias": "Bordón, faltriquera con sus enseres de artesano.",
+      "relaciones": ""
+    },
+    "atributos": {
+      "car": 6,
+      "des": 4,
+      "fue": 0,
+      "int": 1,
+      "per": 2
+    },
+    "habilidades": {
+      "atletismo": {
+        "dados": 2
+      },
+      "auxilio": {
+        "dados": 1
+      },
+      "conducir": {
+        "dados": 1
+      },
+      "conversacion": {
+        "dados": 3
+      },
+      "cultura": {
+        "dados": 2
+      },
+      "entorno": {
+        "dados": 2
+      },
+      "fuerzaBruta": {
+        "dados": 1
+      },
+      "idiomaExtranjero1": {
+        "dados": 1
+      },
+      "idiomaExtranjero2": {
+        "dados": 1
+      },
+      "informacion": {
+        "dados": 1
+      },
+      "intimidacion": {
+        "dados": 1
+      },
+      "lucha": {
+        "dados": 1
+      },
+      "mecanica": {
+        "dados": 3
+      },
+      "memoria": {
+        "dados": 1
+      },
+      "observacion": {
+        "dados": 2
+      },
+      "ocultacion": {
+        "dados": 2
+      },
+      "oido": {
+        "dados": 2
+      },
+      "psicologia": {
+        "dados": 2
+      },
+      "punteria": {
+        "dados": 1
+      },
+      "rastreo": {
+        "dados": 1
+      },
+      "seduccion": {
+        "dados": 3
+      },
+      "sigilo": {
+        "dados": 2
+      },
+      "simulacion": {
+        "dados": 3
+      },
+      "supervivencia": {
+        "dados": 1
+      }
+    },
+    "salud": {
+      "valor": 16,
+      "max": 16
+    },
+    "resistenciaFisica": {
+      "valor": 12,
+      "primeraTirada": false,
+      "umbrales": {
+        "2": false,
+        "4": false,
+        "7": false,
+        "11": false,
+        "16": false
+      }
+    },
+    "estabilidad": {
+      "valor": 23,
+      "max": 23
+    },
+    "resistenciaMental": {
+      "valor": 6,
+      "primeraTirada": false,
+      "umbrales": {
+        "2": false,
+        "4": false,
+        "7": false,
+        "11": false,
+        "16": false
+      }
+    },
+    "proezas": {
+      "valor": 3,
+      "inicial": 3
+    },
+    "defectos": {
+      "leve": "Has seducido a demasiadas mujeres en Granada… y muchos no lo olvidan",
+      "grave": "Lo rematadamente bajo de tus orígenes afecta a tu respetabilidad",
+      "leveUsado": false
+    },
+    "recuerdo": {
+      "usado": false,
+      "nota": ""
+    },
+    "puntoGuion": {
+      "valor": 1,
+      "max": 1,
+      "usado": false,
+      "nota": ""
+    },
+    "combate": {
+      "armaIniciativa": "desarmado",
+      "ataque": "desarmado",
+      "sorprendido": false
+    },
+    "estado": {
+      "inconsciente": false,
+      "crisisMental": false,
+      "muerto": false,
+      "notas": "Fuente: paginas 128-129"
+    }
+  },
+  "items": [
+    {
+      "name": "Sonrisa de djinn",
+      "type": "talento",
+      "_id": "eqOuyTMjMpeRdDqG",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>Puedes convertir en éxito automático una tirada fallada de una habilidad dependiente de CAR, salvo Intimidar, hasta dos veces por sesión.</p><p><strong>Categoría:</strong> Sangre En El Agua</p>",
+        "usos": {
+          "valor": 1,
+          "max": 1
+        },
+        "equipado": false,
+        "automatismo": "",
+        "habilidadUso": "",
+        "dificultadUso": 9
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "prototypeToken": {
+    "name": "Aamir al-Yasin",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg"
+    }
+  }
+}

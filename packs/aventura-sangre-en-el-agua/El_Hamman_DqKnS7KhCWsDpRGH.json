@@ -1,0 +1,61 @@
+{
+  "name": "El Hamman",
+  "_id": "DqKnS7KhCWsDpRGH",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "El Hamman",
+      "type": "text",
+      "_id": "EW47vwyTwqhmMKRt",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>PDF p.110</h2>\n<p>Si el jugador que interpreta a Aamir saca una tirada de Psicología<br>a dificultad 7, notará que Marwan no le dice toda la verdad. Una segunda tirada a dificultad 7, esta de Conversación o Seducción, permitirá a Aamir soltarle la lengua. Y es que Marwan está algo asustado,<br>pues la verdad que guarda sobre Harun Al-Rundi es bastante escalofriante: se dice que su verdadero apellido es «Banu Sarray», lo que lo<br>señala como un descendiente directo de la familia de los Abencerrajes. Añadirá también, como de pasada, que «se trata de los antiguos<br>reyes de Zaragoza, que entre otros llevaban los apellidos de Ibn Hud».<br>EVENTOS OPCIONALES EN EL ZOCO<br>A estas alturas de la historia, existe la posibilidad de que los jugadores decidan separarse: Aamir dirigirse a la mezquita y Benjamín y<br>Pedro a los baños. El DJ debería evitar esto de forma sutil, ya que la<br>escena de los baños es el inicio del final de la aventura. Para ello se<br>proponen diversos eventos opcionales que pueden retrasar al médico y al calatravo:<br>-  La tienda de Amina. Amina regenta una tienda de hierbas cerca de la de Abu Jalaf, pero mucho más reputada (y legal). La mujer conoce a Aamir y Benjamín desde niños; de hecho, tanto el hakim como su padre son sus clientes habituales desde hace años.<br>Por eso, es factible que Amina les salga al paso en el zoco desde la<br>puerta de su tienda, invitándolos a entrar en ella. Quiere saber qué<br>djinns se les ha perdido en la tienda de «ese indigno mercader», y<br>advierte a Benjamín de que no es conveniente que ningún ciudadano respetable se deje ver por allí. Su actitud hacia el hakim (y<br>hacia Aamir, si este también estuviese presente) es casi maternal,<br>mientras que con Pedro resulta sencillamente cortés. Si le preguntan sobre los hombres que merodean por el zoco, la mujer revelará haberlos visto una noche, cuando estaba asomada a la ventana.<br>Confirmará que se trata de un grupo de individuos embozados, a<br>los que vio salir de la tienda de Abu Jalaf.<br>-  La visión de Zoraida. Si Pedro y Benjamín están fuera de la<br>mezquita, podrían ver cómo pasa ante ellos un séquito de guardias<br>que protege a una dama completamente cubierta que atrae la atención de muchos viandantes. Una tirada de Observación a dificultad 15 les permitirá vislumbrar fugazmente a la mujer y advertir<br>que tiene los ojos azules. Si consiguieron ver a Zoraida/Isabel de<br>Solís tras la celosía en la tercera escena de la partida (La enfermedad de Sair y Nair), reconocerán que se trata de la misma persona.<br>¿Por qué la mismísima segunda esposa del rey Muley Hacén vuelve a cruzarse con ellos? ¿Es casualidad, o quizás les sigue o se interesa por sus investigaciones? Aunque los PJ no lo pueden saber,<br>Zoraida está muy preocupada porque sabe que una posible guerra<br>entre Muley Hacén y su hijo mayor también pondría en peligro a su<br>propia familia. No es ingenua y supone que Aixa, la primera esposa del emir, puede estar envenenando los oídos de Al-Zugabi, pero<br>también está segura de que este nunca llegaría al extremo de atentar contra sus hijos. Y lo mismo opina de Aixa.<br>108<br>108<br>SANGRE EN EL AGUA<br>SANGRE EN EL AGUA</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!DqKnS7KhCWsDpRGH.EW47vwyTwqhmMKRt"
+    }
+  ],
+  "folder": null,
+  "sort": 1500000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

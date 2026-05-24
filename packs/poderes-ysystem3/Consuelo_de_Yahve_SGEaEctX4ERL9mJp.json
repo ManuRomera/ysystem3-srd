@@ -1,0 +1,37 @@
+{
+  "name": "Consuelo de Yahvé",
+  "type": "poder",
+  "_id": "SGEaEctX4ERL9mJp",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>Sosiegas al beneficiario y le haces ganar 5 puntos de Estabilidad.</p><p>Coste: 3 puntos de poder.</p>",
+    "tipo": "Hechizo de Benjamín",
+    "habilidad": "cultura",
+    "atributo": "int",
+    "dificultad": 14,
+    "preparacion": "",
+    "lanzamiento": "",
+    "duracion": "Coste: 3 puntos de poder.",
+    "caducidad": "",
+    "equipado": false,
+    "automatismo": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

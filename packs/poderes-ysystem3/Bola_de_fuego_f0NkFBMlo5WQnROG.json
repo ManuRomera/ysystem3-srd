@@ -1,0 +1,37 @@
+{
+  "name": "Bola de fuego",
+  "type": "poder",
+  "_id": "f0NkFBMlo5WQnROG",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>Si impacta, causa 6 daño automático; desde el turno siguiente el objetivo arde y sufre daño por fuego abierto hasta extinguir llamas.</p><p>Preparación: palabras mágicas y una mano libre. Lanzamiento: 1 turno completo. Duración: hasta extinguir fuego. Coste: habitual según dificultad + 3 poder.</p>",
+    "tipo": "Hechizo de alta fantasía",
+    "habilidad": "cultura",
+    "atributo": "des",
+    "dificultad": 8,
+    "preparacion": "",
+    "lanzamiento": "",
+    "duracion": "Preparación: palabras mágicas y una mano libre. Lanzamiento: 1 turno completo. Duración: hasta extinguir fuego. Coste: habitual según dificultad + 3 poder.",
+    "caducidad": "",
+    "equipado": false,
+    "automatismo": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

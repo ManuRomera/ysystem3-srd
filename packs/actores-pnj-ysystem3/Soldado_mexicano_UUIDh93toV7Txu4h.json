@@ -1,0 +1,89 @@
+{
+  "name": "Soldado mexicano",
+  "type": "pnj",
+  "_id": "UUIDh93toV7Txu4h",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "descripcion": "Ejemplo de combate; los cinco soldados suman +3 a ataques por profesión/perfil",
+    "bando": "",
+    "rol": "Ejemplo de combate; los cinco soldados suman +3 a ataques por profesión/perfil",
+    "atributos": {
+      "car": 1,
+      "des": 3,
+      "fue": 3,
+      "int": 0,
+      "per": 2
+    },
+    "habilidades": {
+      "atletismo": {
+        "dados": 2
+      },
+      "fuerzaBruta": {
+        "dados": 2
+      },
+      "lucha": {
+        "dados": 2
+      },
+      "punteria": {
+        "dados": 2
+      }
+    },
+    "salud": {
+      "valor": 20,
+      "max": 20
+    },
+    "agilidad": {
+      "valor": 9,
+      "manual": true
+    },
+    "aplomo": {
+      "valor": 6,
+      "manual": true
+    },
+    "perspicacia": {
+      "valor": 7,
+      "manual": true
+    },
+    "resistenciaFisica": {
+      "valor": 12,
+      "manual": true
+    },
+    "ataque": {
+      "nombre": "Pescozón con los nudillos",
+      "habilidad": "lucha",
+      "tipo": "desarmado",
+      "dano": 2
+    },
+    "combate": {
+      "sorprendido": false
+    },
+    "notas": "Ejemplo de combate; los cinco soldados suman +3 a ataques por profesión/perfil\nAtaques: Pescozón con los nudillos (2D+3); daño 2; Fusil semiautomático Porfirio Díaz Sistema Mondragón modelo 1908 (2D+2); daño 13"
+  },
+  "items": [],
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "prototypeToken": {
+    "name": "Soldado mexicano",
+    "actorLink": true,
+    "disposition": -1,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg"
+    }
+  }
+}

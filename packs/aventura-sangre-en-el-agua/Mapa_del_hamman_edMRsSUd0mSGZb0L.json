@@ -1,0 +1,61 @@
+{
+  "name": "Mapa del hamman",
+  "_id": "edMRsSUd0mSGZb0L",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Mapa del hamman",
+      "type": "text",
+      "_id": "Zin1KpdaWjXzvWLQ",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>PDF p.122</h2>\n<p>Atletismo (DES)<br>sss<br>Fuerza bruta (FUE)<br>ss<br>Lucha (DES)<br>ss<br>Puntería (PER)<br>s<br>Agilidad<br>10<br>Aplomo<br>7<br>Perspicacia<br>11<br>Salud<br>18<br>Resistencia Física<br>11<br>Iniciativa<br>2<br>Atletismo (DES)<br>ss<br>Fuerza bruta (FUE)<br>ss<br>Lucha (DES)<br>ss<br>Puntería (PER)<br>s<br>Agilidad<br>9<br>Aplomo<br>8<br>Perspicacia<br>9<br>Salud<br>20<br>Resistencia Física<br>9<br>Iniciativa<br>5<br>Atletismo (DES)<br>s<br>Fuerza bruta (FUE)<br>s<br>Lucha (DES)<br>s<br>Puntería (PER)<br>s<br>Agilidad<br>4<br>Aplomo<br>13<br>Perspicacia<br>13<br>Salud<br>12<br>Resistencia Física<br>12<br>Iniciativa<br>7<br>AL-ZUGABI (BOABDIL)<br>Pusilánime heredero al trono del reino de Granada<br>+1<br>C<br>A<br>R<br>I<br>S<br>M<br>A</p>\n<p>+1<br>D<br>E<br>S<br>T<br>R<br>E<br>Z<br>A</p>\n<p>+1<br>F<br>U<br>E<br>R<br>Z<br>A</p>\n<p>+1<br>I<br>N<br>T<br>E<br>L<br>I<br>G<br>E<br>N<br>C<br>I<br>A</p>\n<p>+5<br>P<br>E<br>R<br>C<br>E<br>P<br>C<br>I<br>Ó<br>N<br>ATAQUE<br>-  Patada (2D+1); daño 1.<br>-  Espada jineta con empuñadura de oro y marfil y funda de<br>cordobán (2D+1); daño 4.<br>PROTECCIONES<br>Ninguna<br>ABU JALAF<br>Mercader anciano, resabiado y sin escrúpulos<br>+2<br>C<br>A<br>R<br>I<br>S<br>M<br>A</p>\n<p>+1<br>D<br>E<br>S<br>T<br>R<br>E<br>Z<br>A</p>\n<p>0<br>F<br>U<br>E<br>R<br>Z<br>A</p>\n<p>+6<br>I<br>N<br>T<br>E<br>L<br>I<br>G<br>E<br>N<br>C<br>I<br>A</p>\n<p>+2<br>P<br>E<br>R<br>C<br>E<br>P<br>C<br>I<br>Ó<br>N<br>ATAQUE<br>-  Manotazo impreciso (1D+1); daño 1.<br>-  Fusta de camello (1D+1); daño 3.<br>PROTECCIONES<br>Ninguna<br>GUARDIA EMIRAL<br>Soldado consagrado al servicio del emir y su familia<br>y al mantenimiento del orden en la ciudad de Granada<br>+1<br>C<br>A<br>R<br>I<br>S<br>M<br>A</p>\n<p>+3<br>D<br>E<br>S<br>T<br>R<br>E<br>Z<br>A</p>\n<p>+3<br>F<br>U<br>E<br>R<br>Z<br>A</p>\n<p>+2<br>I<br>N<br>T<br>E<br>L<br>I<br>G<br>E<br>N<br>C<br>I<br>A</p>\n<p>+2<br>P<br>E<br>R<br>C<br>E<br>P<br>C<br>I<br>Ó<br>N<br>ATAQUE<br>-  Mamporro (2D+3); daño 2.<br>-  Daga con empuñadura de hierro (2D+3); daño 6.<br>-  Espada jineta (2D+3); daño 6.<br>PROTECCIONES (Penalización total -3)<br>-  Escudo tipo adarga; nivel 2 (+2 a la Agilidad)<br>-  Gambesón acolchado (al-qutn); nivel 2 (–2 daño)<br>120<br>120<br>SANGRE EN EL AGUA<br>SANGRE EN EL AGUA</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!edMRsSUd0mSGZb0L.Zin1KpdaWjXzvWLQ"
+    }
+  ],
+  "folder": null,
+  "sort": 1900000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

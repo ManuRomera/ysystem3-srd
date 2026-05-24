@@ -187,8 +187,61 @@ export class ImsersoActorSheet extends ActorSheet {
 
   async _render(force, options) {
     this._captureScrollState();
-    await super._render(force, options);
+    this._renderingSheet = true;
+    try {
+      await super._render(force, options);
+    } finally {
+      this._renderingSheet = false;
+    }
+    this._restoreSheetSize();
     this._restoreScrollState();
+  }
+
+  setPosition(position = {}) {
+    const placed = super.setPosition(position);
+    if (!this._renderingSheet && !this._restoringSheetSize) this._persistSheetSize(placed);
+    return placed;
+  }
+
+  _sheetSizeKey() {
+    return `${IMSERSO.ID}.sheet-size.${this.actor?.type}.${this.actor?.id}`;
+  }
+
+  _loadSheetSize() {
+    try {
+      const saved = globalThis.localStorage?.getItem(this._sheetSizeKey());
+      if (!saved) return null;
+      const data = JSON.parse(saved);
+      const width = Number(data.width);
+      const height = Number(data.height);
+      if (!Number.isFinite(width) || !Number.isFinite(height)) return null;
+      return { width: Math.max(520, width), height: Math.max(420, height) };
+    } catch (err) {
+      return null;
+    }
+  }
+
+  _restoreSheetSize() {
+    const saved = this._loadSheetSize();
+    if (!saved) return;
+    window.setTimeout(() => {
+      if (!this.rendered) return;
+      this._restoringSheetSize = true;
+      super.setPosition(saved);
+      this._restoringSheetSize = false;
+    }, 0);
+  }
+
+  _persistSheetSize(position = {}) {
+    if (!this.rendered || !position) return;
+    const width = Number(position.width);
+    const height = Number(position.height);
+    if (!Number.isFinite(width) || !Number.isFinite(height)) return;
+    try {
+      globalThis.localStorage?.setItem(this._sheetSizeKey(), JSON.stringify({ width, height }));
+    } catch (err) {
+      // Local storage can be unavailable in constrained browser contexts.
+    }
   }
 
   activateListeners(html) {

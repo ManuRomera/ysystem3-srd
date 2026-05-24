@@ -1,0 +1,35 @@
+{
+  "name": "Hermano mayor",
+  "type": "talento",
+  "_id": "ZlFBhaQWxtWTUcsK",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>Puedes compartir tus propias proezas con tus hermanos pequeños. Por cada proeza compartida, ganas un +1 para una tirada que desees.</p><p><strong>Categoría:</strong> Proezas</p>",
+    "usos": {
+      "valor": 1,
+      "max": 1
+    },
+    "equipado": false,
+    "automatismo": "",
+    "habilidadUso": "",
+    "dificultadUso": 9
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

@@ -1,0 +1,338 @@
+{
+  "name": "Benjamín ben Solomón",
+  "type": "personaje",
+  "_id": "TY7K7MH7znzl7XKj",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "datos": {
+      "jugador": "",
+      "lugarNacimiento": "Granada",
+      "edad": "27",
+      "profesion": "Médico judío",
+      "perfil": "",
+      "motivacion": "Proteger a tu familia y salvar a tus pacientes, especialmente a los niños",
+      "descripcionFisica": "Complexión delgada y más bien enjuta, rostro serio y pensativo, moreno de pelo, bigote y perilla. Viste ropajes de buena calidad y no se separa de sus enseres de hakim.",
+      "situacionFamiliar": "Casado y padre de dos hijos (uno de ellos, fallecido).",
+      "arquetipo": "",
+      "talento": "Mano de Rafael",
+      "historia": "«Yahvé y la familia son lo más importante para cualquier hombre decente».",
+      "pertenencias": "Bolsa de cuero con su material, monedero bien repleto, cuchillo.",
+      "relaciones": ""
+    },
+    "atributos": {
+      "car": 1,
+      "des": 2,
+      "fue": 0,
+      "int": 6,
+      "per": 4
+    },
+    "habilidades": {
+      "atletismo": {
+        "dados": 1
+      },
+      "auxilio": {
+        "dados": 3
+      },
+      "conducir": {
+        "dados": 1
+      },
+      "conversacion": {
+        "dados": 3
+      },
+      "cultura": {
+        "dados": 2
+      },
+      "entorno": {
+        "dados": 2
+      },
+      "fuerzaBruta": {
+        "dados": 1
+      },
+      "idiomaExtranjero1": {
+        "dados": 2
+      },
+      "idiomaExtranjero2": {
+        "dados": 2
+      },
+      "informacion": {
+        "dados": 3
+      },
+      "intimidacion": {
+        "dados": 1
+      },
+      "lucha": {
+        "dados": 1
+      },
+      "mecanica": {
+        "dados": 2
+      },
+      "memoria": {
+        "dados": 2
+      },
+      "observacion": {
+        "dados": 2
+      },
+      "ocultacion": {
+        "dados": 1
+      },
+      "oido": {
+        "dados": 2
+      },
+      "psicologia": {
+        "dados": 3
+      },
+      "punteria": {
+        "dados": 1
+      },
+      "rastreo": {
+        "dados": 1
+      },
+      "seduccion": {
+        "dados": 1
+      },
+      "sigilo": {
+        "dados": 1
+      },
+      "simulacion": {
+        "dados": 1
+      },
+      "supervivencia": {
+        "dados": 2
+      }
+    },
+    "salud": {
+      "valor": 16,
+      "max": 16
+    },
+    "resistenciaFisica": {
+      "valor": 12,
+      "primeraTirada": false,
+      "umbrales": {
+        "2": false,
+        "4": false,
+        "7": false,
+        "11": false,
+        "16": false
+      }
+    },
+    "estabilidad": {
+      "valor": 23,
+      "max": 23
+    },
+    "resistenciaMental": {
+      "valor": 11,
+      "primeraTirada": false,
+      "umbrales": {
+        "2": false,
+        "4": false,
+        "7": false,
+        "11": false,
+        "16": false
+      }
+    },
+    "proezas": {
+      "valor": 6,
+      "inicial": 6
+    },
+    "defectos": {
+      "leve": "Cobarde",
+      "grave": "Hechicero, muy a tu pesar",
+      "leveUsado": false
+    },
+    "recuerdo": {
+      "usado": false,
+      "nota": ""
+    },
+    "puntoGuion": {
+      "valor": 1,
+      "max": 1,
+      "usado": false,
+      "nota": ""
+    },
+    "combate": {
+      "armaIniciativa": "desarmado",
+      "ataque": "desarmado",
+      "sorprendido": false
+    },
+    "estado": {
+      "inconsciente": false,
+      "crisisMental": false,
+      "muerto": false,
+      "notas": "Fuente: paginas 126-127"
+    }
+  },
+  "items": [
+    {
+      "name": "Mano de Rafael",
+      "type": "talento",
+      "_id": "1vUcna0SK4ugce8K",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>Cada vez que sacas una tirada de Auxilio, tu paciente recupera 3 Salud en lugar de 2; 6 con crítico. Cualquier pifia se convierte en fallo normal.</p><p><strong>Categoría:</strong> Sangre En El Agua</p>",
+        "usos": {
+          "valor": 1,
+          "max": 1
+        },
+        "equipado": false,
+        "automatismo": "",
+        "habilidadUso": "",
+        "dificultadUso": 9
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Combustión espontánea",
+      "type": "poder",
+      "_id": "QVezMbyctp2NFRLW",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>Creas una llamarada a la vista que calcina todo durante un turno. Inflige 5 daño que ignora armadura y puede afectar hasta dos personas próximas.</p><p>Coste: 5 puntos de poder.</p>",
+        "tipo": "Hechizo de Benjamín",
+        "habilidad": "cultura",
+        "atributo": "int",
+        "dificultad": 12,
+        "preparacion": "",
+        "lanzamiento": "",
+        "duracion": "Coste: 5 puntos de poder.",
+        "caducidad": "",
+        "equipado": false,
+        "automatismo": ""
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Consuelo de Yahvé",
+      "type": "poder",
+      "_id": "QXBr0LuPrLfpHme6",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>Sosiegas al beneficiario y le haces ganar 5 puntos de Estabilidad.</p><p>Coste: 3 puntos de poder.</p>",
+        "tipo": "Hechizo de Benjamín",
+        "habilidad": "cultura",
+        "atributo": "int",
+        "dificultad": 14,
+        "preparacion": "",
+        "lanzamiento": "",
+        "duracion": "Coste: 3 puntos de poder.",
+        "caducidad": "",
+        "equipado": false,
+        "automatismo": ""
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Dador de vida",
+      "type": "poder",
+      "_id": "l5I4u2CBLkwAXrCk",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>Sanas al beneficiario 5 puntos de Salud.</p><p>Coste: 3 puntos de poder.</p>",
+        "tipo": "Hechizo de Benjamín",
+        "habilidad": "cultura",
+        "atributo": "int",
+        "dificultad": 14,
+        "preparacion": "",
+        "lanzamiento": "",
+        "duracion": "Coste: 3 puntos de poder.",
+        "caducidad": "",
+        "equipado": false,
+        "automatismo": ""
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "prototypeToken": {
+    "name": "Benjamín ben Solomón",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg"
+    }
+  }
+}

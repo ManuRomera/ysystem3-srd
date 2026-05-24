@@ -1,0 +1,61 @@
+{
+  "name": "Información básica",
+  "_id": "mIiz47a4JoTXUZNY",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Información básica",
+      "type": "text",
+      "_id": "GlRmUCFsI2Q87gdq",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>PDF p.89</h2>\n<p>TABLA DE SALVACIÓN ¡PULP!<br>(Tirada de 2D una vez por aventura)<br>s<br>VALOR DE LA TIRADA DE<br>SALVACIÓN IN EXTREMIS<br>LO LOGRO / LO EVITO GRACIAS A...<br>3<br>Mi hermano/a gemelo/a, cuya existencia ignoraba hasta ese momento.<br>4<br>Algún artefacto, estructura o pieza evidentemente alienígena.<br>5<br>Alguien con quien contraje una terrible deuda (ahora le debo dos).<br>6<br>Alguna tara personal, fobia o manía, que en este caso me ayuda.<br>7<br>Una de mis pertenencias (elegida por el DJ o por el jugador).<br>8<br>La persona o criatura que está más cerca de mí en este momento.<br>9<br>Una planta que puedo ver con mis propios ojos.<br>10<br>Un animal salvaje que hace acto de presencia de forma repentina.<br>11<br>Un fenómeno atmosférico o físico inesperado.<br>12<br>Una extraña y perturbadora premonición.<br>13<br>Algo que leí una vez en cierto libro que cayó en mis manos.<br>14<br>El más grave de mis dos defectos.<br>15<br>Un consejo recibido en la más tierna infancia.<br>16<br>Un viejo amigo que aparece de repente, esté yo donde esté.<br>17<br>Un ser sobrenatural que acude en mi ayuda sin que sepa por qué.<br>18<br>Un gorila.<br>OTRAS REGLAS PULP<br>Además de la nueva tirada de salvación in extremis, en Ysystem3<br>¡PULP! los PJ (no así los PNJ) ignoran el primer umbral de Salud y Estabilidad, situado entre los 16 y los 15 puntos (es decir,<br>que los PJ no tienen que tirar por Resistencia Física o Mental hasta<br>que estén por debajo de los 11 puntos). También se ganan proezas<br>cuando el jugador es capaz de soltar la cita de su PJ en un momento dramáticamente apropiado y se permite el gasto de una<br>proeza a priori para añadir 1D más a las tiradas de Resistencia<br>Física y Mental, de modo que desmayarse o enloquecer temporalmente no resulte tan sencillo. Por último, al comienzo de cada<br>sesión todos los jugadores lanzan 1D, obteniendo tantas proezas<br>extra como el resultado de esa tirada dividido entre dos y redondeado hacia abajo.<br>87<br>87<br>SISTEMA<br>SISTEMA</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!mIiz47a4JoTXUZNY.GlRmUCFsI2Q87gdq"
+    }
+  ],
+  "folder": null,
+  "sort": 200000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

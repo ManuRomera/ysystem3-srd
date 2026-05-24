@@ -2,10 +2,10 @@
   "id": "ysystem3-srd",
   "title": "YSYSTEM3 SRD (no oficial)",
   "description": "Sistema NO OFICIAL para jugar el Documento de Referencia del Sistema (SRD) de YSYSTEM en Foundry VTT, con automatismos de tiradas, combate, salud y variantes de ambientación. Basado en el SRD publicado por Walhalla Ediciones (Ignacio Sánchez Aranda y Jorge Carrero Roig). Este paquete no está afiliado ni aprobado por Walhalla Ediciones.",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "url": "https://github.com/ManuRomera/ysystem3-srd",
   "manifest": "https://raw.githubusercontent.com/ManuRomera/ysystem3-srd/main/system.json",
-  "download": "https://github.com/ManuRomera/ysystem3-srd/releases/download/v0.3.3/ysystem3-srd.zip",
+  "download": "https://github.com/ManuRomera/ysystem3-srd/releases/download/v0.3.4/ysystem3-srd.zip",
   "changelog": "https://github.com/ManuRomera/ysystem3-srd/blob/main/CHANGELOG.md",
   "background": "systems/ysystem3-srd/assets/cover-srd-actualizado.png",
   "media": [
@@ -70,6 +70,62 @@
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
       }
+    },
+    {
+      "name": "talentos-ysystem3",
+      "label": "Talentos YSYSTEM3 SRD",
+      "type": "Item",
+      "path": "packs/talentos-ysystem3",
+      "system": "ysystem3-srd"
+    },
+    {
+      "name": "poderes-ysystem3",
+      "label": "Poderes YSYSTEM3 SRD",
+      "type": "Item",
+      "path": "packs/poderes-ysystem3",
+      "system": "ysystem3-srd"
+    },
+    {
+      "name": "armas-ysystem3",
+      "label": "Armas YSYSTEM3 SRD",
+      "type": "Item",
+      "path": "packs/armas-ysystem3",
+      "system": "ysystem3-srd"
+    },
+    {
+      "name": "protecciones-ysystem3",
+      "label": "Protecciones YSYSTEM3 SRD",
+      "type": "Item",
+      "path": "packs/protecciones-ysystem3",
+      "system": "ysystem3-srd"
+    },
+    {
+      "name": "actores-pj-ysystem3",
+      "label": "PJ pregenerados YSYSTEM3 SRD",
+      "type": "Actor",
+      "path": "packs/actores-pj-ysystem3",
+      "system": "ysystem3-srd"
+    },
+    {
+      "name": "actores-pnj-ysystem3",
+      "label": "PNJ YSYSTEM3 SRD",
+      "type": "Actor",
+      "path": "packs/actores-pnj-ysystem3",
+      "system": "ysystem3-srd"
+    },
+    {
+      "name": "aventura-sangre-en-el-agua",
+      "label": "Aventura Sangre en el agua",
+      "type": "JournalEntry",
+      "path": "packs/aventura-sangre-en-el-agua",
+      "system": "ysystem3-srd"
+    },
+    {
+      "name": "tablas-ysystem3",
+      "label": "Tablas YSYSTEM3 SRD",
+      "type": "RollTable",
+      "path": "packs/tablas-ysystem3",
+      "system": "ysystem3-srd"
     }
   ],
   "primaryTokenAttribute": "salud.valor",

@@ -1,0 +1,203 @@
+{
+  "name": "Tabla de sucesos inesperados en persecuciones",
+  "_id": "WqdmwgJu2RrBhdwq",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "name": "Oponente adicional inesperado",
+      "range": [
+        2,
+        2
+      ],
+      "weight": 1,
+      "_id": "dpi3vfzKs0Hs9Icc",
+      "type": "text",
+      "img": null,
+      "description": "Ataque puntual de 3D contra Agilidad. Si impacta, causa 6 daño.",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Obstáculo inesperado grave",
+      "range": [
+        3,
+        4
+      ],
+      "weight": 1,
+      "_id": "PSjgRXSzb8QjMPbH",
+      "type": "text",
+      "img": null,
+      "description": "Tirada extra de Atletismo o Conducir a dificultad 16. Fallar implica perder una distancia; pifia: accidente; crítico: gana una distancia.",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Obstáculo inesperado medio",
+      "range": [
+        5,
+        6
+      ],
+      "weight": 1,
+      "_id": "h6ICG0lGQFbVeYkG",
+      "type": "text",
+      "img": null,
+      "description": "Tirada extra de Atletismo o Conducir a dificultad 12. Fallar implica perder una distancia; pifia: accidente; crítico: gana una distancia.",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Obstáculo inesperado leve",
+      "range": [
+        7,
+        7
+      ],
+      "weight": 1,
+      "_id": "nRacoXT1dPsMVits",
+      "type": "text",
+      "img": null,
+      "description": "Tirada extra de Atletismo o Conducir a dificultad 8. Fallar implica perder una distancia; pifia: accidente; crítico: gana una distancia.",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Ventaja menor",
+      "range": [
+        8,
+        9
+      ],
+      "weight": 1,
+      "_id": "LBQiYGfMuvTLrgOn",
+      "type": "text",
+      "img": null,
+      "description": "El PNJ rival sufre un percance. Su Agilidad se reduce 1 punto en el turno siguiente.",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Ventaja mayor",
+      "range": [
+        10,
+        11
+      ],
+      "weight": 1,
+      "_id": "INCeMhF4xYzNb72T",
+      "type": "text",
+      "img": null,
+      "description": "El PNJ rival sufre un percance importante. Su Agilidad se reduce 1D puntos en el turno siguiente.",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Ventaja completa",
+      "range": [
+        12,
+        12
+      ],
+      "weight": 1,
+      "_id": "5PYTnvlvAdSBdLo2",
+      "type": "text",
+      "img": null,
+      "description": "El PNJ rival sufre un gran percance. Su Agilidad se reduce 2D puntos en el turno siguiente.",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "formula": "2d6",
+  "sort": 100000
+}

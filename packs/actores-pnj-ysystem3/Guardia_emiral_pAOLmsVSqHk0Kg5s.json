@@ -1,0 +1,89 @@
+{
+  "name": "Guardia emiral",
+  "type": "pnj",
+  "_id": "pAOLmsVSqHk0Kg5s",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "descripcion": "Soldado consagrado al servicio del emir y su familia y al mantenimiento del orden en Granada",
+    "bando": "",
+    "rol": "Soldado consagrado al servicio del emir y su familia y al mantenimiento del orden en Granada",
+    "atributos": {
+      "car": 1,
+      "des": 3,
+      "fue": 3,
+      "int": 2,
+      "per": 2
+    },
+    "habilidades": {
+      "atletismo": {
+        "dados": 1
+      },
+      "fuerzaBruta": {
+        "dados": 1
+      },
+      "lucha": {
+        "dados": 1
+      },
+      "punteria": {
+        "dados": 1
+      }
+    },
+    "salud": {
+      "valor": 12,
+      "max": 12
+    },
+    "agilidad": {
+      "valor": 4,
+      "manual": true
+    },
+    "aplomo": {
+      "valor": 13,
+      "manual": true
+    },
+    "perspicacia": {
+      "valor": 13,
+      "manual": true
+    },
+    "resistenciaFisica": {
+      "valor": 12,
+      "manual": true
+    },
+    "ataque": {
+      "nombre": "Mamporro",
+      "habilidad": "lucha",
+      "tipo": "desarmado",
+      "dano": 2
+    },
+    "combate": {
+      "sorprendido": false
+    },
+    "notas": "Soldado consagrado al servicio del emir y su familia y al mantenimiento del orden en Granada\nAtaques: Mamporro (2D+3); daño 2; Daga con empuñadura de hierro (2D+3); daño 6; Espada jineta (2D+3); daño 6\nPenalización por protección: -3"
+  },
+  "items": [],
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "prototypeToken": {
+    "name": "Guardia emiral",
+    "actorLink": true,
+    "disposition": -1,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg"
+    }
+  }
+}

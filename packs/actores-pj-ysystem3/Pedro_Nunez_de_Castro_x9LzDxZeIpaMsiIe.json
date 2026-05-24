@@ -1,0 +1,320 @@
+{
+  "name": "Pedro Núñez de Castro",
+  "type": "personaje",
+  "_id": "x9LzDxZeIpaMsiIe",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "datos": {
+      "jugador": "",
+      "lugarNacimiento": "Medinaceli (tierras de Soria)",
+      "edad": "28",
+      "profesion": "Caballero de la orden de Calatrava",
+      "perfil": "",
+      "motivacion": "Contribuir al mantenimiento de la paz entre Castilla y Granada, aunque a veces te parece una causa perdida.",
+      "descripcionFisica": "Complexión musculosa, cuerpo lleno de cicatrices, cabello castaño entrecano cortado al estilo militar y bigote algo descuidado. Vestido con la cota de malla y la sobrevesta de su orden.",
+      "situacionFamiliar": "Su única familia son sus hermanos de la Orden de Calatrava.",
+      "arquetipo": "",
+      "talento": "Retroceder nunca, rendirse jamás",
+      "historia": "«Haré cuanto sea necesario… por mis amigos, por Dios y por Castilla».",
+      "pertenencias": "Espada, escudo, daga, armadura completa y sobrevesta de la Orden de Calatrava.",
+      "relaciones": ""
+    },
+    "atributos": {
+      "car": 1,
+      "des": 4,
+      "fue": 6,
+      "int": 0,
+      "per": 2
+    },
+    "habilidades": {
+      "atletismo": {
+        "dados": 3
+      },
+      "auxilio": {
+        "dados": 1
+      },
+      "conducir": {
+        "dados": 2
+      },
+      "conversacion": {
+        "dados": 1
+      },
+      "cultura": {
+        "dados": 2
+      },
+      "entorno": {
+        "dados": 2
+      },
+      "fuerzaBruta": {
+        "dados": 3
+      },
+      "idiomaExtranjero1": {
+        "dados": 2
+      },
+      "idiomaExtranjero2": {
+        "dados": 1
+      },
+      "informacion": {
+        "dados": 1
+      },
+      "intimidacion": {
+        "dados": 3
+      },
+      "lucha": {
+        "dados": 2
+      },
+      "mecanica": {
+        "dados": 1
+      },
+      "memoria": {
+        "dados": 1
+      },
+      "observacion": {
+        "dados": 1
+      },
+      "ocultacion": {
+        "dados": 1
+      },
+      "oido": {
+        "dados": 2
+      },
+      "psicologia": {
+        "dados": 1
+      },
+      "punteria": {
+        "dados": 2
+      },
+      "rastreo": {
+        "dados": 2
+      },
+      "seduccion": {
+        "dados": 1
+      },
+      "sigilo": {
+        "dados": 2
+      },
+      "simulacion": {
+        "dados": 1
+      },
+      "supervivencia": {
+        "dados": 2
+      }
+    },
+    "salud": {
+      "valor": 28,
+      "max": 28
+    },
+    "resistenciaFisica": {
+      "valor": 6,
+      "primeraTirada": false,
+      "umbrales": {
+        "2": false,
+        "4": false,
+        "7": false,
+        "11": false,
+        "16": false
+      }
+    },
+    "estabilidad": {
+      "valor": 17,
+      "max": 17
+    },
+    "resistenciaMental": {
+      "valor": 11,
+      "primeraTirada": false,
+      "umbrales": {
+        "2": false,
+        "4": false,
+        "7": false,
+        "11": false,
+        "16": false
+      }
+    },
+    "proezas": {
+      "valor": 6,
+      "inicial": 6
+    },
+    "defectos": {
+      "leve": "Extremadamente honesto, incluso en contra de tus propios intereses",
+      "grave": "Dolorosas dudas existenciales respecto a tu lealtad hacia tu reino",
+      "leveUsado": false
+    },
+    "recuerdo": {
+      "usado": false,
+      "nota": ""
+    },
+    "puntoGuion": {
+      "valor": 1,
+      "max": 1,
+      "usado": false,
+      "nota": ""
+    },
+    "combate": {
+      "armaIniciativa": "desarmado",
+      "ataque": "desarmado",
+      "sorprendido": false
+    },
+    "estado": {
+      "inconsciente": false,
+      "crisisMental": false,
+      "muerto": false,
+      "notas": "Fuente: paginas 130-131"
+    }
+  },
+  "items": [
+    {
+      "name": "Retroceder nunca, rendirse jamás",
+      "type": "talento",
+      "_id": "gsnUeL5JDY7fxXly",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>Puedes gastar una proeza para ignorar durante un combate entero todos los penalizadores acumulados por pérdida de Salud.</p><p><strong>Categoría:</strong> Sangre En El Agua</p>",
+        "usos": {
+          "valor": 1,
+          "max": 1
+        },
+        "equipado": false,
+        "automatismo": "",
+        "habilidadUso": "",
+        "dificultadUso": 9
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Gambesón de cuero grueso",
+      "type": "armadura",
+      "_id": "4KbYked3VOtKsmzm",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>-2 daño.</p><p>penalización -1</p>",
+        "nivel": 2,
+        "penalizador": 0,
+        "equipado": false,
+        "automatismo": ""
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Cota de anillas reforzada",
+      "type": "armadura",
+      "_id": "BInmxZBBL95zdwLq",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>-5 daño.</p><p>penalización -2</p>",
+        "nivel": 5,
+        "penalizador": 0,
+        "equipado": false,
+        "automatismo": ""
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Escudo",
+      "type": "escudo",
+      "_id": "11kXG558L5uyduec",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "descripcion": "<p>+3 Agilidad.</p><p>penalización -3</p>",
+        "nivel": 3,
+        "penalizador": 0,
+        "equipado": false,
+        "automatismo": ""
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 2
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "prototypeToken": {
+    "name": "Pedro Núñez de Castro",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg"
+    }
+  }
+}

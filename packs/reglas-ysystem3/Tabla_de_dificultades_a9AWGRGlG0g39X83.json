@@ -1,0 +1,61 @@
+{
+  "name": "Tabla de dificultades",
+  "_id": "a9AWGRGlG0g39X83",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Tabla de dificultades",
+      "type": "text",
+      "_id": "DSTm6n2zP6blE7nG",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>Compendio: tabla de dificultades</h2>\n<p>| Dificultad | Valores |<br>|---|---:|<br>| Muy fácil | 5-6 |<br>| Fácil | 7-8 |<br>| Media | 9-10 |<br>| Desafiante | 11-13 |<br>| Difícil | 14-17 |<br>| Muy difícil | 18-21 |<br>| Extrema | 22-25 |</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!a9AWGRGlG0g39X83.DSTm6n2zP6blE7nG"
+    }
+  ],
+  "folder": null,
+  "sort": 200000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

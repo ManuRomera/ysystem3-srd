@@ -1,0 +1,89 @@
+{
+  "name": "Harun «Al-Rundi» (Harun Ibn Hud)",
+  "type": "pnj",
+  "_id": "T0xHlvyM7KvQtSb0",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "descripcion": "Implacable líder de los Banu Sarray",
+    "bando": "",
+    "rol": "Implacable líder de los Banu Sarray",
+    "atributos": {
+      "car": 4,
+      "des": 2,
+      "fue": 4,
+      "int": 4,
+      "per": 3
+    },
+    "habilidades": {
+      "atletismo": {
+        "dados": 2
+      },
+      "fuerzaBruta": {
+        "dados": 2
+      },
+      "lucha": {
+        "dados": 2
+      },
+      "punteria": {
+        "dados": 1
+      }
+    },
+    "salud": {
+      "valor": 20,
+      "max": 20
+    },
+    "agilidad": {
+      "valor": 9,
+      "manual": true
+    },
+    "aplomo": {
+      "valor": 8,
+      "manual": true
+    },
+    "perspicacia": {
+      "valor": 7,
+      "manual": true
+    },
+    "resistenciaFisica": {
+      "valor": 9,
+      "manual": true
+    },
+    "ataque": {
+      "nombre": "Codazo",
+      "habilidad": "lucha",
+      "tipo": "desarmado",
+      "dano": 3
+    },
+    "combate": {
+      "sorprendido": false
+    },
+    "notas": "Implacable líder de los Banu Sarray\nAtaques: Codazo (3D+2); daño 3; Daga de plata de los Banu Sarray (3D+2); daño 7; Espada de lajín o al-jam (3D+2); daño 7\nPenalización por protección: -2"
+  },
+  "items": [],
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "prototypeToken": {
+    "name": "Harun «Al-Rundi» (Harun Ibn Hud)",
+    "actorLink": true,
+    "disposition": -1,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg"
+    }
+  }
+}

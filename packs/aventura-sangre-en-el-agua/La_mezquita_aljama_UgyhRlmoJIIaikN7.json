@@ -1,0 +1,61 @@
+{
+  "name": "La mezquita aljama",
+  "_id": "UgyhRlmoJIIaikN7",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "La mezquita aljama",
+      "type": "text",
+      "_id": "2TglNcaoB39sXoZi",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>PDF p.107</h2>\n<p>Unos segundos después cesa la trifulca. La puerta de la casa<br>vuelve a abrirse, pero ya no es el abuelo quien entra, sino unos pasos pesados que delatan a alguien que lleva botas militares. El intruso se acerca poco a poco al niño, hasta que este observa a un guardia de la Alhambra que lo examina, pensativo. El guardia se dirige al<br>niño con propósito de tranquilizarlo y se identifica a sí mismo como<br>«Hassan». Después, con cuidado de sacarlo por la puerta de atrás y<br>no dejar que se asome a la plaza de Bib-rambla, se lo lleva en brazos<br>dando un rodeo para subir finalmente hasta la Alhambra, a la zona de<br>las viviendas de los sirvientes, donde les espera una casa que despide un agradable olor a comida. Allí dentro está Najwa, la esposa de<br>Hassan. Se trata, evidentemente, de los padres adoptivos de Aamir.</p>\n<p>Si Aamir pregunta por su abuelo, Hassan le responde que está<br>enfermo y que se lo han llevado al maristán para curarlo. El DJ puede preguntar al jugador si en los días posteriores siguió interesándose por lo que le había ocurrido o si simplemente asumió con rapidez que estaba muerto y<br>luego se olvidó de él. En cualquier caso,<br>el recuerdo del abuelo se fue difuminando con el paso del tiempo y el<br>afecto y los cuidados de Najwa<br>y Hassan, convertidos estos en<br>los verdaderos padres de Aamir.<br>Algún día<br>serás rey<br>de Zaragoza...<br>AAMIR<br>JUEGA<br>CON SU<br>ABUELO<br>105<br>105<br>SANGRE EN EL AGUA<br>SANGRE EN EL AGUA</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!UgyhRlmoJIIaikN7.2TglNcaoB39sXoZi"
+    }
+  ],
+  "folder": null,
+  "sort": 1300000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

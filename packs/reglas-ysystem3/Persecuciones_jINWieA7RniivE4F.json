@@ -1,0 +1,61 @@
+{
+  "name": "Persecuciones",
+  "_id": "jINWieA7RniivE4F",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Persecuciones",
+      "type": "text",
+      "_id": "YEfHoMU685IFw1Ot",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>PDF p.66</h2>\n<p>PERSECUCIONES<br>PERSECUCIONES<br>PERSECUCIONES<br>En una persecución, el PJ tiene que imponerse en cada turno al valor de Agilidad del PNJ que lo persigue o al que persigue. La tirada es por la habilidad de Atletismo si la persecución es a pie, en bicicleta, a rastras en el interior de un conducto de ventilación o por<br>cualquier otro medio imaginable que requiera exclusivo desempeño<br>físico; por el contrario, si la persecución se realiza sobre una montura<br>o a los mandos de un coche, moto, reactor, nave espacial o cualquier<br>otro vehículo de propulsión, la tirada se lleva a cabo por la habilidad<br>de Conducir. Por supuesto, si un personaje va a pie y el otro sobre<br>una montura o a bordo de algún vehículo, la persecución tal cual no<br>se produce, y el que vaya a pie será alcanzado antes o después.</p>\n<p>En las persecuciones existen cuatro distancias: corta, media, larga y muy larga. El objetivo de los PJ es bajar de corta si son<br>los perseguidores o ir más allá de muy larga si son los perseguidos.<br>Cuando se baja de corta, el perseguidor cierra el paso o captura al<br>perseguido, y, si este se resiste, comienza un combate. Cuando se<br>va más allá de muy larga, el perseguido huye y el perseguidor le<br>pierde la pista definitivamente.</p>\n<p>Los críticos hacen ganar o perder una distancia extra, mientras<br>que las pifias se traducen en accidentes (una caída o un choque,<br>por ejemplo). En caso de accidente, el DJ debe determinar su gravedad y los dados de daño que provoca, que oscilarán siempre entre 1 y 7D; además, cualquier vehículo que pueda estar conduciendo el personaje quedará siniestrado y dejará de estar operativo, al<br>menos en lo que respecta a sus funciones principales.</p>\n<p>Por otro lado, cada PJ directamente involucrado en una persecución (lo cual no incluye, por ejemplo, a los PJ pasajeros de un<br>coche conducido por otro PJ) debe realizar una tirada extra en la<br>Tabla de sucesos inesperados en las persecuciones al final de<br>cada turno de persecución. Esta tabla está diseñada para espolear la imaginación del DJ. La tirada es siempre de 2D, cuyos valores se han de sumar para consultar un suceso y una consecuencia<br>que se producirán justo al comienzo del turno siguiente, tal y como<br>se muestra en la tabla de la siguiente página.</p>\n<p>Con respecto al combate en las persecuciones, la dificultad<br>real para impactar dependerá siempre de la distancia:<br>-  Distancia corta: dificultad estándar (esto es: valor de Agilidad<br>del objetivo + cobertura que aporte el vehículo, si la hay).<br>-  Distancia media: a lo anterior, se añade la necesidad de apuntar<br>(sacrificar 1D en la tirada de Puntería). En este caso, la acción de apuntar es un mero requisito de impacto y no redunda en un aumento del<br>daño. Sin embargo, nada impide sacrificar 2D o más a la hora de apuntar para aumentar el daño del disparo (que sería de 2D de daño extra a<br>partir del segundo dado sacrificado en el caso de armas a distancia).<br>-  Distancias larga y muy larga: a estas distancias solo se impacta con un crítico, que tiene éxito automático, dobla daño e ignora<br>armadura, como es habitual.<br>64<br>64<br>SISTEMA<br>SISTEMA</p>\n<h2>PDF p.67</h2>\n<p>TABLA DE SUCESOS INESPERADOS EN LAS PERSECUCIONES<br>(Tirada de 2D al final de cada turno para cada PJ involucrado)<br>VALOR<br>SUCESO<br>CONSECUENCIAS<br>EJEMPLOS<br>s<br>2<br>Oponente<br>adicional<br>inesperado<br>El oponente adicional inesperado dispone de un ataque<br>puntual en ese turno de 3D<br>contra el valor de Agilidad del<br>PJ. Si impacta, causa 6 puntos<br>de daño.<br>- Un animal salvaje que se asusta al paso del PJ y<br>le ataca antes de salir corriendo.<br>- Un meteorito que se cruza en la trayectoria de la<br>nave espacial que pilota el PJ.<br>- Un guerrero que suelta un hachazo al aire.<br>- Un pandillero cyberpunk que dispara un blaster<br>ligero desde las sombras de un callejón.<br>s<br>3-4<br>Obstáculo<br>inesperado<br>grave<br>Tirada extra de Atletismo o<br>Conducir a dificultad 16. Fallar la tirada implica perder<br>una distancia (o un accidente<br>en caso de pifia). Sacar un crítico hace ganar una distancia.<br>- Dos turistas que va charlando despreocupadamente mientras consulta un plano de la ciudad.<br>- Un árbol de enormes proporciones cuyas raíces<br>se extienden muchos metros a la redonda.<br>- Un muro más o menos alto al final de un callejón<br>sin salida en pleno bastión cátaro.<br>- Un agujero que se abre repentinamente bajo el<br>suelo de la mazmorra.<br>- Un mercado de recambios cibernéticos y puestos<br>de comida rápida atestados de gente.<br>- Un rebaño de ovejas que ocupa toda la calle de<br>parte a parte.<br>- Una nutrida procesión de la Tecnoiglesia de la<br>Sagrada Singularidad.<br>- Un carromato cargado de verduras cruzado en<br>medio del camino.<br>- Una corriente de agua que desciende con fuerza.<br>s<br>5-6<br>Obstáculo<br>inesperado<br>de gravedad<br>media<br>Tirada extra de Atletismo o<br>Conducir a dificultad 12. Fallar la tirada implica perder<br>una distancia (o un accidente<br>en caso de pifia). Sacar un crítico hace ganar una distancia.<br>s<br>7<br>Obstáculo<br>inesperado<br>leve<br>Tirada extra de Atletismo o<br>Conducir a dificultad 8. Fallar<br>la tirada implica perder una<br>distancia (o un accidente en<br>caso de pifia). Sacar un crítico<br>hace ganar una distancia.<br>Cualquiera de los ejemplos enumerados en la celda<br>superior, y además:<br>- Un perro que se abalanza sobre el PNJ y le suelta una dentellada que no alcanza su pierna por<br>escasos centímetros.<br>- Un resbalón inoportuno en la cubierta de pasajeros de la carlinga del zepelín que da con los huesos del PNJ contra el suelo.<br>- Un empujón propinado por un macarra de los bajos fondos de Marsella molesto porque el PNJ ha<br>pasado demasiado cerca de él.<br>- Una zona con nieve especialmente blanda que<br>hunde al PNJ hasta la cintura.<br>- Una leve torcedura de tobillo.<br>- Un molesto fogonazo o destello de luz.<br>- Un charco que parecía mucho menos profundo a<br>simple vista.<br>s<br>8-9<br>Ventaja<br>menor<br>El PNJ que persigue al PJ o<br>que es perseguido por este sufre un pequeño percance. Su<br>valor de Agilidad se reduce 1<br>punto en el turno siguiente.<br>s<br>10-11<br>Ventaja<br>mayor<br>El PNJ que persigue al PJ o que<br>es perseguido por este sufre un<br>importante percance. Su valor<br>de Agilidad se reduce 1D puntos en el turno siguiente.<br>s<br>12<br>Ventaja<br>completa<br>El PNJ que persigue al PJ o<br>que es perseguido por este sufre un gran percance. Su valor<br>de Agilidad se reduce 2D puntos en el turno siguiente.<br>En los casos en los que hay un perseguidor que va tras varios perseguidos o un<br>perseguido al que tratan de alcanzar varios perseguidores, las consecuencias de<br>la Tabla de sucesos inesperados pueden llegar a acumularse para un mismo PNJ.<br>65<br>65<br>SISTEMA<br>SISTEMA</p>\n<h2>PDF p.68</h2>\n<p>También se puede tratar de impactar en una zona concreta del<br>vehículo del oponente (habitualmente un neumático) si se apunta y se sacrifica 1D a distancia corta, 2D a distancia media y 3D a<br>distancia larga o muy larga. El reventón de un neumático obliga al<br>oponente a realizar una tirada de Conducir a dificultad 12 para no<br>sufrir un accidente de 2D de daño (además, dejará a su vehículo<br>fuera de combate ya en el siguiente turno).<br>Tony Petrelli está al volante de su Packard Super Eight y huye a<br>toda velocidad de unos sectarios a los que ha robado un pequeño ídolo mesoamericano que adoraban en una nave semiabandonada del puerto de Chicago. Los sectarios son cuatro y van montados en un Buick Series 90. Llevan pistolas Colt 1911, tienen un valor<br>de Agilidad de 11 puntos, conducen con 2D + 4 y disparan con 2D +<br>2, mientras que Petrelli tiene su revólver S&amp;W Model 10 en la sobaquera, cuenta con una Agilidad de 15 puntos, conduce con 3D + 6<br>(¡el máximo posible!) y dispara con 3D + 1. El ídolo mesoamericano,<br>de unos 25 centímetros de altura, descansa en el asiento del copiloto del Packard.</p>\n<p>La persecución se ha establecido a distancia media y Lara, la<br>jugadora que interpreta a Petrelli, se muestra confiada. Con una<br>Agilidad de 15 puntos y 3D + 6 en Conducir, es prácticamente imposible que su adorado contrabandista no logre escapar. Pero claro,<br>en una persecución pueden pasar muchas cosas...</p>\n<p>En el primer turno de la persecución, Lara lanza los dados y<br>obtiene un 5, un 1 y un 2, lo que, sumado al bonificador del atributo, arroja un resultado total de 14 puntos, tres por encima del valor de Agilidad del sectario que conduce el Buick. Esto significa<br>que la distancia pasa de media a larga. Además, ahora los otros<br>tres sectarios que van en el coche perseguidor necesitan obtener<br>un crítico al disparar si quieren tener la fortuna de darle a Petrelli. Eso no sucede, ya que el DJ tira tres veces los dados y no obtiene ningún doble 6. Las balas vuelan relativamente cerca del Packard, pero Petrelli sonríe con suficiencia y aprieta el acelerador,<br>consciente de que tiene todas las de ganar. Si Lara sacase un crítico en su próxima tirada de Conducir, el PJ lograría huir y la persecución se daría por concluida (ya que los críticos proporcionan<br>una distancia extra); de lo contrario, bastará con imponerse dos<br>veces más a la Agilidad del sectario que conduce para que Petrelli escape con el misterioso ídolo que ha robado (y que no para de<br>salir despedido contra el suelo, la puerta y el salpicadero del Packard con cada volantazo del contrabandista).</p>\n<p>No obstante, antes de pasar al segundo turno de la persecución, Lara debe realizar una tirada en la Tabla de sucesos inesperados en las persecuciones. Toma entonces 2D, los lanza y obtiene<br>sendos 5, 10 puntos en total, lo que se traduce en una ventaja mayor: «El PNJ que persigue al PJ o que es perseguido por este sufre<br>un importante percance. Su valor de Agilidad se reduce 1D puntos<br>en el turno siguiente». ¡Menuda fortuna la de Petrelli, todo se le<br>pone de cara! El DJ narra la súbita aparición de un tranvía frente<br>al automóvil de los sectarios, que se ven obligados a frenar en seco<br>EJEMPLO<br>66<br>66<br>SISTEMA<br>SISTEMA</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!jINWieA7RniivE4F.YEfHoMU685IFw1Ot"
+    }
+  ],
+  "folder": null,
+  "sort": 700000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

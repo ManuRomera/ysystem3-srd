@@ -1,0 +1,61 @@
+{
+  "name": "La investigación en el zoco",
+  "_id": "sfMpgj9nEU49j6lW",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "La investigación en el zoco",
+      "type": "text",
+      "_id": "BErAUoFSGLf5UeLk",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>PDF p.106</h2>\n<p>AAMIR<br>AAMIR<br>FLASHBACK DE AAMIR<br>La zona del zoco (actual calle Alcaicería y exteriores de la catedral de<br>Granada), es donde se va a desarrollar el grueso de la investigación,<br>pero también servirá de disparador del último flashback de trasfondo preestablecido, el del personaje de Aamir.</p>\n<p>El DJ puede describir cómo los PJ descienden al zoco por la Carrera del Darro y dejan la Alhambra a su izquierda hasta desembocar en lo que hoy es la Plaza Nueva. Después, van caminando hacia<br>Bib-Rambla. El sonido del agua es, de nuevo, el protagonista de casi<br>todo el recorrido, despidiéndoles por fin antes de adentrarse en las<br>callejuelas anejas a la mezquita aljama.</p>\n<p>En una de esas callejuelas, aproximándose a lo que hoy en día es<br>la Plaza de las Pasiegas, los PJ pasan frente a un solar abandonado<br>donde se yerguen los restos medio derruidos de una casa. Este elemento será el auténtico disparador del flashback de Aamir:</p>\n<p>—«¡Aamir! ¡Aamir!».</p>\n<p>Aamir se ve a sí mismo de niño, sentado en las rodillas de su<br>abuelo y jugando con el colgante que pende del cuello del anciano.<br>Lo tiene en la mano y va pasando la yema de sus dedos por el relieve<br>que lo adorna… Pero, antes de que pueda examinarlo con verdadera<br>atención, su abuelo le regaña cariñosamente y se lo quita, levantándose y obligando al chico a hacer lo mismo.</p>\n<p>El abuelo deambula por la casa diciendo cosas sin sentido: «Mi<br>pequeño, tienes que aprender a controlar tus impulsos. ¡Algún día<br>serás rey de Zaragoza, pillastre! ¡Cuando seas rey de Zaragoza podrás hacer lo que quieras; entonces sí! ¡Y ve a lavarte de una vez! Un<br>rey no debería estar sucio nunca». En contraposición, el DJ debe<br>describir el aspecto general de la casa: pequeña, oscura, sucia y llamativamente pobre. Lo cierto es que Aamir y su abuelo pasan hambre. Puertas y ventanas suelen estar cerradas, y los dos apenas salen de allí. Mientras el abuelo sigue diciendo tonterías, el DJ debería<br>hacer hincapié de alguna manera en la supuesta identidad de Aamir<br>como «rey de Zaragoza», ciudad que fue conquistada por los cristianos mucho tiempo atrás, en el siglo XII.</p>\n<p>En un momento dado, alguien llama a la puerta de la casa. El<br>abuelo se pone tenso, como de costumbre, y ordena a Aamir que se<br>esconda de inmediato en una habitación trasera mientras él se dispone a abrir. Si el niño obedece, solo escuchará cómo su abuelo habla con alguien a quien ordena marcharse, volviéndose cada vez más<br>agresivo, hasta que grita al visitante que su nieto es «EL REY DE ZA-<br>RAGOZA» y que debe hacer lo que le diga sin rechistar. En un determinado momento, a Aamir le parece que su abuelo sale de casa<br>tras su interlocutor; acto seguido, escucha con claridad golpes y gritos. Si en ese instante el jugador quisiera espiar por las ventanas o la<br>misma puerta, tan solo vería la espalda de un guardia tapándole casi<br>todo su ángulo de visión. En caso de que Aamir no obedezca y espíe<br>desde el principio, verá a su abuelo de espaldas asomado a la puerta,<br>para abalanzarse después sobre alguien que hay fuera, cerrando antes de un portazo.<br>104<br>104<br>SANGRE EN EL AGUA<br>SANGRE EN EL AGUA</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!sfMpgj9nEU49j6lW.BErAUoFSGLf5UeLk"
+    }
+  ],
+  "folder": null,
+  "sort": 1100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

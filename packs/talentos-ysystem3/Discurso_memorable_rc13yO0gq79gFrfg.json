@@ -1,0 +1,35 @@
+{
+  "name": "Discurso memorable",
+  "type": "talento",
+  "_id": "rc13yO0gq79gFrfg",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>Una vez por sesión, puedes motivar a tus compañeros con un discurso y prueba de Conversación contra su Aplomo. Si superas la tirada contra al menos uno, tú y todos los motivados ganáis una proeza.</p><p><strong>Categoría:</strong> Interaccion Social</p>",
+    "usos": {
+      "valor": 1,
+      "max": 1
+    },
+    "equipado": false,
+    "automatismo": "",
+    "habilidadUso": "",
+    "dificultadUso": 9
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

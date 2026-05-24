@@ -1,0 +1,35 @@
+{
+  "name": "Meditación",
+  "type": "talento",
+  "_id": "bHHIq4LIokJf4Ksm",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>Gastando una proeza puedes pedir al DJ que revele algo importante sobre la tarea entre manos, resolver un problema, hallar punto débil o encontrar una pista.</p><p><strong>Categoría:</strong> Especificos</p>",
+    "usos": {
+      "valor": 1,
+      "max": 1
+    },
+    "equipado": false,
+    "automatismo": "",
+    "habilidadUso": "",
+    "dificultadUso": 9
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

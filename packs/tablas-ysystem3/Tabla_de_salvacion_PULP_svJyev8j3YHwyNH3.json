@@ -1,0 +1,428 @@
+{
+  "name": "Tabla de salvación ¡PULP!",
+  "_id": "svJyev8j3YHwyNH3",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "name": "Mi hermano/a gemelo/a, cuya existencia ignoraba hasta ese momento.",
+      "range": [
+        3,
+        3
+      ],
+      "weight": 1,
+      "_id": "Eq57dUe3umJb4ifD",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Algún artefacto, estructura o pieza evidentemente alienígena.",
+      "range": [
+        4,
+        4
+      ],
+      "weight": 1,
+      "_id": "mnCkuYkZmuphToCd",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Alguien con quien contraje una terrible deuda (ahora le debo dos).",
+      "range": [
+        5,
+        5
+      ],
+      "weight": 1,
+      "_id": "dVhDXBPzusVoCgS5",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Alguna tara personal, fobia o manía, que en este caso me ayuda.",
+      "range": [
+        6,
+        6
+      ],
+      "weight": 1,
+      "_id": "2Ed2KNe6cKvCzEQ4",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Una de mis pertenencias (elegida por el DJ o por el jugador).",
+      "range": [
+        7,
+        7
+      ],
+      "weight": 1,
+      "_id": "MxMNpVTUpmcWhLYL",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "La persona o criatura que está más cerca de mí en este momento.",
+      "range": [
+        8,
+        8
+      ],
+      "weight": 1,
+      "_id": "Y4sJ5TBDGY3LVLpz",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Una planta que puedo ver con mis propios ojos.",
+      "range": [
+        9,
+        9
+      ],
+      "weight": 1,
+      "_id": "7gX1g0ysm4YQl5aO",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Un animal salvaje que hace acto de presencia de forma repentina.",
+      "range": [
+        10,
+        10
+      ],
+      "weight": 1,
+      "_id": "QTrrZWtGq7aDndiJ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Un fenómeno atmosférico o físico inesperado.",
+      "range": [
+        11,
+        11
+      ],
+      "weight": 1,
+      "_id": "2tzDpt7wUBAhIRfk",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Una extraña y perturbadora premonición.",
+      "range": [
+        12,
+        12
+      ],
+      "weight": 1,
+      "_id": "EADCWRqz4du0jttt",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Algo que leí una vez en cierto libro que cayó en mis manos.",
+      "range": [
+        13,
+        13
+      ],
+      "weight": 1,
+      "_id": "DKTdVKn5WDAVBxSG",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "El más grave de mis dos defectos.",
+      "range": [
+        14,
+        14
+      ],
+      "weight": 1,
+      "_id": "NGxQ3mZwrQzAXhae",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Un consejo recibido en la más tierna infancia.",
+      "range": [
+        15,
+        15
+      ],
+      "weight": 1,
+      "_id": "PThpe5L3LeHySrLU",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Un viejo amigo que aparece de repente, esté yo donde esté.",
+      "range": [
+        16,
+        16
+      ],
+      "weight": 1,
+      "_id": "4B1PVmkvh14g9WfZ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Un ser sobrenatural que acude en mi ayuda sin que sepa por qué.",
+      "range": [
+        17,
+        17
+      ],
+      "weight": 1,
+      "_id": "5AvbXyOXOBebplmD",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    },
+    {
+      "name": "Un gorila.",
+      "range": [
+        18,
+        18
+      ],
+      "weight": 1,
+      "_id": "8fGNTPvundhFyCqx",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      }
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "formula": "2d6",
+  "sort": 100000
+}

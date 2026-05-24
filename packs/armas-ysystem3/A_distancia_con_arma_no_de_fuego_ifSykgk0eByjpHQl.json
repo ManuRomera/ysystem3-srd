@@ -1,0 +1,33 @@
+{
+  "name": "A distancia con arma no de fuego",
+  "type": "arma",
+  "_id": "ifSykgk0eByjpHQl",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "tipo": "distancia",
+    "habilidad": "punteria",
+    "danoBase": 3,
+    "atributoDano": "per",
+    "descripcion": "<p><strong>Ejemplos:</strong> Arco, arpón, boleadoras, gastrafetes, honda, ballesta</p><p><strong>Tirada:</strong> Puntería (PER)</p><p><strong>Daño fijo:</strong> 3 + PER</p>",
+    "equipado": false,
+    "automatismo": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

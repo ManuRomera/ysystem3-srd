@@ -1,0 +1,33 @@
+{
+  "name": "Cuerpo a cuerpo armado a dos manos",
+  "type": "arma",
+  "_id": "KMXoBUFPhe028l99",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "tipo": "cuerpoDosManos",
+    "habilidad": "lucha",
+    "danoBase": 3,
+    "atributoDano": "fue",
+    "descripcion": "<p><strong>Ejemplos:</strong> Arma improvisada grande, garras/colmillos de criatura descomunal, hacha a dos manos, lanza pesada, maza pesada</p><p><strong>Tirada:</strong> Lucha (DES)</p><p><strong>Daño fijo:</strong> 3 + (FUE x 1,5)</p>",
+    "equipado": false,
+    "automatismo": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

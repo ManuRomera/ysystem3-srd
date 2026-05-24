@@ -1,0 +1,61 @@
+{
+  "name": "Armas y tipos de ataque",
+  "_id": "ExvW050UMeqDavX9",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Armas y tipos de ataque",
+      "type": "text",
+      "_id": "qoMm0jiGZ5H0Acnc",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>Compendio: armas y tipos de ataque</h2>\n<p>| Tipo de ataque | Ejemplos | Tirada | Daño fijo |<br>|---|---|---|---|<br>| Cuerpo a cuerpo desarmado normal | Arañazo, cabezazo, codazo, mordisco, patada, puñetazo, rodillazo | Lucha (DES) | 1 + FUE/2 |<br>| Cuerpo a cuerpo desarmado especial | Golpe de artista marcial, patada con bota tipo Dr. Martens, puñetazo con puño americano | Lucha (DES) | 2 + FUE/2 |<br>| Cuerpo a cuerpo armado | Arma improvisada cortante o contundente, cimitarra, cuchillo, daga, espada, garras o colmillos de animal salvaje, hacha, lanza, machete, maza | Lucha (DES) | 3 + FUE |<br>| Cuerpo a cuerpo armado a dos manos | Arma improvisada grande, garras/colmillos de criatura descomunal, hacha a dos manos, lanza pesada, maza pesada | Lucha (DES) | 3 + (FUE x 1,5) |<br>| A distancia con arma no de fuego | Arco, arpón, boleadoras, gastrafetes, honda, ballesta | Puntería (PER) | 3 + PER |<br>| A distancia con arma de fuego corta | Pistola o revólver; blaster pequeño | Puntería (PER) | 7 + PER |<br>| A distancia con arma de fuego larga | Carabina, escopeta, fusil, rifle, subfusil; blaster normal | Puntería (PER) | 11 + PER |<br>| A distancia con arma de fuego mortífera | Ametralladora, fusil de asalto; rifle blaster | Puntería (PER) | 15 + PER |<br>| A distancia con armas extramortíferas | Ametralladora láser, arma ultrasónica, ballesta de asedio, cañón láser, catapulta, fundíbulo, misil de protones | Puntería (PER) | Por determinar |</p>\n<h3>Objetos/armas concretas mencionadas\n- Bordón\n- Cimitarra enjoyada\n- Cohete / explosivo medio\n- Colt Peacemaker 4,75 pulgadas\n- Colt Single Action Army\n- Cuchillo\n- Daga con empuñadura de hierro\n- Daga de plata de los Banu Sarray\n- Daga gumía\n- Espada de lajín o al-jam\n- Espada jineta\n- Espada recta (montante)\n- Fusil semiautomático Porfirio Díaz Sistema Mondragón modelo 1908\n- Fusta de camello\n- Garrote\n- Granada / explosivo menor\n- Mandoble recto cruciforme\n- Misil / explosivo mayor\n- Puño/manotazo/patada/codazo/empellón\n- Rifle Winchester Modelo 1895\n- TASER / arma de electrochoque</h3>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!ExvW050UMeqDavX9.qoMm0jiGZ5H0Acnc"
+    }
+  ],
+  "folder": null,
+  "sort": 300000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

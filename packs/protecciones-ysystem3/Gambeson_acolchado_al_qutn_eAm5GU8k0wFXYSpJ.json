@@ -1,0 +1,31 @@
+{
+  "name": "Gambesón acolchado (al-qutn)",
+  "type": "armadura",
+  "_id": "eAm5GU8k0wFXYSpJ",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>-2 daño.</p><p>penalización incluida en total -3 con escudo</p>",
+    "nivel": 2,
+    "penalizador": 0,
+    "equipado": false,
+    "automatismo": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Fuerza ciclópea; golpe mortal",
+  "type": "talento",
+  "_id": "m5bWIgKVRxr1zu1u",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>Cuando gastas proezas para aumentar el daño de tus golpes cuerpo a cuerpo, los dados explotan con 4, 5 o 6 en lugar de solo 6.</p><p><strong>Categoría:</strong> Combate</p>",
+    "usos": {
+      "valor": 1,
+      "max": 1
+    },
+    "equipado": false,
+    "automatismo": "",
+    "habilidadUso": "",
+    "dificultadUso": 9
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

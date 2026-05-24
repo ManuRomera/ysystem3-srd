@@ -1,0 +1,33 @@
+{
+  "name": "Rifle Winchester Modelo 1895",
+  "type": "arma",
+  "_id": "UDq2VCwX7c7mdn1f",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "tipo": "fuegoLargo",
+    "habilidad": "punteria",
+    "danoBase": 11,
+    "atributoDano": "per",
+    "descripcion": "<p>Arma concreta mencionada en el material de Ysystem3. Usa el tipo SRD más próximo: fuegoLargo.</p>",
+    "equipado": false,
+    "automatismo": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

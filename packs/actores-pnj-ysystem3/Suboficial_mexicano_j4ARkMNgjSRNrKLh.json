@@ -1,0 +1,89 @@
+{
+  "name": "Suboficial mexicano",
+  "type": "pnj",
+  "_id": "j4ARkMNgjSRNrKLh",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "descripcion": "Ejemplo de combate; suma +3 a ataques por profesión/perfil",
+    "bando": "",
+    "rol": "Ejemplo de combate; suma +3 a ataques por profesión/perfil",
+    "atributos": {
+      "car": 1,
+      "des": 3,
+      "fue": 3,
+      "int": 1,
+      "per": 3
+    },
+    "habilidades": {
+      "atletismo": {
+        "dados": 2
+      },
+      "fuerzaBruta": {
+        "dados": 1
+      },
+      "lucha": {
+        "dados": 2
+      },
+      "punteria": {
+        "dados": 3
+      }
+    },
+    "salud": {
+      "valor": 18,
+      "max": 18
+    },
+    "agilidad": {
+      "valor": 12,
+      "manual": true
+    },
+    "aplomo": {
+      "valor": 9,
+      "manual": true
+    },
+    "perspicacia": {
+      "valor": 7,
+      "manual": true
+    },
+    "resistenciaFisica": {
+      "valor": 12,
+      "manual": true
+    },
+    "ataque": {
+      "nombre": "Fustazo en la cara",
+      "habilidad": "lucha",
+      "tipo": "desarmado",
+      "dano": 6
+    },
+    "combate": {
+      "sorprendido": false
+    },
+    "notas": "Ejemplo de combate; suma +3 a ataques por profesión/perfil\nAtaques: Fustazo en la cara (2D+3); daño 6; Colt Peacemaker 4,75 pulgadas (2D+3); daño 10"
+  },
+  "items": [],
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "prototypeToken": {
+    "name": "Suboficial mexicano",
+    "actorLink": true,
+    "disposition": -1,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg"
+    }
+  }
+}

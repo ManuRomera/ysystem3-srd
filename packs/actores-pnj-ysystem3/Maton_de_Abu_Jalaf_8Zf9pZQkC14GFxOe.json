@@ -1,0 +1,89 @@
+{
+  "name": "Matón de Abu Jalaf",
+  "type": "pnj",
+  "_id": "8Zf9pZQkC14GFxOe",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "descripcion": "Bravucón con más inteligencia de la que parece",
+    "bando": "",
+    "rol": "Bravucón con más inteligencia de la que parece",
+    "atributos": {
+      "car": 2,
+      "des": 3,
+      "fue": 4,
+      "int": 4,
+      "per": 2
+    },
+    "habilidades": {
+      "atletismo": {
+        "dados": 2
+      },
+      "fuerzaBruta": {
+        "dados": 1
+      },
+      "lucha": {
+        "dados": 1
+      },
+      "punteria": {
+        "dados": 1
+      }
+    },
+    "salud": {
+      "valor": 18,
+      "max": 18
+    },
+    "agilidad": {
+      "valor": 9,
+      "manual": true
+    },
+    "aplomo": {
+      "valor": 8,
+      "manual": true
+    },
+    "perspicacia": {
+      "valor": 8,
+      "manual": true
+    },
+    "resistenciaFisica": {
+      "valor": 11,
+      "manual": true
+    },
+    "ataque": {
+      "nombre": "Puñetazo al entrecejo",
+      "habilidad": "lucha",
+      "tipo": "desarmado",
+      "dano": 3
+    },
+    "combate": {
+      "sorprendido": false
+    },
+    "notas": "Bravucón con más inteligencia de la que parece\nAtaques: Puñetazo al entrecejo (3D+3); daño 3; Garrote (3D+3); daño 7"
+  },
+  "items": [],
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  },
+  "prototypeToken": {
+    "name": "Matón de Abu Jalaf",
+    "actorLink": true,
+    "disposition": -1,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg"
+    }
+  }
+}

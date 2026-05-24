@@ -7,6 +7,19 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.4] — 2026-05-25
+
+### Corregido
+- Regenerado el compendio de reglas con registros de páginas de Journal compatibles con Foundry VTT 13; las entradas ya no aparecen vacías.
+- Los botones de Resistencia física y mental de la pestaña Estado usan el estilo visual del sistema.
+
+### Cambiado
+- La hoja recuerda el tamaño asignado por usuario al cerrarla y lo recupera al abrirla de nuevo.
+- Las ayudas contextuales de habilidades usan descripciones ampliadas tomadas del markdown de reglas.
+
+### Añadido
+- Nuevos compendios de Talentos, Poderes, Armas, Protecciones, PJ pregenerados, PNJ, Aventura Sangre en el agua y Tablas, generados desde `Ysystem3_compendios_codex.md`.
+
 ## [0.3.3] — 2026-05-24
 
 ### Cambiado

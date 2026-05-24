@@ -1,0 +1,35 @@
+{
+  "name": "Charlatán pragmático",
+  "type": "talento",
+  "_id": "lUWD38nT3gzXj36F",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "descripcion": "<p>En caso de fallo, puedes repetir gratuitamente todos los dados que desees en tiradas para agradar o complacer hasta dos veces por sesión. Si aun así fallas, puedes repetir gastando proeza.</p><p><strong>Categoría:</strong> Interaccion Social</p>",
+    "usos": {
+      "valor": 1,
+      "max": 1
+    },
+    "equipado": false,
+    "automatismo": "",
+    "habilidadUso": "",
+    "dificultadUso": 9
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}

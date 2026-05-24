@@ -1,0 +1,61 @@
+{
+  "name": "La enfermedad de Sair y Nair",
+  "_id": "ML4eR89wN6tPIczH",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "La enfermedad de Sair y Nair",
+      "type": "text",
+      "_id": "TSDKjdMPsfjtlet4",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>PDF p.98</h2>\n<p>a\t «¿Qué piensas al estar aquí, Benjamín, en el palacio de los reyes<br>musulmanes de Granada? Porque eres granadino, claro, pero sobre<br>todo eres judío».<br>-  «Sabes que en otras tierras los cristianos persiguen, maltratan y<br>expulsan a los judíos, y que esto sucede cada vez con mayor frecuencia. ¿Eso ha hecho que tu amistad con Pedro se haya resentido, o no<br>le ha afectado en absoluto?»<br>NARRACIÓN</p>\n<p>Cuando el jugador que interpreta a Benjamín termine de presentar a su PJ, es el momento de que aparezca el tercero en discordia, el artesano Aamir. Aamir tiene una vena cómica que probablemente irá desapareciendo a lo largo de la aventura, así que una<br>buena ocasión para explotarla es durante las escenas iniciales (en la<br>Alhambra y luego en la ciudad). Se recomienda que el DJ lea el siguiente texto en voz alta:<br>«Estáis a punto de decir algo, cuando unas voces airadas hacen que<br>os detengáis. Es una monserga cargada de rabia dicha en un árabe tan rápido que Pedro no es capaz de entenderlo y que requiere la<br>atención plena de Benjamín. Pero en esa ristra de lo que probablemente sean los peores insultos que se puedan decir en la lengua de<br>Mahoma, hay una palabra que reconocéis sin ningún problema. Una<br>única y evidente palabra:<br>—¡¡¡AAMIR!!!<br>Aamir, cuéntanos… ¿Quién y por qué te persigue? Esa persona que grita<br>ya ha perdido tu rastro y no te va a encontrar, pero, ¿qué es lo que ha visto cuando te ha pillado haciendo lo que sea que estuvieras haciendo?».<br>NARRACIÓN</p>\n<p>Tras la introducción de Aamir, que debería ir acompañada de<br>una breve descripción física del artesano, los tres PJ quedan por fin<br>frente a frente en el patio. Son tres amigos que llevan mucho tiempo sin verse (o quizás no), por lo que parece apropiado iniciar una<br>escena de interpretación. Si fuese necesario, el DJ la puede espolear con las siguientes preguntas:<br>-  «¿Cuánto tiempo hace que no os veis?»<br>-  «¿Cómo os conocisteis unos a otros? ¿Qué pasó para que os hicierais tan amigos?»<br>-  «¿Qué es lo que más valora cada uno de vosotros de los otros dos?»<br>NARRACIÓN</p>\n<p>Cuando la escena se agote, un sirviente interrumpirá a los PJ<br>para anunciarles que el emir está ansioso por recibirlos. Sin más dilación, ese mismo criado conduce a nuestros protagonistas hasta el<br>Patio de Comares, y, de ahí, al Salón de Embajadores. Allí aguarda<br>Muley Hacén.<br>96<br>96<br>SANGRE EN EL AGUA<br>SANGRE EN EL AGUA</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.4",
+        "createdTime": 1779666008608,
+        "modifiedTime": 1779666008608,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!ML4eR89wN6tPIczH.TSDKjdMPsfjtlet4"
+    }
+  ],
+  "folder": null,
+  "sort": 700000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.4",
+    "createdTime": 1779666008608,
+    "modifiedTime": 1779666008608,
+    "lastModifiedBy": null
+  }
+}
