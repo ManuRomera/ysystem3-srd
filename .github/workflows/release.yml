@@ -37,12 +37,15 @@ jobs:
             exit 1
           fi
 
-      - name: Validar system.json
+      - name: Validar manifiestos
         shell: bash
         run: |
           jq empty system.json
+          jq empty manifest.json
           test "$(jq -r '.id' system.json)" = "ysystem3-srd"
+          test "$(jq -r '.id' manifest.json)" = "ysystem3-srd"
           test "$(jq -r '.download' system.json)" = "https://github.com/ManuRomera/ysystem3-srd/releases/download/v${{ steps.version.outputs.version }}/ysystem3-srd.zip"
+          test "$(jq -r '.download' manifest.json)" = "https://github.com/ManuRomera/ysystem3-srd/releases/download/v${{ steps.version.outputs.version }}/ysystem3-srd.zip"
 
       - name: Crear archivo zip del sistema
         shell: bash
@@ -88,7 +91,7 @@ jobs:
             Pega esta URL en Foundry VTT → Sistemas → Instalar sistema → URL del Manifiesto:
 
             ```text
-            https://raw.githubusercontent.com/ManuRomera/ysystem3-srd/main/system.json
+            https://raw.githubusercontent.com/ManuRomera/ysystem3-srd/main/manifest.json
             ```
 
             ### Notas de esta versión
