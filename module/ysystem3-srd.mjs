@@ -28,16 +28,17 @@ Hooks.once("init", async () => {
 
   const ActorsCls = foundry.documents.collections.Actors ?? globalThis.Actors;
   const ItemsCls = foundry.documents.collections.Items ?? globalThis.Items;
-  const { ActorSheet, ItemSheet } = foundry.appv1.sheets;
+  const ActorSheet = foundry.appv1?.sheets?.ActorSheet ?? globalThis.ActorSheet;
+  const ItemSheet = foundry.appv1?.sheets?.ItemSheet ?? globalThis.ItemSheet;
 
-  ActorsCls.unregisterSheet("core", ActorSheet);
+  if (ActorSheet) ActorsCls.unregisterSheet("core", ActorSheet);
   ActorsCls.registerSheet(IMSERSO.ID, ImsersoActorSheet, {
     types: ["personaje", "pnj"],
     makeDefault: true,
     label: "YSYSTEM.HojaPersonaje"
   });
 
-  ItemsCls.unregisterSheet("core", ItemSheet);
+  if (ItemSheet) ItemsCls.unregisterSheet("core", ItemSheet);
   ItemsCls.registerSheet(IMSERSO.ID, ImsersoItemSheet, {
     makeDefault: true,
     label: "YSYSTEM.HojaItem"
@@ -175,7 +176,7 @@ async function showWelcomeDialog() {
       <h2>YSYSTEM3 SRD listo para jugar</h2>
       <p>Este mundo aplica las reglas del <strong>Ysystem3 SRD</strong> (Walhalla Ediciones): tiradas con tope 5D, dificultad media 9-10, iniciativa 1D6+DES+INT, combate y dano segun el documento oficial.</p>
       <ul>
-        <li><strong>Apariencia / variante:</strong> la variante por defecto sigue la identidad del SRD; tambien puedes elegir pulp, fantasia, ciencia ficcion, horror, capa y espada, ciberpunk, terror contemporaneo o YayoSystem.</li>
+        <li><strong>Apariencia / variante:</strong> la variante por defecto sigue la identidad del SRD; tambien puedes elegir pulp, fantasia, ciencia ficcion, horror, capa y espada, ciberpunk o terror contemporaneo.</li>
         <li><strong>Distribucion de fichas:</strong> elige entre la ficha optimizada para Foundry o la ficha clasica tipo A4 desde Configuracion del sistema.</li>
         <li><strong>Uso rapido:</strong> en las fichas puedes tirar habilidades pulsando su nombre, ajustar dados con los circulos, aplicar dano/curacion y gestionar equipo arrastrable.</li>
         <li><strong>Items:</strong> armas, armaduras, escudos, objetos, poderes, talentos y arquetipos tienen fichas propias. Armaduras y escudos recalculan protecciones al equiparse.</li>
@@ -256,6 +257,7 @@ async function handleChatAction(event, message) {
   if (action === "apply-fear-damage") return handleFearWorkflow(message);
   if (action === "apply-healing") return handleHealingWorkflow(message);
   if (action === "roll-jamacuco-threshold") return handleJamacucoThreshold(event, message);
+  if (action === "roll-resistencia-mental-threshold") return handleResistenciaMentalThreshold(event, message);
 }
 
 async function handleLooseAction(event) {
@@ -436,6 +438,25 @@ function mergeRerollFaces(originalFaces, selected, rerolledFaces) {
   return originalFaces.map((face, index) => selectedSet.has(index) ? rerolledFaces[rerollIndex++] : face);
 }
 
+async function rollExplodingD6(count) {
+  const safeCount = Math.max(0, Number(count) || 0);
+  if (!safeCount) return { total: 0, rolls: [], formula: "0", faces: [] };
+
+  let total = 0;
+  const rolls = [];
+  const faces = [];
+  let pending = safeCount;
+  while (pending > 0) {
+    const roll = await new Roll(`${pending}d6`).evaluate({ async: true });
+    rolls.push(roll);
+    const currentFaces = roll.dice.flatMap((die) => die.results).map((result) => result.result);
+    faces.push(...currentFaces);
+    total += roll.total;
+    pending = currentFaces.filter((face) => face === 6).length;
+  }
+  return { total, rolls, formula: `${safeCount}d6x`, faces };
+}
+
 function evaluateYayoFaces(data, finalFaces) {
   const atributo = Number(data.atributo) || 0;
   const bonus = Number(data.bonus) || 0;
@@ -445,7 +466,7 @@ function evaluateYayoFaces(data, finalFaces) {
   const isSkillRoll = !data.tipo || data.tipo === "habilidad";
   const sixes = isSkillRoll ? finalFaces.filter((face) => face === 6).length : 0;
   const pifia = isSkillRoll && finalFaces.length > 0 && finalFaces.every((face) => face === 1);
-  const critico = isSkillRoll && sixes >= 2;
+  const critico = false;
   const exitoBase = total >= dificultad;
   const exito = critico || (!pifia && exitoBase);
   return {
@@ -497,16 +518,24 @@ async function buildAttackWorkflowFromReroll(actor, context, result) {
   const attack = context.attack ?? {};
   const attackData = context.attackData ?? {};
   const attackCfg = attackConfig(attack.tipo ?? "desarmado");
-  const yays = Math.min(attackCfg.maxProezasDano ?? 2, Math.max(0, Number(attackData.proezasDano ?? attackData.yayoDano) || 0));
+  let yays = Math.min(attackCfg.maxProezasDano ?? 2, Math.max(0, Number(attackData.proezasDano ?? attackData.yayoDano) || 0));
+  if (yays && actor.type === "personaje") {
+    const available = Math.max(0, Number(actor.system.proezas?.valor) || 0);
+    if (available < yays) {
+      ui.notifications.warn(`${actor.name} solo tiene ${available} proeza(s) para dano tras la repeticion.`);
+      yays = available;
+    }
+    if (yays) await actor.spendProezas(yays);
+  }
   const attrKey = attack.atributo ?? attackCfg.atributo ?? "fue";
   const rawAttrDamage = Number(actor.system.efectivos?.atributos?.[attrKey] ?? actor.system.atributos?.[attrKey]) || 0;
   const attrDamage = attackAttributeDamage(attackCfg, rawAttrDamage);
   const aimedDice = (Number(attackData.dadosSacrificados) || 0) * (attack.apuntar === "2d6" ? 2 : 1);
-  const extraDice = yays + aimedDice;
-  const extraRoll = extraDice > 0 ? await new Roll(`${extraDice}d6`).evaluate({ async: true }) : null;
-  const subtotal = (Number(attack.dano) || 0) + attrDamage + (extraRoll?.total ?? 0);
+  const proezaDamage = await rollExplodingD6(yays);
+  const aimedRoll = aimedDice > 0 ? await new Roll(`${aimedDice}d6`).evaluate({ async: true }) : null;
+  const armorReduction = Number(target.system.efectivos?.mods?.proteccionDano ?? target.system.proteccion?.dano) || 0;
+  const subtotal = Math.max(0, (Number(attack.dano) || 0) + attrDamage + proezaDamage.total + (aimedRoll?.total ?? 0) - armorReduction);
   const totalDamage = result.critico ? subtotal * 2 : subtotal;
-  const aimed = (Number(attackData.dadosSacrificados) || 0) > 0;
   return {
     attackerUuid: actor.uuid,
     targetUuid: context.targetUuid ?? target.uuid,
@@ -518,7 +547,7 @@ async function buildAttackWorkflowFromReroll(actor, context, result) {
     attackTipo: attack.tipo ?? "",
     damage: totalDamage,
     originalDamage: totalDamage,
-    formulaText: `${Number(attack.dano) || 0} + ${String(attrKey).toUpperCase()} ${attrDamage}${extraRoll ? ` + ${extraRoll.total}` : ""}${result.critico ? " x2 crítico" : ""}`,
+    formulaText: `${Number(attack.dano) || 0} + ${String(attrKey).toUpperCase()} ${attrDamage}${proezaDamage.total ? ` + proezas ${proezaDamage.total}` : ""}${aimedRoll ? ` + apuntar ${aimedRoll.total}` : ""}${armorReduction ? ` - armadura ${armorReduction}` : ""}`,
     defenseDifficulty: Number(context.difficulty) || 10,
     applied: false,
     defended: false,
@@ -637,6 +666,23 @@ function renderJamacucoWorkflow(workflow) {
     </div>`;
 }
 
+function renderResistenciaMentalWorkflow(workflow) {
+  const buttons = workflow.thresholds.map((threshold) => {
+    const done = workflow.rolled.includes(Number(threshold));
+    if (workflow.failed && !done) return `<span class="ims-badge">Pendiente cancelado</span>`;
+    return done
+      ? `<span class="ims-badge">Umbral ${threshold} resuelto</span>`
+      : `<button type="button" class="ims-chat-action" data-ims-action="roll-resistencia-mental-threshold" data-threshold="${threshold}">Tirar umbral ${threshold}</button>`;
+  }).join("");
+  return `
+    <div class="ims-chat-card ims-jamacuco-card">
+      <header><h3>Umbrales de Resistencia mental</h3><strong>${escapeHtml(workflow.actorName)}</strong></header>
+      <p>Cruza por primera vez: <strong>${workflow.thresholds.join(", ")}</strong>. Hay que resolver una tirada de Resistencia mental por cada umbral.</p>
+      ${workflow.failed ? `<p><strong>Fallado en umbral ${workflow.failed}:</strong> el personaje entra en crisis temporal.</p>` : ""}
+      <div class="ims-chat-actions">${buttons}</div>
+    </div>`;
+}
+
 async function handleJamacucoThreshold(event, message) {
   const threshold = Number(event.currentTarget.dataset.threshold);
   const workflow = foundry.utils.deepClone(message.getFlag(IMSERSO.ID, "resistenciaFisicaWorkflow") ?? message.getFlag(IMSERSO.ID, "jamacucoWorkflow") ?? {});
@@ -650,6 +696,21 @@ async function handleJamacucoThreshold(event, message) {
   if (result && !result.exito) workflow.failed = threshold;
   await message.setFlag(IMSERSO.ID, "resistenciaFisicaWorkflow", workflow);
   return message.update({ content: renderJamacucoWorkflow(workflow) });
+}
+
+async function handleResistenciaMentalThreshold(event, message) {
+  const threshold = Number(event.currentTarget.dataset.threshold);
+  const workflow = foundry.utils.deepClone(message.getFlag(IMSERSO.ID, "resistenciaMentalWorkflow") ?? {});
+  if (!workflow?.actorUuid || !threshold) return ui.notifications.warn("Este aviso de Resistencia mental no tiene datos suficientes.");
+  if (workflow.rolled?.includes(threshold)) return ui.notifications.warn("Ese umbral ya se ha resuelto.");
+  const actor = await fromUuid(workflow.actorUuid).catch(() => null);
+  if (!actor) return ui.notifications.warn("No encuentro al personaje para tirar Resistencia mental.");
+  if (!canUseActor(actor)) return ui.notifications.warn("Solo quien controla el personaje o el GM puede tirar esta Resistencia mental.");
+  const result = await actor.rollResistenciaMental({ skipDialog: true, reason: `umbral ${threshold}` });
+  workflow.rolled = [...(workflow.rolled ?? []), threshold];
+  if (result && !result.exito) workflow.failed = threshold;
+  await message.setFlag(IMSERSO.ID, "resistenciaMentalWorkflow", workflow);
+  return message.update({ content: renderResistenciaMentalWorkflow(workflow) });
 }
 
 async function resolveWorkflowTarget(workflow) {

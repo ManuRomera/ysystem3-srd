@@ -34,19 +34,6 @@ export class ImsersoItem extends Item {
       await this.mostrarEnChat();
       return this.actor.rollSkill(this.system.habilidadUso, { dificultad: Number(this.system.dificultadUso) || IMSERSO.srd.defaultDifficulty });
     }
-    if (["traje-superman", "traje-batman", "traje-flash", "traje-wonder-woman", "traje-cyborg", "visor-de-cyborg", "defensa", "punteria", "brazaletes-de-wonder-woman"].includes(automation)) {
-      const next = !this.system.equipado;
-      await this.update({ "system.equipado": next });
-      const state = next ? "se equipa" : "se quita";
-      return ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        content: `
-          <div class="ims-chat-card ims-item-card">
-            <header><img src="${this.img}" alt=""><h3>${this.name}</h3></header>
-            <p><strong>${this.actor.name}</strong> ${state} ${this.name}. Las estadisticas se recalculan automaticamente mientras este equipado.</p>
-          </div>`
-      });
-    }
     return this.mostrarEnChat();
   }
 

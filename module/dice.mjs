@@ -1,6 +1,7 @@
 import { IMSERSO, labelForAttribute, labelForSkill } from "./config.mjs";
 
 const SKILL_ROLL_TYPES = new Set(["habilidad", ""]);
+const REROLLABLE_ROLL_TYPES = new Set(["habilidad", "", "resistenciaFisica", "resistenciaMental"]);
 
 export function clampDicePool(value) {
   return Math.max(0, Math.min(IMSERSO.srd.maxDicePool, Number(value) || 0));
@@ -33,20 +34,19 @@ export async function rollYayo({
     : `${Number(atributo) || 0} + ${Number(bonus) || 0}`;
   const roll = await new Roll(formula).evaluate({ async: true });
   const isSkillRoll = SKILL_ROLL_TYPES.has(tipo) && safeDice > 0;
+  const isRerollableRoll = REROLLABLE_ROLL_TYPES.has(tipo) && safeDice > 0;
   const sixes = isSkillRoll ? countFaces(roll, 6) : 0;
   const pifia = isSkillRoll && allDiceAre(roll, 1);
   const critico = isSkillRoll && sixes >= 2;
   const total = roll.total;
   const exitoBase = total >= dificultad;
   const exito = critico || (!pifia && exitoBase);
-  const canReroll = isSkillRoll
+  const canReroll = isRerollableRoll
     && allowYayoReroll
     && actor?.type === "personaje"
     && !exito
     && !yayoReroll
     && tipo !== "iniciativa"
-    && tipo !== "resistenciaFisica"
-    && tipo !== "resistenciaMental"
     && tipo !== "miedo";
   const result = { actor, label, roll, dice: safeDice, atributo, bonus, dificultad, flavor, tipo, total, sixes, critico, pifia, exito, canReroll, yayoReroll };
   result.message = await sendRollToChat(result);

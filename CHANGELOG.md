@@ -7,6 +7,19 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.0] — 2026-05-24
+
+### Corregido
+- Ajustadas las tiradas de habilidad al SRD: oposicion automatica contra Agilidad, Aplomo o Perspicacia del objetivo tarjeteado cuando procede.
+- Las proezas de repeticion vuelven a estar disponibles tambien en Resistencia fisica y mental, y ya no pueden generar criticos en la repeticion.
+- El dano extra por proezas en combate usa dados explosivos, como indica el SRD.
+- Las protecciones aplican penalizadores SRD: armadura `floor(nivel/2)` y escudo `nivel`, solo a habilidades de DES y FUE.
+- Los PNJ tambien reciben penalizadores por perdida de Salud.
+- Las plantillas de arquetipo dejan de escribir campos heredados de otros sistemas y usan atributos, habilidades, Proezas y Resistencias de Ysystem3 SRD.
+
+### Cambiado
+- Manifiesto actualizado a Foundry VTT `verified: 13.351` y descarga de release `v0.3.0`.
+
 ## [0.2.1] — 2026-05-24
 
 ### Corregido

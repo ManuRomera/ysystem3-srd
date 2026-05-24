@@ -51,6 +51,25 @@ function clampDice(value) {
   return Math.min(3, Math.max(1, number(value, 1)));
 }
 
+async function rollExplodingD6(count) {
+  const safeCount = Math.max(0, number(count, 0));
+  if (!safeCount) return { total: 0, rolls: [], formula: "0", faces: [] };
+
+  let total = 0;
+  const rolls = [];
+  const faces = [];
+  let pending = safeCount;
+  while (pending > 0) {
+    const roll = await new Roll(`${pending}d6`).evaluate({ async: true });
+    rolls.push(roll);
+    const currentFaces = roll.dice.flatMap((die) => die.results).map((result) => result.result);
+    faces.push(...currentFaces);
+    total += roll.total;
+    pending = currentFaces.filter((face) => face === 6).length;
+  }
+  return { total, rolls, formula: `${safeCount}d6x`, faces };
+}
+
 function automationKey(item) {
   const raw = item?.system?.automatismo || item?.system?.uso || item?.name || "";
   return String(raw)
@@ -104,14 +123,16 @@ function minSkill(mods, key, value) {
 function modifiersForItem(item) {
   const mods = emptyModifiers();
   if (item?.system?.equipado && item.type === "armadura") {
-    mods.proteccionDano += Math.max(0, number(item.system.nivel, 0));
-    mods.proteccionPenalizacion += Math.max(0, number(item.system.penalizador, 0));
-    mods.notas.push(`${item.name}: armadura ${mods.proteccionDano}`);
+    const level = Math.max(0, number(item.system.nivel, 0));
+    mods.proteccionDano += level;
+    mods.proteccionPenalizacion += Math.floor(level / 2);
+    mods.notas.push(`${item.name}: armadura ${level}, penalizador ${Math.floor(level / 2)}`);
   }
   if (item?.system?.equipado && item.type === "escudo") {
-    mods.proteccionAgilidad += Math.max(0, number(item.system.nivel, 0));
-    mods.proteccionPenalizacion += Math.max(0, number(item.system.penalizador, 0));
-    mods.notas.push(`${item.name}: escudo +${mods.proteccionAgilidad}`);
+    const level = Math.max(0, number(item.system.nivel, 0));
+    mods.proteccionAgilidad += level;
+    mods.proteccionPenalizacion += level;
+    mods.notas.push(`${item.name}: escudo +${level} Agilidad, penalizador ${level}`);
   }
   return mods;
 }
@@ -158,6 +179,14 @@ function escapeHtml(value) {
 
 function firstTargetToken() {
   return game.user.targets.first() ?? null;
+}
+
+function fixedValue(actor, key) {
+  if (!actor || !key) return null;
+  const value = actor.system?.[key];
+  const fixed = typeof value === "object" ? value?.valor : value;
+  const n = Number(fixed);
+  return Number.isFinite(n) ? n : null;
 }
 
 function stepper(name, value, { min = 0, max = 99, step = 1 } = {}) {
@@ -262,6 +291,9 @@ export class ImsersoActor extends Actor {
       agilidad: number(effective.mods.proteccionAgilidad, 0),
       penalizacion: number(effective.mods.proteccionPenalizacion, 0)
     };
+    sys.penalizadorDados = healthPenalty(sys.salud?.valor);
+    sys.inconscienteAuto = number(sys.salud?.valor, 0) === 1;
+    sys.muertoAuto = number(sys.salud?.valor, 0) <= 0;
   }
 
   async applyArchetype(key, itemSystem = null) {
@@ -279,7 +311,7 @@ export class ImsersoActor extends Actor {
       title: `Aplicar arquetipo: ${arquetipo.name}`,
       content: `
         <form class="ims-dialog">
-          <p>Esto ajustara atributos, habilidades, partido, talento, Proezas, Salud y Resistencia fisica segun el arquetipo (contenido de ambientacion, no reglas oficiales del SRD).</p>
+          <p>Esto ajustara atributos, habilidades, perfil, talento, Proezas, Salud y Resistencias segun la plantilla SRD.</p>
           <p>No cambia el nombre del PJ, jugador, fotografia ni biografia.</p>
         </form>`,
       yes: "Aplicar arquetipo",
@@ -310,7 +342,15 @@ export class ImsersoActor extends Actor {
   }
 
   _archetypeFromItemSystem(baseArquetipo, itemSystem, key) {
-    if (!itemSystem) return baseArquetipo;
+    if (!itemSystem && baseArquetipo) {
+      return {
+        ...baseArquetipo,
+        partido: baseArquetipo.perfil || baseArquetipo.partido || "",
+        yayos: baseArquetipo.proezas ?? baseArquetipo.yayos ?? 0,
+        jamacuco: baseArquetipo.resistenciaFisica ?? baseArquetipo.jamacuco ?? 10
+      };
+    }
+    if (!itemSystem) return null;
     const attrs = itemSystem.atributos && Object.keys(itemSystem.atributos).length
       ? foundry.utils.deepClone(itemSystem.atributos)
       : foundry.utils.deepClone(baseArquetipo?.attrs ?? {});
@@ -325,10 +365,13 @@ export class ImsersoActor extends Actor {
       key: itemSystem.arquetipoKey || baseArquetipo?.key || key,
       name: baseArquetipo?.name || key,
       genero: itemSystem.genero || baseArquetipo?.genero || "",
-      partido: itemSystem.partido || baseArquetipo?.partido || "",
+      perfil: itemSystem.perfil || itemSystem.partido || baseArquetipo?.perfil || baseArquetipo?.partido || "",
+      partido: itemSystem.partido || itemSystem.perfil || baseArquetipo?.perfil || baseArquetipo?.partido || "",
       attrs,
-      yayos: number(itemSystem.yayopoints, baseArquetipo?.yayos ?? 0),
-      jamacuco: number(itemSystem.jamacuco, baseArquetipo?.jamacuco ?? 10),
+      proezas: number(itemSystem.proezas ?? itemSystem.yayopoints, baseArquetipo?.proezas ?? baseArquetipo?.yayos ?? 0),
+      yayos: number(itemSystem.proezas ?? itemSystem.yayopoints, baseArquetipo?.proezas ?? baseArquetipo?.yayos ?? 0),
+      resistenciaFisica: number(itemSystem.resistenciaFisica ?? itemSystem.jamacuco, baseArquetipo?.resistenciaFisica ?? baseArquetipo?.jamacuco ?? 10),
+      jamacuco: number(itemSystem.resistenciaFisica ?? itemSystem.jamacuco, baseArquetipo?.resistenciaFisica ?? baseArquetipo?.jamacuco ?? 10),
       saludBase: number(itemSystem.saludBase, baseArquetipo?.saludBase ?? 10),
       d3,
       d2,
@@ -342,11 +385,14 @@ export class ImsersoActor extends Actor {
     const skill = IMSERSO.habilidades[skillKey];
     if (!skill) return;
     const attrKey = skill.atributo;
+    const targetToken = firstTargetToken();
+    const target = targetToken?.actor ?? null;
+    const opposedDifficulty = skill.oposicion ? fixedValue(target, skill.oposicion) : null;
     let attr = number(this.system.efectivos?.atributos?.[attrKey], this.system.atributos?.[attrKey]);
-    attr -= number(this.system.efectivos?.mods?.proteccionPenalizacion, 0);
+    if (["des", "fue"].includes(attrKey)) attr -= number(this.system.efectivos?.mods?.proteccionPenalizacion, 0);
     const baseDice = number(this.system.efectivos?.habilidades?.[skillKey]?.dados, this.system.habilidades?.[skillKey]?.dados);
     const defaults = {
-      dificultad: options.dificultad ?? IMSERSO.srd.defaultDifficulty,
+      dificultad: options.dificultad ?? opposedDifficulty ?? IMSERSO.srd.defaultDifficulty,
       extraDados: options.extraDados ?? 0,
       bonus: options.bonus ?? 0,
       profesion: options.profesion ?? false,
@@ -354,7 +400,8 @@ export class ImsersoActor extends Actor {
       recuerdo: options.recuerdo ?? options.flashback ?? false,
       defectoGrave: options.defectoGrave ?? options.achaqueMayor ?? false,
       defectoLeve: options.defectoLeve ?? options.achaqueMenor ?? false,
-      dadosSacrificados: options.dadosSacrificados ?? 0
+      dadosSacrificados: options.dadosSacrificados ?? 0,
+      oppositionText: opposedDifficulty ? `${target.name}: ${skill.oposicion} ${opposedDifficulty}` : ""
     };
     const data = options.skipDialog ? defaults : await this._skillDialog(skillKey, defaults);
     if (!data) return;
@@ -363,7 +410,7 @@ export class ImsersoActor extends Actor {
     const usesProezaDado = this.type === "personaje" && (data.proezaDado || data.yayoDado);
     let extraDice = number(data.extraDados, 0) + (usesProezaDado ? 1 : 0) + (data.recuerdo || data.flashback ? 2 : 0);
     let dice = baseDice + extraDice - number(data.dadosSacrificados, 0);
-    if (this.type === "personaje") dice -= number(this.system.penalizadorDados, 0);
+    dice -= number(this.system.penalizadorDados, 0);
     if (data.defectoGrave || data.achaqueMayor) dice -= 1;
     dice = Math.min(IMSERSO.srd.maxDicePool, Math.max(0, dice));
 
@@ -405,14 +452,16 @@ export class ImsersoActor extends Actor {
           <p>Hay que igualar o superar el valor de Resistencia fisica. Si falla, el personaje cae inconsciente.</p>
           <label>Valor de Resistencia fisica ${stepper("dificultad", defaults.dificultad, { min: 1, max: 30 })}</label>
           <label>Dados extra ${stepper("extraDados", 0, { min: -3, max: 3 })}</label>
-          <p class="notes">SRD: 3D sin atributo. Proeza puede repetir dados (no sumar +1D salvo anexo Pulp).</p>
+          <label class="check"><input type="checkbox" name="recuerdo" ${this.system.recuerdo?.usado ? "disabled" : ""}> Recuerdo cuando... (+2D)</label>
+          <p class="notes">SRD: 3D sin atributo. Proeza puede repetir dados; Recuerdo cuando... puede añadir +2D.</p>
         </form>`
     });
     if (!data) return;
-    let dice = 3 + number(data.extraDados, 0) - number(this.system.penalizadorDados, 0);
-    dice = Math.max(0, dice);
+    let dice = 3 + number(data.extraDados, 0) + (data.recuerdo ? 2 : 0) - number(this.system.penalizadorDados, 0);
+    dice = Math.min(IMSERSO.srd.maxDicePool, Math.max(0, dice));
     const updates = {};
     if (!options.reason) updates["system.resistenciaFisica.primeraTirada"] = true;
+    if (data.recuerdo) updates["system.recuerdo.usado"] = true;
     if (Object.keys(updates).length) await this.update(updates);
     const result = await rollYayo({
       actor: this,
@@ -441,14 +490,16 @@ export class ImsersoActor extends Actor {
           <p>Hay que igualar o superar el valor de Resistencia mental. Si falla, el PJ sufre una crisis temporal.</p>
           <label>Valor de Resistencia mental ${stepper("dificultad", defaults.dificultad, { min: 1, max: 30 })}</label>
           <label>Dados extra ${stepper("extraDados", 0, { min: -3, max: 3 })}</label>
-          <p class="notes">SRD: 3D sin atributo. Sin critico ni pifia.</p>
+          <label class="check"><input type="checkbox" name="recuerdo" ${this.system.recuerdo?.usado ? "disabled" : ""}> Recuerdo cuando... (+2D)</label>
+          <p class="notes">SRD: 3D sin atributo. Sin critico ni pifia; Proeza puede repetir dados.</p>
         </form>`
     });
     if (!data) return;
-    let dice = 3 + number(data.extraDados, 0);
-    dice = Math.max(0, dice);
+    let dice = 3 + number(data.extraDados, 0) + (data.recuerdo ? 2 : 0);
+    dice = Math.min(IMSERSO.srd.maxDicePool, Math.max(0, dice));
     const updates = {};
     if (!options.reason) updates["system.resistenciaMental.primeraTirada"] = true;
+    if (data.recuerdo) updates["system.recuerdo.usado"] = true;
     if (Object.keys(updates).length) await this.update(updates);
     const result = await rollYayo({
       actor: this,
@@ -476,10 +527,23 @@ export class ImsersoActor extends Actor {
     if (!crossed.length) return;
     return ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this }),
+      flags: {
+        [IMSERSO.ID]: {
+          resistenciaMentalWorkflow: {
+            actorUuid: this.uuid,
+            actorName: this.name,
+            thresholds: crossed,
+            rolled: []
+          }
+        }
+      },
       content: `
         <div class="ims-chat-card ims-jamacuco-card">
           <header><h3>Umbrales de Resistencia mental</h3><strong>${this.name}</strong></header>
           <p>Cruza por primera vez: <strong>${crossed.join(", ")}</strong>. Hay que resolver una tirada de Resistencia mental por cada umbral.</p>
+          <div class="ims-chat-actions">
+            ${crossed.map((threshold) => `<button type="button" class="ims-chat-action" data-ims-action="roll-resistencia-mental-threshold" data-threshold="${threshold}">Tirar umbral ${threshold}</button>`).join("")}
+          </div>
         </div>`
     });
   }
@@ -550,7 +614,6 @@ export class ImsersoActor extends Actor {
     const yays = this.type === "personaje" ? Math.min(maxDamageProezas, Math.max(0, number(data.proezasDano ?? data.yayoDano, 0))) : 0;
     const declaredYayos = yays + (this.type === "personaje" && (data.proezaDado || data.yayoDado) ? 1 : 0);
     if (declaredYayos && !this.canSpendProezas(declaredYayos)) return null;
-    if (yays) await this.spendProezas(yays);
     const actorAttack = this.type === "pnj" ? this.system.ataque : null;
     const itemSkill = IMSERSO.habilidades[item?.system?.habilidad] ? item.system.habilidad : null;
     const actorSkill = IMSERSO.habilidades[actorAttack?.habilidad] ? actorAttack.habilidad : null;
@@ -593,16 +656,17 @@ export class ImsersoActor extends Actor {
       await result.message.setFlag(IMSERSO.ID, "rollData", rollData);
     }
     if (!result?.exito) return result;
+    if (yays && !(await this.spendProezas(yays))) return result;
 
     const rawAttrDamage = number(this.system.efectivos?.atributos?.[attack.atributo], this.system.atributos?.[attack.atributo]);
     const attrDamage = attackAttributeDamage(baseAttack, rawAttrDamage);
     const aimedDice = number(data.dadosSacrificados, 0) * (attack.apuntar === "2d6" ? 2 : 1);
-    const extraFormula = `${yays + aimedDice}d6`;
-    const extraRoll = (yays + aimedDice) > 0 ? await new Roll(extraFormula).evaluate({ async: true }) : null;
+    const proezaDamage = await rollExplodingD6(yays);
+    const aimedRoll = aimedDice > 0 ? await new Roll(`${aimedDice}d6`).evaluate({ async: true }) : null;
     const armorReduction = result.critico ? 0 : number(target.system.efectivos?.mods?.proteccionDano, target.system.proteccion?.dano);
-    const subtotal = Math.max(0, attack.dano + attrDamage + (extraRoll?.total ?? 0) - armorReduction);
+    const extraDamage = proezaDamage.total + (aimedRoll?.total ?? 0);
+    const subtotal = Math.max(0, attack.dano + attrDamage + extraDamage - armorReduction);
     const totalDamage = result.critico ? subtotal * 2 : subtotal;
-    const aimed = number(data.dadosSacrificados, 0) > 0;
     const defenseDifficulty = number(data.dificultad, targetAgilidad);
     const workflow = {
       attackerUuid: this.uuid,
@@ -615,7 +679,7 @@ export class ImsersoActor extends Actor {
       attackTipo: data.tipo,
       damage: totalDamage,
       originalDamage: totalDamage,
-      formulaText: `${attack.dano} + ${attack.atributo.toUpperCase()} ${attrDamage}${extraRoll ? ` + ${extraRoll.total}` : ""}${armorReduction ? ` - armadura ${armorReduction}` : ""}${result.critico ? " x2 crítico e ignora armadura" : ""}`,
+      formulaText: `${attack.dano} + ${attack.atributo.toUpperCase()} ${attrDamage}${proezaDamage.total ? ` + proezas ${proezaDamage.total}` : ""}${aimedRoll ? ` + apuntar ${aimedRoll.total}` : ""}${armorReduction ? ` - armadura ${armorReduction}` : ""}${result.critico ? " x2 crítico e ignora armadura" : ""}`,
       defenseDifficulty,
       applied: false,
       defended: false,
@@ -623,7 +687,7 @@ export class ImsersoActor extends Actor {
     };
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      rolls: extraRoll ? [extraRoll] : [],
+      rolls: [...proezaDamage.rolls, ...(aimedRoll ? [aimedRoll] : [])],
       flags: { [IMSERSO.ID]: { attackWorkflow: workflow } },
       content: damageCard(workflow)
     });
@@ -765,15 +829,12 @@ export class ImsersoActor extends Actor {
     const targetToken = firstTargetToken();
     const target = targetToken?.actor ?? this;
     const sources = {
-      hospital: { label: "Hospital", amount: 6, skill: "" },
-      casa: { label: "Casa y reposo", amount: 3, skill: "" },
-      mesa: { label: "Comida en mesa", amount: 2, skill: "" },
-      siesta: { label: "Siesta / masaje / balneario", amount: 1, skill: "" },
-      casquete: { label: "Casquete terapeutico", amount: 3, skill: "" },
-      bingo: { label: "Bingo ganado", amount: 1, skill: "" },
-      botiquin: { label: "Botiquin", amount: 2, critAmount: 4, skill: "auxilio", difficulty: 10 },
-      reposo: { label: "Reposo seguro", amount: 3, skill: "" },
-      porrete: { label: "Porrete", amount: 1, skill: "" }
+      hospital: { label: "Hospital / centro medico", amount: 2, skill: "" },
+      reposo: { label: "Reposo confortable", amount: 1, skill: "" },
+      auxilio: { label: "Auxilio DF 10", amount: 2, critAmount: 4, fumbleDamage: 2, skill: "auxilio", difficulty: 10 },
+      dormir: { label: "Dormir mas de 8 horas", amount: 1, skill: "" },
+      contacto: { label: "Contacto fisico prolongado", amount: 1, skill: "" },
+      actividad: { label: "Actividad relajante", amount: 1, skill: "" }
     };
     const options = Object.entries(sources).map(([key, source]) => `<option value="${key}">${source.label}</option>`).join("");
     const data = await simpleDialog({
@@ -794,6 +855,10 @@ export class ImsersoActor extends Actor {
       const result = await this.rollSkill(source.skill, { dificultad: number(data.difficulty, source.difficulty), skipDialog: false });
       if (!result) return null;
       failed = !result.exito;
+      if (result.pifia && source.fumbleDamage) {
+        await target.applyDamage(source.fumbleDamage);
+        failed = true;
+      }
       amount = result.critico ? (source.critAmount ?? source.amount) : source.amount;
     }
     const workflow = {
@@ -817,6 +882,7 @@ export class ImsersoActor extends Actor {
   async rollHazardDamage() {
     const sources = {
       asfixia: "Asfixia",
+      electrochoque: "Electrochoque",
       caida: "Caida",
       congelacion: "Congelacion",
       deslomarse: "Deslomarse",
@@ -852,16 +918,22 @@ export class ImsersoActor extends Actor {
       damage = roll?.exito ? 0 : 3;
       summary = "tras agotar FUE + 5 turnos sin respirar, tira Fuerza bruta a dificultad 15.";
       details = roll?.exito ? "Aguanta un turno mas." : "Falla: empieza a perder 3 puntos de Salud por turno.";
+    } else if (source === "electrochoque") {
+      const per = number(this.system.efectivos?.atributos?.per, this.system.atributos?.per);
+      damage = 1 + Math.floor(per / 2);
+      roll = await this.rollSkill("fuerzaBruta", { dificultad: 20 });
+      summary = "arma de electrochoque: 1 + PER/2 de dano y Fuerza bruta DF 20.";
+      details = roll?.exito ? "Resiste la incapacitacion." : "Falla: queda incapacitado 3D minutos y sufre -1D durante una hora.";
     } else if (source === "caida") {
       const metros = Math.max(0, number(data.metros, 1));
-      damage = metros * 3;
+      damage = Math.max(0, metros - 2) * 3;
       roll = await this.rollSkill("atletismo", { dificultad: 12 });
-      summary = `${metros} metro(s) de caída libre: 3 Salud por metro.`;
+      summary = `${metros} metro(s) de caída libre: 3 Salud por metro a partir de los dos metros.`;
       details = roll?.exito ? "Supera Atletismo dificultad 12: reduce el daño total en 3." : "Falla Atletismo dificultad 12: recibe todo el daño de la caída.";
       if (roll?.exito) damage = Math.max(0, damage - 3);
     } else if (source === "congelacion") {
       damage = Math.max(0, number(data.amount, 1));
-      summary = "frío intenso: normalmente 1 Salud por minuto de tiempo de juego.";
+      summary = "frío intenso: normalmente 1 Salud por cada quince minutos de tiempo de juego.";
     } else if (source === "deslomarse") {
       roll = await this.rollSkill("fuerzaBruta", { dificultad: 15 });
       damage = roll?.exito ? 0 : 2;
@@ -874,14 +946,14 @@ export class ImsersoActor extends Actor {
       summary = `veneno POT ${difficulty}: Fuerza bruta contra la potencia.`;
       details = roll?.exito ? "Supera la tirada: sufre el daño menor." : "Falla la tirada: sufre el daño mayor.";
     } else if (source === "hambre") {
-      damage = Math.floor(number(data.amount, 12) / 12);
-      summary = `${number(data.amount, 12)} hora(s) sin comer: 1 Salud por cada 12 horas.`;
+      damage = Math.floor(number(data.amount, 24) / 24);
+      summary = `${number(data.amount, 24)} hora(s) sin comer: 1 Salud por cada 24 horas.`;
     } else if (source === "sed") {
       damage = Math.floor(number(data.amount, 6) / 6);
       summary = `${number(data.amount, 6)} hora(s) sin beber: 1 Salud por cada 6 horas.`;
     } else if (source === "cogorza") {
       const difficulty = Math.max(10, number(data.difficulty, 10));
-      const byDifficulty = difficulty >= 20 ? 5 : difficulty >= 15 ? 3 : 1;
+      const byDifficulty = difficulty >= 20 ? 3 : difficulty >= 15 ? 2 : 1;
       roll = await this.rollSkill("fuerzaBruta", { dificultad: difficulty });
       damage = roll?.exito ? 0 : byDifficulty;
       summary = `intoxicacion etilica: Fuerza bruta dificultad ${difficulty}.`;
@@ -1074,6 +1146,7 @@ export class ImsersoActor extends Actor {
               ${stepper("dadosSacrificados", 0, { min: 0, max: 2 })}
             </label>
           </div>
+          ${defaults.oppositionText ? `<p class="notes">Oposicion detectada: ${escapeHtml(defaults.oppositionText)}.</p>` : ""}
           <div class="ims-dialog-checks">
             <label class="check"><input type="checkbox" name="profesion"> Profesion/perfil (+3)</label>
             <label class="check"><input type="checkbox" name="proezaDado"> Proeza antes de tirar (+1D)</label>

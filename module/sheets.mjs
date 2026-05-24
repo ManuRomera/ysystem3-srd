@@ -9,7 +9,8 @@ import {
 } from "./config.mjs";
 import { helpEntry } from "./help-data.mjs";
 
-const { ActorSheet, ItemSheet } = foundry.appv1.sheets;
+const ActorSheet = foundry.appv1?.sheets?.ActorSheet ?? globalThis.ActorSheet;
+const ItemSheet = foundry.appv1?.sheets?.ItemSheet ?? globalThis.ItemSheet;
 
 function entries(obj) {
   return Object.entries(obj ?? {});
@@ -467,16 +468,15 @@ export class ImsersoItemSheet extends ItemSheet {
     context.system = this.item.system;
     context.descripcionTexto = stripHtmlDescription(this.item.system?.descripcion ?? "");
     context.config = IMSERSO;
+    const protectionLevel = Number(this.item.system?.nivel) || 0;
+    context.protectionPenalty = this.item.type === "armadura"
+      ? Math.floor(protectionLevel / 2)
+      : this.item.type === "escudo"
+        ? protectionLevel
+        : 0;
     context.automationOptions = [
       { value: "", label: "Sin automatismo" },
-      { value: "botiquin", label: "Botiquin: Ambulatorio DF 10, cura 2/4" },
-      { value: "traje-superman", label: "Traje de Superman" },
-      { value: "traje-batman", label: "Traje de Batman" },
-      { value: "traje-flash", label: "Traje de Flash" },
-      { value: "traje-wonder-woman", label: "Traje de Wonder Woman" },
-      { value: "traje-cyborg", label: "Traje de Cyborg" },
-      { value: "visor-de-cyborg", label: "Visor de Cyborg" },
-      { value: "brazaletes-de-wonder-woman", label: "Brazaletes de Wonder Woman" }
+      { value: "botiquin", label: "Botiquin: Auxilio DF 10, cura 2/4" }
     ];
     return context;
   }

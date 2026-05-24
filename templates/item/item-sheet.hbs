@@ -39,7 +39,7 @@
   <section class="ims-item-panel">
     <div class="ims-item-fields proteccion-fields">
       <label>Protección al daño<input type="number" name="system.nivel" value="{{system.nivel}}"></label>
-      <label>Penalizador<input type="number" name="system.penalizador" value="{{system.penalizador}}"></label>
+      <label>Penalizador SRD<input type="number" value="{{protectionPenalty}}" disabled></label>
       <label class="check"><input type="checkbox" name="system.equipado" {{imsChecked system.equipado}}> Equipada</label>
       <label>Automatismo
         <select name="system.automatismo">
@@ -54,7 +54,7 @@
   <section class="ims-item-panel">
     <div class="ims-item-fields proteccion-fields">
       <label>Bonificador a Agilidad<input type="number" name="system.nivel" value="{{system.nivel}}"></label>
-      <label>Penalizador<input type="number" name="system.penalizador" value="{{system.penalizador}}"></label>
+      <label>Penalizador SRD<input type="number" value="{{protectionPenalty}}" disabled></label>
       <label class="check"><input type="checkbox" name="system.equipado" {{imsChecked system.equipado}}> Equipado</label>
       <label>Automatismo
         <select name="system.automatismo">
@@ -160,7 +160,7 @@
     <div class="ims-item-fields arquetipo-fields">
       <label>Clave de arquetipo<input name="system.arquetipoKey" value="{{system.arquetipoKey}}"></label>
       <label>Género<input name="system.genero" value="{{system.genero}}"></label>
-      <label>Partido<input name="system.partido" value="{{system.partido}}"></label>
+      <label>Perfil<input name="system.perfil" value="{{system.perfil}}"></label>
       <label>Proezas<input type="number" name="system.proezas" value="{{system.proezas}}"></label>
       <label>Salud base<input type="number" name="system.saludBase" value="{{system.saludBase}}"></label>
       <label>Resistencia fisica<input type="number" name="system.resistenciaFisica" value="{{system.resistenciaFisica}}"></label>

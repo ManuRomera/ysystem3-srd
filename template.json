@@ -192,10 +192,10 @@
       "habilidadUso": "",
       "dificultadUso": 9
     },
-    "arquetipo": {
-      "arquetipoKey": "",
-      "genero": "",
-      "partido": "",
+      "arquetipo": {
+        "arquetipoKey": "",
+        "genero": "",
+        "perfil": "",
       "atributos": {},
       "habilidades": {},
       "habilidades3d": [],

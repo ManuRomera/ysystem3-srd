@@ -2,10 +2,10 @@
   "id": "ysystem3-srd",
   "title": "YSYSTEM3 SRD (no oficial)",
   "description": "Sistema NO OFICIAL para jugar el Documento de Referencia del Sistema (SRD) de YSYSTEM en Foundry VTT, con automatismos de tiradas, combate, salud y variantes de ambientación. Basado en el SRD publicado por Walhalla Ediciones (Ignacio Sánchez Aranda y Jorge Carrero Roig). Este paquete no está afiliado ni aprobado por Walhalla Ediciones.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "url": "https://github.com/ManuRomera/ysystem3-srd",
   "manifest": "https://raw.githubusercontent.com/ManuRomera/ysystem3-srd/main/system.json",
-  "download": "https://github.com/ManuRomera/ysystem3-srd/releases/download/v0.2.1/ysystem3-srd.zip",
+  "download": "https://github.com/ManuRomera/ysystem3-srd/releases/download/v0.3.0/ysystem3-srd.zip",
   "changelog": "https://github.com/ManuRomera/ysystem3-srd/blob/main/CHANGELOG.md",
   "background": "systems/ysystem3-srd/assets/cover-srd-actualizado.png",
   "media": [
@@ -22,7 +22,7 @@
   "readme": "README.md",
   "compatibility": {
     "minimum": "11",
-    "verified": "13",
+    "verified": "13.351",
     "maximum": "13"
   },
   "authors": [
