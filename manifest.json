@@ -5,7 +5,7 @@
   "version": "0.2.1",
   "url": "https://github.com/ManuRomera/ysystem3-srd",
   "manifest": "https://raw.githubusercontent.com/ManuRomera/ysystem3-srd/main/manifest.json",
-  "download": "https://github.com/ManuRomera/ysystem3-srd/releases/download/v0.2.1/ysystem3-srd.zip",
+  "download": "https://codeload.github.com/ManuRomera/ysystem3-srd/zip/refs/heads/main",
   "changelog": "https://github.com/ManuRomera/ysystem3-srd/blob/main/CHANGELOG.md",
   "background": "systems/ysystem3-srd/assets/cover-srd-actualizado.png",
   "media": [
