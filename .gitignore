@@ -4,3 +4,5 @@ __MACOSX/
 Thumbs.db
 *.log
 *.zip
+dist/
+node_modules/
