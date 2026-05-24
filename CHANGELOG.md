@@ -1,0 +1,31 @@
+# Historial de cambios — YSYSTEM3 SRD para Foundry VTT
+
+Todos los cambios relevantes de este proyecto se documentan en este archivo.
+
+El formato sigue la convención [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
+
+---
+
+## [0.2.0] — 2026-05-24
+
+### Primera publicación pública
+
+Esta es la primera versión publicada en GitHub del sistema YSYSTEM3 SRD para Foundry VTT.
+
+#### Añadido
+- Hojas de personaje (PJ) y de PNJ optimizadas para pantalla, con pestañas por secciones.
+- Modo clásico A4 seleccionable desde la configuración del mundo.
+- Tiradas automatizadas: habilidades, Salud, Estabilidad, Resistencia física, Resistencia mental, Proezas, iniciativa y combate.
+- Tipos de item: armas, armaduras, escudos, objetos, poderes, talentos y arquetipos.
+- Compendio de reglas y ayudas de juego.
+- Identidad visual del SRD: carátula «SRD actualizado» e icono oficial.
+- Selector de apariencia/variante temática en configuración del mundo.
+- Compatibilidad verificada con Foundry VTT v11–v13.
+
+---
+
+## Versiones futuras
+
+Las nuevas versiones se publicarán como [Releases en GitHub](https://github.com/ManuRomera/ysystem3-srd/releases).
+Foundry VTT comprobará actualizaciones automáticamente si instalaste el sistema mediante la URL del manifiesto.

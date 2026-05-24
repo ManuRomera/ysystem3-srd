@@ -1,0 +1,212 @@
+{
+  "Actor": {
+    "types": ["personaje", "pnj"],
+    "personaje": {
+      "datos": {
+        "jugador": "",
+        "lugarNacimiento": "",
+        "edad": "",
+        "profesion": "",
+        "perfil": "",
+        "motivacion": "",
+        "descripcionFisica": "",
+        "situacionFamiliar": "",
+        "arquetipo": "",
+        "talento": "",
+        "historia": "",
+        "pertenencias": "",
+        "relaciones": ""
+      },
+      "atributos": {
+        "car": 0,
+        "des": 1,
+        "fue": 2,
+        "int": 4,
+        "per": 6
+      },
+      "habilidades": {},
+      "salud": {
+        "valor": 18,
+        "max": 18
+      },
+      "resistenciaFisica": {
+        "valor": 10,
+        "primeraTirada": false,
+        "umbrales": {
+          "16": false,
+          "11": false,
+          "7": false,
+          "4": false,
+          "2": false
+        }
+      },
+      "estabilidad": {
+        "valor": 18,
+        "max": 18
+      },
+      "resistenciaMental": {
+        "valor": 12,
+        "primeraTirada": false,
+        "umbrales": {
+          "16": false,
+          "11": false,
+          "7": false,
+          "4": false,
+          "2": false
+        }
+      },
+      "proezas": {
+        "valor": 4,
+        "inicial": 4
+      },
+      "defectos": {
+        "grave": "",
+        "leve": "",
+        "leveUsado": false
+      },
+      "recuerdo": {
+        "usado": false,
+        "nota": ""
+      },
+      "combate": {
+        "armaIniciativa": "desarmado",
+        "ataque": "desarmado",
+        "sorprendido": false
+      },
+      "estado": {
+        "inconsciente": false,
+        "crisisMental": false,
+        "muerto": false,
+        "notas": ""
+      }
+    },
+    "pnj": {
+      "descripcion": "",
+      "bando": "",
+      "rol": "",
+      "atributos": {
+        "car": 0,
+        "des": 0,
+        "fue": 0,
+        "int": 0,
+        "per": 0
+      },
+      "habilidades": {},
+      "salud": {
+        "valor": 10,
+        "max": 10
+      },
+      "agilidad": {
+        "valor": 3,
+        "manual": false
+      },
+      "aplomo": {
+        "valor": 7,
+        "manual": false
+      },
+      "perspicacia": {
+        "valor": 7,
+        "manual": false
+      },
+      "resistenciaFisica": {
+        "valor": 12,
+        "manual": false
+      },
+      "ataque": {
+        "nombre": "Ataque desarmado",
+        "habilidad": "lucha",
+        "tipo": "desarmado",
+        "dano": 1
+      },
+      "combate": {
+        "sorprendido": false
+      },
+      "notas": ""
+    }
+  },
+  "Item": {
+    "types": ["equipo", "arma", "armadura", "escudo", "objeto", "poder", "talento", "arquetipo"],
+    "equipo": {
+      "descripcion": "",
+      "cantidad": 1,
+      "uso": "",
+      "equipado": false,
+      "automatismo": "",
+      "habilidadUso": "",
+      "dificultadUso": 9
+    },
+    "arma": {
+      "tipo": "desarmado",
+      "habilidad": "lucha",
+      "danoBase": 1,
+      "atributoDano": "fue",
+      "iniciativa": 0,
+      "descripcion": "",
+      "equipado": false,
+      "automatismo": ""
+    },
+    "armadura": {
+      "descripcion": "",
+      "nivel": 1,
+      "penalizador": 0,
+      "equipado": false,
+      "automatismo": ""
+    },
+    "escudo": {
+      "descripcion": "",
+      "nivel": 1,
+      "penalizador": 0,
+      "equipado": false,
+      "automatismo": ""
+    },
+    "objeto": {
+      "descripcion": "",
+      "cantidad": 1,
+      "uso": "",
+      "equipado": false,
+      "automatismo": "",
+      "habilidadUso": "",
+      "dificultadUso": 9
+    },
+    "poder": {
+      "descripcion": "",
+      "tipo": "",
+      "habilidad": "cultura",
+      "atributo": "int",
+      "dificultad": 8,
+      "preparacion": "",
+      "lanzamiento": "",
+      "duracion": "",
+      "caducidad": "",
+      "equipado": false,
+      "automatismo": ""
+    },
+    "talento": {
+      "descripcion": "",
+      "usos": {
+        "valor": 1,
+        "max": 1
+      },
+      "equipado": false,
+      "automatismo": "",
+      "habilidadUso": "",
+      "dificultadUso": 9
+    },
+    "arquetipo": {
+      "arquetipoKey": "",
+      "genero": "",
+      "partido": "",
+      "atributos": {},
+      "habilidades": {},
+      "habilidades3d": [],
+      "habilidades2d": [],
+      "proezas": 0,
+      "saludBase": 0,
+      "resistenciaFisica": 0,
+      "resistenciaMental": 0,
+      "talentoNombre": "",
+      "talento": "",
+      "descripcion": ""
+    }
+  }
+}

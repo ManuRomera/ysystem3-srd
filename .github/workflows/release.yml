@@ -1,0 +1,87 @@
+name: Crear Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publicar Release en GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Leer versión desde system.json
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' system.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Verificar que el tag coincide con la versión en system.json
+        run: |
+          TAG="${GITHUB_REF#refs/tags/v}"
+          VERSION="${{ steps.version.outputs.version }}"
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "ERROR: El tag (v$TAG) no coincide con la versión en system.json ($VERSION)"
+            echo "Actualiza la versión en system.json antes de crear el tag."
+            exit 1
+          fi
+
+      - name: Crear archivo zip del sistema
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          mkdir -p dist
+          # Incluye todos los archivos excepto los de desarrollo
+          zip -r "dist/ysystem3-srd.zip" . \
+            --exclude "*.git*" \
+            --exclude ".github/*" \
+            --exclude "dist/*" \
+            --exclude ".DS_Store" \
+            --exclude "._*" \
+            --exclude "__MACOSX/*" \
+            --exclude "*.log"
+          echo "Zip creado: dist/ysystem3-srd.zip"
+          ls -lh dist/
+
+      - name: Extraer notas de la versión desde CHANGELOG.md
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Extrae el bloque de la versión actual del CHANGELOG
+          NOTES=$(awk "/^## \[$VERSION\]/,/^## \[/{if(/^## \[/ && !/^## \[$VERSION\]/) exit; print}" CHANGELOG.md | tail -n +2)
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Publicar Release en GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "YSYSTEM3 SRD v${{ steps.version.outputs.version }}"
+          body: |
+            ## YSYSTEM3 SRD para Foundry VTT — versión ${{ steps.version.outputs.version }}
+
+            ### Instalación
+
+            Pega esta URL en Foundry VTT → Sistemas → Instalar sistema → URL del Manifiesto:
+
+            ```
+            https://raw.githubusercontent.com/ManuRomera/ysystem3-srd/main/system.json
+            ```
+
+            ### Notas de esta versión
+
+            ${{ steps.changelog.outputs.notes }}
+
+            ---
+
+            > ⚠️ Este es un sistema **no oficial**. No está afiliado ni aprobado por Walhalla Ediciones.
+          files: dist/ysystem3-srd.zip
+          draft: false
+          prerelease: false

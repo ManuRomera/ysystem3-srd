@@ -1,0 +1,17 @@
+{
+  "YSYSTEM.HojaPersonaje": "Ficha de PJ (YSYSTEM3 SRD)",
+  "YSYSTEM.HojaItem": "Ficha de Item (YSYSTEM3 SRD)",
+  "IMSERSO.HojaJubilado": "Ficha de PJ",
+  "IMSERSO.HojaExtra": "Ficha de PNJ",
+  "IMSERSO.HojaItem": "Ficha de Item",
+  "TYPES.Actor.personaje": "PJ",
+  "TYPES.Actor.pnj": "PNJ",
+  "TYPES.Item.equipo": "Equipo",
+  "TYPES.Item.arma": "Arma",
+  "TYPES.Item.armadura": "Armadura",
+  "TYPES.Item.escudo": "Escudo",
+  "TYPES.Item.objeto": "Objeto",
+  "TYPES.Item.poder": "Poder",
+  "TYPES.Item.talento": "Talento",
+  "TYPES.Item.arquetipo": "Arquetipo"
+}

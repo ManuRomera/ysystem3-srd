@@ -1,0 +1,170 @@
+<form class="ims-sheet ims-personaje ims-jubilado ys-a4-sheet" autocomplete="off">
+  <nav class="ims-tabs" data-group="primary">
+    <a class="item" data-tab="ficha"><i class="fas fa-id-card"></i> Ficha</a>
+    <a class="item" data-tab="equipo"><i class="fas fa-suitcase"></i> Pertenencias</a>
+    <a class="item" data-tab="notas"><i class="fas fa-book-open"></i> Vida</a>
+  </nav>
+
+  <section class="ims-body">
+    <div class="tab ims-tab-panel" data-group="primary" data-tab="ficha">
+      <main class="ims-paper">
+        <header class="ims-paper-header">
+          <div class="ims-logo-block ys-a4-logo-block">
+            <img class="ys-a4-logo" src="{{logoPath}}" alt="YSYSTEM3 SRD">
+          </div>
+          <div class="ims-paper-headline">
+            <section class="ims-number-section ims-data-grid" data-help-type="section" data-help-key="datos">
+              <h2>1. Datos del personaje</h2>
+              <label class="span-2">Nombre del jugador<input name="system.datos.jugador" value="{{system.datos.jugador}}"></label>
+              <label class="span-2">Nombre del PJ<input name="name" value="{{actor.name}}"></label>
+              <label>Lugar de nacimiento<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
+              <label>Edad<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
+              <label>Profesión / perfil (+3)<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
+              <label>Ambientación<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
+              <label class="span-2 tall">Motivación<textarea name="system.datos.motivacion">{{system.datos.motivacion}}</textarea></label>
+            </section>
+            <div class="ims-photo-frame">
+              <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" alt="Retrato">
+            </div>
+          </div>
+        </header>
+
+        <section class="ims-midline">
+          <div class="ims-attr-grid">
+            {{#each atributos}}
+            <label data-help-type="attribute" data-help-key="{{key}}">
+              <span>{{short}}</span>
+              <input type="number" name="system.atributos.{{key}}" value="{{value}}" step="1">
+            </label>
+            {{/each}}
+          </div>
+          <div class="ims-stamp" data-help-type="rule" data-help-key="proezas">
+            <span>{{ysTerm "resource"}}</span>
+            <div class="ims-yayo-control">
+              <button type="button" data-spend-yayo title='Bajar {{ysTerm "resource"}}'><i class="fas fa-minus"></i></button>
+              <input type="number" value="{{system.proezas.valor}}" readonly>
+              <b>/</b>
+              <input type="number" name="system.proezas.inicial" value="{{system.proezas.inicial}}">
+              <button type="button" data-gain-yayo title='Subir {{ysTerm "resource"}}'><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="ims-bemoles" data-help-type="rule" data-help-key="aplomo">
+            <strong>{{ysFixed "aplomo"}}</strong>
+            <b>{{system.aplomo}}</b>
+            <i></i>
+            <strong>{{ysFixed "agilidad"}}</strong>
+            <b>{{system.agilidad}}</b>
+          </div>
+        </section>
+
+        <section class="ims-number-section ims-lines ims-archetype-panel" data-help-type="section" data-help-key="arquetipos">
+          <label class="span-2"><strong>2. Talento / rasgo:</strong><textarea name="system.datos.talento">{{system.datos.talento}}</textarea></label>
+        </section>
+
+        <section class="ims-number-section">
+          <h2>3. Habilidades</h2>
+          <div class="ims-skill-table">
+            {{#each habilidades}}
+            <div class="ims-skill-row">
+              <button type="button" data-help-type="skill" data-help-key="{{key}}" data-roll-skill="{{key}}">{{label}} ({{attrLabel}})</button>
+              <div class="ims-dots ys-dice" aria-label="{{dados}} dados">
+                {{#each dots}}
+                <button type="button" class="ims-dot ims-die {{#if active}}active{{/if}}" data-skill-dot="{{../key}}" data-value="{{value}}" title="{{value}}D"></button>
+                {{/each}}
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="ims-number-section ims-aches" data-help-type="rule" data-help-key="defectos">
+          <label><strong>Defecto grave</strong><input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
+          <label><strong>Defecto leve</strong><input name="system.defectos.leve" value="{{system.defectos.leve}}"></label>
+          <label><strong>Recuerdo cuando...</strong><textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
+        </section>
+
+        <section class="ims-number-section ims-toolbar-band">
+          <button type="button" data-roll-initiative><i class="fas fa-forward"></i> Iniciativa</button>
+          <button type="button" data-help-type="rule" data-help-key="ataque" data-roll-attack><i class="fas fa-burst"></i> Ataque</button>
+          <button type="button" data-roll-reserve><i class="fas fa-hourglass-half"></i> Reservar</button>
+          <button type="button" data-roll-pursuit><i class="fas fa-person-running"></i> Persecución</button>
+          <button type="button" data-damage><i class="fas fa-kit-medical"></i> Daño</button>
+          <button type="button" data-heal><i class="fas fa-hand-holding-medical"></i> Curar</button>
+        </section>
+
+        <section class="ims-number-section ims-health" data-help-type="rule" data-help-key="salud">
+          <h2>4. Salud</h2>
+          <div class="ims-health-zone-labels" style="{{healthGridStyle}}">
+            {{#each healthZones}}<span class="{{class}}" style="{{style}}">{{label}}</span>{{/each}}
+          </div>
+          <div class="ims-health-track" style="{{healthGridStyle}}">
+            {{#each healthTrack}}
+            <button type="button" data-help-type="rule" data-help-key="salud" data-health="{{value}}" class="zone-{{zone}} {{#if active}}active{{/if}} {{#if threshold}}threshold{{/if}} {{#if crossed}}crossed{{/if}}">
+              {{#if threshold}}<em>{{thresholdLabel}}</em>{{/if}}
+              <span></span><b>{{value}}</b>
+            </button>
+            {{/each}}
+          </div>
+          <div class="ims-jamacuco-row">
+            <label>{{ysTerm "resistancePhysical"}}<input type="number" name="system.resistenciaFisica.valor" value="{{system.resistenciaFisica.valor}}"></label>
+            <button type="button" data-roll-resistencia-fisica><i class="fas fa-heart-pulse"></i> Tirar {{ysTerm "resistancePhysical"}}</button>
+            <em>{{penaltyLabel}}</em>
+          </div>
+        </section>
+
+        <section class="ims-number-section ims-stability" data-help-type="rule" data-help-key="estabilidad">
+          <h2>5. Estabilidad</h2>
+          <div class="ims-jamacuco-row">
+            <label>Estabilidad<input type="number" name="system.estabilidad.valor" value="{{system.estabilidad.valor}}"></label>
+            <label>Máx<input type="number" name="system.estabilidad.max" value="{{system.estabilidad.max}}"></label>
+            <label>{{ysTerm "resistanceMental"}}<input type="number" name="system.resistenciaMental.valor" value="{{system.resistenciaMental.valor}}"></label>
+            <button type="button" data-roll-resistencia-mental><i class="fas fa-brain"></i> Tirar {{ysTerm "resistanceMental"}}</button>
+            <button type="button" data-stability-damage><i class="fas fa-brain"></i> Perder Est.</button>
+            <button type="button" data-stability-heal><i class="fas fa-spa"></i> Recuperar</button>
+          </div>
+          <div class="ims-stability-zone-labels" style="{{stabilityGridStyle}}">
+            {{#each stabilityZones}}<span class="{{class}}" style="{{style}}">{{label}}</span>{{/each}}
+          </div>
+          <div class="ims-stability-track" style="{{stabilityGridStyle}}">
+            {{#each stabilityTrack}}
+            <button type="button" data-help-type="rule" data-help-key="estabilidad" data-stability="{{value}}" class="zone-{{zone}} {{#if active}}active{{/if}} {{#if threshold}}threshold threshold-rm{{/if}} {{#if crossed}}crossed{{/if}}">
+              {{#if threshold}}<em>{{thresholdLabel}}</em>{{/if}}
+              <span></span><b>{{value}}</b>
+            </button>
+            {{/each}}
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="tab ims-tab-panel" data-group="primary" data-tab="equipo">
+      <section class="ims-inventory">
+        <header><h2>Pertenencias arrastrables</h2>{{#each itemCreateTypes}}<button type="button" data-item-create="{{type}}"><i class="fas {{icon}}"></i> {{label}}</button>{{/each}}</header>
+        {{#each itemsByType}}
+        <h3>{{@key}}</h3>
+        <ol>
+          {{#each this}}
+          <li class="item {{#if system.equipado}}equipped{{/if}}" data-item-id="{{id}}">
+            <img src="{{img}}" alt="">
+            <span>{{name}}</span>
+            <button type="button" data-item-equip title="Equipar"><i class="fas fa-shirt"></i></button>
+            <button type="button" data-item-use title="Usar"><i class="fas fa-dice-six"></i></button>
+            <button type="button" data-item-chat title="Enviar al chat"><i class="fas fa-comment"></i></button>
+            <button type="button" data-item-edit title="Editar"><i class="fas fa-pen"></i></button>
+            <button type="button" data-item-delete title="Borrar"><i class="fas fa-trash"></i></button>
+          </li>
+          {{/each}}
+        </ol>
+        {{/each}}
+      </section>
+    </div>
+
+    <div class="tab ims-tab-panel" data-group="primary" data-tab="notas">
+      <section class="ims-notes">
+        <label>Historia<textarea name="system.datos.historia">{{system.datos.historia}}</textarea></label>
+        <label>Relaciones<textarea name="system.datos.relaciones">{{system.datos.relaciones}}</textarea></label>
+        <label>Notas de estado<textarea name="system.estado.notas">{{system.estado.notas}}</textarea></label>
+      </section>
+    </div>
+  </section>
+</form>

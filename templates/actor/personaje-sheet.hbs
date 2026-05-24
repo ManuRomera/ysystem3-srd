@@ -1,0 +1,312 @@
+<form class="ims-sheet ys-screen-sheet ys-personaje" autocomplete="off">
+  <header class="ys-screen-header">
+    <img class="ys-portrait" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" alt="Retrato">
+    <section class="ys-identity">
+      <div class="ys-brand">
+        <img src="systems/ysystem3-srd/assets/ysystem-icon.png" alt="YSYSTEM3 SRD">
+        <strong>{{ysTerm "logoMark"}}</strong>
+        <span>{{ysTerm "logoScript"}}</span>
+      </div>
+      <div class="ys-title-line">
+        <input class="ys-title-input" name="name" value="{{actor.name}}" placeholder="Nombre del PJ">
+        <label>Jugador<input name="system.datos.jugador" value="{{system.datos.jugador}}"></label>
+      </div>
+      <div class="ys-meta-grid">
+        <label>Profesión / perfil (+3)<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
+        <label>Ambientación<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
+        <label>Edad<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
+        <label>Lugar de nacimiento<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
+      </div>
+    </section>
+    <aside class="ys-quick-stats">
+      <button type="button" data-roll-initiative title="Iniciativa"><i class="fas fa-forward"></i><span>Ini</span></button>
+      <button type="button" data-roll-attack title="Ataque rápido"><i class="fas fa-burst"></i><span>Atq</span></button>
+      <button type="button" data-roll-resistencia-fisica title='{{ysTerm "resistancePhysical"}}'><i class="fas fa-heart-pulse"></i><span>RF</span></button>
+      <button type="button" data-roll-resistencia-mental title='{{ysTerm "resistanceMental"}}'><i class="fas fa-brain"></i><span>RM</span></button>
+    </aside>
+  </header>
+
+  <nav class="ims-tabs ys-tabs" data-group="primary">
+    <a class="item" data-tab="ficha"><i class="fas fa-id-card"></i><span>Resumen</span></a>
+    <a class="item" data-tab="combate"><i class="fas fa-shield-halved"></i><span>Combate</span></a>
+    <a class="item" data-tab="estado"><i class="fas fa-heart-pulse"></i><span>Estado</span></a>
+    <a class="item" data-tab="equipo"><i class="fas fa-suitcase"></i><span>Equipo</span></a>
+    <a class="item" data-tab="notas"><i class="fas fa-book-open"></i><span>Notas</span></a>
+  </nav>
+
+  <section class="ims-body ys-body">
+    <div class="tab ims-tab-panel ys-panel" data-group="primary" data-tab="ficha">
+      <main class="ys-panel-grid">
+        <section class="ys-card ys-attr-card">
+          <header><h2>Atributos</h2></header>
+          <div class="ys-attr-grid">
+            {{#each atributos}}
+            <label data-help-type="attribute" data-help-key="{{key}}">
+              <span>{{short}}</span>
+              <input type="number" name="system.atributos.{{key}}" value="{{value}}" step="1">
+            </label>
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="ys-card ys-derived-card">
+          <header>
+            <h2>Valores</h2>
+            <div class="ys-icon-actions">
+              <button type="button" data-gain-yayo title='Ganar {{ysTerm "resource"}}'><i class="fas fa-plus"></i><span>{{ysTerm "resource"}}</span></button>
+              <button type="button" data-spend-yayo title='Gastar {{ysTerm "resource"}}'><i class="fas fa-minus"></i><span>{{ysTerm "resource"}}</span></button>
+              <button type="button" data-boost-defense title='+{{ysFixed "aplomo"}}/{{ysFixed "agilidad"}}'><i class="fas fa-shield"></i><span>Defensa</span></button>
+            </div>
+          </header>
+          <div class="ys-value-grid">
+            <button type="button" data-help-type="rule" data-help-key="agilidad"><span>{{ysFixed "agilidad"}}</span><strong>{{system.agilidad}}</strong></button>
+            <button type="button" data-help-type="rule" data-help-key="aplomo"><span>{{ysFixed "aplomo"}}</span><strong>{{system.aplomo}}</strong></button>
+            <button type="button" data-help-type="rule" data-help-key="perspicacia"><span>{{ysFixed "perspicacia"}}</span><strong>{{system.perspicacia}}</strong></button>
+            <button type="button" data-help-type="rule" data-help-key="proezas"><span>{{ysTerm "resource"}}</span><strong>{{system.proezas.valor}}/{{system.proezas.inicial}}</strong></button>
+          </div>
+        </section>
+
+        <section class="ys-card ys-wide-card ys-summary-state" data-help-type="rule" data-help-key="salud">
+          <header>
+            <h2>Estado</h2>
+            <div class="ys-icon-actions">
+              <button type="button" data-damage title="Aplicar daño"><i class="fas fa-kit-medical"></i><span>Daño</span></button>
+              <button type="button" data-heal title="Curar"><i class="fas fa-hand-holding-medical"></i><span>Curar</span></button>
+              <button type="button" data-roll-resistencia-fisica title='{{ysTerm "resistancePhysical"}}'><i class="fas fa-heart-pulse"></i><span>RF</span></button>
+              <button type="button" data-roll-resistencia-mental title='{{ysTerm "resistanceMental"}}'><i class="fas fa-brain"></i><span>RM</span></button>
+            </div>
+          </header>
+          <div class="ys-state-grid compact">
+            <label>Salud<input type="number" name="system.salud.valor" value="{{system.salud.valor}}"></label>
+            <label>Max<input type="number" name="system.salud.max" value="{{system.salud.max}}"></label>
+            <label>{{ysTerm "resistancePhysical"}}<input type="number" name="system.resistenciaFisica.valor" value="{{system.resistenciaFisica.valor}}"></label>
+            <label>{{ysTerm "resistanceMental"}}<input type="number" name="system.resistenciaMental.valor" value="{{system.resistenciaMental.valor}}"></label>
+            <label>Armadura<input type="number" value="{{system.proteccion.dano}}" disabled></label>
+            <label>Escudo<input type="number" value="{{system.proteccion.agilidad}}" disabled></label>
+            <strong>{{penaltyLabel}}</strong>
+          </div>
+          <div class="ims-health-track ys-health-track ys-summary-health" style="{{healthGridStyle}}">
+            {{#each healthTrack}}
+            <button type="button" data-help-type="rule" data-help-key="salud" data-health="{{value}}" class="zone-{{zone}} {{#if active}}active{{/if}} {{#if threshold}}threshold{{/if}} {{#if crossed}}crossed{{/if}}">
+              {{#if threshold}}<em>{{thresholdLabel}}</em>{{/if}}
+              <span></span><b>{{value}}</b>
+            </button>
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="ys-card ys-wide-card ys-summary-skills-card">
+          <header>
+            <h2>Habilidades</h2>
+            <p>Clic en el nombre para tirar. Clic en cada dado para marcar 1D, 2D o 3D.</p>
+          </header>
+          <div class="ys-skill-grid summary">
+            {{#each habilidades}}
+            <div class="ys-skill-row">
+              <button type="button" data-help-type="skill" data-help-key="{{key}}" data-roll-skill="{{key}}">
+                <span>{{label}}</span>
+                <small>{{attrLabel}}</small>
+              </button>
+              <div class="ims-dots ys-dice ys-dots" aria-label="{{dados}} dados">
+                {{#each dots}}
+                <button type="button" class="ims-dot ims-die {{#if active}}active{{/if}}" data-skill-dot="{{../key}}" data-value="{{value}}" title="{{value}}D"></button>
+                {{/each}}
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="ys-card ys-compact-card" data-help-type="section" data-help-key="arquetipos">
+          <header><h2>Rasgos</h2></header>
+          <div class="ys-form-grid compact">
+            <label>Talento / rasgo<textarea name="system.datos.talento">{{system.datos.talento}}</textarea></label>
+            <label>Motivación<textarea name="system.datos.motivacion">{{system.datos.motivacion}}</textarea></label>
+            <label>Descripción física<textarea name="system.datos.descripcionFisica">{{system.datos.descripcionFisica}}</textarea></label>
+            <label>Situación familiar<textarea name="system.datos.situacionFamiliar">{{system.datos.situacionFamiliar}}</textarea></label>
+          </div>
+        </section>
+
+        <section class="ys-card ys-compact-card" data-help-type="rule" data-help-key="defectos">
+          <header><h2>Defectos y recuerdo</h2></header>
+          <div class="ys-form-grid compact">
+            <label>Defecto leve<input name="system.defectos.leve" value="{{system.defectos.leve}}"></label>
+            <label>Defecto grave<input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
+            <label class="check"><input type="checkbox" name="system.defectos.leveUsado" {{imsChecked system.defectos.leveUsado}}> Defecto leve usado</label>
+            <label class="check"><input type="checkbox" name="system.recuerdo.usado" {{imsChecked system.recuerdo.usado}}> Recuerdo usado</label>
+            <label>Nota del recuerdo<textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="tab ims-tab-panel ys-panel" data-group="primary" data-tab="combate">
+      <main class="ys-panel-grid">
+        <section class="ys-card">
+          <header><h2>Acciones</h2></header>
+          <div class="ys-action-grid">
+            <button type="button" data-roll-initiative><i class="fas fa-forward"></i> Iniciativa</button>
+            <button type="button" data-help-type="rule" data-help-key="ataque" data-roll-attack><i class="fas fa-burst"></i> Ataque rápido</button>
+            <button type="button" data-roll-reserve><i class="fas fa-hourglass-half"></i> Reservar</button>
+            <button type="button" data-roll-pursuit><i class="fas fa-person-running"></i> Persecución</button>
+            <button type="button" data-roll-fear><i class="fas fa-eye"></i> Miedo</button>
+            <button type="button" data-help-type="rule" data-help-key="danoReglado" data-hazard-damage><i class="fas fa-triangle-exclamation"></i> Daño reglado</button>
+          </div>
+        </section>
+
+        <section class="ys-card">
+          <header><h2>Configuración de combate</h2></header>
+          <div class="ys-form-grid">
+            <label>Arma para iniciativa
+              <select name="system.combate.armaIniciativa">
+                {{#each config.ataqueTipos}}<option value="{{@key}}" {{imsSelected @key ../system.combate.armaIniciativa}}>{{label}}</option>{{/each}}
+              </select>
+            </label>
+            <label>Ataque
+              <select name="system.combate.ataque">
+                {{#each config.ataqueTipos}}<option value="{{@key}}" {{imsSelected @key ../system.combate.ataque}}>{{label}}</option>{{/each}}
+              </select>
+            </label>
+            <label class="check"><input type="checkbox" name="system.combate.sorprendido" {{imsChecked system.combate.sorprendido}}> Pillado por sorpresa</label>
+          </div>
+        </section>
+
+        <section class="ys-card ys-wide-card">
+          <header><h2>Equipo de combate</h2></header>
+          <div class="ys-quick-inventory">
+            {{#each itemsFlat}}
+            <div class="item ys-quick-item {{#if system.equipado}}equipped{{/if}}" data-item-id="{{id}}">
+              <img src="{{img}}" alt="">
+              <b>{{name}}</b>
+              <small>{{type}}</small>
+              <button type="button" data-item-equip title="Equipar"><i class="fas fa-shirt"></i></button>
+              <button type="button" data-item-use title="Usar"><i class="fas fa-dice-six"></i></button>
+              <button type="button" data-item-chat title="Enviar al chat"><i class="fas fa-comment"></i></button>
+              <button type="button" data-item-edit title="Editar"><i class="fas fa-pen"></i></button>
+            </div>
+            {{else}}
+            <p class="ims-empty-inventory">Arrastra aquí equipo, armas o talentos.</p>
+            {{/each}}
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="tab ims-tab-panel ys-panel" data-group="primary" data-tab="estado">
+      <main class="ys-panel-grid">
+        <section class="ys-card ys-wide-card ys-health-card" data-help-type="rule" data-help-key="salud">
+          <header>
+            <h2>Salud</h2>
+            <div class="ys-status-actions">
+              <button type="button" data-damage><i class="fas fa-kit-medical"></i> Aplicar daño</button>
+              <button type="button" data-heal><i class="fas fa-hand-holding-medical"></i> Curar</button>
+              <button type="button" data-rules-heal><i class="fas fa-briefcase-medical"></i> Curación reglada</button>
+            </div>
+          </header>
+          <div class="ys-state-grid">
+            <label>Salud actual<input type="number" name="system.salud.valor" value="{{system.salud.valor}}"></label>
+            <label>Salud inicial/max<input type="number" name="system.salud.max" value="{{system.salud.max}}"></label>
+            <label data-help-type="rule" data-help-key="resistenciaFisica">{{ysTerm "resistancePhysical"}}<input type="number" name="system.resistenciaFisica.valor" value="{{system.resistenciaFisica.valor}}"></label>
+            <label class="check"><input type="checkbox" name="system.resistenciaFisica.primeraTirada" {{imsChecked system.resistenciaFisica.primeraTirada}}> Primera tirada</label>
+            <button type="button" data-roll-resistencia-fisica><i class="fas fa-heart-pulse"></i> Tirar {{ysTerm "resistancePhysical"}}</button>
+            <strong>{{penaltyLabel}}</strong>
+          </div>
+          <div class="ims-health-zone-labels ys-health-labels" style="{{healthGridStyle}}">
+            {{#each healthZones}}<span class="{{class}}" style="{{style}}">{{label}}</span>{{/each}}
+          </div>
+          <div class="ims-health-track ys-health-track" style="{{healthGridStyle}}">
+            {{#each healthTrack}}
+            <button type="button" data-help-type="rule" data-help-key="salud" data-health="{{value}}" class="zone-{{zone}} {{#if active}}active{{/if}} {{#if threshold}}threshold{{/if}} {{#if crossed}}crossed{{/if}}">
+              {{#if threshold}}<em>{{thresholdLabel}}</em>{{/if}}
+              <span></span><b>{{value}}</b>
+            </button>
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="ys-card ys-wide-card ys-stability-card" data-help-type="rule" data-help-key="estabilidad">
+          <header>
+            <h2>Estabilidad</h2>
+            <div class="ys-status-actions">
+              <button type="button" data-stability-damage><i class="fas fa-brain"></i> Perder Estabilidad</button>
+              <button type="button" data-stability-heal><i class="fas fa-spa"></i> Recuperar</button>
+            </div>
+          </header>
+          <div class="ys-state-grid">
+            <label>Estabilidad actual<input type="number" name="system.estabilidad.valor" value="{{system.estabilidad.valor}}"></label>
+            <label>Estabilidad max<input type="number" name="system.estabilidad.max" value="{{system.estabilidad.max}}"></label>
+            <label data-help-type="rule" data-help-key="resistenciaMental">{{ysTerm "resistanceMental"}}<input type="number" name="system.resistenciaMental.valor" value="{{system.resistenciaMental.valor}}"></label>
+            <button type="button" data-roll-resistencia-mental><i class="fas fa-brain"></i> Tirar {{ysTerm "resistanceMental"}}</button>
+            {{#if estabilidadCritica}}<strong class="ys-mind-alert">Locura (0 Est.)</strong>{{/if}}
+          </div>
+          <div class="ims-stability-zone-labels ys-stability-labels" style="{{stabilityGridStyle}}">
+            {{#each stabilityZones}}<span class="{{class}}" style="{{style}}">{{label}}</span>{{/each}}
+          </div>
+          <div class="ims-stability-track ys-stability-track" style="{{stabilityGridStyle}}">
+            {{#each stabilityTrack}}
+            <button type="button" data-help-type="rule" data-help-key="estabilidad" data-stability="{{value}}" class="zone-{{zone}} {{#if active}}active{{/if}} {{#if threshold}}threshold threshold-rm{{/if}} {{#if crossed}}crossed{{/if}}">
+              {{#if threshold}}<em>{{thresholdLabel}}</em>{{/if}}
+              <span></span><b>{{value}}</b>
+            </button>
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="ys-card ys-wide-card">
+          <header><h2>Estado del personaje</h2></header>
+          <div class="ys-form-grid two">
+            <label class="check"><input type="checkbox" name="system.estado.inconsciente" {{imsChecked system.estado.inconsciente}}> Inconsciente</label>
+            <label class="check"><input type="checkbox" name="system.estado.crisisMental" {{imsChecked system.estado.crisisMental}}> Crisis mental temporal</label>
+            <label class="check"><input type="checkbox" name="system.estado.muerto" {{imsChecked system.estado.muerto}}> Muerto</label>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="tab ims-tab-panel ys-panel" data-group="primary" data-tab="equipo">
+      <section class="ys-card ys-full-card ys-inventory-card">
+        <header>
+          <h2>Pertenencias</h2>
+          <div class="ys-status-actions">
+            {{#each itemCreateTypes}}
+            <button type="button" data-item-create="{{type}}"><i class="fas {{icon}}"></i> {{label}}</button>
+            {{/each}}
+          </div>
+        </header>
+        {{#if equipmentNotes.length}}
+        <p class="ims-equipped-note">Equipado: {{#each equipmentNotes}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</p>
+        {{/if}}
+        {{#each itemsByType}}
+        <h3>{{@key}}</h3>
+        <ol class="ys-item-list">
+          {{#each this}}
+          <li class="item {{#if system.equipado}}equipped{{/if}}" data-item-id="{{id}}">
+            <img src="{{img}}" alt="">
+            <span>{{name}}</span>
+            <button type="button" data-item-equip title="Equipar"><i class="fas fa-shirt"></i></button>
+            <button type="button" data-item-use title="Usar"><i class="fas fa-dice-six"></i></button>
+            <button type="button" data-item-chat title="Enviar al chat"><i class="fas fa-comment"></i></button>
+            <button type="button" data-item-edit title="Editar"><i class="fas fa-pen"></i></button>
+            <button type="button" data-item-delete title="Borrar"><i class="fas fa-trash"></i></button>
+          </li>
+          {{else}}
+          <li class="ims-empty-row">Sin elementos.</li>
+          {{/each}}
+        </ol>
+        {{/each}}
+        <label>Notas sueltas de pertenencias<textarea name="system.datos.pertenencias">{{system.datos.pertenencias}}</textarea></label>
+      </section>
+    </div>
+
+    <div class="tab ims-tab-panel ys-panel" data-group="primary" data-tab="notas">
+      <section class="ys-card ys-full-card">
+        <header><h2>Notas e historia</h2></header>
+        <div class="ys-form-grid">
+          <label>Historia<textarea name="system.datos.historia">{{system.datos.historia}}</textarea></label>
+          <label>Relaciones<textarea name="system.datos.relaciones">{{system.datos.relaciones}}</textarea></label>
+          <label>Notas de estado<textarea name="system.estado.notas">{{system.estado.notas}}</textarea></label>
+        </div>
+      </section>
+    </div>
+  </section>
+</form>
