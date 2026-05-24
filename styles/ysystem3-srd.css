@@ -3262,17 +3262,17 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-value-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
 }
 
 .ys-value-grid button,
 .ys-value-grid label {
-  min-height: 44px;
+  min-height: 58px;
   display: grid;
   gap: 2px;
   align-content: center;
-  padding: 4px 6px;
+  padding: 4px;
   color: var(--ims-ink);
   background: var(--ys-section-bg);
   border: 2px solid var(--ims-ink);
@@ -3283,7 +3283,7 @@ body.ys-theme-capa .ims-number-section h2 {
 .ys-value-grid button span,
 .ys-value-grid label span {
   color: var(--ims-muted);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 950;
   text-transform: uppercase;
 }
@@ -3291,7 +3291,7 @@ body.ys-theme-capa .ims-number-section h2 {
 .ys-value-grid button strong,
 .ys-value-grid label input {
   color: var(--ims-plum);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 1000;
 }
 
@@ -3339,6 +3339,11 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-icon-actions button i {
   font-size: 12px;
+}
+
+.ys-icon-actions button.active {
+  color: var(--ims-plum);
+  background: #fff;
 }
 
 .ys-icon-actions button span {
@@ -3477,6 +3482,22 @@ body.ys-theme-capa .ims-number-section h2 {
   min-height: 20px;
 }
 
+.ys-skill-grid.summary[data-skill-edit="false"] .ims-dot,
+.ys-skill-grid.summary[data-skill-edit="false"] .ims-die {
+  cursor: default;
+  opacity: 0.62;
+}
+
+.ys-skill-grid.summary[data-skill-edit="false"] .ims-dot:hover,
+.ys-skill-grid.summary[data-skill-edit="false"] .ims-die:hover {
+  transform: none;
+}
+
+.ys-skill-grid.summary[data-skill-edit="true"] .ys-dice {
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 0 0 2px var(--ims-plum);
+}
+
 .ys-state-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
@@ -3488,7 +3509,7 @@ body.ys-theme-capa .ims-number-section h2 {
 .ys-state-grid.compact {
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 6px;
-  margin-bottom: 4px;
+  margin-bottom: 16px;
 }
 
 .ys-state-grid.compact input {
@@ -3509,6 +3530,8 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-health-labels {
   font-size: 10px;
+  margin-top: 10px;
+  margin-bottom: 8px;
 }
 
 .ys-health-track {
@@ -3539,6 +3562,7 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-summary-health {
   min-width: 520px;
+  margin-top: 6px;
 }
 
 .ys-summary-state .ys-health-track button {
@@ -3554,6 +3578,17 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-summary-state .ys-health-track b {
   font-size: 11px;
+}
+
+.ys-summary-state .ys-health-track .threshold em,
+.ys-health-card .ys-health-track .threshold em,
+.ys-stability-card .ys-stability-track .threshold em {
+  top: 0;
+}
+
+.ys-stability-labels {
+  margin-top: 10px;
+  margin-bottom: 8px;
 }
 
 .ys-compact-card {

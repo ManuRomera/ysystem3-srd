@@ -231,7 +231,16 @@ export class ImsersoActorSheet extends ActorSheet {
     }));
     html.find("[data-stability-damage]").on("click", () => this._withScroll(() => this._askNumber("Perder Estabilidad", "Puntos de Estabilidad perdidos", (n) => this.actor.applyStabilityDamage(n))));
     html.find("[data-stability-heal]").on("click", () => this._withScroll(() => this._askNumber("Recuperar Estabilidad", "Puntos de Estabilidad recuperados", (n) => this.actor.healStability(n))));
+    html.find("[data-toggle-skill-edit]").on("click", (ev) => {
+      const button = ev.currentTarget;
+      const grid = button.closest(".ys-card")?.querySelector("[data-skill-edit]");
+      const enabled = grid?.dataset.skillEdit === "true";
+      if (grid) grid.dataset.skillEdit = enabled ? "false" : "true";
+      button.classList.toggle("active", !enabled);
+    });
     html.find("[data-skill-dot]").on("click", (ev) => {
+      const editContainer = ev.currentTarget.closest("[data-skill-edit]");
+      if (editContainer && editContainer.dataset.skillEdit !== "true") return;
       const el = ev.currentTarget;
       this._withScroll(() => this.actor.update({ [`system.habilidades.${el.dataset.skillDot}.dados`]: Number(el.dataset.value) }));
     });

@@ -7,6 +7,16 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.2] — 2026-05-24
+
+### Cambiado
+- Compactado el bloque de Valores en la hoja de resumen para ocupar una altura equivalente al bloque de Atributos.
+- Separadas las marcas de umbral `RF`, `RM`, `-1D`, `-2D` y `-3D` de los campos y etiquetas de Salud/Estabilidad para evitar solapes visuales.
+- La edición de dados de habilidades en el resumen queda bloqueada por defecto y se activa con un botón de llave inglesa.
+
+### Añadido
+- Campo de Punto de guion en la ficha de PJ, con valor actual, máximo, estado de uso, nota y ayuda contextual.
+
 ## [0.3.1] — 2026-05-24
 
 ### Corregido

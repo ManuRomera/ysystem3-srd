@@ -42,6 +42,7 @@ export const SHEET_HELP = {
     resistenciaFisica: { title: "Resistencia fisica", body: "12 - bonus FUE. Tirada de 3D (sin atributo) al cruzar umbrales de Salud; fallo = inconsciencia." },
     resistenciaMental: { title: "Resistencia mental", body: "12 - bonus CAR. Tirada de 3D al cruzar umbrales de Estabilidad; fallo = crisis temporal." },
     defectos: { title: "Defectos", body: "Grave: repetir con -1D y ganas 1 proeza. Leve: repetir 1 vez por sesion. El DJ obliga a repetir la tirada." },
+    puntoGuion: { title: "Punto de guion", body: "Recurso narrativo de Ysystem3 para introducir una ventaja, elemento o giro pactado con el DJ. Normalmente se recupera por aventura o sesion segun el tono de mesa." },
     ataque: { title: "Ataque (SRD)", body: "Lucha/Punteria vs Agilidad. Dano segun tipo de arma (ver reglas). Critico x2 e ignora armadura. Maximo 5D en tiradas de habilidad." },
     danoReglado: { title: "Daño reglado", body: "Automatiza caidas, asfixia, venenos, hambre, sed, quemaduras y sobreesfuerzos." },
     empeoramiento: { title: "Aprendizaje", body: "YSYSTEM puede adaptarse por ambientacion. Usa este control para registrar cambios de atributo tras aventura si procede." }

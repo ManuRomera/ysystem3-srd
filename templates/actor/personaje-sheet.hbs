@@ -98,9 +98,11 @@
         <section class="ys-card ys-wide-card ys-summary-skills-card">
           <header>
             <h2>Habilidades</h2>
-            <p>Clic en el nombre para tirar. Clic en cada dado para marcar 1D, 2D o 3D.</p>
+            <div class="ys-icon-actions">
+              <button type="button" data-toggle-skill-edit title="Editar dados de habilidad"><i class="fas fa-wrench"></i><span>Editar</span></button>
+            </div>
           </header>
-          <div class="ys-skill-grid summary">
+          <div class="ys-skill-grid summary" data-skill-edit="false">
             {{#each habilidades}}
             <div class="ys-skill-row">
               <button type="button" data-help-type="skill" data-help-key="{{key}}" data-roll-skill="{{key}}">
@@ -134,7 +136,11 @@
             <label>Defecto grave<input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
             <label class="check"><input type="checkbox" name="system.defectos.leveUsado" {{imsChecked system.defectos.leveUsado}}> Defecto leve usado</label>
             <label class="check"><input type="checkbox" name="system.recuerdo.usado" {{imsChecked system.recuerdo.usado}}> Recuerdo usado</label>
+            <label data-help-type="rule" data-help-key="puntoGuion">Punto de guion<input type="number" name="system.puntoGuion.valor" value="{{system.puntoGuion.valor}}"></label>
+            <label data-help-type="rule" data-help-key="puntoGuion">Máx. punto de guion<input type="number" name="system.puntoGuion.max" value="{{system.puntoGuion.max}}"></label>
+            <label class="check" data-help-type="rule" data-help-key="puntoGuion"><input type="checkbox" name="system.puntoGuion.usado" {{imsChecked system.puntoGuion.usado}}> Punto de guion usado</label>
             <label>Nota del recuerdo<textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
+            <label>Nota del punto de guion<textarea name="system.puntoGuion.nota">{{system.puntoGuion.nota}}</textarea></label>
           </div>
         </section>
       </main>

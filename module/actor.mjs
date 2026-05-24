@@ -300,6 +300,7 @@ export class ImsersoActor extends Actor {
     };
     sys.proezas ??= { valor: 0, inicial: 0 };
     if (!sys.proezas.inicial) sys.proezas.inicial = Math.floor((number(sys.atributos?.fue, 0) + number(sys.atributos?.int, 0)) / 2) + 3;
+    sys.puntoGuion ??= { valor: 1, max: 1, usado: false, nota: "" };
     sys.penalizadorDados = healthPenalty(sys.salud?.valor);
     sys.inconscienteAuto = number(sys.salud?.valor, 0) === 1;
     sys.muertoAuto = number(sys.salud?.valor, 0) <= 0;
