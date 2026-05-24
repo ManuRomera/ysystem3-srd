@@ -1,4 +1,4 @@
-import { IMSERSO, attackConfig, attackAttributeDamage } from "./config.mjs";
+import { IMSERSO, attackConfig, attackAttributeDamage, normalizeSkills } from "./config.mjs";
 import { ARQUETIPOS } from "./arquetipos-data.mjs";
 import { buildReglasJournals, getAchaque } from "./reglas-data.mjs";
 import { ImsersoActor } from "./actor.mjs";
@@ -59,6 +59,7 @@ Hooks.once("ready", async () => {
   if (!game.user.isGM) return;
   await repairCoreSheetFlags();
   let seeded = 0;
+  seeded += await repairActorSkillData();
   await cleanupLegacyArchetypeActorPack();
 
   const reglasResult = await seedPack({ name: "reglas-diarios", label: "Reglas y ayudas", documentName: "JournalEntry", data: buildReglasJournals() });
@@ -66,7 +67,7 @@ Hooks.once("ready", async () => {
   seeded += await ensureCoreMacros();
 
   await showWelcomeDialog();
-  if (seeded > 0) ui.notifications?.info(`YSYSTEM3 SRD: ${seeded} entradas preparadas en compendios.`);
+  if (seeded > 0) ui.notifications?.info(`YSYSTEM3 SRD: ${seeded} datos o entradas preparados.`);
 });
 
 Hooks.on("updateSetting", (setting) => {
@@ -858,6 +859,22 @@ async function cleanupLegacyArchetypeActorPack() {
   const seeded = docs.filter((doc) => doc.getFlag?.(IMSERSO.ID, "seeded"));
   for (const doc of seeded) await doc.delete();
   if (seeded.length) console.log(`YSYSTEM3 SRD | Eliminados ${seeded.length} arquetipos antiguos creados como actores.`);
+}
+
+async function repairActorSkillData() {
+  const updates = [];
+  for (const actor of game.actors.contents) {
+    if (!["personaje", "pnj"].includes(actor.type)) continue;
+    const normalized = normalizeSkills(actor.system?.habilidades ?? {});
+    const current = actor.system?.habilidades ?? {};
+    const needsRepair = Object.keys(IMSERSO.habilidades).some((key) => {
+      const dice = Number(current[key]?.dados ?? current[key]);
+      return !Number.isFinite(dice) || dice < 1 || dice > 3;
+    });
+    if (needsRepair) updates.push({ _id: actor.id, "system.habilidades": normalized });
+  }
+  if (updates.length) await Actor.updateDocuments(updates);
+  return updates.length;
 }
 
 async function repairCoreSheetFlags() {

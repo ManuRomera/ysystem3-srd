@@ -7,6 +7,13 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.1] — 2026-05-24
+
+### Corregido
+- Se corrige la lectura de dados de habilidad en las tiradas desde la hoja. Si una ficha antigua no tiene `system.habilidades.<habilidad>.dados` persistido, la tirada usa 1D por defecto en lugar de quedarse en 0D y sumar solo atributo.
+- Se añade reparación automática al abrir el mundo para completar las 24 habilidades de PJ/PNJ con valores legales de 1D a 3D, preservando los rangos ya existentes.
+- Las tarjetas de tirada muestran la reserva base de la habilidad en el texto de la tirada para facilitar la comprobación en mesa.
+
 ## [0.3.0] — 2026-05-24
 
 ### Corregido

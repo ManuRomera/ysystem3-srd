@@ -18,6 +18,12 @@ function number(value, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+function finiteNumber(value, fallback = 0) {
+  if (value === null || value === undefined || value === "") return fallback;
+  const n = Number(value?.dados ?? value);
+  return Number.isFinite(n) ? n : fallback;
+}
+
 function healthPenalty(salud) {
   const value = number(salud, 0);
   if (value < 4) return 3;
@@ -31,7 +37,7 @@ function calcAplomo(system) {
 }
 
 function calcAgilidad(system) {
-  const atletismo = number(system.habilidades?.atletismo?.dados, 1);
+  const atletismo = finiteNumber(system.habilidades?.atletismo?.dados, 1);
   return (atletismo * 3) + number(system.atributos?.des, 0);
 }
 
@@ -49,6 +55,27 @@ function calcResistenciaMental(system) {
 
 function clampDice(value) {
   return Math.min(3, Math.max(1, number(value, 1)));
+}
+
+function skillDice(actor, skillKey) {
+  const candidates = [
+    actor.system?.efectivos?.habilidades?.[skillKey]?.dados,
+    actor.system?.habilidades?.[skillKey]?.dados,
+    actor.system?.habilidades?.[skillKey],
+    1
+  ];
+  for (const candidate of candidates) {
+    const n = finiteNumber(candidate, NaN);
+    if (Number.isFinite(n)) return Math.min(3, Math.max(1, n));
+  }
+  return 1;
+}
+
+function attributeValue(actor, attrKey) {
+  return finiteNumber(
+    actor.system?.efectivos?.atributos?.[attrKey],
+    finiteNumber(actor.system?.atributos?.[attrKey], 0)
+  );
 }
 
 async function rollExplodingD6(count) {
@@ -388,9 +415,9 @@ export class ImsersoActor extends Actor {
     const targetToken = firstTargetToken();
     const target = targetToken?.actor ?? null;
     const opposedDifficulty = skill.oposicion ? fixedValue(target, skill.oposicion) : null;
-    let attr = number(this.system.efectivos?.atributos?.[attrKey], this.system.atributos?.[attrKey]);
+    let attr = attributeValue(this, attrKey);
     if (["des", "fue"].includes(attrKey)) attr -= number(this.system.efectivos?.mods?.proteccionPenalizacion, 0);
-    const baseDice = number(this.system.efectivos?.habilidades?.[skillKey]?.dados, this.system.habilidades?.[skillKey]?.dados);
+    const baseDice = skillDice(this, skillKey);
     const defaults = {
       dificultad: options.dificultad ?? opposedDifficulty ?? IMSERSO.srd.defaultDifficulty,
       extraDados: options.extraDados ?? 0,
@@ -431,7 +458,7 @@ export class ImsersoActor extends Actor {
       atributo: attr,
       bonus,
       dificultad: number(data.dificultad, IMSERSO.srd.defaultDifficulty),
-      flavor: rollFlavorForSkill(skillKey, attrKey),
+      flavor: `${rollFlavorForSkill(skillKey, attrKey)} · ${baseDice}D base`,
       tipo: "habilidad",
       allowYayoReroll: !(data.defectoGrave || data.defectoLeve || data.achaqueMayor || data.achaqueMenor)
     });
