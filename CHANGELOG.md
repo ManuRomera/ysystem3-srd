@@ -7,6 +7,16 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.2.1] — 2026-05-24
+
+### Corregido
+- Se actualiza el manifiesto `system.json` para apuntar al asset de descarga `v0.2.1`.
+- Se corrige el workflow de publicación para generar un ZIP instalable por Foundry VTT.
+- El ZIP de release empaqueta el sistema dentro de la carpeta `ysystem3-srd/`, que es el formato esperado para instalación manual o mediante manifiesto.
+- Se añade ejecución manual del workflow (`workflow_dispatch`) para poder regenerar el release sin crear un tag localmente.
+
+---
+
 ## [0.2.0] — 2026-05-24
 
 ### Primera publicación pública
