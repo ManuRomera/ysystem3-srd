@@ -67,6 +67,7 @@ export class ImsersoActorSheet extends ActorSheet {
     context.config = IMSERSO;
     context.isGM = game.user.isGM;
     context.sheetLayout = game.settings?.get?.(IMSERSO.ID, "sheetLayout") ?? "screen";
+    context.skillEditEnabled = !!this._summarySkillEdit;
     context.logoPath = `systems/${IMSERSO.ID}/assets/ysystem-icon.png`;
     context.atributos = entries(IMSERSO.atributos).map(([key, cfg]) => ({
       key,
@@ -215,6 +216,8 @@ export class ImsersoActorSheet extends ActorSheet {
     html.find("[data-boost-defense]").on("click", () => this._withScroll(() => this.actor.boostDefenseYayo()));
     html.find("[data-gain-yayo]").on("click", () => this._withScroll(() => this.actor.gainProezas(1)));
     html.find("[data-spend-yayo]").on("click", () => this._withScroll(() => this.actor.spendProezas(1)));
+    html.find("[data-gain-punto-guion]").on("click", () => this._withScroll(() => this.actor.gainPuntoGuion(1)));
+    html.find("[data-spend-punto-guion]").on("click", () => this._withScroll(() => this.actor.spendPuntoGuion(1)));
     html.find("[data-heal]").on("click", () => this._withScroll(() => this._askNumber("Curar Salud", "Puntos a recuperar", (n) => this.actor.heal(n))));
     html.find("[data-damage]").on("click", () => this._withScroll(() => this._askNumber("Aplicar daño", "Puntos de Salud perdidos", (n) => this.actor.applyDamage(n))));
     html.find("[data-health]").on("click", (ev) => this._withScroll(() => {
@@ -236,6 +239,7 @@ export class ImsersoActorSheet extends ActorSheet {
       const grid = button.closest(".ys-card")?.querySelector("[data-skill-edit]");
       const enabled = grid?.dataset.skillEdit === "true";
       if (grid) grid.dataset.skillEdit = enabled ? "false" : "true";
+      this._summarySkillEdit = !enabled;
       button.classList.toggle("active", !enabled);
     });
     html.find("[data-skill-dot]").on("click", (ev) => {
@@ -344,7 +348,7 @@ export class ImsersoActorSheet extends ActorSheet {
     const target = event.currentTarget;
     this._imsHelpTimer = window.setTimeout(() => {
       this._openContextHelp(target, original.clientX, original.clientY, { hover: true });
-    }, 2200);
+    }, 2750);
   }
 
   _clearContextHelpTimer() {

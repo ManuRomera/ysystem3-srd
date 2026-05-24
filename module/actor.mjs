@@ -461,6 +461,7 @@ export class ImsersoActor extends Actor {
       dificultad: number(data.dificultad, IMSERSO.srd.defaultDifficulty),
       flavor: `${rollFlavorForSkill(skillKey, attrKey)} · ${baseDice}D base`,
       tipo: "habilidad",
+      proezaSpent: usesProezaDado,
       allowYayoReroll: !(data.defectoGrave || data.defectoLeve || data.achaqueMayor || data.achaqueMenor)
     });
 
@@ -1140,6 +1141,48 @@ export class ImsersoActor extends Actor {
 
   async gainYayopoints(amount = 1, notify = true) {
     return this.gainProezas(amount, notify);
+  }
+
+  async spendPuntoGuion(amount = 1) {
+    if (this.type !== "personaje") return;
+    const current = number(this.system.puntoGuion?.valor, 0);
+    if (current < amount) {
+      ui.notifications.warn(`${this.name} no tiene puntos de guion suficientes (${current}/${amount}).`);
+      return false;
+    }
+    const next = Math.max(0, current - amount);
+    await this.update({
+      "system.puntoGuion.valor": next,
+      "system.puntoGuion.usado": next <= 0
+    });
+    return this._announcePuntoGuion("gasta", amount, current, next);
+  }
+
+  async gainPuntoGuion(amount = 1) {
+    if (this.type !== "personaje") return;
+    const current = number(this.system.puntoGuion?.valor, 0);
+    const max = Math.max(1, number(this.system.puntoGuion?.max, 1));
+    const next = Math.min(max, current + amount);
+    if (next === current) {
+      ui.notifications.info(`${this.name} ya tiene el punto de guion al maximo (${current}/${max}).`);
+      return false;
+    }
+    await this.update({
+      "system.puntoGuion.valor": next,
+      "system.puntoGuion.usado": next <= 0
+    });
+    return this._announcePuntoGuion("recupera", next - current, current, next);
+  }
+
+  async _announcePuntoGuion(verb, amount, before, after) {
+    return ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      content: `
+        <div class="ims-chat-card">
+          <header><h3>Punto de guion</h3><strong>${after}</strong></header>
+          <p><strong>${this.name}</strong> ${verb} ${amount} punto(s) de guion: ${before} → ${after}.</p>
+        </div>`
+    });
   }
 
   async _announceProezas(verb, amount, before, after) {

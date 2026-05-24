@@ -499,7 +499,7 @@ async function renderSelectedReroll(actor, data, result, details) {
     pifia: result.pifia,
     exito: result.exito,
     canReroll: false,
-    cssClass: result.cssClass,
+    cssClass: `${result.cssClass}${result.exito ? " proeza-exito" : ""}`,
     title: result.title,
     diceFaces: details.finalFaces,
     keptFaces: details.keptFaces,

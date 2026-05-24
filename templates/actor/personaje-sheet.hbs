@@ -55,6 +55,8 @@
             <div class="ys-icon-actions">
               <button type="button" data-gain-yayo title='Ganar {{ysTerm "resource"}}'><i class="fas fa-plus"></i><span>{{ysTerm "resource"}}</span></button>
               <button type="button" data-spend-yayo title='Gastar {{ysTerm "resource"}}'><i class="fas fa-minus"></i><span>{{ysTerm "resource"}}</span></button>
+              <button type="button" data-gain-punto-guion title="Recuperar punto de guion"><i class="fas fa-circle-plus"></i><span>Punto de guion</span></button>
+              <button type="button" data-spend-punto-guion title="Gastar punto de guion"><i class="fas fa-circle-minus"></i><span>Punto de guion</span></button>
               <button type="button" data-boost-defense title='+{{ysFixed "aplomo"}}/{{ysFixed "agilidad"}}'><i class="fas fa-shield"></i><span>Defensa</span></button>
             </div>
           </header>
@@ -63,6 +65,7 @@
             <button type="button" data-help-type="rule" data-help-key="aplomo"><span>{{ysFixed "aplomo"}}</span><strong>{{system.aplomo}}</strong></button>
             <button type="button" data-help-type="rule" data-help-key="perspicacia"><span>{{ysFixed "perspicacia"}}</span><strong>{{system.perspicacia}}</strong></button>
             <button type="button" data-help-type="rule" data-help-key="proezas"><span>{{ysTerm "resource"}}</span><strong>{{system.proezas.valor}}/{{system.proezas.inicial}}</strong></button>
+            <button type="button" data-help-type="rule" data-help-key="puntoGuion"><span>Punto guion</span><strong>{{system.puntoGuion.valor}}/{{system.puntoGuion.max}}</strong></button>
           </div>
         </section>
 
@@ -99,10 +102,10 @@
           <header>
             <h2>Habilidades</h2>
             <div class="ys-icon-actions">
-              <button type="button" data-toggle-skill-edit title="Editar dados de habilidad"><i class="fas fa-wrench"></i><span>Editar</span></button>
+              <button type="button" class="{{#if skillEditEnabled}}active{{/if}}" data-toggle-skill-edit title="Editar dados de habilidad"><i class="fas fa-wrench"></i><span>Editar</span></button>
             </div>
           </header>
-          <div class="ys-skill-grid summary" data-skill-edit="false">
+          <div class="ys-skill-grid summary" data-skill-edit="{{#if skillEditEnabled}}true{{else}}false{{/if}}">
             {{#each habilidades}}
             <div class="ys-skill-row">
               <button type="button" data-help-type="skill" data-help-key="{{key}}" data-roll-skill="{{key}}">
@@ -136,11 +139,7 @@
             <label>Defecto grave<input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
             <label class="check"><input type="checkbox" name="system.defectos.leveUsado" {{imsChecked system.defectos.leveUsado}}> Defecto leve usado</label>
             <label class="check"><input type="checkbox" name="system.recuerdo.usado" {{imsChecked system.recuerdo.usado}}> Recuerdo usado</label>
-            <label data-help-type="rule" data-help-key="puntoGuion">Punto de guion<input type="number" name="system.puntoGuion.valor" value="{{system.puntoGuion.valor}}"></label>
-            <label data-help-type="rule" data-help-key="puntoGuion">Máx. punto de guion<input type="number" name="system.puntoGuion.max" value="{{system.puntoGuion.max}}"></label>
-            <label class="check" data-help-type="rule" data-help-key="puntoGuion"><input type="checkbox" name="system.puntoGuion.usado" {{imsChecked system.puntoGuion.usado}}> Punto de guion usado</label>
             <label>Nota del recuerdo<textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
-            <label>Nota del punto de guion<textarea name="system.puntoGuion.nota">{{system.puntoGuion.nota}}</textarea></label>
           </div>
         </section>
       </main>

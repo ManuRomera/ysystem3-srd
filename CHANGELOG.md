@@ -7,6 +7,19 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.3] — 2026-05-24
+
+### Cambiado
+- Movido el Punto de guion al bloque de Valores como recurso consumible junto a Proezas.
+- Reubicadas las etiquetas de umbral `RF`, `RM`, `-1D`, `-2D` y `-3D` en el espacio entre campos y casillas de Salud/Estabilidad.
+- La llave inglesa de habilidades conserva el modo edición activo tras varias modificaciones hasta desactivarla o cerrar la hoja.
+- Mejoradas las tarjetas de tirada del chat con resultado más visible, estados por color y color especial cuando una proeza convierte la tirada en éxito.
+- Ampliado el tiempo de espera de la ayuda contextual al pasar el ratón por la ficha.
+
+### Añadido
+- Compendio de reglas `Reglas YSYSTEM3 SRD` con entradas de Journal generadas desde el markdown de reglas.
+- Textos de ayuda contextual más completos para las reglas principales.
+
 ## [0.3.2] — 2026-05-24
 
 ### Cambiado

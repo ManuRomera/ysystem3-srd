@@ -33,19 +33,19 @@ export const SHEET_HELP = {
     supervivencia: { title: "Supervivencia", subtitle: "PER", body: "Refugio, alimento, agua y recursos en espacios hostiles." }
   },
   rule: {
-    proezas: { title: "Proezas (SRD)", body: "Inicio de sesion: floor((FUE+INT)/2)+3. Repetir dados, +1D en habilidad, buff a valores fijos, +D de dano en combate o anular critico enemigo." },
-    agilidad: { title: "Agilidad", body: "3 x dados de Atletismo + bonus DES. Dificultad de ataques y acciones fisicas en oposicion." },
-    aplomo: { title: "Aplomo", body: "Bonus CAR + bonus INT + 5. Cordura, oposicion social y tiradas de miedo." },
-    perspicacia: { title: "Perspicacia", body: "Bonus INT + bonus PER + 5. Detectar enganos, ocultacion y sigilo." },
-    salud: { title: "Salud", body: "Bonus FUE x 2 + 10 + 1D6. Penalizadores: -1D (<11), -2D (<7), -3D (<4). A 0 muere." },
-    estabilidad: { title: "Estabilidad", body: "Aplomo + 5 + 1D6. A 0: locura permanente. Umbrales de Resistencia mental en 16, 11, 7, 4 y 2." },
-    resistenciaFisica: { title: "Resistencia fisica", body: "12 - bonus FUE. Tirada de 3D (sin atributo) al cruzar umbrales de Salud; fallo = inconsciencia." },
-    resistenciaMental: { title: "Resistencia mental", body: "12 - bonus CAR. Tirada de 3D al cruzar umbrales de Estabilidad; fallo = crisis temporal." },
-    defectos: { title: "Defectos", body: "Grave: repetir con -1D y ganas 1 proeza. Leve: repetir 1 vez por sesion. El DJ obliga a repetir la tirada." },
-    puntoGuion: { title: "Punto de guion", body: "Recurso narrativo de Ysystem3 para introducir una ventaja, elemento o giro pactado con el DJ. Normalmente se recupera por aventura o sesion segun el tono de mesa." },
-    ataque: { title: "Ataque (SRD)", body: "Lucha/Punteria vs Agilidad. Dano segun tipo de arma (ver reglas). Critico x2 e ignora armadura. Maximo 5D en tiradas de habilidad." },
-    danoReglado: { title: "Daño reglado", body: "Automatiza caidas, asfixia, venenos, hambre, sed, quemaduras y sobreesfuerzos." },
-    empeoramiento: { title: "Aprendizaje", body: "YSYSTEM puede adaptarse por ambientacion. Usa este control para registrar cambios de atributo tras aventura si procede." }
+    proezas: { title: "Proezas (SRD)", body: "Representan el empuje heroico del PJ. Al inicio de sesion se calculan como la mitad redondeada hacia abajo de FUE + INT, +3. Pueden gastarse para repetir dados de una tirada fallada, anadir 1D antes de tirar, mejorar temporalmente Agilidad/Aplomo/Perspicacia, aumentar dano o cancelar un critico enemigo.", details: ["No se puede superar 5D en una tirada de habilidad.", "El +1D por proeza es incompatible con Recuerdo cuando... en la misma tirada."] },
+    agilidad: { title: "Agilidad", body: "Valor fijo y pasivo para resistir ataques, persecuciones y maniobras fisicas contra el personaje. Se calcula con 3 x dados de Atletismo + DES. En Ysystem3 evita tirar por el PNJ: el PJ tira contra este valor cuando corresponde." },
+    aplomo: { title: "Aplomo", body: "Valor fijo y pasivo para resistir presion social, intimidacion, seduccion, miedo y situaciones que ponen a prueba la entereza. Se calcula con CAR + INT + 5 y tambien sirve de base para Estabilidad." },
+    perspicacia: { title: "Perspicacia", body: "Valor fijo y pasivo para detectar enganos, ocultacion, sigilo y detalles relevantes cuando alguien actua contra el personaje. Se calcula con INT + PER + 5." },
+    salud: { title: "Salud", body: "Mide la capacidad de resistir dano fisico. La Salud inicial se calcula con FUE x 2 + 10 + 1D6. Al bajar de ciertos umbrales se aplican penalizadores a las tiradas y pueden activarse tiradas de Resistencia fisica.", details: ["11 o menos: -1D.", "7 o menos: -2D.", "4 o menos: -3D.", "0 Salud: muerte salvo regla o tono de mesa que indique otra cosa."] },
+    estabilidad: { title: "Estabilidad", body: "Mide la resistencia mental ante panico, horror, trauma o presion extrema. Se calcula con Aplomo + 5 + 1D6. Al cruzar umbrales se tiran pruebas de Resistencia mental; a 0 se produce una ruptura o locura permanente segun la escena." },
+    resistenciaFisica: { title: "Resistencia fisica", body: "Valor objetivo para comprobar si el personaje se mantiene consciente al cruzar umbrales de Salud. Se calcula como 12 - FUE. La tirada se hace normalmente con 3D sin sumar atributo; si falla, el PJ cae inconsciente." },
+    resistenciaMental: { title: "Resistencia mental", body: "Valor objetivo para comprobar si el personaje aguanta mentalmente al cruzar umbrales de Estabilidad. Se calcula como 12 - CAR. La tirada se hace normalmente con 3D; si falla, sufre una crisis temporal." },
+    defectos: { title: "Defectos", body: "Los defectos permiten al DJ complicar una tirada cuando encajan con la ficcion. Un defecto grave obliga a repetir con -1D y el PJ gana 1 proeza. Un defecto leve permite forzar una repeticion una vez por sesion, sin dar proeza." },
+    puntoGuion: { title: "Punto de guion", body: "Recurso narrativo para introducir un elemento, ventaja, contacto, detalle o giro razonable en la historia con aprobacion del DJ. No mejora directamente una tirada como una proeza: modifica la situacion narrativa. Normalmente se recupera al comienzo de una aventura o cuando el tono de campana lo permita." },
+    ataque: { title: "Ataque (SRD)", body: "Los ataques se resuelven con Lucha o Punteria contra la Agilidad del objetivo. El dano depende del arma y normalmente suma el atributo indicado. Un critico duplica el dano e ignora armadura; una pifia puede dejar vendido al atacante o provocar una complicacion.", details: ["Las tiradas de habilidad nunca superan 5D.", "Las protecciones pueden reducir dano o aumentar la dificultad defensiva, segun sean armadura o escudo."] },
+    danoReglado: { title: "Daño reglado", body: "Atajos para resolver fuentes de dano no procedentes de un ataque ordinario: caidas, asfixia, venenos, hambre, sed, quemaduras, sobreesfuerzos y riesgos ambientales. Ajusta la cantidad y automatismo segun la situacion de juego." },
+    empeoramiento: { title: "Aprendizaje", body: "Ysystem3 permite adaptar la evolucion de los PJ al tono de la ambientacion. Usa este control para registrar cambios de atributo o deterioros pactados tras la aventura, especialmente en campanas donde la experiencia no solo mejora al personaje." }
   },
   section: {
     datos: { title: "Datos", body: "Identidad, perfil, profesion y motivacion del PJ." },

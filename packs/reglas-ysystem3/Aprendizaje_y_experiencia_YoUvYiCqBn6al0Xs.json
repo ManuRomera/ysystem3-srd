@@ -1,0 +1,51 @@
+{
+  "name": "Aprendizaje y experiencia",
+  "_id": "YoUvYiCqBn6al0Xs",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Aprendizaje y experiencia",
+      "type": "text",
+      "_id": "9mEpj3un1IPzaX1c",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p>permiten alcanzar<br>nuevas cotas<br>de poder.<br>1 Subir una habilidad de 1 a 2D: 5 puntos de Experiencia.<br>2 Subir una habilidad de 2 a 3D: 10 puntos de Experiencia.<br>3 Aumentar en 1 punto cualquiera de los cinco atributos básicos: nuevo valor del bonificador x 3 puntos de Experiencia. Las subidas han de hacerse punto a punto. Por otra parte, hay que recordar que la alteración de los bonificadores de<br>los atributos puede modificar muchos valores derivados, como,<br>por ejemplo, el Aplomo, la Perspicacia, los puntos de Salud, la<br>Resistencia Física o la Iniciativa.<br>LA<br>EXPERIENCIA<br>Y EL<br>APRENDIZAJE<br>APRENDIZAJE a 1D semanas (para pasar de 1 a 2D) o 1D meses (para pasar de 2 a 3D), tras lo cual un maestro con más dados en la habilidad que su discípulo debe realizar una tirada<br>y quedar por debajo del valor de Perspicacia de este último.<br>En caso de un PNJ maestro, el DJ puede tener que improvisar<br>el número de dados que tendría en la habilidad.<br>PUNTOS DE EXPERIENCIA a Se ganan de 1 a 3 por objetivo<br>concreto alcanzado en la sesión, por desarrollar ideas geniales o interpretaciones sublimes y por cumplir con la Motivación del PJ a lo largo de la aventura. Los puntos obtenidos se emplean para aumentar las habilidades (5 puntos<br>para pasar de 1 a 2D; 10 para pasar de 2 a 3D) y los atributos (nuevo valor del bonificador x 3 puntos).<br>RESUMEN<br>SISTEMA<br>SISTEMA</p>\n<p>CREACIÓN DE PJ<br>CREACIÓN DE PJ<br>En Ysystem3, la generación de nuevos PJ es fácil y divertida, aunque en ocasiones se opta por usar PJ pregenerados (como sucede, por ejemplo, con las aventuras y campañas publicadas en las<br>líneas Pergaminos de Midgard y Biblioteca de Asgard, de Walhalla Ediciones). En este último caso, cada PJ suele contar con un talento específico, característica de la que carecen los PJ creados<br>desde cero.<br>DISEÑA<br>TU<br>P<br>J<br>FUERZA<br>INTELIGENCIA<br>INTELIGENCIA<br>PERCEPCIÓN<br>DESTREZA<br>CARISMA<br>76 SISTEMA<br>SISTEMA</p>",
+        "markdown": "permiten alcanzar\nnuevas cotas\nde poder.\n1 Subir una habilidad de 1 a 2D: 5 puntos de Experiencia.\n2 Subir una habilidad de 2 a 3D: 10 puntos de Experiencia.\n3 Aumentar en 1 punto cualquiera de los cinco atributos básicos: nuevo valor del bonificador x 3 puntos de Experiencia. Las subidas han de hacerse punto a punto. Por otra parte, hay que recordar que la alteración de los bonificadores de\nlos atributos puede modificar muchos valores derivados, como,\npor ejemplo, el Aplomo, la Perspicacia, los puntos de Salud, la\nResistencia Física o la Iniciativa.\nLA\nEXPERIENCIA\nY EL\nAPRENDIZAJE\nAPRENDIZAJE a 1D semanas (para pasar de 1 a 2D) o 1D meses (para pasar de 2 a 3D), tras lo cual un maestro con más dados en la habilidad que su discípulo debe realizar una tirada\ny quedar por debajo del valor de Perspicacia de este último.\nEn caso de un PNJ maestro, el DJ puede tener que improvisar\nel número de dados que tendría en la habilidad.\nPUNTOS DE EXPERIENCIA a Se ganan de 1 a 3 por objetivo\nconcreto alcanzado en la sesión, por desarrollar ideas geniales o interpretaciones sublimes y por cumplir con la Motivación del PJ a lo largo de la aventura. Los puntos obtenidos se emplean para aumentar las habilidades (5 puntos\npara pasar de 1 a 2D; 10 para pasar de 2 a 3D) y los atributos (nuevo valor del bonificador x 3 puntos).\nRESUMEN\nSISTEMA\nSISTEMA\n\nCREACIÓN DE PJ\nCREACIÓN DE PJ\nEn Ysystem3, la generación de nuevos PJ es fácil y divertida, aunque en ocasiones se opta por usar PJ pregenerados (como sucede, por ejemplo, con las aventuras y campañas publicadas en las\nlíneas Pergaminos de Midgard y Biblioteca de Asgard, de Walhalla Ediciones). En este último caso, cada PJ suele contar con un talento específico, característica de la que carecen los PJ creados\ndesde cero.\nDISEÑA\nTU\nP\nJ\nFUERZA\nINTELIGENCIA\nINTELIGENCIA\nPERCEPCIÓN\nDESTREZA\nCARISMA\n76 SISTEMA\nSISTEMA"
+      },
+      "video": {},
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.3",
+        "createdTime": 1779649234524,
+        "modifiedTime": 1779649234524,
+        "lastModifiedBy": null
+      }
+    }
+  ],
+  "folder": null,
+  "sort": 1800000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.3",
+    "createdTime": 1779649234524,
+    "modifiedTime": 1779649234524,
+    "lastModifiedBy": null
+  }
+}

@@ -26,6 +26,7 @@ export async function rollYayo({
   flavor = "",
   tipo = "habilidad",
   yayoReroll = false,
+  proezaSpent = false,
   allowYayoReroll = true
 }) {
   const safeDice = clampDicePool(dice);
@@ -48,17 +49,18 @@ export async function rollYayo({
     && !yayoReroll
     && tipo !== "iniciativa"
     && tipo !== "miedo";
-  const result = { actor, label, roll, dice: safeDice, atributo, bonus, dificultad, flavor, tipo, total, sixes, critico, pifia, exito, canReroll, yayoReroll };
+  const result = { actor, label, roll, dice: safeDice, atributo, bonus, dificultad, flavor, tipo, total, sixes, critico, pifia, exito, canReroll, yayoReroll, proezaSpent };
   result.message = await sendRollToChat(result);
   return result;
 }
 
 export async function sendRollToChat(result) {
   const cls = result.critico ? "critico" : result.pifia ? "pifia" : result.exito ? "exito" : "fallo";
+  const cssClass = `${cls}${result.exito && (result.proezaSpent || result.yayoReroll) ? " proeza-exito" : ""}`;
   const title = result.critico ? "Éxito crítico" : result.pifia ? "Pifia" : result.exito ? "Éxito" : "Fallo";
   const content = await renderTemplate(`systems/${IMSERSO.ID}/templates/chat/roll-card.hbs`, {
     ...result,
-    cssClass: cls,
+    cssClass,
     title,
     diceFaces: result.roll.dice.flatMap((die) => die.results).map((r) => r.result),
     formula: result.roll.formula,
@@ -79,6 +81,7 @@ export async function sendRollToChat(result) {
           flavor: result.flavor,
           tipo: result.tipo,
           diceFaces: result.roll.dice.flatMap((die) => die.results).map((r) => r.result),
+          proezaSpent: result.proezaSpent,
           canReroll: result.canReroll,
           rerolled: false
         }

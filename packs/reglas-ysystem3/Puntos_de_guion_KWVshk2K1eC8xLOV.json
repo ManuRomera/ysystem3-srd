@@ -1,0 +1,51 @@
+{
+  "name": "Puntos de guion",
+  "_id": "KWVshk2K1eC8xLOV",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Puntos de guion",
+      "type": "text",
+      "_id": "VS2JoF4AMw4bPDq5",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p>PUNTOS<br>PUNTOS</p>\n<p>DE<br>GUION</p>\n<p>DE<br>GUION<br>PUNTOS DE GUION<br>En Ysystem3 cada jugador cuenta con 1 punto de guion por sesión (en el caso de partidas autoconclusivas o one-shots) o por<br>aventura (en el caso de campañas), es decir, igual que con el Recuerdo cuando..., que es la otra gran mecánica narrativa del reglamento. Estos puntos de guion se pueden gastar exclusivamente<br>para tres cosas:<br>1 Crear un contacto útil para el PJ. No obstante, que el contacto sea «útil» no significa que vaya a ayudar u ofrecer información de forma automática o gratuita. El DJ puede terminar de<br>concretar la relación que existe entre el contacto y el PJ para darle más profundidad, más interés narrativo o menos previsibilidad.<br>2 Crear un recurso dramático ambiental útil para el PJ (de<br>nuevo, siempre con la supervisión del DJ). Puede tratarse de la súbita llegada (o salida) de un tren, la aparición inesperada<br>de una patrulla de policía o el desprendimiento de algunas rocas en<br>medio de una tormenta ya declarada anteriormente por el DJ, por<br>poner algunos ejemplos.<br>3 Declarar la existencia de un objeto físico útil para el PJ<br>en las inmediaciones. El DJ debe supervisar que la presencia de ese objeto esté justificada y sea lógica, posible y plausible<br>en el contexto de la escena que se esté jugando. El objeto no tiene<br>que estar necesariamente a mano (o tal vez sí), pero siempre quedará cerca del PJ.<br>Los puntos de guion constituyen una de las mecánicas narrativas más potentes de Ysystem3, ya que permiten a los jugadores intervenir puntualmente en el mundo de la ficción casi como si fuesen directores de juego. Además, sirven para superar uno de los<br>problemas más recurrentes en las partidas de trama encarrilada o<br>de investigación, en las que una o varias malas tiradas pueden hacer que los PJ no se hagan con alguna pista clave y, en consecuencia, la trama no avance. Un uso inteligente de los puntos de guion<br>por parte de los jugadores, sobre todo a la hora de crear contactos<br>útiles, puede solventar eso con la complicidad del DJ.<br>«Milady, su punto de guion»<br>SISTEMA<br>SISTEMA</p>",
+        "markdown": "PUNTOS\nPUNTOS\n\nDE\nGUION\n\nDE\nGUION\nPUNTOS DE GUION\nEn Ysystem3 cada jugador cuenta con 1 punto de guion por sesión (en el caso de partidas autoconclusivas o one-shots) o por\naventura (en el caso de campañas), es decir, igual que con el Recuerdo cuando..., que es la otra gran mecánica narrativa del reglamento. Estos puntos de guion se pueden gastar exclusivamente\npara tres cosas:\n1 Crear un contacto útil para el PJ. No obstante, que el contacto sea «útil» no significa que vaya a ayudar u ofrecer información de forma automática o gratuita. El DJ puede terminar de\nconcretar la relación que existe entre el contacto y el PJ para darle más profundidad, más interés narrativo o menos previsibilidad.\n2 Crear un recurso dramático ambiental útil para el PJ (de\nnuevo, siempre con la supervisión del DJ). Puede tratarse de la súbita llegada (o salida) de un tren, la aparición inesperada\nde una patrulla de policía o el desprendimiento de algunas rocas en\nmedio de una tormenta ya declarada anteriormente por el DJ, por\nponer algunos ejemplos.\n3 Declarar la existencia de un objeto físico útil para el PJ\nen las inmediaciones. El DJ debe supervisar que la presencia de ese objeto esté justificada y sea lógica, posible y plausible\nen el contexto de la escena que se esté jugando. El objeto no tiene\nque estar necesariamente a mano (o tal vez sí), pero siempre quedará cerca del PJ.\nLos puntos de guion constituyen una de las mecánicas narrativas más potentes de Ysystem3, ya que permiten a los jugadores intervenir puntualmente en el mundo de la ficción casi como si fuesen directores de juego. Además, sirven para superar uno de los\nproblemas más recurrentes en las partidas de trama encarrilada o\nde investigación, en las que una o varias malas tiradas pueden hacer que los PJ no se hagan con alguna pista clave y, en consecuencia, la trama no avance. Un uso inteligente de los puntos de guion\npor parte de los jugadores, sobre todo a la hora de crear contactos\nútiles, puede solventar eso con la complicidad del DJ.\n«Milady, su punto de guion»\nSISTEMA\nSISTEMA"
+      },
+      "video": {},
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.3",
+        "createdTime": 1779649234524,
+        "modifiedTime": 1779649234524,
+        "lastModifiedBy": null
+      }
+    }
+  ],
+  "folder": null,
+  "sort": 800000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.3",
+    "createdTime": 1779649234524,
+    "modifiedTime": 1779649234524,
+    "lastModifiedBy": null
+  }
+}

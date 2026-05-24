@@ -2339,16 +2339,88 @@ body.ys-theme-capa .ims-number-section h2 {
   line-height: 1;
 }
 
+.ims-roll-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0 4px;
+}
+
+.ims-roll-result strong {
+  min-width: 0;
+  padding: 6px 8px;
+  color: #fff;
+  background: var(--ims-plum);
+  border: 2px solid var(--ims-ink);
+  border-radius: 4px;
+  font-size: 22px;
+  font-weight: 1000;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ims-roll-result span {
+  padding: 5px 7px;
+  color: var(--ims-ink);
+  background: var(--ys-section-bg);
+  border: 2px solid var(--ims-ink);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 1000;
+  white-space: nowrap;
+}
+
+.ims-roll.exito,
 .ims-roll.critico {
+  color: #102416;
+  background: #eef8ef;
+  border-left-color: #13652f;
+}
+
+.ims-roll.exito .ims-roll-result strong {
+  background: #13652f;
+}
+
+.ims-roll.critico {
+  background: #fff4fb;
   border-left-color: var(--ims-pink);
 }
 
+.ims-roll.critico .ims-roll-result strong {
+  background: var(--ims-pink);
+}
+
 .ims-roll.pifia {
+  color: #2b0d0d;
+  background: #fff0f0;
   border-left-color: var(--ims-danger);
 }
 
+.ims-roll.pifia .ims-roll-result strong {
+  background: var(--ims-danger);
+}
+
 .ims-roll.fallo {
+  color: #2a210c;
+  background: #fff8e1;
   border-left-color: var(--ims-warn);
+}
+
+.ims-roll.fallo .ims-roll-result strong {
+  color: var(--ims-ink);
+  background: var(--ims-warn);
+}
+
+.ims-roll.proeza-exito {
+  color: #171530;
+  background: #f1efff;
+  border-left-color: #5140a8;
+}
+
+.ims-roll.proeza-exito .ims-roll-result strong {
+  background: #5140a8;
 }
 
 .ims-dice-faces {
@@ -3262,7 +3334,7 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-value-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 6px;
 }
 
@@ -3509,7 +3581,7 @@ body.ys-theme-capa .ims-number-section h2 {
 .ys-state-grid.compact {
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .ys-state-grid.compact input {
@@ -3531,7 +3603,7 @@ body.ys-theme-capa .ims-number-section h2 {
 .ys-health-labels {
   font-size: 10px;
   margin-top: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 22px;
 }
 
 .ys-health-track {
@@ -3562,7 +3634,7 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-summary-health {
   min-width: 520px;
-  margin-top: 6px;
+  margin-top: 0;
 }
 
 .ys-summary-state .ys-health-track button {
@@ -3583,12 +3655,12 @@ body.ys-theme-capa .ims-number-section h2 {
 .ys-summary-state .ys-health-track .threshold em,
 .ys-health-card .ys-health-track .threshold em,
 .ys-stability-card .ys-stability-track .threshold em {
-  top: 0;
+  top: -19px;
 }
 
 .ys-stability-labels {
   margin-top: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 22px;
 }
 
 .ys-compact-card {

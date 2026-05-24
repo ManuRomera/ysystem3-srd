@@ -1,10 +1,13 @@
 <div class="ims-chat-card ims-roll {{cssClass}}">
   <header>
     <h3>{{label}}</h3>
-    <strong>{{title}}</strong>
   </header>
+  <div class="ims-roll-result">
+    <strong>{{title}}</strong>
+    <span>DF {{dificultad}}</span>
+  </div>
   <div class="ims-roll-total">{{total}}</div>
-  <p>{{flavor}} · DF {{dificultad}}</p>
+  <p>{{flavor}}</p>
   <div class="ims-dice-faces">
     {{#each diceFaces}}<span>{{this}}</span>{{/each}}
   </div>
