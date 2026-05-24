@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - "v*"
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -26,26 +25,23 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Verificar tag cuando el workflow se lance por etiqueta
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Verificar que el tag coincide con la versión en system.json
         shell: bash
         run: |
           TAG="${GITHUB_REF#refs/tags/v}"
           VERSION="${{ steps.version.outputs.version }}"
           if [ "$TAG" != "$VERSION" ]; then
             echo "ERROR: El tag (v$TAG) no coincide con la versión en system.json ($VERSION)"
+            echo "Actualiza la versión en system.json antes de crear el tag."
             exit 1
           fi
 
-      - name: Validar manifiestos
+      - name: Validar system.json
         shell: bash
         run: |
           jq empty system.json
-          jq empty manifest.json
           test "$(jq -r '.id' system.json)" = "ysystem3-srd"
-          test "$(jq -r '.id' manifest.json)" = "ysystem3-srd"
           test "$(jq -r '.download' system.json)" = "https://github.com/ManuRomera/ysystem3-srd/releases/download/v${{ steps.version.outputs.version }}/ysystem3-srd.zip"
-          test "$(jq -r '.download' manifest.json)" = "https://github.com/ManuRomera/ysystem3-srd/releases/download/v${{ steps.version.outputs.version }}/ysystem3-srd.zip"
 
       - name: Crear archivo zip del sistema
         shell: bash
@@ -71,17 +67,16 @@ jobs:
           VERSION="${{ steps.version.outputs.version }}"
           NOTES=$(awk "/^## \[$VERSION\]/,/^## \[/{if(/^## \[/ && !/^## \[$VERSION\]/) exit; print}" CHANGELOG.md | tail -n +2)
           if [ -z "$NOTES" ]; then
-            NOTES="Release técnico para empaquetar correctamente el sistema e instalarlo desde Foundry VTT mediante manifest."
+            NOTES="Release de la versión $VERSION."
           fi
           echo "notes<<EOF" >> "$GITHUB_OUTPUT"
           echo "$NOTES" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-      - name: Crear o actualizar Release en GitHub
+      - name: Crear Release en GitHub
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "v${{ steps.version.outputs.version }}"
-          target_commitish: ${{ github.sha }}
           name: "YSYSTEM3 SRD v${{ steps.version.outputs.version }}"
           body: |
             ## YSYSTEM3 SRD para Foundry VTT — versión ${{ steps.version.outputs.version }}
@@ -90,8 +85,8 @@ jobs:
 
             Pega esta URL en Foundry VTT → Sistemas → Instalar sistema → URL del Manifiesto:
 
-            ```text
-            https://raw.githubusercontent.com/ManuRomera/ysystem3-srd/main/manifest.json
+            ```
+            https://raw.githubusercontent.com/ManuRomera/ysystem3-srd/main/system.json
             ```
 
             ### Notas de esta versión
