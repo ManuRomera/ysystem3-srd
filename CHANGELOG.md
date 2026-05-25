@@ -7,6 +7,18 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.5] — 2026-05-25
+
+### Corregido
+- La hoja de PJ ya no guarda campos numéricos críticos como vacío al cerrar, evitando que desaparezcan Salud, Resistencias y Estabilidad al reabrir.
+- Las tiradas de habilidad ya no pierden dados por una Salud vacía guardada accidentalmente.
+- Mejora de contraste en fichas de items y poderes; el título deja de mostrarse blanco sobre fondo claro.
+
+### Cambiado
+- Rediseñadas las fichas de objetos para usar una cabecera clara, campos más compactos y descripciones legibles sin cortes innecesarios.
+- Retirado del manifest el compendio de aventura.
+- Desactivada la creación automática del compendio de mundo `Reglas y ayudas`; si existe de versiones anteriores, el sistema intenta eliminarlo al arrancar como GM.
+
 ## [0.3.4] — 2026-05-25
 
 ### Corregido

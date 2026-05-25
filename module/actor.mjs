@@ -18,6 +18,11 @@ function number(value, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+function numberOrFallback(value, fallback = 0) {
+  if (value === "" || value === null || value === undefined) return fallback;
+  return number(value, fallback);
+}
+
 function finiteNumber(value, fallback = 0) {
   if (value === null || value === undefined || value === "") return fallback;
   const n = Number(value?.dados ?? value);
@@ -51,6 +56,26 @@ function calcResistenciaFisica(system) {
 
 function calcResistenciaMental(system) {
   return 12 - number(system.atributos?.car, 0);
+}
+
+function ensureThresholds(target, thresholds = [16, 11, 7, 4, 2]) {
+  target.umbrales ??= {};
+  for (const threshold of thresholds) target.umbrales[threshold] ??= false;
+}
+
+function prepareResource(resource, { valor = 0, max = valor } = {}) {
+  const out = resource && typeof resource === "object" ? resource : {};
+  out.max = numberOrFallback(out.max, max);
+  out.valor = numberOrFallback(out.valor, out.max);
+  return out;
+}
+
+function prepareResistance(resource, fallback) {
+  const out = resource && typeof resource === "object" ? resource : {};
+  out.valor = numberOrFallback(out.valor, fallback);
+  out.primeraTirada = !!out.primeraTirada;
+  ensureThresholds(out);
+  return out;
 }
 
 function clampDice(value) {
@@ -270,7 +295,24 @@ function hazardCard(data) {
 export class ImsersoActor extends Actor {
   prepareBaseData() {
     super.prepareBaseData();
-    this.system.habilidades = normalizeSkills(this.system.habilidades);
+    const sys = this.system;
+    sys.habilidades = normalizeSkills(sys.habilidades);
+    if (this.type === "personaje") {
+      sys.atributos ??= {};
+      sys.salud = prepareResource(sys.salud, { valor: 18, max: 18 });
+      sys.estabilidad = prepareResource(sys.estabilidad, { valor: 18, max: 18 });
+      sys.resistenciaFisica = prepareResistance(sys.resistenciaFisica, calcResistenciaFisica(sys));
+      sys.resistenciaMental = prepareResistance(sys.resistenciaMental, calcResistenciaMental(sys));
+      sys.proezas = prepareResource(sys.proezas, { valor: 4, max: number(sys.proezas?.inicial, 4) });
+      sys.proezas.inicial = numberOrFallback(sys.proezas.inicial, sys.proezas.max);
+      sys.puntoGuion = prepareResource(sys.puntoGuion, { valor: 1, max: 1 });
+    }
+    if (this.type === "pnj") {
+      sys.atributos ??= {};
+      sys.salud = prepareResource(sys.salud, { valor: 10, max: 10 });
+      sys.resistenciaFisica ??= {};
+      sys.resistenciaFisica.valor = numberOrFallback(sys.resistenciaFisica.valor, calcResistenciaFisica(sys));
+    }
   }
 
   prepareDerivedData() {

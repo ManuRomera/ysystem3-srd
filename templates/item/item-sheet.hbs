@@ -1,8 +1,11 @@
 <form class="ims-sheet ims-item" autocomplete="off">
-  <header class="ims-pnj-header ims-item-header">
+  <header class="ims-item-header">
     <img src="{{item.img}}" data-edit="img" alt="">
     <div class="ims-item-head-main">
-      <input class="ims-title-input" name="name" value="{{item.name}}">
+      <div class="ims-item-title-block">
+        <span>{{item.type}}</span>
+        <input class="ims-title-input" name="name" value="{{item.name}}">
+      </div>
       <div class="ims-item-actions">
         <button type="button" data-item-use><i class="fas fa-dice-six"></i> Usar</button>
         <button type="button" data-item-chat><i class="fas fa-comment"></i> Chat</button>

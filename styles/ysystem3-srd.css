@@ -1741,59 +1741,99 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ims-item {
   display: grid;
+  grid-template-rows: auto auto minmax(96px, 1fr);
   gap: 8px;
   padding: 10px;
+  color: var(--ims-text);
+  background:
+    linear-gradient(90deg, rgba(61, 155, 85, 0.10), rgba(255, 255, 255, 0.62)),
+    var(--ims-paper);
 }
 
 .ims-item .ims-item-header {
-  grid-template-columns: 64px 1fr;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
   gap: 10px;
-  padding: 10px;
+  align-items: center;
+  padding: 8px;
+  color: var(--ims-ink);
+  background: #fffefa;
+  border: 3px solid var(--ims-ink);
+  box-shadow: 4px 4px 0 var(--ims-mint);
 }
 
 .ims-item .ims-item-header img {
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  object-position: center;
+  background: #fff;
   border: 2px solid var(--ims-ink);
 }
 
 .ims-item-head-main {
+  min-width: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 8px;
   align-items: center;
 }
 
+.ims-item-title-block {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.ims-item-title-block > span {
+  color: var(--ims-muted);
+  font-size: 11px;
+  font-weight: 1000;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 .ims-item .ims-title-input {
   min-width: 0;
-  font-size: 22px !important;
+  height: 34px;
+  padding: 2px 0 !important;
+  color: var(--ims-plum) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 3px solid var(--ims-ink) !important;
+  font-size: 24px !important;
+  font-weight: 1000 !important;
+  line-height: 1.05;
+  text-shadow: none !important;
 }
 
 .ims-item-actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(74px, auto));
+  grid-template-columns: repeat(2, minmax(70px, auto));
   gap: 6px;
 }
 
 .ims-item-actions button {
-  min-height: 34px;
+  min-height: 32px;
   margin: 0;
-  padding: 4px 10px;
+  padding: 4px 9px;
+  color: #fff;
   white-space: nowrap;
 }
 
 .ims-item-panel,
 .ims-item-description {
-  padding: 10px;
+  padding: 8px;
+  color: var(--ims-text);
   background: #fff;
   border: 3px solid var(--ims-ink);
-  box-shadow: 5px 5px 0 var(--ims-mint);
+  box-shadow: 4px 4px 0 var(--ims-mint);
 }
 
 .ims-item-fields {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px 10px;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 7px 9px;
   align-items: end;
 }
 
@@ -1803,54 +1843,68 @@ body.ys-theme-capa .ims-number-section h2 {
 }
 
 .ims-item-fields label {
-  display: grid;
-  gap: 3px;
   min-width: 0;
+  display: grid;
+  gap: 2px;
   color: var(--ims-muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 1000;
+  line-height: 1.15;
   text-transform: uppercase;
 }
 
 .ims-item-fields input,
 .ims-item-fields select {
-  min-height: 30px;
+  width: 100%;
+  min-height: 28px;
   padding: 3px 6px;
   color: var(--ims-ink);
-  font-size: 15px;
+  background: #fffefa;
+  border: 2px solid var(--ims-ink);
+  font-size: 14px;
   font-weight: 900;
+  line-height: 1.15;
 }
 
 .ims-item-fields .check {
-  align-self: center;
+  min-height: 42px;
+  align-self: end;
   display: flex;
   gap: 8px;
-  padding-top: 18px;
+  align-items: center;
+  padding: 4px 6px;
   color: var(--ims-ink);
+  background: #fffefa;
+  border: 2px solid var(--ims-ink);
 }
 
 .ims-item-fields .check input {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   min-height: 0;
+  flex: 0 0 auto;
 }
 
 .ims-item-description {
   display: grid;
   gap: 5px;
+  min-height: 0;
   color: var(--ims-muted);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 1000;
+  line-height: 1.15;
   text-transform: uppercase;
 }
 
 .ims-item-description textarea {
-  min-height: 72px;
-  max-height: 96px;
+  min-height: 86px;
   resize: vertical;
   color: var(--ims-ink);
-  font-size: 15px;
-  font-weight: 900;
+  background: #fffefa;
+  border: 2px solid var(--ims-ink);
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.25;
   text-transform: none;
 }
 
@@ -1867,7 +1921,17 @@ body.ys-theme-capa .ims-number-section h2 {
 }
 
 .ims-item .ims-description textarea {
-  min-height: 72px;
+  min-height: 86px;
+}
+
+@media (max-width: 620px) {
+  .ims-item-head-main {
+    grid-template-columns: 1fr;
+  }
+
+  .ims-item-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .ims-dialog {

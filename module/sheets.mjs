@@ -197,6 +197,35 @@ export class ImsersoActorSheet extends ActorSheet {
     this._restoreScrollState();
   }
 
+  async _updateObject(event, formData) {
+    return super._updateObject(event, this._sanitizeActorFormData(formData));
+  }
+
+  _sanitizeActorFormData(formData) {
+    const data = { ...formData };
+    const numericPaths = [
+      "system.salud.valor",
+      "system.salud.max",
+      "system.estabilidad.valor",
+      "system.estabilidad.max",
+      "system.resistenciaFisica.valor",
+      "system.resistenciaMental.valor",
+      "system.proezas.valor",
+      "system.proezas.inicial",
+      "system.puntoGuion.valor",
+      "system.puntoGuion.max"
+    ];
+    for (const key of Object.keys(IMSERSO.atributos)) numericPaths.push(`system.atributos.${key}`);
+    for (const key of Object.keys(IMSERSO.habilidades)) numericPaths.push(`system.habilidades.${key}.dados`);
+
+    for (const path of numericPaths) {
+      if (!(path in data)) continue;
+      const fallback = foundry.utils.getProperty(this.actor, path);
+      data[path] = sanitizeFormNumber(data[path], fallback);
+    }
+    return data;
+  }
+
   setPosition(position = {}) {
     const placed = super.setPosition(position);
     if (!this._renderingSheet && !this._restoringSheetSize) this._persistSheetSize(placed);
@@ -512,12 +541,28 @@ export class ImsersoActorSheet extends ActorSheet {
   }
 }
 
+function sanitizeFormNumber(value, fallback = 0) {
+  const values = Array.isArray(value) ? value : [value];
+  let chosen;
+  for (let i = values.length - 1; i >= 0; i -= 1) {
+    const candidate = values[i];
+    if (candidate !== "" && candidate !== null && candidate !== undefined) {
+      chosen = candidate;
+      break;
+    }
+  }
+  const n = Number(chosen ?? fallback);
+  if (Number.isFinite(n)) return n;
+  const safe = Number(fallback);
+  return Number.isFinite(safe) ? safe : 0;
+}
+
 export class ImsersoItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["imserso", "sheet", "item"],
-      width: 560,
-      height: 390,
+      width: 620,
+      height: 430,
       resizable: true,
       submitOnChange: true,
       submitOnClose: true,

@@ -1,6 +1,6 @@
 import { IMSERSO, attackConfig, attackAttributeDamage, normalizeSkills } from "./config.mjs";
 import { ARQUETIPOS } from "./arquetipos-data.mjs";
-import { buildReglasJournals, getAchaque } from "./reglas-data.mjs";
+import { getAchaque } from "./reglas-data.mjs";
 import { ImsersoActor } from "./actor.mjs";
 import { ImsersoItem } from "./item.mjs";
 import { ImsersoActorSheet, ImsersoItemSheet } from "./sheets.mjs";
@@ -59,11 +59,10 @@ Hooks.once("ready", async () => {
   if (!game.user.isGM) return;
   await repairCoreSheetFlags();
   let seeded = 0;
+  seeded += await repairActorCoreData();
   seeded += await repairActorSkillData();
+  await cleanupLegacyRulesWorldPack();
   await cleanupLegacyArchetypeActorPack();
-
-  const reglasResult = await seedPack({ name: "reglas-diarios", label: "Reglas y ayudas", documentName: "JournalEntry", data: buildReglasJournals() });
-  seeded += reglasResult.changes;
   seeded += await ensureCoreMacros();
 
   await showWelcomeDialog();
@@ -861,6 +860,17 @@ async function cleanupLegacyArchetypeActorPack() {
   if (seeded.length) console.log(`YSYSTEM3 SRD | Eliminados ${seeded.length} arquetipos antiguos creados como actores.`);
 }
 
+async function cleanupLegacyRulesWorldPack() {
+  const pack = game.packs.get("world.imserso-reglas-diarios");
+  if (!pack || pack.metadata?.package !== "world") return;
+  try {
+    await pack.deleteCompendium();
+    console.log("YSYSTEM3 SRD | Eliminado el compendio antiguo del mundo: imserso-reglas-diarios.");
+  } catch (err) {
+    console.warn("YSYSTEM3 SRD | No se pudo eliminar el compendio antiguo imserso-reglas-diarios.", err);
+  }
+}
+
 async function repairActorSkillData() {
   const updates = [];
   for (const actor of game.actors.contents) {
@@ -872,6 +882,38 @@ async function repairActorSkillData() {
       return !Number.isFinite(dice) || dice < 1 || dice > 3;
     });
     if (needsRepair) updates.push({ _id: actor.id, "system.habilidades": normalized });
+  }
+  if (updates.length) await Actor.updateDocuments(updates);
+  return updates.length;
+}
+
+function missingNumber(value) {
+  const n = Number(value);
+  return value === "" || value === null || value === undefined || !Number.isFinite(n);
+}
+
+async function repairActorCoreData() {
+  const updates = [];
+  for (const actor of game.actors.contents) {
+    if (!["personaje", "pnj"].includes(actor.type)) continue;
+    const raw = actor._source?.system ?? {};
+    const update = { _id: actor.id };
+
+    if (missingNumber(raw.salud?.max)) update["system.salud.max"] = Number(actor.system?.salud?.max) || (actor.type === "personaje" ? 18 : 10);
+    if (missingNumber(raw.salud?.valor)) update["system.salud.valor"] = Number(actor.system?.salud?.valor) || Number(update["system.salud.max"]) || (actor.type === "personaje" ? 18 : 10);
+    if (missingNumber(raw.resistenciaFisica?.valor)) update["system.resistenciaFisica.valor"] = Number(actor.system?.resistenciaFisica?.valor) || 10;
+
+    if (actor.type === "personaje") {
+      if (missingNumber(raw.estabilidad?.max)) update["system.estabilidad.max"] = Number(actor.system?.estabilidad?.max) || 18;
+      if (missingNumber(raw.estabilidad?.valor)) update["system.estabilidad.valor"] = Number(actor.system?.estabilidad?.valor) || Number(update["system.estabilidad.max"]) || 18;
+      if (missingNumber(raw.resistenciaMental?.valor)) update["system.resistenciaMental.valor"] = Number(actor.system?.resistenciaMental?.valor) || 12;
+      if (missingNumber(raw.proezas?.valor)) update["system.proezas.valor"] = Number(actor.system?.proezas?.valor) || 0;
+      if (missingNumber(raw.proezas?.inicial)) update["system.proezas.inicial"] = Number(actor.system?.proezas?.inicial) || Number(actor.system?.proezas?.valor) || 0;
+      if (missingNumber(raw.puntoGuion?.valor)) update["system.puntoGuion.valor"] = Number(actor.system?.puntoGuion?.valor) || 1;
+      if (missingNumber(raw.puntoGuion?.max)) update["system.puntoGuion.max"] = Number(actor.system?.puntoGuion?.max) || 1;
+    }
+
+    if (Object.keys(update).length > 1) updates.push(update);
   }
   if (updates.length) await Actor.updateDocuments(updates);
   return updates.length;
