@@ -7,6 +7,12 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.9] — 2026-05-25
+
+### Corregido
+- Reconstruidos limpiamente todos los compendios LevelDB desde sus JSON fuente para eliminar entradas obsoletas y recuperar armas, objetos, reglas, actores y tablas.
+- El bloque de acciones de la pestaña Combate se adapta mejor al ancho disponible y evita que los botones se salgan de la tarjeta.
+
 ## [0.3.8] — 2026-05-25
 
 ### Corregido
