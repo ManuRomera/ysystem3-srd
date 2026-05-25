@@ -4,7 +4,7 @@
   "_id": "pQFoCvfovvoucrSj",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>-5 daño.</p><p>penalización total -2</p>",
+    "descripcion": "<p>Protección corporal diseñada para absorber cortes, impactos y perforaciones antes de que alcancen al personaje.</p><p><strong>Regla SRD:</strong> Como armadura equipada reduce 5 puntos de daño; su penalizador SRD es -2D a habilidades afectadas por protección.</p><p><strong>Uso:</strong> marca Equipado para que sus efectos se apliquen automáticamente a la ficha.</p>",
     "nivel": 5,
     "penalizador": 0,
     "equipado": false,
@@ -23,9 +23,9 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.6",
     "createdTime": 1779666008608,
-    "modifiedTime": 1779666008608,
+    "modifiedTime": 1779701815768,
     "lastModifiedBy": null
   }
 }

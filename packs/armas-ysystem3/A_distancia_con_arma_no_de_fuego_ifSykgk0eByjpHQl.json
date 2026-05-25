@@ -8,7 +8,7 @@
     "habilidad": "punteria",
     "danoBase": 3,
     "atributoDano": "per",
-    "descripcion": "<p><strong>Ejemplos:</strong> Arco, arpón, boleadoras, gastrafetes, honda, ballesta</p><p><strong>Tirada:</strong> Puntería (PER)</p><p><strong>Daño fijo:</strong> 3 + PER</p>",
+    "descripcion": "<p>Arma no de fuego usada a distancia: arco, honda, ballesta, jabalina u otro proyectil impulsado sin pólvora.</p><p><strong>Regla SRD:</strong> Arma no de fuego usada a distancia: arco, honda, ballesta, jabalina u otro proyectil impulsado sin pólvora.</p><p><strong>Tirada:</strong> Puntería (PER). <strong>Daño:</strong> 3 + PER.</p>",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,9 +25,9 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.6",
     "createdTime": 1779666008608,
-    "modifiedTime": 1779666008608,
+    "modifiedTime": 1779701815768,
     "lastModifiedBy": null
   }
 }

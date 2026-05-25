@@ -8,7 +8,7 @@
     "habilidad": "punteria",
     "danoBase": 7,
     "atributoDano": "per",
-    "descripcion": "<p><strong>Ejemplos:</strong> Pistola o revólver; blaster pequeño</p><p><strong>Tirada:</strong> Puntería (PER)</p><p><strong>Daño fijo:</strong> 7 + PER</p>",
+    "descripcion": "<p>Arma de fuego corta o equivalente. Es manejable a una mano y está pensada para disparos rápidos a corta o media distancia.</p><p><strong>Regla SRD:</strong> Arma de fuego corta o equivalente. Es manejable a una mano y está pensada para disparos rápidos a corta o media distancia.</p><p><strong>Tirada:</strong> Puntería (PER). <strong>Daño:</strong> 7 + PER.</p>",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,9 +25,9 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.6",
     "createdTime": 1779666008608,
-    "modifiedTime": 1779666008608,
+    "modifiedTime": 1779701815768,
     "lastModifiedBy": null
   }
 }

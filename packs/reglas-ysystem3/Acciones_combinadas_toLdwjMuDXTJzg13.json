@@ -1,0 +1,62 @@
+{
+  "name": "Acciones combinadas",
+  "type": "JournalEntry",
+  "_id": "toLdwjMuDXTJzg13",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Acciones combinadas",
+      "type": "text",
+      "_id": "LLRUDjecgQhdbPRR",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Acciones combinadas</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 23</h2><h3>Acciones</h3><h3>Combinadas</h3><h3>Acciones Combinadas</h3><p>Poner en práctica una habilidad de forma conjunta hace que alcanzar el éxito resulte bastante más sencillo. En este caso estamos ante lo que se conoce como «acciones combinadas», que funcionan de la siguiente manera: por cada personaje (PJ o PNJ) que colabora con aquel que lleva a cabo la acción, este suma + 2 puntos a su tirada (hasta un máximo de + 10). Sin embargo, no todas las acciones se pueden combinar, ni mucho menos, y siempre es el DJ el que tiene la última palabra acerca de si eso es posible o no.</p><p>Las acciones combinadas también pueden ser de combate, tanto por parte de los PJ como de los PNJ. Esto significa que uno o más personajes no atacan en el turno pero llevan a cabo algún tipo de acción que favorece el ataque de otro personaje (que es quien disfruta del +2 extra por colaborador).</p><p>Tony Petrelli y su amigo Wan Lu visitan la tienda de un anticuario que tiene una información vital para ellos. Sin embargo, el anticuario se resiste a soltar prenda, y Lara decide que su PJ, Petrelli, trate de intimidarlo para que desembuche. El Aplomo del anticuario es de 11 puntos, y Petrelli «solo» tiene 2D + 2 en Intimidación (lo que no alcanza ni un 30 % de probabilidad de éxito). Para hacerlo más sencillo, Diego declara que Wan Lu se colocará a la espalda del anticuario para ponerlo un poco más nervioso mientras Petrelli intenta intimidarlo. Esto es una acción combinada evidente, y se gestiona del siguiente modo: Lara será la que tire los dados, pero a su 2D + 2 original añadirá 2 puntos extra gracias a la maniobra de Wan Lu, es decir, 2D + 4 en total. Gracias a esto, las posibilidades de éxito ascienden ya al 60 % aproximadamente.</p><p>Supongamos ahora que Petrelli y Wan Lu han logrado hacer hablar al anticuario pero que justo cuando van a salir de su tienda aparecen cuatro matones de poca monta dispuestos a darles una paliza. Estos matones están armados con cuchillos y solo tienen 2D + 4 en Lucha: en condiciones normales, raramente lograrían impactar a Petrelli o a Wan Lu, pues ambos PJ cuentan con un estupendo valor de Agilidad de 15 puntos (esto arroja en torno a un 8 % de probabilidad).</p><p>El DJ declara entonces que en cada turno de combate atacarán nada más que dos de los matones, mientras que los otros dos tratarán de arrinconar a los PJ para favorecer los ataques de sus compañeros.</p><p>En consecuencia, el DJ solo tirará dos veces los dados en cada turno, pero añadirá a cada tirada 2 puntos extra (es decir, 2D + 6 en total). Esto hará subir las posibilidades de éxito de los matones por encima del 25 % y añadirá algo de emoción al combate.</p><h3>Ejemplo</h3><p>ACCIONES COMBINADAS a + 2 puntos a la tirada por personaje colaborador (PJ o PNJ) hasta un máximo de + 10.</p><h3>Resumen</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 24</h2><h3>Acciones Combinadas: Quiénes Sí Y Quiénes No</h3><p>A veces los jugadores quieren combinar las acciones de sus PJ incluso cuando estos no están haciendo literalmente nada en la escena o se encuentran físicamente distantes del PJ principal (aquel que va a realizar la tirada). Esto es algo que no se debería permitir. Cuando se solicita una tirada a los jugadores y alguno de ellos expresa la posibilidad de combinarla, hay que evaluar justo en ese momento qué PJ están involucrados realmente en la acción y cuáles no. Estos últimos no deberían proporcionar su +2 en ningún caso.</p><p>Por el contrario, el DJ sí tiene que consentir y hasta alentar que los jugadores declaren acciones diferentes a las del jugador que realiza la acción principal pero con el objetivo de allanar la acción de este último. Por ejemplo, cuando el PJ principal quiere llevar a cabo alguna acción con sigilo y los otros PJ hablan en voz alta o hacen algún tipo de ruido para ponérselo más fácil. Ahí sí habría que otorgar el +2 por PJ auxiliar sin lugar a dudas.</p><h3>Consejo</h3><p>¡Vamos, suéltalo! Yo de ti empezaría a hablar... tratan de intimidar al anticuario... tratan de intimidar al anticuario...</p><h3>Petrelli</h3><h3>Y Wan Lu</h3><h3>Petrelli</h3><h3>Y Wan Lu</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!toLdwjMuDXTJzg13.LLRUDjecgQhdbPRR"
+    }
+  ],
+  "folder": null,
+  "sort": 100006,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

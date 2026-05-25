@@ -8,7 +8,7 @@
     "habilidad": "lucha",
     "danoBase": 1,
     "atributoDano": "fue",
-    "descripcion": "<p><strong>Ejemplos:</strong> Arañazo, cabezazo, codazo, mordisco, patada, puñetazo, rodillazo</p><p><strong>Tirada:</strong> Lucha (DES)</p><p><strong>Daño fijo:</strong> 1 + FUE/2</p>",
+    "descripcion": "<p>Ataque sin arma: golpes, patadas, cabezazos, mordiscos o empujones. Úsalo cuando el personaje no lleva ninguna arma equipada.</p><p><strong>Regla SRD:</strong> Ataque sin arma: golpes, patadas, cabezazos, mordiscos o empujones. Úsalo cuando el personaje no lleva ninguna arma equipada.</p><p><strong>Tirada:</strong> Lucha (DES). <strong>Daño:</strong> 1 + FUE/2.</p>",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,9 +25,9 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.6",
     "createdTime": 1779666008608,
-    "modifiedTime": 1779666008608,
+    "modifiedTime": 1779701815768,
     "lastModifiedBy": null
   }
 }

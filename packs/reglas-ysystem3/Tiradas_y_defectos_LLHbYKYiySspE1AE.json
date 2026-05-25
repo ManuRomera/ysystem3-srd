@@ -1,0 +1,62 @@
+{
+  "name": "Tiradas y defectos",
+  "type": "JournalEntry",
+  "_id": "LLHbYKYiySspE1AE",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Tiradas y defectos",
+      "type": "text",
+      "_id": "kWWBojCZSuYPjQxl",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Tiradas y defectos</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 15</h2><h3>Tiradas Y</h3><h3>Defectos</h3><h3>Tiradas Y Defectos</h3><p>Todos los PJ cuentan con dos defectos: uno de naturaleza grave y otro leve. Estos defectos pueden ser muy variados, ya que se refieren a cualquier tara física o cualquier rasgo negativo de la personalidad del PJ. Ejemplos de defectos pueden ser: Dolor lumbar, Codicioso, Duro de oído, Inseguro, Feo, Obsesivo, Sobrepeso, Mentiroso compulsivo, Taquifemia, Irascible, etc. En general, conviene que los dos defectos sean de naturaleza muy diferente, a ser posible uno físico y otro de personalidad.</p><p>Los defectos complican la vida de los PJ y les impiden llevar a cabo sus acciones de la mejor forma posible. Por eso, cuando son activados es solo para obligar a los jugadores a repetir una tirada que ya han sacado pero que el DJ desea que fallen (por ejemplo, por necesidades argumentales, para favorecer a los jugadores sin que estos se den cuenta o para conseguir que la historia resulte aún más atractiva). Las tiradas que han cosechado un éxito crítico también son susceptibles de repetición mediante la activación de defectos, lo que, como es natural, anula el crítico y todas sus consecuencias, incluida la ganancia de una proeza.</p><p>Los defectos son activados por el DJ, nunca por el resto de los jugadores. No obstante, el DJ solo tiene potestad para activarlos cuando los defectos realmente perjudican o interfieren con la habilidad concreta por la que desea obligar a repetir la tirada. Por ejemplo: el DJ podría forzar a tirar de nuevo los dados por la habilidad de Memoria si el defecto del PJ fuese Patológicamente distraído, pero no si se tratase de Halitosis.</p><p>El defecto grave lo puede activar el DJ en cualquier momento de la partida y tantas veces como quiera. Cuando eso ocurre, se debe repetir la tirada con 1D menos, aunque el bonificador por atributo, si lo hay, se mantiene. Como compensación, el DJ hace entrega al jugador de una proeza (unos puntos de gran utilidad que se explican en el siguiente apartado).</p><p>El defecto leve lo puede activar el DJ solo una vez por sesión. Al igual que con el defecto grave, eso obliga al jugador a repetir la tirada, pero en este caso sin restar dado alguno. El DJ ya no tiene que entregar ninguna proeza cuando activa el defecto leve de un PJ.</p><p>Diego ha lanzado ni más ni menos que 5D para comprobar si su PJ Wan Lu es capaz de huir de sus perseguidores en el mercado de Shanghái: 3D por la habilidad de Atletismo más 2D extra por la activación de la mecánica Recuerdo cuando... El resultado de su tirada ha sido de 1, 3, 2, 1 y 4 puntos, esto es, 11 puntos en total, a lo que hay que añadir el bonificador de DES (atributo del que depende la habilidad), que como ya sabemos es de +6. Esto hace un total de 17 puntos, 3 por encima de los 14 en los que estaba fijada la dificultad de acción. Wan Lu logra escapar de sus perseguidores y Diego respira aliviado.</p><p>Sin embargo, el DJ consulta sus notas y se percata de que el defecto leve del grumete es Borrachín, una tara perfectamente activable en estas circunstancias, en las que un resacoso (o ebrio) Wan Lu no se hallaría en plenas facultades para correr. Además, al DJ le interesa activar el defecto leve porque realmente no pone en</p><h3>Ejemplo</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 16</h2><p>bebe para no recordar cuando...</p><h3>Wan Lu</h3><p>DEFECTO GRAVE a Se repite la tirada con 1D menos a cambio de una proeza (críticos incluidos). El DJ puede activarlo tantas veces como quiera. DEFECTO LEVE a Se repite la tirada tal cual, pero sin recibir ninguna proeza a cambio (críticos incluidos). Solo se puede activar una vez por sesión.</p><h3>Resumen Ejemplo</h3><p>peligro la huida del PJ de Diego (es casi imposible no tener éxito en una tirada de 5D + 6 a una dificultad de 14 puntos), pero en cambio brinda al jugador muchas más probabilidades de lo habitual de obtener un éxito crítico y ganar una proeza con ello (casi un 20 %).</p><p>Esto último le interesa tanto al propio Diego, por razones obvias, como al DJ, que desea que el jugador cuente con alguna proeza en lo que queda de aventura. En resumen: el DJ va a activar el defecto leve de Wan Lu para favorecer subrepticiamente a Diego.</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 17</h2><h3>Cuándo Y Por Qué Activar Los Defectos De Los Pj</h3><p>A algunos DJ les puede costar activar los defectos de los PJ. Esto suele deberse a que se les olvida, a que no están acostumbrados a las mecánicas de aspectos, a que temen que se los identifique como «enemigos» de los jugadores o a que, sencillamente, no saben elegir el momento apropiado para hacerlo.</p><p>Esto último es muy importante, casi al mismo nivel que darse cuenta de que la activación de los defectos nunca va (o, al menos, nunca debería ir) en contra de los jugadores, sino a favor de la historia, esto es, de la diversión de todos.</p><p>A continuación, se plantea una pequeña lista de situaciones en las que parece recomendable activar un defecto para aumentar las posibilidades de que el jugador falle su tirada:</p><ul><li>Cuando un elemento cualquiera de la trama</li></ul><p>está directamente relacionado con alguno de los defectos de uno de los PJ. En este caso, la activación del defecto ayuda a conocer mejor a ese PJ y darle mayor profundidad.</p><ul><li>Cuando todo está resultando demasiado fácil y</li></ul><p>es necesario aumentar la tensión narrativa. Es un hecho que apretar las tuercas a los jugadores de vez en cuando hace que la partida sea más divertida.</p><ul><li>Cuando los jugadores atesoran ya muy pocas o</li></ul><p>incluso ninguna proeza y el DJ sabe que las van</p><ul><li>necesitar en el tramo final de la partida. En</li></ul><p>este caso, existe la opción de activar los defectos graves de los PJ, sobre todo en tiradas que en realidad no tienen excesiva importancia, para así obtener proezas. Es una manera inte ligente y subrepticia de favorecer a los jugado res sin que estos se den cuenta. Justo al contrario: lo más probable es que perciban al DJ como alguien que trata de ponerles las cosas más difíciles. ¡Es darle la vuelta a la expresión bíblica para ser un cordero con piel de lobo!</p><ul><li>Cuando se quiere despistar a los jugadores para</li></ul><p>que no puedan intuir cuáles de las tiradas que el DJ les solicita son «importantes» y cuáles no. Un jugador siempre va a pensar que la tirada es de la mayor importancia en cuanto se le active un defecto para que la falle. Esto no es así, claro, ya que los defectos se suelen activar por razones más constructivas que el necio deseo de perjudicar a un jugador, pero la asociación suele ser inmediata. El asunto tiene que ver con la arraigada y obsoleta idea de que el DJ es el «enemigo» de los jugadores. Pero la cuestión es que se puede sacar partido de ello para despistar a los jugadores y, de esta manera, reducir el metajuego nocivo en mesa.</p><ul><li>Cuando los jugadores han tomado unos derroteros completamente inesperados y vendría me jor que fallaran una tirada clave que, de sacarla,</li></ul><p>va a colocar al DJ en una posición especialmente complicada desde un punto de vista narrativo.</p><ul><li>Versión de la situación anterior: cuando los jugadores se empeñan en dar vueltas y más vueltas en</li></ul><p>torno a una localización o un PNJ que ya no tiene nada que ofrecer ni para el color de la partida ni para el progreso de la historia. En estos casos, que se falle una tirada determinada (por ejemplo, de Conversación, Entorno, Intimidación, Mecánica o Psicología) puede servir para cerrar esa molesta puerta que los jugadores se empeñan en mantener abierta; para ello, la activación de un defecto es la mejor aliada. Además, esta es una forma especialmente elegante de sacar a los jugadores de ese callejón sin salida en el que se empeñan en permanecer, ya que, como se ha señalado en el tercer punto, siempre que se activa un defecto se tiende a pensar que la tirada afectada es «importante». Es mucho mejor esto que tener que recurrir a un tipo de metajuego radical y decirles a los jugadores algo del estilo de «Chicos, aquí ya no hay nada más que ver», o «Este PNJ ya no os va a decir nada más; es mejor que vayáis a otra parte».</p><ul><li>Todo lo dicho hasta ahora, pero especialmente</li></ul><p>cuando un solo jugador ha sacado la tirada. Si los que han tenido éxito son dos o más jugado res, activar los defectos de todos ellos apenas garantiza que nadie vaya a sacar su tirada (además, no queda bien; da la sensación de que el DJ está un tanto desesperado).</p><p>Por último, se recomienda apuntar en una hojita todos los defectos de los PJ para tenerla siempre delante. De este modo, al DJ le resultará mucho más fácil identificar el momento idóneo en el que activarlos.</p><h3>Consejo</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!LLHbYKYiySspE1AE.kWWBojCZSuYPjQxl"
+    }
+  ],
+  "folder": null,
+  "sort": 100004,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

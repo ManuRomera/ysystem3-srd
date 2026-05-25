@@ -150,6 +150,9 @@ export class ImsersoActorSheet extends ActorSheet {
       talento: this.actor.items.filter((i) => i.type === "talento"),
       arquetipo: this.actor.items.filter((i) => i.type === "arquetipo")
     };
+    context.itemSections = Object.entries(context.itemsByType)
+      .filter(([, items]) => items.length)
+      .map(([key, items]) => ({ key, label: key, items }));
     context.itemCreateTypes = [
       { type: "arma", label: "Arma", icon: "fa-gavel" },
       { type: "armadura", label: "Armadura", icon: "fa-vest" },
@@ -165,19 +168,19 @@ export class ImsersoActorSheet extends ActorSheet {
     context.skillOptions = entries(IMSERSO.habilidades).map(([key, cfg]) => ({ key, ...cfg, attrLabel: labelForAttribute(cfg.atributo) }));
     context.arquetipos = [];
     const equippedWeapon = this.actor.items.find((item) => item.type === "arma" && item.system?.equipado) ?? null;
-    const attackType = equippedWeapon?.system?.tipo ?? system.ataque?.tipo ?? "desarmado";
+    const attackType = equippedWeapon?.system?.tipo ?? "desarmado";
     const baseAttack = attackConfig(attackType);
-    const attackSkill = equippedWeapon?.system?.habilidad ?? system.ataque?.habilidad ?? baseAttack.habilidad;
+    const attackSkill = equippedWeapon?.system?.habilidad ?? baseAttack.habilidad;
     const attackAttr = equippedWeapon?.system?.atributoDano ?? baseAttack.atributo;
     context.effectiveAttack = {
       equipped: !!equippedWeapon,
-      source: equippedWeapon ? `Arma equipada: ${equippedWeapon.name}` : "Ataque base del PNJ",
-      name: equippedWeapon?.name ?? system.ataque?.nombre ?? baseAttack.label,
+      source: equippedWeapon ? `Arma equipada: ${equippedWeapon.name}` : "Sin arma equipada: desarmado",
+      name: equippedWeapon?.name ?? baseAttack.label,
       type: attackType,
       typeLabel: baseAttack.label,
       skill: attackSkill,
       skillLabel: labelForSkill(attackSkill),
-      damage: equippedWeapon?.system?.danoBase ?? system.ataque?.dano ?? baseAttack.dano,
+      damage: equippedWeapon?.system?.danoBase ?? baseAttack.dano,
       attr: attackAttr,
       attrLabel: labelForAttribute(attackAttr),
       initiative: equippedWeapon?.system?.iniciativa ?? baseAttack.iniciativa

@@ -1,0 +1,62 @@
+{
+  "name": "Salud y Resistencia Física",
+  "type": "JournalEntry",
+  "_id": "M4w0NwOo0yGHxVVt",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Salud y Resistencia Física",
+      "type": "text",
+      "_id": "wTY8BqL953TU6hHS",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Salud y Resistencia Física</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 52</h2><h3>Salud</h3><h3>Y Res. Física</h3><h3>Salud Y Resistencia Física</h3><p>La Salud es la condición física general y la constitución de cualquier personaje, de modo que, cuantos menos puntos de Salud se tienen, más cerca se está de la muerte. De entrada, todo PJ posee un número de puntos de Salud igual a su bonificador de FUE x 2 + 10 + 1D puntos (por lo que estos oscilarán entre los 11 y los 28 puntos). Los personajes mueren irremediablemente cuando pierden el último de sus puntos de Salud, aunque en ambientaciones fantásticas puede llegar a existir alguna clase de hechizos o elixires de resurrección.</p><p>Por otro lado, los personajes reciben penalizadores a todas sus tiradas de habilidad y de Resistencia Física debido a la pérdida acumulada de puntos de Salud: ‒ 1D cuando bajan de 11 puntos, ‒ 2D cuando bajan de 7 puntos y ‒ 3D cuando bajan de 4 puntos (véase la ficha de PJ). Los PNJ también sufren estos penalizadores.</p><p>Además de los puntos de Salud, todos los personajes (PJ y PNJ) cuentan con un valor de Resistencia Física igual a 12 ‒ FUE. Este valor indica cuánto aguanta un personaje sin desmayarse a causa de los golpes recibidos o las heridas sufridas. La tirada de Resistencia Física consiste en igualar o superar con 3D el valor establecido.</p><p>Como ya se ha dicho, la tirada (susceptible de repetición mediante el uso de una proeza) se puede ver afectada por las penalizaciones relativas a la pérdida de puntos de Salud. Todo personaje se enfrenta a una tirada de Resistencia Física si al perder Salud baja de los 16, 11, 7, 4 o 2 puntos. Al sobrepasar cualquiera de estos umbrales (tres de los cuales coinciden exactamente con los límites de los penalizadores de dados referidos más arriba), los personajes tienen que pasar una tirada de Resistencia Física y, de fallarla, caen inconscientes en ese mismo momento y durante el tiempo de juego que establezca el DJ.</p><p>Es importante señalar que solo se tira por Resistencia Física en la primera ocasión, es decir, que al traspasar un umbral determinado ya no se vuelve a tirar por él en esa sesión de juego, aunque se recuperen puntos de Salud a lo largo de la partida y más adelante se pierdan de nuevo y se traspase por segunda vez dicho umbral. Por otro lado, si se traspasan de una sola vez dos o más umbrales marcados en la ficha de PJ, hay que tirar varias veces por Resistencia Física, una detrás de otra.</p><p>D’ Artagnan se encuentra en pleno combate con el misterioso asesino de la espada española, un enfrentamiento a vida o muerte en el que se suceden estocadas rápidas como el rayo, fintas espectaculares y requiebros inverosímiles. El mosquetero ya ha logrado impactar dos veces en su oponente, pero este se revuelve y, justo al comienzo del cuarto asalto de combate, consigue herir al PJ, lo que le causa ni más ni menos que 8 puntos de daño. Comoquiera que D’ Artagnan «solo» tiene 18 puntos de Salud, baja ahora hasta 10, lo que significa que atraviesa dos umbrales de una tacada: el situado entre los 16 y los 15 puntos de Salud y el que hay entre los 11 y los 10 (lo que comporta un penalizador de 1D a todas las tiradas de habilidad y Resistencia Física hasta que el PJ recupere al menos 1 punto de Salud). En consecuencia, el jugador, Asier, está obligado a realizar dos tiradas</p><h3>Ejemplo</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 53</h2><h3>DʼArtagnan</h3><p>está a punto de desmayarse... Si se quiere calcular aún más rápido el número de puntos de Salud de uno o varios personajes, siempre se puede sustituir el «+ 1D puntos» por 6 puntos directos en el caso de PJ y PNJ poderosos y 3 puntos en el caso del resto de PNJ.</p><h3>Ejemplo</h3><p>PUNTOS DE SALUD a FUE x 2 + 10 + 1D (o FUE x 2 + 16 para PJ y PNJ poderosos y + 13 para el resto). Cuando un personaje pierde todos sus puntos de Salud, muere indefectiblemente. Los penalizadores a las tiradas de habilidad por pérdida de puntos de Salud indicados en la ficha de PJ (de ‒ 1 a ‒ 3D) se aplican también a las tiradas de Resistencia Física.</p><p>VALOR DE RESISTENCIA FÍSICA a 12 – bonificador de FUE. TIRADA DE RESISTENCIA FÍSICA a 3D para igualar o superar el valor del personaje. Si falla, se desmaya. La tirada se puede repetir una vez mediante el uso de una proeza.</p><p>Se tira por Resistencia Física al bajar por primera vez de 16, 11, 7, 4 y 2 puntos de Salud, tal y como se indica en la ficha de PJ.</p><h3>Resumen</h3><p>de Resistencia Física, una por cada umbral atravesado por D’ Artagnan, para lo cual lanzará 3 y 2D respectivamente. En ambos casos tendrá que sacar 11 puntos o más, que es el valor de Resistencia Física del mosquetero. Recordemos que la segunda tirada se hará con 2D porque el penalizador recibido se aplica de inmediato.</p><p>Asier lanza en primer lugar los 3D y obtiene un 5, un 3 y un 4, 12 puntos en total, con lo que pasa su primera tirada de Resistencia Física sin mayor problema. Para la segunda tirada el jugador cuenta solo con 2D, como ya hemos dicho, y si quiere igualar o superar el valor de Resistencia Física de su PJ tendrá que obtener un 5 y un 6 o directamente un doble 6. ¡Algo muy complicado! Además, no se pueden gastar proezas para lanzar más dados en las tiradas de Resistencia Física, así que... ¿puede que esta sea una buena ocasión para activar la mecánica del Recuerdo cuando... y echar un vistazo al pasado de D’ Artagnan para descubrir por qué es tan resistente a las heridas de florete?</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 54</h2><h3>Aclaraciones Sobre Los Penalizadores A Las Tiradas</h3><h3>Por Perder Puntos De Salud</h3><p>Sobre los penalizadores por pérdida acumulada de puntos de Salud, es importante tener claros los siguientes aspectos:</p><ul><li>Solo genera penalizadores la pérdida acumulada de puntos de Salud, no la de Estabilidad. Esto es relevante para el simulacionismo, pero también para no convertir</li></ul><p>Ysystem3 en una máquina trituradora de PJ.</p><ul><li>Solo se penalizan las tiradas de habilidad</li></ul><p>(todas ellas) y las de Resistencia Física. Como es lógico, no se penalizan las tiradas de Resistencia Mental.</p><ul><li>Los penalizadores afectan a todos los personajes, sean estos PJ o PNJ.</li><li>Si, como consecuencia del penalizador sufrido, el personaje se queda sin dados con</li></ul><p>los que tirar por una habilidad concreta, aún mantiene el bonificador por el atributo del que depende. Si este es de +6, el perso naje tendría éxito automático en las accio nes catalogadas como «muy fáciles».</p><ul><li>Nada impide a un PJ gastar proezas o activar el Recuerdo cuando… para compensar</li></ul><p>parcial o totalmente un penalizador. De lo anterior se exceptúa el uso de las proezas en las tiradas de Resistencia Física (que, como ya sabemos, no está permitido). En cualquier caso, el DJ debería esforzarse por interpretar los penalizadores de forma narrativa, es decir, darles color, pasión y sentido para que no se queden en unos meros indicadores numéricos. Siempre hay que plantearse qué significa en la realidad del juego que un PJ sufra un penalizador a sus tiradas. ¿Qué le ha pasado para encontrarse en tan lamentable condición? El DJ hará bien en ofrecer en estos casos todos los detalles que pueda. ¿Dónde y cómo le han impactado? ¿Qué huesos tiene fisurados o fracturados?</p><p>¿Está perdiendo sangre? ¿Experimenta alguna deformidad temporal? ¿Cómo le ha quedado la cara después de recibir el último puñetazo? ¿Qué músculos se le han roto, rasgado o desprendido?</p><p>¿Cómo afecta todo eso a su movimiento? ¿Cojea; se arrastra; puede moverse? Hacerse estas y otras mil preguntas similares hace que las partidas ganen dramatismo y resulten más memorables.</p><h3>Cómo Gestionar Las Tiradas De Resistencia Física</h3><p>En primer lugar, hay que tener claro que es el DJ quien decide en qué momento recupera la consciencia el PJ tras producirse un fallo en una tirada de Resistencia Física, cosa que debe determinar a partir de lo que resulte mejor desde un punto de vista estrictamente narrativo. Cualquier otra consideración sobra, en especial las de tipo simulacionista. No obstante, si otros personajes auxilian o refrescan al que está inconsciente, lo lógico es que el DJ permita que el restablecimiento se produzca en ese momento.</p><p>En segundo lugar, es bueno insistir en que solo se tira por Resistencia Física la primera vez que se traspasa un umbral de pérdida de puntos de Salud por sesión, no por aventura. Es decir, que si una aventura se desarrolla a lo largo de, por ejemplo, tres sesiones, en cada una de ellas habremos de resetear y volver a tirar por Resistencia Física al traspasar cualquiera de los umbrales. Además, todo lo dicho en este párrafo se aplica exactamente igual a la Resistencia Mental (véase más adelante).</p><h3>Consejo</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!M4w0NwOo0yGHxVVt.wTY8BqL953TU6hHS"
+    }
+  ],
+  "folder": null,
+  "sort": 100014,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

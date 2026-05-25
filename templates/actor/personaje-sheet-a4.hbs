@@ -140,10 +140,10 @@
     <div class="tab ims-tab-panel" data-group="primary" data-tab="equipo">
       <section class="ims-inventory">
         <header><h2>Pertenencias arrastrables</h2>{{#each itemCreateTypes}}<button type="button" data-item-create="{{type}}"><i class="fas {{icon}}"></i> {{label}}</button>{{/each}}</header>
-        {{#each itemsByType}}
-        <h3>{{@key}}</h3>
+        {{#each itemSections}}
+        <h3>{{label}}</h3>
         <ol>
-          {{#each this}}
+          {{#each items}}
           <li class="item {{#if system.equipado}}equipped{{/if}}" data-item-id="{{id}}">
             <img src="{{img}}" alt="">
             <span>{{name}}</span>

@@ -7,6 +7,22 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.6] — 2026-05-25
+
+### Corregido
+- Las acciones vinculadas a token ya no bloquean la tirada si no hay token seleccionado o tarjeteado: avisan de la limitación y permiten resolver con datos manuales cuando hace falta.
+- Los campos de defecto leve y defecto grave del resumen aceptan scroll vertical para leer textos largos.
+- Las secciones vacías del equipo ya no muestran cajas de `Sin elementos`.
+
+### Cambiado
+- El ataque e iniciativa se calculan desde el arma equipada; si no hay arma equipada, el actor ataca como desarmado.
+- Retirada la configuración manual de combate de la hoja de PJ y sustituida por un resumen del ataque activo.
+- El compendio de reglas se ha regenerado desde el PDF de Ysystem3 con entradas de Journal paginadas y mejor formato visual.
+- Mejoradas las descripciones de armas y protecciones de compendio para que describan el objeto y su uso, no solo su equivalencia técnica.
+
+### Añadido
+- Nueva arma de compendio: `Desarmado (Artes Marciales)`.
+
 ## [0.3.5] — 2026-05-25
 
 ### Corregido

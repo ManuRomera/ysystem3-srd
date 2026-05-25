@@ -1,0 +1,62 @@
+{
+  "name": "La ficha de personaje",
+  "type": "JournalEntry",
+  "_id": "6qGUUeAxIYplCXOL",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "La ficha de personaje",
+      "type": "text",
+      "_id": "0Vp77V17p4G1ttCz",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>La ficha de personaje</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 78</h2><h3>¡También En La Página Trasera!</h3><p>+ + + + + + + + + + + + + + + + + + + + + + + + Atletismo Auxilio Conducir Conversación Cultura Entorno Fuerza bruta Idioma 1 Idioma 2 Información Intimidación Lucha Mecánica Memoria Observación Ocultación Oído Psicología Puntería Rastreo Seducción Sigilo Simulación Supervivencia</p><h3>Habilidades</h3><h3>Des</h3><h3>Int</h3><h3>Des</h3><h3>Car</h3><h3>Int</h3><h3>Per</h3><h3>Fue</h3><h3>Int</h3><h3>Int</h3><h3>Int</h3><h3>Car</h3><h3>Des</h3><h3>Int</h3><h3>Int</h3><h3>Per</h3><h3>Des</h3><h3>Per</h3><h3>Per</h3><h3>Per</h3><h3>Per</h3><h3>Car</h3><h3>Des</h3><h3>Car</h3><h3>Per</h3><h3>Atributos+</h3><h3>Percepción</h3><h3>Inteligencia</h3><h3>Fuerza</h3><h3>Destreza</h3><h3>Carisma</h3><h3>Defecto Grave</h3><p>Repetir tirada con 1D menos. Se gana 1 proeza. Sin límite.</p><h3>Perspicacia</h3><h3>Int + Per + 5</h3><h3>Aplomo</h3><h3>Car + Int + 5</h3><h3>Agilidad</h3><p>3 X dados en Atletismo + DES</p><h3>Valores</h3><h3>Pasivos</h3><p>Total Actual</p><h3>Recuerdo</h3><h3>Cuando...</h3><p>+ 2D a una tirada. Solo 1 por sesión.</p><h3>Punto</h3><h3>De Guion</h3><p>Crea un recurso. Solo 1 por sesión.</p><h3>Proezas</h3><h3>(Fue + Int) / 2 + 3</h3><h3>Combate Iniciativa</h3><h3>Des + Int</h3><h3>Arma Ataque Daño</h3><h3>Protección Efectonivel</h3><p>Penalización total por protección +1</p><h3>Defecto Leve</h3><p>Repetir tirada. Solo 1 por sesión. –2 –3</p><h3>Máximo</h3><h3>Estabilidad</h3><h3>Aplomo + 5 + 1D</h3><h3>Salud</h3><h3>Fuex2 + 10 + 1D</h3><p>Resistencia Mental</p><h3>12 - Car</h3><p>Resistencia Física</p><h3>12 - Fue</h3><p>–1</p><h3>Nombre</h3><h3>Profesión/Perfil (+3)</h3><h3>Motivación</h3><h3>Lugar De Nacimiento</h3><h3>Edad</h3><h3>Descripción Física</h3><h3>Cita</h3><p>Indicar la profesión o el perfil sociolaboral del PJ (lo que en parte constituye el concepto del personaje). Recordemos que esto se puede usar para añadir 3 puntos extra a las tiradas de habilidad y para disfrutar de una bonificación de + 3 al valor de Aplomo frente a ciertas tiradas de pánico.</p><p>Repartir libremente los cinco bonificadores posibles entre los cinco atributos básicos: 0, +1, +2, +4 y +6. Escoger cuatro habilidades en las que se quiere tener 3D y ocho en las que se quiere tener 2D. Para las 12 restantes hay que conformarse con 1D.</p><p>Determinar el valor de Resistencia Física del PJ: 12 – FUE. Indicar los puntos de Salud: FUE x 2 + 10 + 1D (o FUE x 2 + 16). Escribir las pertenencias del PJ, tanto lo que suele llevar siempre encima como las cosas con las que viaja (con la supervisión del DJ).</p><p>Describir brevemente cuál es la situación familiar del PJ. Escribir el nombre del PJ.1 Determinar la edad del PJ.5 Determinar la Motivación vital del PJ.3 Escribir el lugar de nacimiento del PJ.4 Redactar un pequeño historial del PJ. Aquí el jugador se puede explayar más o menos en función de sus deseos, la ambientación de la que se trate y el propósito particular o naturaleza de la partida (campaña o one-shot).</p><h3>La Ficha De Personaje</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 79</h2><p>+ + + + + + + + + + + + + + + + + + + + + + + + Atletismo Auxilio Conducir Conversación Cultura Entorno Fuerza bruta Idioma 1 Idioma 2 Información Intimidación Lucha Mecánica Memoria Observación Ocultación Oído Psicología Puntería Rastreo Seducción Sigilo Simulación Supervivencia</p><h3>Habilidades</h3><h3>Des</h3><h3>Int</h3><h3>Des</h3><h3>Car</h3><h3>Int</h3><h3>Per</h3><h3>Fue</h3><h3>Int</h3><h3>Int</h3><h3>Int</h3><h3>Car</h3><h3>Des</h3><h3>Int</h3><h3>Int</h3><h3>Per</h3><h3>Des</h3><h3>Per</h3><h3>Per</h3><h3>Per</h3><h3>Per</h3><h3>Car</h3><h3>Des</h3><h3>Car</h3><h3>Per</h3><h3>Atributos+</h3><h3>Percepción</h3><h3>Inteligencia</h3><h3>Fuerza</h3><h3>Destreza</h3><h3>Carisma</h3><h3>Defecto Grave</h3><p>Repetir tirada con 1D menos. Se gana 1 proeza. Sin límite.</p><h3>Perspicacia</h3><h3>Int + Per + 5</h3><h3>Aplomo</h3><h3>Car + Int + 5</h3><h3>Agilidad</h3><p>3 X dados en Atletismo + DES</p><h3>Valores</h3><h3>Pasivos</h3><p>Total Actual</p><h3>Recuerdo</h3><h3>Cuando...</h3><p>+ 2D a una tirada. Solo 1 por sesión.</p><h3>Punto</h3><h3>De Guion</h3><p>Crea un recurso. Solo 1 por sesión.</p><h3>Proezas</h3><h3>(Fue + Int) / 2 + 3</h3><h3>Combate Iniciativa</h3><h3>Des + Int</h3><h3>Arma Ataque Daño</h3><h3>Protección Efectonivel</h3><p>Penalización total por protección +1</p><h3>Defecto Leve</h3><p>Repetir tirada. Solo 1 por sesión. –2 –3</p><h3>Máximo</h3><h3>Estabilidad</h3><h3>Aplomo + 5 + 1D</h3><h3>Salud</h3><h3>Fuex2 + 10 + 1D</h3><p>Resistencia Mental</p><h3>12 - Car</h3><p>Resistencia Física</p><h3>12 - Fue</h3><p>–1</p><h3>Nombre</h3><h3>Profesión/Perfil (+3)</h3><h3>Motivación</h3><h3>Lugar De Nacimiento</h3><h3>Edad</h3><h3>Descripción Física</h3><h3>Cita</h3><p>Determinar el número inicial de proezas del PJ, que es igual a (FUE + INT)/2 + 3, redondeando hacia abajo si fuese necesario. Por tanto, se parte siempre con entre tres y ocho proezas.</p><p>Establecer el valor de Aplomo del PJ: CAR + INT + 5 puntos. Determinar el valor de Perspicacia del PJ: INT + PER + 5 puntos. Determinar el valor de Agilidad del PJ: 3 x número de dados que tenga en la habilidad de Atletismo + DES.</p><p>Escribir un defecto grave y un defecto leve para el PJ. Se intentará que sean muy distintos (y al menos uno puramente físico). Determinar el valor de Resistencia Mental del PJ: 12 – CAR.</p><p>Determinar los puntos de Estabilidad del PJ: Aplomo + 5 + 1D. Establecer el valor de Iniciativa: bonificadores de DES + INT. Consignar las protecciones (en caso de haberlas), con su nivel respectivo y su valor total de penalización.</p><p>Redactar una pequeña descripción física del PJ. Por último, y de manera opcional, dibujar o pegar una ilustración o una fotografía del PJ en el espacio habilitado para ello. Redactar una breve cita entrecomillada que caracterice y defina al PJ.</p></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!6qGUUeAxIYplCXOL.0Vp77V17p4G1ttCz"
+    }
+  ],
+  "folder": null,
+  "sort": 100023,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

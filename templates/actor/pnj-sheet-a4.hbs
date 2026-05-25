@@ -48,20 +48,7 @@
           <span>{{effectiveAttack.source}}</span>
           <small>{{effectiveAttack.skillLabel}} · Daño {{effectiveAttack.damage}} + {{effectiveAttack.attrLabel}} · Ini +{{effectiveAttack.initiative}}</small>
         </div>
-        <div class="ims-extra-attack-grid">
-          <label>Tipo
-            <select name="system.ataque.tipo" data-pnj-attack-type>
-              {{#each attackTypes}}<option value="{{key}}" {{imsSelected key ../system.ataque.tipo}}>{{label}}</option>{{/each}}
-            </select>
-          </label>
-          <label>Habilidad
-            <select name="system.ataque.habilidad">
-              {{#each skillOptions}}<option value="{{key}}" {{imsSelected key ../system.ataque.habilidad}}>{{label}} ({{attrLabel}})</option>{{/each}}
-            </select>
-          </label>
-          <label class="span-2">Nombre<input name="system.ataque.nombre" value="{{system.ataque.nombre}}"></label>
-          <label>Daño<input type="number" name="system.ataque.dano" value="{{system.ataque.dano}}"></label>
-        </div>
+        <label class="check"><input type="checkbox" name="system.combate.sorprendido" {{imsChecked system.combate.sorprendido}}> Pillado por sorpresa</label>
       </div>
     </section>
 
@@ -102,10 +89,10 @@
             {{/each}}
           </div>
         </header>
-        {{#each itemsByType}}
-        <h3>{{@key}}</h3>
+        {{#each itemSections}}
+        <h3>{{label}}</h3>
         <ol>
-          {{#each this}}
+          {{#each items}}
           <li class="item {{#if system.equipado}}equipped{{/if}}" data-item-id="{{id}}">
             <img src="{{img}}" alt="">
             <span>{{name}}</span>
@@ -114,8 +101,6 @@
             <button type="button" data-item-edit title="Editar"><i class="fas fa-pen"></i></button>
             <button type="button" data-item-delete title="Borrar"><i class="fas fa-trash"></i></button>
           </li>
-          {{else}}
-          <li class="ims-empty-row">Sin elementos.</li>
           {{/each}}
         </ol>
         {{/each}}

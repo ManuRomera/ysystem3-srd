@@ -8,7 +8,7 @@
     "habilidad": "lucha",
     "danoBase": 3,
     "atributoDano": "fue",
-    "descripcion": "<p>Arma concreta mencionada en el material de Ysystem3. Usa el tipo SRD más próximo: cuerpoDosManos.</p>",
+    "descripcion": "<p>Arma blanca de hoja larga, equilibrada para tajos y estocadas. En combate cercano se usa para atacar, detener y mantener la distancia.</p><p><strong>Regla SRD:</strong> Arma pesada o voluminosa que requiere ambas manos. Golpea con más inercia y aprovecha mejor la Fuerza.</p><p><strong>Tirada:</strong> Lucha (DES). <strong>Daño:</strong> 3 + FUE x 1,5.</p>",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,9 +25,9 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.6",
     "createdTime": 1779666008608,
-    "modifiedTime": 1779666008608,
+    "modifiedTime": 1779701815768,
     "lastModifiedBy": null
   }
 }

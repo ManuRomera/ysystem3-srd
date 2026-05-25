@@ -1,0 +1,62 @@
+{
+  "name": "Anexo II: tono pulp",
+  "type": "JournalEntry",
+  "_id": "fUBgqYNRTshlRTIi",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Anexo II: tono pulp",
+      "type": "text",
+      "_id": "qcqotnhLXC1BnTRd",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Anexo II: tono pulp</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 86</h2><h3>Anexo Ii</h3><h3>Retoques Para Ambientaciones</h3><h3>Con Tono Pulp</h3><p>Jugar a Ysystem3 con tono pulp (algo bastante clásico en muchas aventuras y campañas de rol) exige contar con una regla especial, que es la tirada de salvación in extremis. Esta mecánica consiste en que una vez por aventura (que no por sesión), el jugador puede solicitar al DJ una tirada especial para lograr algo que no ha conseguido tras haber fallado una tirada previa o para evitar cualquier cosa que haya afectado negativamente a su PJ. Para ello, el jugador tira 3D, suma los valores y acude a la Tabla de salvación ¡PULP!</p><p>Esta tabla descubre el agente gracias al cual el PJ logrará lo que quiere o evitará lo que no desea. Por supuesto, el jugador (o, en su defecto, el DJ) debe describir la escena a partir del resultado concreto obtenido.</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 87</h2><h3>Tabla De Salvación ¡Pulp!</h3><p>(Tirada de 2D una vez por aventura) s</p><h3>Valor De La Tirada De</h3><h3>Salvación In Extremis Lo Logro / Lo Evito Gracias A...</h3><p>3 Mi hermano/a gemelo/a, cuya existencia ignoraba hasta ese momento. 4 Algún artefacto, estructura o pieza evidentemente alienígena. 5 Alguien con quien contraje una terrible deuda (ahora le debo dos).</p><p>6 Alguna tara personal, fobia o manía, que en este caso me ayuda. 7 Una de mis pertenencias (elegida por el DJ o por el jugador). 8 La persona o criatura que está más cerca de mí en este momento.</p><p>9 Una planta que puedo ver con mis propios ojos. 10 Un animal salvaje que hace acto de presencia de forma repentina. 11 Un fenómeno atmosférico o físico inesperado. 12 Una extraña y perturbadora premonición.</p><p>13 Algo que leí una vez en cierto libro que cayó en mis manos. 14 El más grave de mis dos defectos. 15 Un consejo recibido en la más tierna infancia. 16 Un viejo amigo que aparece de repente, esté yo donde esté.</p><p>17 Un ser sobrenatural que acude en mi ayuda sin que sepa por qué. 18 Un gorila.</p><h3>Otras Reglas Pulp</h3><p>Además de la nueva tirada de salvación in extremis, en Ysystem3 ¡PULP! los PJ (no así los PNJ) ignoran el primer umbral de Salud y Estabilidad, situado entre los 16 y los 15 puntos (es decir, que los PJ no tienen que tirar por Resistencia Física o Mental hasta que estén por debajo de los 11 puntos). También se ganan proezas cuando el jugador es capaz de soltar la cita de su PJ en un momento dramáticamente apropiado y se permite el gasto de una proeza a priori para añadir 1D más a las tiradas de Resistencia Física y Mental, de modo que desmayarse o enloquecer temporalmente no resulte tan sencillo. Por último, al comienzo de cada sesión todos los jugadores lanzan 1D, obteniendo tantas proezas extra como el resultado de esa tirada dividido entre dos y redondeado hacia abajo.</p></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!fUBgqYNRTshlRTIi.qcqotnhLXC1BnTRd"
+    }
+  ],
+  "folder": null,
+  "sort": 100026,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

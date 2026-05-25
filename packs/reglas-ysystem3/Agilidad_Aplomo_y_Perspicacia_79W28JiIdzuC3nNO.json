@@ -1,0 +1,62 @@
+{
+  "name": "Agilidad, Aplomo y Perspicacia",
+  "type": "JournalEntry",
+  "_id": "79W28JiIdzuC3nNO",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Agilidad, Aplomo y Perspicacia",
+      "type": "text",
+      "_id": "bdSWQeZV4tIG8OXi",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Agilidad, Aplomo y Perspicacia</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 36</h2><h3>Valores</h3><h3>Pasivos</h3><h3>Agilidad, Aplomo Y Perspicacia</h3><p>Varias de las veinticuatro habilidades explicadas en el apartado anterior se suelen emplear en oposición a otros individuos, habitualmente los PNJ (pero también los propios PJ), por lo que, en lugar de que el DJ establezca una dificultad subjetiva para la acción, existe una dificultad concreta que depende de alguno de los tres valores fijos y pasivos con los que cuentan todos los personajes: Agilidad (que representa sus reflejos, su capacidad para esquivar golpes y su explosividad física), Aplomo (que representa su valor, su cordura y la templanza de su carácter) y Perspicacia (que representa su capacidad para percatarse de cosas que no son evidentes</p><ul><li>simple vista). Por consiguiente, en las tiradas por ciertas habilidades hay que fijarse en el valor de Agilidad, Aplomo o Perspicacia del personaje contra el que se realiza la acción, lo que conforma</li></ul><p>la única dificultad de la tirada. Como el objetivo es imponerse al otro personaje, se debe igualar o superar su valor fijo, sin que sean necesarias tiradas adicionales. Cuando en lugar de un solo oponente hay varios, el valor de Agilidad, Aplomo o Perspicacia que hay que superar es el mayor de todos ellos (como ya se ha señalado en el apartado anterior).</p><p>El valor de Agilidad del personaje se averigua sumando 3 puntos por cada D6 que se tenga en la habilidad de Atletismo y añadiendo el bonificador de DES. El valor de Aplomo se calcula sumando los bonificadores de CAR e INT del personaje y añadiendo 5 puntos al resultado.</p><p>El valor de Perspicacia se calcula de forma parecida al de Aplomo, sumando los bonificadores de INT y PER del personaje y añadiendo 5 puntos al resultado. Algunos PNJ especiales o ciertas criaturas fantásticas pueden presentar valores de Agilidad, Aplomo o Perspicacia muy llamativos, sobre todo cuando los bonificadores de sus atributos resultan extraordinarios.</p><p>D’ Artagnan huye a la carrera de cuatro enemigos que tienen un valor de Agilidad de 11, 13, 9 y 10 puntos de Agilidad, respectivamente. Como consecuencia, Asier tendrá que tirar por Atletismo a dificultad 13 (el valor de Agilidad más alto de todos los perseguidores de D’ Artagnan). Si la persecución fuese a caballo, Asier tiraría por Conducir a esa misma dificultad, igualmente.</p><p>Milady de Winter está negociando con el embajador de Venecia, al que quiere convencer de lo provechosa que sería una alianza con Francia. Para ello, Gemma tendrá que sacar una tirada de Conversación a una dificultad igual al Aplomo del embajador, que en este caso es de 15 puntos. ¡Un hueso duro de roer!</p><p>Volviendo a la persecución de D’ Artagnan, el mosquetero cruza ahora un mercado abarrotado de gente y a Asier se le ocurre que su PJ trate de esconderse para dar esquinazo a sus perseguidores, que cada vez se le acercan más. Para ello, el jugador tendrá que sacar una tirada de Ocultación contra el valor de Perspicacia más alto de sus cuatro oponentes, que tienen 7, 10, 9 y 10 puntos, respectivamente. Esto significa que si Asier supera una sencilla tirada de Ocultación a dificultad 10, D’ Artagnan se habrá librado de ellos.</p><h3>Ejemplos</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 37</h2><h3>La Posibilidad De Recalcular El Valor De Agilidad</h3><h3>Para Las Tiradas De Fuerza Bruta Con Oposición</h3><p>Con respecto a la habilidad de Fuerza bruta, se ha dicho que «en competencia con otros personajes, la dificultad de la tirada siempre es igual al valor de Agilidad del rival»; sin embargo, para el caso concreto de enfrentamientos exclusivamente basados en la fuerza de los contendientes, puede surgir el de seo de modificarlo un poco para darle algo más de realismo. ¿De qué manera? Pues calculando sobre la marcha el valor fijo de Agilidad del siguiente modo: 3 puntos por cada D6 que se tenga en Fuerza bruta + el bonificador de FUE; es decir, sustituir en el cálculo Atletismo y DES por Fuerza bruta y FUE, respectivamente. Esta posibilidad (puramente opcional) no es algo tan instantáneo y abstracto como usar la Agilidad tal cual, pero re sulta más realista.</p><h3>Ejemplos</h3><p>Las habilidades que se suelen oponer a la Agilidad de un personaje son:</p><ul><li>Atletismo (DES).</li><li>Conducir (DES).</li><li>Fuerza bruta (FUE).</li><li>Lucha (DES).</li><li>Observación (PER).</li><li>Oído (PER).</li><li>Puntería (PER).</li></ul><p>Las habilidades que se suelen oponer al Aplomo de un personaje son:</p><ul><li>Conversación (CAR).</li><li>Intimidación (CAR).</li><li>Psicología (PER).</li><li>Seducción (CAR).</li></ul><p>Cuando un solo PJ quiere convencer o intimidar a varios PNJ al mismo tiempo, el número de estos afecta al valor de Aplomo que hay que superar, que será el mayor de entre todos los que ostenten los PNJ + 2 puntos por cada PNJ que haya que convencer o intimidar por encima de uno, hasta un máximo de +10 (es decir, como si se tratase de una especie de acción combinada de unos PNJ que se refuerzan entre sí a la hora de resistir una argumentación o un intento de amilanamiento).</p><p>Las habilidades que se suelen oponer a la Perspicacia de un personaje son:</p><ul><li>Ocultación (DES).</li><li>Sigilo (DES).</li><li>Simulación (CAR).</li></ul><h3>Consejo</h3><p>VALOR DE AGILIDAD a 3 x número de dados que se tengan en Atletismo + bonificador de DES. VALOR DE APLOMO a Bonificadores de CAR e INT + 5. VALOR DE PERSPICACIA a Bonificadores de INT y PER + 5.</p><p>Los valores de Agilidad, Aplomo y Perspicacia son las dificultades que hay que igualar o superar para tener éxito en muchas acciones de ciertas habilidades (generalmente frente</p><ul><li>los PNJ).</li></ul><p>Los PNJ pueden combinarse frente a tiradas de Conversación o Intimidación por parte de un PJ (añaden + 2 puntos al valor de Aplomo más alto por cada PNJ por encima de uno, hasta un máximo de + 10 puntos).</p><h3>Resumen</h3><p>Por último, imaginemos que el embajador de Venecia al que Milady de Winter trata de convencer de las bondades de una alianza con Francia estuviese acompañado por dos avispados secretarios que de vez en cuando susurrasen al oído de su señor lindezas como «No hagáis caso a esta dama; de todos es sabido que su lengua viperina le fue dada por el mismísimo Satanás». En este caso, al tratarse de un PNJ oponente principal acompañado por dos PNJ auxiliares, la dificultad de la tirada que tendría que sacar Gemma sería ni más ni menos que 19 puntos (15 por el Aplomo del embajador + 2 puntos por cada uno de los dos asistentes). Casi imposible...</p><p>¡menos para Milady de Winter, naturalmente!</p></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!79W28JiIdzuC3nNO.bdSWQeZV4tIG8OXi"
+    }
+  ],
+  "folder": null,
+  "sort": 100011,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

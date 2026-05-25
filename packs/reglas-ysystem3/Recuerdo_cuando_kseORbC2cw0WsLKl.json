@@ -1,0 +1,62 @@
+{
+  "name": "Recuerdo cuando...",
+  "type": "JournalEntry",
+  "_id": "kseORbC2cw0WsLKl",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Recuerdo cuando...",
+      "type": "text",
+      "_id": "84TVUfq7Cg6SgZQZ",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Recuerdo cuando...</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 14</h2><h3>Recuerdo</h3><h3>Cuando...</h3><h3>Recuerdo Cuando...</h3><p>En Ysystem3 existe la posibilidad de sumar 2D más a una tirada cualquiera de forma excepcional. Esto incluye las tiradas de Resistencia (pero no las de iniciativa, en las que, como veremos más adelante, siempre se lanza un solo dado). Para ganar ese derecho a tirar 2D extra hay que detener momentáneamente la partida e improvisar un pequeño flashback. En el flashback se debe narrar algo que le ocurriera al PJ en el pasado y que le reportase alguna experiencia que ahora justifica la adición de los dos dados. El uso del Recuerdo cuando… es incompatible con el de las proezas a la hora de añadir dados (véase más adelante), pero no para repetir la tirada.</p><p>Tampoco inhabilita al jugador a la hora de sacar críticos; de hecho, aumenta su probabilidad. Cada jugador tiene derecho a interrumpir la partida para desarrollar un breve flashback una vez por sesión (en el caso de partidas autoconclusivas o one-shot) o por aventura (en el caso de campañas). Mientras lo hace, el resto de los jugadores tiene que escucharlo sin intervenir. Por supuesto, el flashback debe resultar interesante y significativo y tener relación con la acción en curso; de lo contrario, el DJ puede impedir la adición de los dos dados extra. Una vez usado el Recuerdo cuando… hay que marcarlo en la ficha de personaje en el espacio habilitado a tal efecto.</p><p>Es importante recordar que en Ysystem3 no se pueden tirar más de 5D bajo ningún concepto, independientemente de los talentos y mecánicas (como el Recuerdo cuando…) que el jugador sea capaz de activar al mismo tiempo para añadir dados a sus tiradas.</p><p>Para Wan Lu, huir de sus perseguidores en el mercado de Shanghái resulta relativamente sencillo, ya que el PJ de Diego cuenta con 3D en Atletismo y +6 en DES y la dificultad de la acción es de solo 14 puntos. Esto supone alrededor de un 83 % de probabilidades de éxito. No obstante, Diego (que ya no tiene proezas) quiere garantizar que Wan Lu escape, pues si lo atrapan lo van a moler a palos hasta la muerte, así que anuncia que va a activar la mecánica de Recuerdo cuando... La acción se detiene en este momento y Diego narra lo siguiente: «Hace no mucho tiempo, mientras trabajaba en el puerto descargando cajas, Wan Lu se topó de frente con el padre y los tres hermanos de Mei Ling, su novia, que al parecer espera un hijo suyo.</p><p>Los familiares de Mei Ling lo estaban buscando para arrastrarlo hasta el altar y casarlo con la chica, así que Wan Lu tuvo que dar lo mejor de sí mismo para salir del aprieto. ¡Menuda carrera!».</p><h3>Ejemplo</h3><p>RECUERDO CUANDO... a Posibilidad de interrumpir la partida una vez por sesión (one-shots) o por aventura (campañas) para improvisar un flashback que justifique la adición de 2D extra a una tirada cualquiera (incluidas las tiradas de Resistencia).</p><h3>Resumen</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!kseORbC2cw0WsLKl.84TVUfq7Cg6SgZQZ"
+    }
+  ],
+  "folder": null,
+  "sort": 100003,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

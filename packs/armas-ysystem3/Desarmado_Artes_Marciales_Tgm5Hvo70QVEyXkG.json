@@ -1,0 +1,34 @@
+{
+  "name": "Desarmado (Artes Marciales)",
+  "type": "arma",
+  "_id": "Tgm5Hvo70QVEyXkG",
+  "img": "icons/skills/melee/unarmed-punch-fist.webp",
+  "system": {
+    "tipo": "desarmadoEspecial",
+    "habilidad": "lucha",
+    "danoBase": 2,
+    "atributoDano": "fue",
+    "iniciativa": 0,
+    "descripcion": "<p>Ataque sin arma entrenado o reforzado: artes marciales, botas pesadas, guanteletes, nudillos metálicos o una técnica especialmente dañina.</p><p><strong>Regla SRD:</strong> Ataque sin arma entrenado o reforzado: artes marciales, botas pesadas, guanteletes, nudillos metálicos o una técnica especialmente dañina.</p><p><strong>Tirada:</strong> Lucha (DES). <strong>Daño:</strong> 2 + FUE/2.</p>",
+    "equipado": false,
+    "automatismo": ""
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 200000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

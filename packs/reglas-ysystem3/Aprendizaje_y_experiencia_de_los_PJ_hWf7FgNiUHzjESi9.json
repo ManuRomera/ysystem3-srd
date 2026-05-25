@@ -1,0 +1,62 @@
+{
+  "name": "Aprendizaje y experiencia de los PJ",
+  "type": "JournalEntry",
+  "_id": "hWf7FgNiUHzjESi9",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Aprendizaje y experiencia de los PJ",
+      "type": "text",
+      "_id": "Ww2gdcYd6tgq2ebv",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Aprendizaje y experiencia de los PJ</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 74</h2><h3>Aprendizaje Y</h3><h3>Experiencia</h3><p>Subir una habilidad de 2D a 3D Subir una habilidad de 1D a 2D Subir un atributo en 1 punto 10 puntos de Experiencia</p><h3>Aprendizaje Y Experiencia De Los Pj</h3><p>En Ysystem3, los PJ pueden mejorar sus estadísticas a lo largo del tiempo de juego y alcanzar nuevas cotas de poder de dos maneras diferentes: el aprendizaje y la experiencia. Al hallar maestros com petentes o vivir aventuras superando todo tipo de retos sin traicionar sus fundamentos vitales, los PJ pueden incrementar el número de dados que tienen en sus habilidades e incluso los bonificadores de sus atributos básicos.</p><p>El aprendizaje de una habilidad exige hallar a un maestro que quiera y pueda enseñar, que habrá de ser un personaje que tenga más dados en la habilidad que el discípulo, así como invertir en el proceso una cantidad sustancial de tiempo de juego no compatible con otras actividades profesionales. Ese tiempo será de 1D sema nas cuando se quiera pasar de 1 a 2D en la habilidad, y de 1D me ses cuando se quiera pasar de 2 a 3D. Transcurrido dicho tiempo de juego, el aprendizaje se hace efectivo si el maestro realiza una tirada por la habilidad que enseña y el resultado queda por debajo del valor de Perspicacia del discípulo.</p><p>IMPORTANTE: En caso de que el maestro sea un PNJ, el DJ ten drá que improvisar el número de dados que podría tener en la ha bilidad en la que el PJ discípulo desea mejorar (recordemos que, en principio, los PNJ solo cuentan con cuatro habilidades).</p><p>Respecto a la mejora de los PJ por la vía de la experiencia, cada aventura debe contar, de media, con uno, dos o incluso tres objetivos concretos por sesión de juego. La mayoría de estos objetivos se podrá lograr de forma colectiva, mientras que otros tal vez solo se puedan conseguir de manera individual. Cada objetivo al canzado se tiene que traducir en la ganancia de 1 a 3 puntos de Experiencia para cada uno de los jugadores involucrados en función de su magnitud y la dificultad de su realización. Si algún PJ se destaca en el logro de un objetivo, el DJ puede premiarlo con un punto más que al resto, mientras que aquel PJ que no haya participado en su consecución no debería ganar ninguno.</p><p>Al margen de lo anterior, también se pueden ganar puntos de Experiencia cumpliendo con la Motivación presente en la ficha de PJ. Cuando un PJ persigue activamente su Motivación a lo largo de la aventura, al final de la misma (que no de la sesión) recibirá entre 1 y 3 puntos de Experiencia, siempre a criterio del DJ.</p><p>Por último, se deja abierta la posibilidad de que el DJ gratifique con 1 punto de Experiencia alguna ocurrencia genial o interpreta ción especialmente sublime de cualquiera de los jugadores.</p><p>Los jugadores pueden invertir los puntos de experiencia (todos o parte de ellos) en la mejora de sus PJ, de estos tres modos: 11 22 33</p><h3>Atributo</h3><p>+1 HabilidadHabilidad 5 puntos de Experiencia Nuevo valor del atributo x 3 puntos de Experiencia</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 75</h2><p>permiten alcanzar nuevas cotas de poder. Subir una habilidad de 1 a 2D: 5 puntos de Experiencia. Subir una habilidad de 2 a 3D: 10 puntos de Experiencia. Aumentar en 1 punto cualquiera de los cinco atributos básicos: nuevo valor del bonificador x 3 puntos de Experiencia. Las subidas han de hacerse punto a punto. Por otra par te, hay que recordar que la alteración de los bonificadores de los atributos puede modificar muchos valores derivados, como, por ejemplo, el Aplomo, la Perspicacia, los puntos de Salud, la Resistencia Física o la Iniciativa.</p><h3>La</h3><h3>Experiencia</h3><h3>Y El</h3><h3>Aprendizaje</h3><p>APRENDIZAJE a 1D semanas (para pasar de 1 a 2D) o 1D meses (para pasar de 2 a 3D), tras lo cual un maestro con más dados en la habilidad que su discípulo debe realizar una tirada y quedar por debajo del valor de Perspicacia de este último.</p><p>En caso de un PNJ maestro, el DJ puede tener que improvisar el número de dados que tendría en la habilidad. PUNTOS DE EXPERIENCIA a Se ganan de 1 a 3 por objetivo concreto alcanzado en la sesión, por desarrollar ideas geniales o interpretaciones sublimes y por cumplir con la Motivación del PJ a lo largo de la aventura. Los puntos obtenidos se emplean para aumentar las habilidades (5 puntos para pasar de 1 a 2D; 10 para pasar de 2 a 3D) y los atributos (nuevo valor del bonificador x 3 puntos).</p><h3>Resumen</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 76</h2><h3>Creación De Pj</h3><p>En Ysystem3, la generación de nuevos PJ es fácil y divertida, aunque en ocasiones se opta por usar PJ pregenerados (como sucede, por ejemplo, con las aventuras y campañas publicadas en las líneas Pergaminos de Midgard y Biblioteca de Asgard, de Walhalla Ediciones). En este último caso, cada PJ suele contar con un talento específico, característica de la que carecen los PJ creados desde cero.</p><h3>Diseña Tu</h3><h3>Pj</h3><h3>Fuerza</h3><h3>Inteligenciainteligenciapercepción Destreza Carisma</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!hWf7FgNiUHzjESi9.Ww2gdcYd6tgq2ebv"
+    }
+  ],
+  "folder": null,
+  "sort": 100021,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

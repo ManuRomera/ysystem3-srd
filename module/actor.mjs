@@ -229,8 +229,13 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
-function firstTargetToken() {
-  return game.user.targets.first() ?? null;
+function firstTargetToken(actor = null) {
+  const targeted = game.user.targets.first();
+  if (targeted) return targeted;
+  const controlled = canvas?.tokens?.controlled?.[0] ?? null;
+  if (!controlled) return null;
+  if (actor && controlled.actor?.uuid === actor.uuid) return null;
+  return controlled;
 }
 
 function fixedValue(actor, key) {
@@ -260,7 +265,8 @@ function actorAgilidad(actor) {
 
 function damageCard(data) {
   const status = data.applied ? "Daño aplicado" : data.defended ? "Defensa conseguida" : "Impacto pendiente";
-  const buttons = data.applied || data.defended ? "" : `
+  const hasLinkedTarget = !!(data.targetUuid || data.targetTokenUuid);
+  const buttons = data.applied || data.defended || !hasLinkedTarget ? "" : `
     <div class="ims-chat-actions">
       <button type="button" class="ims-chat-action" data-ims-action="active-defense">Defensa activa</button>
       <button type="button" class="ims-chat-action" data-ims-action="apply-damage">Aplicar daño</button>
@@ -271,6 +277,7 @@ function damageCard(data) {
       <header><h3>${escapeHtml(data.attackLabel)}</h3><strong>${status}</strong></header>
       <p><strong>${escapeHtml(data.attackerName)}</strong> impacta a <strong>${escapeHtml(data.targetName)}</strong>.</p>
       <p>Daño calculado: <strong>${data.damage}</strong> (${escapeHtml(data.formulaText)})</p>
+      ${hasLinkedTarget ? "" : "<p>Sin token vinculado: aplica el daño manualmente si procede.</p>"}
       ${data.defenseText ? `<p>${escapeHtml(data.defenseText)}</p>` : `<p>Defensa activa: Atletismo contra dificultad ${data.defenseDifficulty}.</p>`}
       ${buttons}
     </div>`;
@@ -455,9 +462,12 @@ export class ImsersoActor extends Actor {
     const skill = IMSERSO.habilidades[skillKey];
     if (!skill) return;
     const attrKey = skill.atributo;
-    const targetToken = firstTargetToken();
+    const targetToken = firstTargetToken(this);
     const target = targetToken?.actor ?? null;
     const opposedDifficulty = skill.oposicion ? fixedValue(target, skill.oposicion) : null;
+    if (skill.oposicion && !target && !options.skipDialog) {
+      ui.notifications.info("Esta acción funciona mejor con un token seleccionado o tarjeteado; puedes resolverla sin token ajustando la dificultad manualmente.");
+    }
     let attr = attributeValue(this, attrKey);
     if (["des", "fue"].includes(attrKey)) attr -= number(this.system.efectivos?.mods?.proteccionPenalizacion, 0);
     const baseDice = skillDice(this, skillKey);
@@ -632,7 +642,7 @@ export class ImsersoActor extends Actor {
       return null;
     }
     const weapon = equippedWeapon(this);
-    const attackTypeCfg = attackConfig(options.tipo ?? weapon?.system?.tipo ?? this.system.combate?.armaIniciativa ?? this.system.ataque?.tipo ?? "desarmado");
+    const attackTypeCfg = attackConfig(options.tipo ?? weapon?.system?.tipo ?? "desarmado");
     const des = number(this.system.efectivos?.atributos?.des, this.system.atributos?.des);
     const int = number(this.system.efectivos?.atributos?.int, this.system.atributos?.int);
     const roll = await new Roll(`1d6 + ${des} + ${int}`).evaluate({ async: true });
@@ -652,26 +662,27 @@ export class ImsersoActor extends Actor {
   }
 
   async rollAttack(attackOptions = {}) {
-    const targetToken = firstTargetToken();
+    const targetToken = firstTargetToken(this);
     const target = targetToken?.actor ?? null;
     if (!target) {
-      ui.notifications.warn("Tarjetea un token antes de atacar para automatizar impacto, defensa y daño.");
-      return null;
+      ui.notifications.info("El ataque funciona mejor con un token seleccionado o tarjeteado para automatizar impacto, defensa y daño; se resolverá en modo manual.");
     }
     const item = attackOptions.item ?? equippedWeapon(this) ?? null;
-    const currentType = item?.system?.tipo ?? this.system.combate?.ataque ?? this.system.ataque?.tipo ?? "desarmado";
+    const currentType = item?.system?.tipo ?? "desarmado";
     const resolvedType = IMSERSO.ataqueTipos[currentType] ? currentType : resolveAttackType(currentType);
     const typeOptions = Object.entries(IMSERSO.ataqueTipos).map(([key, value]) => `<option value="${key}" ${key === resolvedType ? "selected" : ""}>${value.label}</option>`).join("");
-    const targetName = target.name;
-    const targetAgilidad = actorAgilidad(target);
+    const targetName = target?.name ?? "Objetivo manual";
+    const targetAgilidad = target ? actorAgilidad(target) : 9;
     const data = await simpleDialog({
       title: item ? `Ataque: ${item.name}` : `Ataque: ${this.name}`,
       content: `
         <form class="ims-dialog">
-          <p>Objetivo tarjeteado: <strong>${escapeHtml(targetName)}</strong>.</p>
+          <p>${target ? "Objetivo tarjeteado" : "Objetivo manual"}: <strong>${escapeHtml(targetName)}</strong>.</p>
           ${item ? `<p>Objeto usado: <strong>${escapeHtml(item.name)}</strong>.</p>` : ""}
+          ${target ? "" : `<label>Nombre del objetivo<input name="targetName" value="${escapeHtml(targetName)}"></label>`}
           <label>Tipo de ataque<select name="tipo">${typeOptions}</select></label>
           <label>Agilidad objetivo${stepper("dificultad", targetAgilidad, { min: 1, max: 30 })}</label>
+          ${target ? "" : `<label>Armadura/protección objetivo${stepper("armadura", 0, { min: 0, max: 30 })}</label>`}
           <label>Dados sacrificados para apuntar${stepper("dadosSacrificados", 0, { min: 0, max: 2 })}</label>
           <label>Dados extra/al alimón${stepper("extraDados", 0, { min: -3, max: 3 })}</label>
           <label class="check"><input type="checkbox" name="proezaDado"> Gastar 1 proeza para +1D a impactar</label>
@@ -685,19 +696,17 @@ export class ImsersoActor extends Actor {
     const yays = this.type === "personaje" ? Math.min(maxDamageProezas, Math.max(0, number(data.proezasDano ?? data.yayoDano, 0))) : 0;
     const declaredYayos = yays + (this.type === "personaje" && (data.proezaDado || data.yayoDado) ? 1 : 0);
     if (declaredYayos && !this.canSpendProezas(declaredYayos)) return null;
-    const actorAttack = this.type === "pnj" ? this.system.ataque : null;
     const itemSkill = IMSERSO.habilidades[item?.system?.habilidad] ? item.system.habilidad : null;
-    const actorSkill = IMSERSO.habilidades[actorAttack?.habilidad] ? actorAttack.habilidad : null;
     const itemDamageAttr = IMSERSO.atributos[item?.system?.atributoDano] ? item.system.atributoDano : null;
     const baseDamageDefault = data.tipo === "desarmado" && this.system.efectivos?.mods?.sinArmasDano != null
       ? this.system.efectivos.mods.sinArmasDano
       : baseAttack.dano;
     const attack = {
       ...baseAttack,
-      label: item?.name ?? actorAttack?.nombre ?? baseAttack.label,
+      label: item?.name ?? baseAttack.label,
       tipo: data.tipo ?? baseAttack.tipo,
-      habilidad: itemSkill ?? actorSkill ?? baseAttack.habilidad,
-      dano: number(item?.system?.danoBase, number(actorAttack?.dano, baseDamageDefault)),
+      habilidad: itemSkill ?? baseAttack.habilidad,
+      dano: number(item?.system?.danoBase, baseDamageDefault),
       atributo: itemDamageAttr ?? baseAttack.atributo,
     };
     const result = await this.rollSkill(attack.habilidad, {
@@ -712,7 +721,7 @@ export class ImsersoActor extends Actor {
       attackerUuid: this.uuid,
       targetUuid: target?.uuid ?? "",
       targetTokenUuid: targetToken?.document?.uuid ?? "",
-      targetName,
+      targetName: target?.name ?? data.targetName ?? targetName,
       attack,
       attackData: {
         dadosSacrificados: number(data.dadosSacrificados, 0),
@@ -734,7 +743,9 @@ export class ImsersoActor extends Actor {
     const aimedDice = number(data.dadosSacrificados, 0) * (attack.apuntar === "2d6" ? 2 : 1);
     const proezaDamage = await rollExplodingD6(yays);
     const aimedRoll = aimedDice > 0 ? await new Roll(`${aimedDice}d6`).evaluate({ async: true }) : null;
-    const armorReduction = result.critico ? 0 : number(target.system.efectivos?.mods?.proteccionDano, target.system.proteccion?.dano);
+    const armorReduction = result.critico ? 0 : target
+      ? number(target.system.efectivos?.mods?.proteccionDano, target.system.proteccion?.dano)
+      : number(data.armadura, 0);
     const extraDamage = proezaDamage.total + (aimedRoll?.total ?? 0);
     const subtotal = Math.max(0, attack.dano + attrDamage + extraDamage - armorReduction);
     const totalDamage = result.critico ? subtotal * 2 : subtotal;
@@ -744,7 +755,7 @@ export class ImsersoActor extends Actor {
       targetUuid: target?.uuid ?? "",
       targetTokenUuid: targetToken?.document?.uuid ?? "",
       attackerName: this.name,
-      targetName,
+      targetName: target?.name ?? data.targetName ?? targetName,
       attackLabel: attack.label,
       attackSkill: attack.habilidad,
       attackTipo: data.tipo,
@@ -874,6 +885,7 @@ export class ImsersoActor extends Actor {
   async useHealingItem(item) {
     const targetToken = firstTargetToken();
     const target = targetToken?.actor ?? this;
+    if (!targetToken) ui.notifications.info("La curación funciona mejor con un token seleccionado o tarjeteado; sin objetivo se aplicará al actor que usa el objeto.");
     const result = await this.rollSkill("auxilio", { dificultad: 10 });
     if (!result) return null;
     const amount = result.critico ? 4 : result.exito ? 2 : 0;
@@ -899,6 +911,7 @@ export class ImsersoActor extends Actor {
   async rollRulesHealing() {
     const targetToken = firstTargetToken();
     const target = targetToken?.actor ?? this;
+    if (!targetToken) ui.notifications.info("La curación reglada funciona mejor con un token seleccionado o tarjeteado; sin objetivo se preparará sobre el actor actual.");
     const sources = {
       hospital: { label: "Hospital / centro medico", amount: 2, skill: "" },
       reposo: { label: "Reposo confortable", amount: 1, skill: "" },
@@ -1078,18 +1091,18 @@ export class ImsersoActor extends Actor {
   }
 
   async rollPursuit() {
-    const targetToken = firstTargetToken();
+    const targetToken = firstTargetToken(this);
     const target = targetToken?.actor;
     if (!target) {
-      ui.notifications.warn("Tarjetea a quien marca la dificultad de la persecucion.");
-      return null;
+      ui.notifications.info("La persecución funciona mejor con un token seleccionado o tarjeteado; se resolverá con una referencia manual.");
     }
-    const difficulty = actorAgilidad(target);
+    const difficulty = target ? actorAgilidad(target) : 9;
     const data = await simpleDialog({
       title: `Persecucion: ${this.name}`,
       content: `
         <form class="ims-dialog">
-          <p>Referencia: <strong>${escapeHtml(target.name)}</strong>, Agilidad ${difficulty}.</p>
+          <p>Referencia: <strong>${escapeHtml(target?.name ?? "manual")}</strong>, Agilidad ${difficulty}.</p>
+          ${target ? "" : `<label>Nombre de referencia<input name="targetName" value="Referencia manual"></label>`}
           <label>Habilidad
             <select name="skill">
               <option value="atletismo">Atletismo</option>
@@ -1113,7 +1126,7 @@ export class ImsersoActor extends Actor {
       content: `
         <div class="ims-chat-card">
           <header><h3>Persecucion</h3><strong>${title}</strong></header>
-          <p><strong>${escapeHtml(this.name)}</strong> resuelve persecucion contra <strong>${escapeHtml(target.name)}</strong>: ${outcome}</p>
+          <p><strong>${escapeHtml(this.name)}</strong> resuelve persecucion contra <strong>${escapeHtml(target?.name ?? data.targetName ?? "referencia manual")}</strong>: ${outcome}</p>
         </div>`
     });
   }

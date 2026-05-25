@@ -8,7 +8,7 @@
     "habilidad": "lucha",
     "danoBase": 3,
     "atributoDano": "fue",
-    "descripcion": "<p><strong>Ejemplos:</strong> Arma improvisada grande, garras/colmillos de criatura descomunal, hacha a dos manos, lanza pesada, maza pesada</p><p><strong>Tirada:</strong> Lucha (DES)</p><p><strong>Daño fijo:</strong> 3 + (FUE x 1,5)</p>",
+    "descripcion": "<p>Arma pesada o voluminosa que requiere ambas manos. Golpea con más inercia y aprovecha mejor la Fuerza.</p><p><strong>Regla SRD:</strong> Arma pesada o voluminosa que requiere ambas manos. Golpea con más inercia y aprovecha mejor la Fuerza.</p><p><strong>Tirada:</strong> Lucha (DES). <strong>Daño:</strong> 3 + FUE x 1,5.</p>",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,9 +25,9 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.6",
     "createdTime": 1779666008608,
-    "modifiedTime": 1779666008608,
+    "modifiedTime": 1779701815768,
     "lastModifiedBy": null
   }
 }

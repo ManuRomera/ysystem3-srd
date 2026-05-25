@@ -1,0 +1,62 @@
+{
+  "name": "Glosario de términos",
+  "type": "JournalEntry",
+  "_id": "UbTMCYd64Ll24UVF",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Glosario de términos",
+      "type": "text",
+      "_id": "MoiPVkcfuXLLvnEa",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Glosario de términos</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 4</h2><h3>Glosario</h3><h3>Glosario De Términos De Ysystem3</h3><h3>Agilidad</h3><p>Primero de los tres valores fijos y pasivos con los que cuenta todo personaje. Representa sus reflejos, su capacidad para esquivar golpes y su explosividad física.</p><h3>Aplomo</h3><p>Segundo de los tres valores fijos y pasivos con los que cuenta todo personaje. Representa su valor, su cordura y su templanza.</p><h3>Atributo</h3><p>Cada uno de los cinco rasgos o características esenciales de los personajes, expresados con un bonificador a las tiradas de las habilidades que dependen de ellos (0, +1, +2, +4 o +6). Estos atributos son Carisma (CAR), Destreza (DES), Fuerza (FUE), Inteligencia (INT) y Percepción (PER).</p><h3>Defecto</h3><p>Cualquiera de los dos rasgos del PJ, grave y leve, que el DJ puede «activar» para obligar al jugador a repetir una tirada que ya ha sacado.</p><h3>Dj (Director De Juego)</h3><p>Jugador que narra la partida, conoce y aplica el reglamento, ejerce de árbitro imparcial, detecta e incorpora los deseos del resto de jugadores e interpreta y gestiona las acciones de todos los PNJ.</p><h3>Ficha De Personaje</h3><p>Documento de una sola página en el que se consignan todos los datos relevantes de un PJ y el conjunto de sus estadísticas con influencia en el juego.</p><h3>Habilidad</h3><p>Cada una de las veinticuatro distintas capacidades que tienen los personajes para hacer las cosas correctamente y afrontar cualquier dificultad.</p><h3>Perspicacia</h3><p>Tercer y último de los tres valores fijos y pasivos con los que cuenta todo personaje. Representa su capacidad para percatarse de cosas que no son evidentes a simple vista.</p><h3>Pnj (Personaje No Jugador)</h3><p>Personaje secundario o figurante de la trama narrada por el DJ e interpretado por este último. Generalmente se trata de un aliado, un antagonista o una fuente de información para los PJ. Debe contar con su propio carácter, aspecto, estilo, motivación y objetivos a corto y largo plazo. Sus estadísticas constituyen una pequeña selección o resumen de las que tienen los PJ.</p><h3>Consideraciones Previas</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 5</h2><h3>Pj (Personaje Jugador)</h3><p>Personaje singular interpretado por un jugador cualquiera, a excepción del DJ. Es el protagonista absoluto de la acción. Sus estadísticas se reflejan en la ficha de personaje.</p><h3>Proezas</h3><p>Puntos exclusivos de los PJ que representan su capacidad de esfuerzo y les permiten repetir tiradas falladas, añadir 1D extra a cualquier tirada, aumentar el daño de sus ataques, incrementar temporalmente sus valores de Agilidad, Aplomo o Perspicacia o librarse de un éxito crítico en su contra.</p><h3>Puntos De Estabilidad</h3><p>Puntos que reflejan la condición mental general y el nivel de cordura de cualquier PJ. Cuando se pierden todos los puntos de Estabilidad, el PJ enloquece para siempre.</p><h3>Puntos De Guion</h3><p>Puntos que permiten a los jugadores crear un recurso dramático por aventura, ya se trate de un contacto, un objeto o un suceso narrativo o ambiental provechoso.</p><h3>Puntos De Salud</h3><p>Puntos que reflejan la condición física general y la constitución de cualquier personaje. Cuando se pierden todos los puntos de Salud, el personaje muere irremediablemente.</p><h3>Recuerdo Cuando...</h3><p>Mecánica de analepsis narrativa o flashback que permite sumar 2D adicionales a una tirada de habilidad o de Resistencia una vez por sesión (en el caso de partidas autoconclusivas o one-shot) o aventura (en el caso de campañas). Para ello, el jugador detiene momentáneamente la partida y narra una escena retrospectiva protagonizada por su PJ en la que se justifica la adición de los dados extra.</p><h3>Resistencia Física</h3><p>Valor que indica cuánto aguanta un PJ sin desmayarse a causa de los golpes recibidos o las heridas sufridas.</p><h3>Resistencia Mental</h3><p>Valor que indica cuánto aguanta un PJ sin sufrir una crisis de locura temporal a causa de los horrores que haya podido presenciar.</p><h3>Turno</h3><p>Cada uno de los segmentos en los que se divide el combate (equivalentes a unos cinco segundos de tiempo de juego) y eventualmente otras secuencias de acción, como la mayoría de las persecuciones.</p><h3>Consideraciones Previas</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!UbTMCYd64Ll24UVF.MoiPVkcfuXLLvnEa"
+    }
+  ],
+  "folder": null,
+  "sort": 100000,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

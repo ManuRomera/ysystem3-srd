@@ -8,7 +8,7 @@
     "habilidad": "punteria",
     "danoBase": 11,
     "atributoDano": "per",
-    "descripcion": "<p><strong>Ejemplos:</strong> Carabina, escopeta, fusil, rifle, subfusil; blaster normal</p><p><strong>Tirada:</strong> Puntería (PER)</p><p><strong>Daño fijo:</strong> 11 + PER</p>",
+    "descripcion": "<p>Arma de fuego larga o equivalente. Requiere encare, ofrece mayor potencia y alcance que un arma corta.</p><p><strong>Regla SRD:</strong> Arma de fuego larga o equivalente. Requiere encare, ofrece mayor potencia y alcance que un arma corta.</p><p><strong>Tirada:</strong> Puntería (PER). <strong>Daño:</strong> 11 + PER.</p>",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,9 +25,9 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.6",
     "createdTime": 1779666008608,
-    "modifiedTime": 1779666008608,
+    "modifiedTime": 1779701815768,
     "lastModifiedBy": null
   }
 }

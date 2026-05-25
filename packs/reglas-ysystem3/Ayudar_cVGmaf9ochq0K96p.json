@@ -1,0 +1,62 @@
+{
+  "name": "Ayudar",
+  "type": "JournalEntry",
+  "_id": "cVGmaf9ochq0K96p",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Ayudar",
+      "type": "text",
+      "_id": "E6WBrffMINEAua5b",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Ayudar</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 25</h2><h3>Ayudar</h3><h3>Ayudar</h3><p>Cosa distinta de las acciones combinadas, en las que una sola acción se realiza entre varios personajes, es ayudar. Esto se hace en aquellas situaciones en las que dos o más personajes llevan a cabo acciones independientes pero uno de ellos quiere ayudar a otro u otros. En este caso, se permite el préstamo de uno de los dados de la tirada de habilidad a otro u otros personajes (máximo 1D por PJ o PNJ al que se quiere ayudar). Por supuesto, si se presta 1D significa que la propia tirada se va a hacer con 1D menos.</p><p>Es importante diferenciar las acciones combinadas de las ayudas, porque no tienen mucho que ver. Levantar una roca entre varios, por ejemplo, es una acción combinada, mientras que escalar una pared es cosa de cada uno (aunque se pueda ayudar al de al lado, que de eso se trata). En otras palabras: en las acciones combinadas se realiza una sola tirada, mientras que cuando se ayuda cada uno hace su tirada de forma independiente pero prestándose dados. Solo pueden ayudar los PJ, aunque los PNJ sí pueden ser ayudados.</p><p>Al igual que se ha dicho con las acciones combinadas, no siempre es posible ayudar. El DJ es el que tiene la última palabra sobre esto. Por otro lado, también se puede ayudar con los valores fijos y pasivos, en concreto con el de Agilidad. Cuando dos o más personajes están próximos entre sí y ambos se enfrentan a cualquier tipo de ataque, puede darse el caso de que uno de ellos quiera auxiliar a otro en sus maniobras de esquiva o evasión a costa de su propia Agilidad. Para ello, el jugador que maneja al PJ que quiere ayudar tira uno o dos dados (máximo 2D) y el resultado se resta al propio valor de Agilidad en ese turno a cambio de sumarlo íntegramente al del personaje al que se quiere ayudar. El dado o dados se deben tirar en cada turno en que se quiera ayudar a aumentar la Agilidad del otro personaje, lo que no computa como acción.</p><p>Asier y Gemma son dos nuevos jugadores de Ysystem3 que interpretan, respectivamente, al mosquetero Charles de Batz-Castelmore (el famoso «D’ Artagnan») y a la espía y asesina Anne de Breuil (más conocida como «Milady de Winter»). Los PJ acaban de llegar a un castillo en el que se celebra una fiesta y quieren infiltrarse en ella haciéndose pasar por un matrimonio de aristócratas de una distante región. Para ello, el DJ les solicita una tirada de Simulación a dificultad 14 (el valor de Perspicacia más elevado de entre todos los asistentes a la fiesta).</p><p>Asier y Gemma consultan las fichas de sus PJ y se dan cuenta de que D’ Artagnan solo tiene 1D + 2 en Simulación, por lo que ni siquiera gastando una proeza para añadir 1D extra a su tirada podría alcanzar el éxito (salvo que obtuviese dos 6, algo realmente improbable). En cambio, Milady de Winter tiene 3D + 6, el máximo posible, por lo que Gemma decide ayudar a Asier y cederle uno de sus dados, de manera que D’ Artagnan lanzará 2D + 2 y Milady de Winter 2D + 6. En la ficción, esto se traduciría en que Milady de Winter llevaría la voz cantante, exponiéndose más a cambio de proteger a su compañero de miradas escrutadoras. Por otro lado, ambos pueden ahora gastar una proeza para tirar 3D + 2 y 3D + 6, respectivamente, e incrementar así las</p><h3>Ejemplo</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 26</h2><h3>La Posibilidad De «Ayudar A Fondo»</h3><p>Ayudar es una regla muy útil, pero es necesario realizar un par de puntualizaciones al respecto:</p><ul><li>En primer lugar, si se cuenta con tres o más</li></ul><p>dados para tirar (por ejemplo, porque se tenga 3D en la habilidad o se haga uso de una proeza o del Recuerdo cuando…), nada impide prestar un dado a un personaje y otro dado a otro. Incluso se podrían llegar a sacrificar más de dos dados, siempre que sea a personajes distintos y aquel que ayuda cuente al menos con 1D para realizar su propia tirada.</p><ul><li>En segundo lugar, un personaje puede ser</li></ul><p>ayudado por varios PJ al mismo tiempo, de manera que sea capaz de recibir varios dados por este concepto. No obstante, hay que recordar que en Ysystem3 no se pue den tirar más de 5D bajo ningún concepto.</p><ul><li>En tercer lugar, y aunque el reglamento no lo</li></ul><p>contempla, algunos DJ de Ysystem3 permiten ceder más de 1D a un mismo personaje, lo cual no parece descabellado. El máximo de 1D figura en las reglas porque cualquier ayuda siempre llega hasta cierto punto, pero si el DJ prefiere que se pueda «ayudar a fondo», puede dejar que se presten varios dados. Es algo que no perjudica al sistema.</p><p>posibilidades de éxito de algo que se antoja muy importante (pues si uno de ellos falla, serán detectados como intrusos). Quizás Asier tenga la tentación de activar el Recuerdo cuando... en lugar de gastar una proeza, lo que le permitiría tirar 4D + 2.</p><p>Imaginemos que D’ Artagnan y Milady de Winter han tenido éxito</p><ul><li>la hora de hacerse pasar por quienes no son e incluso han logrado</li></ul><p>ser alojados en el castillo (justo lo que querían, ya que han venido hasta aquí para hacerse con unos comprometedores documentos que el viejo conde guarda en su escritorio). Es noche cerrada, nuestros héroes se mueven con sigilo y, cuando están a punto de acceder al despacho donde descansan los papeles, un avieso espadachín al servicio del conde descubre a los PJ. De inmediato, se inicia un combate, en el que Milady de Winter está claramente en riesgo: ¡el espadachín ataca con 2D + 4 y ella solo tiene una Agilidad de 5 puntos! Por supuesto, Gemma puede ir gastando proezas para aumentar temporalmente su valor de Agilidad en cada turno, pero semejante sangría la va a dejar sin ninguna proeza en menos de tres turnos. Para ayudarla, Asier (cuyo PJ ostenta una estupenda Agilidad de 15 puntos), decide tirar 1D en cada turno para sumar el resultado a la Agilidad de Milady de Winter y restárselo a la de D’ Artagnan. De esta manera, si Gemma tuviera que invertir alguna proeza durante el combate para reducir aún más las posibilidades de impacto del espadachín, serían muchas menos que si tuviese que partir de un valor de 5 puntos.</p><h3>Ejemplo</h3><h3>Consejo</h3><p>AYUDAR a Se presta 1D a la tirada de habilidad de cada personaje que se quiere ayudar, ya sea PJ o PNJ. También se puede ayudar con los valores pasivos, concretamente con la Agilidad: se tiran uno o dos dados y se resta el resultado al propio valor para sumarlo al del personaje ayudado.</p><h3>Resumen</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!cVGmaf9ochq0K96p.E6WBrffMINEAua5b"
+    }
+  ],
+  "folder": null,
+  "sort": 100007,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

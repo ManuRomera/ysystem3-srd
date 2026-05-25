@@ -1,0 +1,62 @@
+{
+  "name": "Protecciones",
+  "type": "JournalEntry",
+  "_id": "sXiM8Sg7fUZxblwE",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Protecciones",
+      "type": "text",
+      "_id": "8AKJg8FSqhZRnlo3",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Protecciones</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 55</h2><h3>Protecciones</h3><h3>Protecciones</h3><p>En un buen número de ambientaciones, en especial las fantásticas y las históricas, los personajes pueden ir equipados con armaduras o escudos. En Ysystem3, esta posibilidad mecánica se gestiona otorgando un simple nivel de calidad a ambos tipos de protecciones. Dicho nivel oscila entre 1 y 5 puntos, aunque en ciertas ambientaciones puede existir un rango distinto.</p><p>En el caso de las armaduras, el nivel indica la cantidad de puntos que se restan al daño de los golpes o impactos sufridos por el personaje y, al mismo tiempo, la penalización que se aplica a todas las tiradas de habilidad de DES y FUE de ese personaje en razón a la aparatosidad de la armadura. Esta penalización es igual al nivel de la armadura dividido entre dos y redondeado hacia abajo (lo que significa que las armaduras de nivel 1 no generan penalización).</p><p>Por lo que respecta a los escudos, el nivel indica la cantidad de puntos que aumenta el valor de Agilidad del personaje a la hora de ser atacado (en el sentido de que hace más difícil que se le pueda impactar), así como también la penalización aplicable a todas las tiradas de DES y FUE de ese personaje debido a la aparatosidad del escudo. En este caso particular, la penalización es la misma que el nivel del escudo (no se divide, a diferencia de las armaduras).</p><h3>Otras Reglas Y</h3><h3>Opciones Opciones Mecánicas</h3><p>Un personaje ataviado con una armadura de nivel 5 y un escudo de nivel 3, resta 5 puntos al daño de cada ataque exitoso que recibe y suma 3 puntos a su valor de Agilidad; por desgracia, también sufre un penalizador total de 5 puntos a todas sus tiradas de habilidad de DES y FUE en razón de la aparatosidad conjunta de las dos protecciones que lleva encima (2 puntos por la armadura, que es la mitad de su nivel dividido entre dos y redondeado hacia abajo, y 3 puntos por el escudo).</p><h3>Ejemplo</h3><p>PROTECCIONES a Armaduras y escudos tienen un nivel de calidad que va de 1 a 5. El nivel se traduce en una penalización a todas las tiradas de habilidad de DES y FUE del personaje (la mitad del nivel para las armaduras; todo el nivel para los escudos). A cambio, las protecciones restan tantos puntos de daño como el propio nivel (en el caso de las armaduras) o los suman al valor de Agilidad del personaje (caso de los escudos).</p><h3>Resumen</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!sXiM8Sg7fUZxblwE.8AKJg8FSqhZRnlo3"
+    }
+  ],
+  "folder": null,
+  "sort": 100015,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

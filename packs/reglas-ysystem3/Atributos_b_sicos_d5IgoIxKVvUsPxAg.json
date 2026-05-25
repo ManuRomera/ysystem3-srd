@@ -1,0 +1,62 @@
+{
+  "name": "Atributos básicos",
+  "type": "JournalEntry",
+  "_id": "d5IgoIxKVvUsPxAg",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Atributos básicos",
+      "type": "text",
+      "_id": "Ha2hBLWPQSWR06N8",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Atributos básicos</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 29</h2><h3>Atributos Atributos 22</h3><h3>Atributos Y Habilidades</h3><h3>Atributos Básicos</h3><p>En Ysystem3 todo personaje (sea PJ o PNJ) cuenta con cinco atributos básicos: Carisma, Destreza, Fuerza, Inteligencia y Percepción. El Carisma (CAR) es el atributo de la sociabilidad del personaje, lo que se vincula con su talento para relacionarse con los demás, convencerlos, engañarlos, intimidarlos, seducirlos, regatear provechosamente con ellos, etc. La Destreza (DES) se refiere a la rapidez, la pericia, el sigilo y la maña del personaje, pero también tiene que ver con su flexibilidad, sus reflejos, su coordinación y su capacidad de equilibrio. La Fuerza (FUE) se relaciona con el vigor y la solidez física del personaje y su capacidad para levantar pesos o romper cosas, así como con su constitución, su musculatura y su salud. La Inteligencia (INT) indica lo listo que es el personaje, lo bien que piensa y razona y lo mucho que sabe, así como su capacidad cognitiva general para aprender, recordar, crear o adaptarse a situaciones nuevas e incluso inesperadas. Por último, la Percepción (PER) informa de lo agudos que son los sentidos del personaje, su puntería, su sensibilidad, su capacidad para procesar en su beneficio datos extraídos del entorno e, indirectamente, lo firme y saludable de su estado mental.</p><p>Todas las habilidades dependen de alguno de los cinco atributos básicos. Estos atributos no cuentan con dados o valores numéricos fijos, como en la mayoría de los sistemas de rol, sino que se expresan con un bonificador a las tiradas de habilidad. Cuando se genera un PJ, cada atributo tiene necesariamente uno de los cinco bonificadores posibles, que son 0, +1, +2, +4 y +6. Esto significa que si, de inicio, un PJ tiene +2 en INT, por ejemplo, ningún otro atributo puede presentar este bonificador. Como es lógico, cuanto más alto resulta el bonificador, mejor es el personaje en ese atributo concreto.</p><p>Durante las aventuras, a menudo aparecen PNJ o criaturas que presentan bonificadores distintos, extraños, repetidos o incluso negativos, sobre todo si se trata de animales o de algún tipo de ser sobrenatural. No obstante, los PJ siempre tienen de partida bonificadores de 0, +1, +2, +4 y +6, sin excepciones.</p><p>Todas las habilidades dependen de uno de los cinco atributos básicos (CAR, DES, FUE, INT y PER), que se expresan como bonificadores a las tiradas de habilidad: 0, +1, +2, +4 o +6. Los PNJ pueden presentar bonificadores distintos, repetidos e incluso negativos.</p><h3>Resumen</h3></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 30</h2><h3>Algunos Ejemplos De Atributos Y Tipologías De Pnj</h3><p>En Ysystem3, los PNJ no tienen que limitarse al rango de bonificadores de los atributos establecido para los PJ, «sobre todo si se trata de animales o de algún tipo de ser sobrenatural». Esta última frase, no obstante, no implica que los PNJ humanos tengan que hacerlo, ni mucho menos. La recomendación es que todos los PNJ de cualquier aventura, humanos o no, ostenten unos atributos lo más ajustados posible al reto que planteen, sin ceñirse a ninguna otra consideración. Veamos algunos ejemplos de fichas de PNJ humanos con un rango de atributos completamente distinto del que ostentan los PJ cuando son creados:</p><h3>Pnj Oponente Genérico Débil</h3><p>+1</p><h3>Carisma</h3><p>+2</p><h3>Destreza</h3><p>+2</p><h3>Fuerza</h3><p>+1</p><h3>Inteligencia</h3><p>+3</p><h3>Percepción</h3><h3>Ataque</h3><ul><li>Combate sin armas (1D+2); daño, 2.</li><li>Arma blanca (1D+2); daño, 5.</li></ul><p>Atletismo (DES) s Fuerza bruta (FUE) s Lucha (DES) s Puntería (PER) s Agilidad 5 Aplomo 7 Perspicacia 9 Salud 17 Res. física 10 Iniciativa 3</p><h3>Pnj Oponente Genérico Fuerte</h3><p>+2</p><h3>Carisma</h3><p>+4</p><h3>Destreza</h3><p>+4</p><h3>Fuerza</h3><p>+2</p><h3>Inteligencia</h3><p>+3</p><h3>Percepción</h3><h3>Ataque</h3><ul><li>Combate sin armas (2D+4); daño, 3.</li><li>Arma blanca (2D+4); daño, 7 .</li><li>Arma de fuego corta/blaster (2D+3); daño 10.</li></ul><p>Atletismo (DES) ss Fuerza bruta (FUE) ss Lucha (DES) ss Puntería (PER) ss Agilidad 10 Aplomo 9 Perspicacia 10 Salud 21 Res. física 8 Iniciativa 6</p><h3>Pnj Oponente Genérico Muy Fuerte</h3><p>+4</p><h3>Carisma</h3><p>+6</p><h3>Destreza</h3><p>+6</p><h3>Fuerza</h3><p>+6</p><h3>Inteligencia</h3><p>+4</p><h3>Percepción</h3><h3>Ataque</h3><ul><li>Combate sin armas (3D+6); daño, 4.</li><li>Arma blanca (3D+6); daño, 9.</li><li>Arma de fuego corta/blaster (3D+4); daño 11.</li><li>Arma de fuego mortífera (3D+4); daño 19.</li></ul><p>Atletismo (DES) ss Fuerza bruta (FUE) ss Lucha (DES) sss Puntería (PER) sss Agilidad 12 Aplomo 15 Perspicacia 15 Salud 25 Res. física 6 Iniciativa 12</p><h3>Pnj Gran Antagonista</h3><p>+6</p><h3>Carisma</h3><p>+6</p><h3>Destreza</h3><p>+8</p><h3>Fuerza</h3><p>+6</p><h3>Inteligencia</h3><p>+5</p><h3>Percepción</h3><h3>Ataque</h3><ul><li>Combate sin armas (3D+6); daño, 5.</li><li>Arma blanca (3D+6); daño, 11.</li><li>Arma de fuego corta/blaster (3D+5); daño 12.</li><li>Arma de fuego mortífera (3D+5); daño 20.</li></ul><p>Atletismo (DES) sss Fuerza bruta (FUE) sss Lucha (DES) sss Puntería (PER) sss Agilidad 15 Aplomo 17 Perspicacia 16 Salud 30 Res. física 4 Iniciativa 12</p><h3>Consejo</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!d5IgoIxKVvUsPxAg.Ha2hBLWPQSWR06N8"
+    }
+  ],
+  "folder": null,
+  "sort": 100009,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

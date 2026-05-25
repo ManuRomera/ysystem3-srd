@@ -1,0 +1,62 @@
+{
+  "name": "Magia y poderes",
+  "type": "JournalEntry",
+  "_id": "W8eSw6mYpWMzqiOh",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Magia y poderes",
+      "type": "text",
+      "_id": "h0zscZEgQiYDCs6F",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Magia y poderes</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 69</h2><h3>Magia Y</h3><h3>Poderes</h3><h3>Magia Y Poderes</h3><p>Algunas ambientaciones pueden exigir una mecánica concreta de magia o poderes psiónicos de alguna clase, como, por ejemplo, la fantasía, la ciencia ficción, el horror de tipo lovecraftiano, los juegos de superhéroes o los juegos sobre mutantes. En estos casos, e independientemente de la ambientación de la que se trate, el subsistema de magia o psiónica se basa en una lista de hechizos o poderes (que en ciertos casos incluso se podrán aprender), los cuales cuentan con todas o la gran mayoría de las siguientes características: Para lanzar, desencadenar o activar los hechizos o poderes presentes en cada ambientación el personaje contará con una nueva habilidad, de nombre MAGIA o PSIÓNICA, en la que los PJ pueden empezar con 1D. Esta habilidad especial no depende de ningún atributo en concreto, sino que es cada hechizo o poder particular el que lo hace, de modo que la tirada para realizar magia o psiónica es por la habilidad especial + el bonificador del atributo del que depende el hechizo o poder. A continuación, se debe enfrentar ese resultado con una dificultad de 8, 12 o 16 puntos. Además, en el supuesto de que el hechizo o poder afecte directa y negativamente a un personaje, la misma tirada de lanzamiento, desencadenamiento o activación habrá de superar el valor de Agilidad, Aplomo o Perspicacia de la víctima (si este es mayor que la dificultad). Toda esta mecánica es aplicable tanto a los PJ como a los PNJ. En este último caso, y al igual que si fuese un ataque, el DJ tirará el dado o dados contra la dificultad del hechizo o poder y contra la Agilidad, el Aplomo o la Perspicacia del PJ al mismo tiempo.</p><p>No obstante, para poder tirar por la habilidad de Magia o Psiónica, todo personaje debe contar con puntos de Poder en el momento del lanzamiento, desencadenamiento o activación del hechizo o poder. Cada personaje inicia sus aventuras con tantos puntos de Poder como dados tiene en la habilidad de Magia o Psiónica x 3 + su Perspicacia. HECHIZO/PODER</p><ul><li>Nombre del hechizo o poder.</li><li>Tipo.</li><li>Atributo del que depende.</li><li>Dificultad (que será de 8, 12 o 16 puntos en función de la</li></ul><p>potencia del hechizo o poder).</p><ul><li>Descripción de los efectos.</li><li>Necesidades de preparación (si las hay).</li><li>Tiempo de lanzamiento, desencadenamiento o</li></ul><p>activación.</p><ul><li>Duración de los efectos.</li><li>Caducidad (por ejemplo, en el caso de hechizos en</li></ul><p>forma de ungüentos o pociones).</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 70</h2><p>Cada vez que se hace uso de la magia o la psiónica, e independientemente de que se realice con éxito o no, el personaje ve reducida su cantidad de puntos de Poder del siguiente modo: 2 puntos para hechizos o poderes de dificultad 8, 4 puntos para los de dificultad 12 y 6 puntos para los de dificultad 16. Además, algunos hechizos o poderes pueden comportar un gasto fijo y adicional de puntos de Poder.</p><p>Cuando un personaje llega a 0 puntos de Poder se siente mareado y sufre un penalizador de ‒ 1D a todas sus tiradas. Los puntos de Poder se recuperan tras ocho horas de sueño reparador o de forma proporcional a esta relación (por ejemplo, cuatro horas de sueño permiten recuperar el 50 % de los puntos de Poder).</p><h3>Ejemplos De Hechizos:</h3><p>Ambientación de espionaje con mutantes psiónicos clandestinos en un mundo actual (juego tipo Mutantes en la sombra; habilidad</p><h3>Psiónica).</h3><h3>Ejemplo</h3><p>Como se puede observar, en este caso las características Necesidades de preparación y Caducidad no son necesarias, ya que se trata de un poder psiónico.</p><h3>Control Del Metabolismo</h3><p>Control del metabolismo Tipo: Gamma. Atributo: PER. Dificultad: 12. Además, la tirada de Psiónica debe igualar o superar el valor de Perspicacia del objetivo o víctima salvo que esta se relaje intencionadamente de modo que su organismo rehúse resistir el control metabólico.</p><p>Descripción: El poder afecta a las células de los organismos, cuyo funcionamiento altera, por lo que no es aplicable a los objetos inertes. Permite que se recuperen o se pierdan hasta 3 puntos de Salud por turno de combate.</p><p>Tiempo de activación: Un turno de combate completo. Duración de los efectos: Tantos turnos como el mutante desee mientras siga restando o añadiendo puntos de Salud a su víctima u objetivo. La tirada de Psiónica solo es necesaria en el primer turno.</p><ul><li>Además del coste habitual (que es de 4 puntos de</li></ul><p>Poder por presentar una dificultad de 12), este poder psiónico comporta un coste extraordinario de 1 punto de Poder por cada punto de Salud que se reste o añada a la víctima u objetivo.</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 71</h2><p>Ambientación de alta fantasía clásica de aspecto medieval europeo, con magos, clérigos y hechiceros (juego tipo Dungeons &amp; Dragons o Pathfinder; habilidad MAGIA).</p><h3>Ejemplo</h3><h3>La Bola</h3><h3>De Fuego</h3><h3>Bola De Fuego</h3><p>Bola de fuego Atributo: DES. Dificultad: 8 hasta los 10 metros de distancia, 12 entre los 11-25 metros de distancia, y 16 entre los 26-50 metros de distancia. Además, la tirada de Magia debe superar el valor de Agilidad del objetivo o víctima.</p><p>Descripción: Si la bola de fuego impacta, causa 6 puntos de daño de forma automática. Además, a partir del siguiente turno el objetivo o víctima queda ardiendo como una tea y se enfrenta a un daño por quemadura de «fuego abierto» cada turno hasta que halle la forma de extinguir las llamas (véase el apartado Otras fuentes de daño).</p><p>Preparación: Ninguna, salvo susurrar ciertas palabras mágicas y tener al menos una mano libre. Tiempo de lanzamiento: Un turno de combate completo. Duración de los efectos: Lo que tarde el objetivo o víctima en librarse del fuego (por ejemplo, zambulléndose en agua).</p><p>Caducidad: No aplicable.</p><ul><li>Además de su coste habitual (que será de 2, 4 o 6</li></ul><p>puntos de Poder en función de la dificultad, determinada esta por la distancia), el hechizo tiene un coste extraordinario de 3 puntos de Poder. El hechicero se prepara para lanzar...</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 72</h2><h3>Cómo Graduar Los Costes Extraordinarios De Los Hechizos Y Poderes</h3><p>Como ya se ha explicado, los hechizos y pode res suelen presentar un coste extraordinario en puntos de Poder. Dicho coste extraordinario se tiene que establecer en relación a la potencia de cada hechizo o poder concreto y</p><ul><li>la cantidad de veces que el DJ desea que se</li></ul><p>use en el marco de la ambientación de jue go. Esto es así para que el DJ no tenga mie do de crear cualquier tipo de hechizo o poder, incluidos algunos realmente poderosos, a los que siempre puede «penalizar» con un mayor coste (lo que vendría a representar el agotamiento psíquico del personaje mago, brujo o mutante de turno).</p><p>Ambientación de suspense y horror inquietante con psíquicos o magos sectarios (juego tipo La Llamada de Cthulhu o Esoterroristas; habilidad MAGIA).</p><h3>Ejemplo</h3><p>Como sucedía en el primer ejemplo, las características Necesidades de preparación y Caducidad no son necesarias al tratarse de un poder de médium.</p><h3>Consejo</h3><h3>Asalto Mental</h3><p>Asalto mental Tipo: Poder de médium. Atributo: INT. Dificultad: 12. Además, la tirada de Magia debe igualar o superar el valor de Aplomo del objetivo o víctima. Descripción: El psíquico es capaz de proyectar una sobrecarga sensorial en la mente de cualquier animal, criatura o persona que provoca una penalización temporal de 1D a todas sus acciones y la merma de 1 punto de Salud, además de reducir en 3 puntos sus valores fijos (Agilidad, Aplomo y Perspicacia). Además, cuando el poder se emplea sobre una persona no en defensa propia, este uso agresivo obliga al psíquico a enfrentarse a una tirada de pánico de gravedad 3.</p><p>Tiempo de activación: Un turno de combate completo. Duración de los efectos: El objetivo o víctima se ve afectado durante tres turnos y experimenta un estado algo parecido al de una terrible resaca. El poder no se puede lanzar una segunda vez sobre una víctima que ya está sufriendo sus efectos, pero sí inmediatamente después (esto es, al cuarto turno).</p><ul><li>Además del coste habitual (que es de 4 puntos de</li></ul><p>Poder por presentar una dificultad de 12), este poder psiónico comporta un coste extraordinario de 5 puntos de Poder.</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 73</h2><p>TIRADA DE MAGIA O PSIÓNICA a Habilidad + bonificador del atributo del que depende el hechizo o poder vs. dificultad de 8, 12 o 16 puntos en función de la potencia del hechizo o poder (también, vs. Agilidad, Aplomo o Perspicacia de la víctima si el hechizo o poder afecta directa y negativamente a un personaje).</p><p>PUNTOS DE PODER a De inicio: dados de Magia/Psiónica del personaje x 3 + Perspicacia. Gasto de puntos de Poder: 2 puntos por hechizo o poder de dificultad 8, 4 por uno de 12 y 6 por uno de 16. Con 0 puntos de Poder, mareo y –1D a todas las tiradas.</p><p>Se recuperan todos los puntos de Poder tras ocho horas de sueño reparador (o proporción).</p><h3>Resumen</h3><p>desata un poder terrible</p><h3>La Psiónica</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W8eSw6mYpWMzqiOh.h0zscZEgQiYDCs6F"
+    }
+  ],
+  "folder": null,
+  "sort": 100020,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

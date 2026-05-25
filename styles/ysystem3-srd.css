@@ -2838,6 +2838,69 @@ body.ys-theme-capa .ims-number-section h2 {
   font-weight: 800;
 }
 
+.journal-entry-content .ims-pdf-rules,
+.ims-pdf-rules {
+  max-width: 980px;
+  margin: 0 auto;
+  color: #17130f;
+  line-height: 1.45;
+}
+
+.journal-entry-content .ims-pdf-rules > h1,
+.ims-pdf-rules > h1 {
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  color: var(--ims-navy);
+  border-bottom: 3px solid var(--ims-plum);
+  font-size: 34px;
+}
+
+.journal-entry-content .ims-pdf-source,
+.ims-pdf-source {
+  margin: 0 0 14px;
+  padding: 8px 10px;
+  background: #fff8df;
+  border-left: 6px solid var(--ims-gold);
+  color: #4b4640;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.journal-entry-content .ims-pdf-page,
+.ims-pdf-page {
+  margin: 14px 0;
+  padding: 16px 18px;
+}
+
+.journal-entry-content .ims-pdf-page h2,
+.ims-pdf-page h2 {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 4px 8px;
+  color: #fff;
+  background: var(--ims-navy);
+  border: 2px solid #17130f;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.journal-entry-content .ims-pdf-page h3,
+.ims-pdf-page h3 {
+  margin: 8px 0 6px;
+  color: var(--ims-navy);
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.journal-entry-content .ims-pdf-page p,
+.ims-pdf-page p {
+  margin: 0 0 9px;
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+}
+
 .journal-entry-content .ims-attribute-grid,
 .ims-attribute-grid {
   display: grid;
@@ -3524,6 +3587,13 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-form-grid.compact textarea {
   min-height: 42px;
+}
+
+.ys-form-grid.compact textarea.ys-mini-textarea {
+  min-height: 34px;
+  max-height: 72px;
+  overflow: auto;
+  resize: vertical;
 }
 
 .ys-screen-sheet .check {

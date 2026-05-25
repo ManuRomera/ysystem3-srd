@@ -1,0 +1,62 @@
+{
+  "name": "Críticos y pifias",
+  "type": "JournalEntry",
+  "_id": "SZDNezyrsnceu7kY",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Críticos y pifias",
+      "type": "text",
+      "_id": "Ykg4jTIvRy7ojkXL",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Críticos y pifias</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 12</h2><h3>Críticos</h3><h3>Y Pifias</h3><h3>Críticos Y Pifias</h3><p>El crítico, que siempre es un éxito extraordinario al margen de que no se iguale ni supere la dificultad de acción, se consigue al obtener dos o más seises en la tirada de habilidad. Esto significa que en las habilidades en las que solo se tiene 1D nunca se pueden lograr críticos (a no ser que, con objeto de tirar más dados, se gaste una proeza o se desencadene la mecánica Recuerdo cuando… ).</p><p>La pifia, que siempre es un fallo garrafal independientemente de que se iguale o supere la dificultad de acción, se produce cuando todos los dados que se han tirado muestran el número 1. Esto se traduce en que sacar una pifia cuando solo se cuenta con 1D en la habilidad es moderadamente fácil (un 16,7 % de probabilidad).</p><p>Diego es un veterano jugador de Ysystem3 que en esta ocasión interpreta a Wan Lu, un grumete chino tan granuja como cobarde, viejo conocido de Tony Petrelli. Como es habitual, Wan Lu se acaba de meter en problemas y trata de escapar de ellos a toda velocidad, por lo que el DJ solicita a Diego una tirada de Atletismo a dificultad 14 (valor de Agilidad de sus perseguidores, varios matones del mercado de Shanghái que lo quieren machacar). Wan Lu, que tiene ni más ni menos que 3D en Atletismo, obtendrá un éxito crítico si saca dos o tres 6 en su tirada (lo que supone un 7,4 % de posibilidades), mientras que cosechará una pifia si saca 1 en los tres dados al mismo tiempo (una probabilidad inferior al 0,5 %).</p><h3>Ejemplo</h3><p>CRÍTICOS (ÉXITOS EXTRAORDINARIOS) a Sacar dos o más seises con los dados en tiradas de habilidad. PIFIAS (FALLOS GARRAFALES) a Sacar 1 en todos los dados que se han tirado.</p><h3>Resumen</h3><h3>Wan Lu</h3><p>intenta escapar...</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 13</h2><h3>Miedo A La Pifia: El Jugador No Debería Resistirse A Tirar</h3><p>Como ya hemos señalado, en Ysystem3 los PJ poco competentes en una habilidad (es decir, los que solo cuentan con 1D), tienen una probabilidad mo deradamente alta de obtener una pifia cada vez que lanzan los dados. Si a esto le añadimos que al tirar un solo dado es imposible conseguir un crítico y que, en ocasiones, resulta imposible que el jugador iguale o supere la dificultad de la acción incluso si obtiene un resultado de 6, a menudo puede ocurrir que el jugador prefiera no realizar la tirada. Es comprensible: ¿para qué lanzar ese dado, si lo único que se puede conseguir al margen del fallo es una pifia?</p><p>Pero las cosas no son tan sencillas. En general, parece recomendable que el jugador tire en cualquier caso, sobre todo cuando se disponía directa o indirectamente a hacerlo y solo se ha echado para atrás al comprobar que la dificultad de acción le resulta inalcanzable. Las razones de por qué es mejor que la tirada se produzca son las siguientes:</p><ul><li>El jugador siempre puede gastar una proeza para</li></ul><p>tirar con 1D extra, o incluso activar el Recuerdo cuando… y disfrutar de 2D adicionales. Para eso existen estas mecánicas. No echar mano de ellas porque la tirada en concreto no parezca lo suficientemente relevante es una decisión táctica del jugador que debe tener sus consecuencias (en este caso, verse obligado a tirar).</p><ul><li>Si, como hemos aconsejado en el apartado anterior, hay que ser capaz de hacer que las consecuencias de fallar sean interesantes, el DJ</li></ul><p>no debería permitir que los jugadores escamoteen los fallos. Es lógico que lo intenten, porque en el rol hay una tradición muy arraigada hacia la protección del propio PJ, pero el DJ no tiene que colaborar en ello.</p><ul><li>Si se acepta que los jugadores se inhiban a la</li></ul><p>hora de tirar con 1D, no solo se valida un tipo de metajuego poco recomendable, sino que la posibilidad de que se registren pifias en la partida se reduce prácticamente a cero. Además, hay que tener en cuenta que las tiradas de habilidad se pueden repetir una vez mediante el gasto de una proeza, por lo que el jugador siempre tiene</p><ul><li>su disposición esa herramienta para esquivar</li></ul><p>la pifia. Y lo cierto es que ver alguna que otra pifia en mesa a lo largo de la partida es bueno. Lo es por varias razones: las pifias son un «regalo» para el DJ a la hora de presionar a los jugado res, añadir dramatismo a la narración o, por qué no, generar un pequeño alivio cómico que relaje la tensión acumulada, pero también son interesantes para aumentar el tacticismo y la responsabilidad de los jugadores respecto al uso de las proezas, que es una de esas cosas que aumen tan la profundidad del sistema y permite que poco a poco se pueda aprender a jugar mejor.</p><p>Por último, hay que recordar que las pifias (al igual que los críticos) son exclusivas de las tiradas de habilidad. No hay pifias al tirar por Iniciativa, ni por Resistencia Física o Mental, ni en las tiradas de pánico que realiza el DJ, como se verá más adelante.</p><h3>Consejo</h3><p>... varios... varios matonesmatoneslo persiguenlo persiguen ¡Vuelve aquí, condenado granuja!</p></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!SZDNezyrsnceu7kY.Ykg4jTIvRy7ojkXL"
+    }
+  ],
+  "folder": null,
+  "sort": 100002,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

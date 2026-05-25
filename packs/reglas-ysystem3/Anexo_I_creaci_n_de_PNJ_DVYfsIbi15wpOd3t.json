@@ -1,0 +1,62 @@
+{
+  "name": "Anexo I: creación de PNJ",
+  "type": "JournalEntry",
+  "_id": "DVYfsIbi15wpOd3t",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Anexo I: creación de PNJ",
+      "type": "text",
+      "_id": "hBwoJ2Zehvw9HhG3",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Anexo I: creación de PNJ</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 84</h2><h3>Anexo I</h3><h3>Creación De Pnj</h3><p>Con Ysystem3, diseñar PNJ y dotarlos de estadísticas completas es muy rápido, sobre todo si lo comparamos con otros reglamentos de rol. Sin embargo, eso no significa que haya que hacerlo de manera irreflexiva. Si se asignan estadísticas a un PNJ sin pensar en el reto que se desea que constituya, lo más habitual es que luego, en mesa, se descubra que ese PNJ no sirve para lo que el DJ quería (básicamente porque resulta demasiado poderoso o demasiado débil). Si no se afina bien el diseño de un PNJ, pueden pasar cosas como que resulte imposible de convencer, engañar o impactar en combate… cuando el hecho de que esas posibilidades existan quizás sea recomendable para la aventura. Y al contrario: también puede suceder que imponerse a ese PNJ parezca demasiado sencillo y la interacción con él, sea del tipo que sea, acabe resultando anticlimática. Además, hay que recordar que en Ysystem3 los bonificadores de los atributos de los PNJ no se ciñen al rango establecido para los PJ (que es de 0, +1, +2, +4 y +6), por lo que la posibilidad de «pasarse» o «quedarse corto» con ellos es bastante mayor. Es lógico: a mayor libertad y variabilidad estadística, más capacidad para conseguir grandes efectos lúdicos, pero también más dificultad para afinar.</p><p>Cuando se quiere calibrar algo de forma eficaz, en este caso las estadísticas de los PNJ, se hace siempre respecto de otra cosa, que por naturaleza es invariable. En Ysystem3 esa referencia son, por supuesto, los PJ, que deben ser el centro de todo.</p><p>No se pueden ajustar las estadísticas de los PNJ «en abstracto», sino en concreto, es decir, con res-</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 85</h2><p>pecto a los PJ que van a jugar la aventura (o, si estos aún no han sido creados, respecto a los valores medios habituales de los PJ en el reglamento, cuyo rango de atributos y habilidades se conoce perfectamente). Esa es la clave.</p><p>¿Cómo llevarlo a cabo? Esto dependerá de la ambientación de la partida, del tono (más heroico o más realista) y, sobre todo, de la magnitud que el DJ quiere que represente el PNJ como obstáculo u oponente de los PJ. La mejor forma es que el DJ se haga las siguientes cinco preguntas acerca del PNJ en cuestión: ¿Cómo de difícil quiero que sea impactar a este PNJ?</p><p>La respuesta, en puntos, será el valor fijo de Agilidad que tendrá que tener. Un PNJ difícil de impactar debe tener una Agilidad de 14 o 15 puntos. A partir de este valor, y no al revés, hay que calcular sus dados de Atletismo y su valor de DES.</p><p>¿Cómo de difícil quiero que sea convencer o intimidar a este PNJ? La respuesta, en puntos, será el valor fijo de Aplomo del PNJ. Un PNJ difícil de convencer o intimidar debe tener un Aplomo de 13 a 16 puntos. A partir de este valor, y no al revés, hay que calcular su CAR y, parcialmente, su INT.</p><p>¿Cómo de difícil quiero que sea engañar a este PNJ o pasar junto a su lado sin que detecte a un PJ que trata de andar sigilosamente? La respuesta, en puntos, será el valor fijo de Perspicacia del PNJ.</p><p>Un PNJ difícil de engañar debe tener una Perspicacia de 14 o 15 puntos. A partir de este valor, y no al revés, hay que calcular su PER y, parcialmente, su INT. ¿Cómo de «duro» quiero sea el PNJ?</p><p>La respuesta serán directamente los puntos de Salud del PNJ. Un PNJ «resistente» nunca debería tener menos de 24 o 25 puntos de Salud. A partir de ellos, y no al revés, debe calcularse su FUE y, en consecuencia, su valor de Resistencia Física.</p><p>¿Cómo de «letal» quiero que sea mi PNJ? Aquí la respuesta es muy sencilla: si se desea crear un PNJ verdaderamente peligroso para los PJ, hay que asignarle 3D a Lucha o a Puntería (o a ambas). No obstante, hay que tener cuidado y ser consciente de que semejante PNJ puede acabar con cualquiera de los PJ en uno o dos ataques. Si eso es lo que en verdad necesita la aventura, el DJ no debería dudar.</p><p>Por último, no hay que olvidar que en algunas ambientaciones ciertos PNJ también tendrán que ostentar la habilidad de Magia o Psiónica, puntos de Poder y hechizos o poderes bien desarrollados.</p></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!DVYfsIbi15wpOd3t.hBwoJ2Zehvw9HhG3"
+    }
+  ],
+  "folder": null,
+  "sort": 100025,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

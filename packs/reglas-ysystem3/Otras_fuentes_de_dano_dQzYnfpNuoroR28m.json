@@ -1,0 +1,62 @@
+{
+  "name": "Otras fuentes de daño",
+  "type": "JournalEntry",
+  "_id": "dQzYnfpNuoroR28m",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Otras fuentes de daño",
+      "type": "text",
+      "_id": "IHz3i4pNCtqDcvE6",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Otras fuentes de daño</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 50</h2><h3>Otras Fuentes</h3><h3>De Daño</h3><h3>Otras Fuentes De Daño</h3><h3>Armas De Electrochoque</h3><p>Cuando un personaje utiliza una pistola de corriente tipo TASER, una pértiga eléctrica o un arma similar, hay que sacrificar 1D de la propia tirada de Lucha (al igual que sucede al noquear) o Puntería. Esta tirada debe igualar o superar el valor de Agilidad del oponente, como es habitual, pero si se logra impactar no se aumenta el daño; al contrario: un arma de electrochoque solo provoca 1 punto + PER/2 (redondeando hacia abajo). La víctima, sin embargo, debe superar una tirada de Fuerza bruta a dificultad 20 o quedará incapacitada durante 3D minutos. En todo ese tiempo sufrirá grandes dolores y no podrá ni siquiera hablar. Además, durante la hora siguiente tendrá una penalización de 1D a todas sus acciones.</p><h3>Asfixia</h3><p>Un personaje puede bucear o contener la respiración en medio del humo sin problema tantos turnos como su FUE + 5. Más allá de eso, por cada turno en el que no pueda respirar deberá pasar una tirada por la habilidad de Fuerza bruta a dificultad 15. En el momento en el que falle, empezará a perder 3 puntos de Salud por turno.</p><h3>Borracheras</h3><p>El DJ determinará la gravedad de la borrachera, que puede ser de 10 puntos (leve), 15 (grave) o 20 (bacanal). Ese número conforma la dificultad de la tirada de Fuerza bruta que el personaje debe superar; de lo contrario, perderá 1, 2 o 3 puntos de Salud, respectivamente. Además, caer bajo los efectos del alcohol resta 1D a todas las tiradas durante las siguientes seis horas de tiempo de juego.</p><h3>Caídas</h3><p>Un personaje pierde 3 puntos de Salud por cada metro de caída libre a partir de los dos metros de altura. Al margen de ello, existe la posibilidad de pasar una tirada de Atletismo a dificultad 12 para caer rodando y reducir en 3 puntos el daño total de la caída.</p><h3>Congelaciones</h3><p>Un personaje sometido a un frío intenso pierde normalmente 1 punto de Salud cada quince minutos de tiempo de juego. El DJ puede incrementar esta pérdida si entiende que las circunstancias ambientales resultan especialmente difíciles.</p><h3>Envenenamientos</h3><p>Cada veneno presenta tres datos fundamentales: una potencia (POT), un daño menor y un daño mayor. La potencia es la dificultad que se debe igualar o superar con una tirada de Fuerza bruta. Si se saca, hay que restar al personaje tantos puntos de Salud como el daño menor, que a veces puede ser 0 si el veneno es de poca entidad. Si la tirada se falla, se restan tantos puntos de Salud como el daño mayor.</p></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 51</h2><h3>Hambre Y Sed</h3><p>Por cada veinticuatro horas de tiempo de juego en las que un personaje no haya ingerido alimento alguno, perderá 1 punto de Salud. Respecto a la bebida, perderá esa misma cantidad de puntos cada seis horas.</p><h3>Quemaduras</h3><p>Un personaje expuesto a fuego abierto pierde 3 puntos de Salud por turno, aunque esta cantidad puede ser incrementada o reducida por el DJ en función de cada caso concreto. Por otro lado, los personajes pueden sufrir quemaduras por valor de 1 punto de Salud cada vez que se exponen al sol de forma prolongada sin haberse cubierto o protegido convenientemente.</p><h3>Sobreesfuerzos</h3><p>En ciertas ocasiones, el DJ puede estimar que un personaje ha llevado a cabo un esfuerzo físico extraordinario, por encima de sus posibilidades reales, por lo que tendrá que pasar una tirada de Fuerza bruta a dificultad 15 o recibirá 2 puntos de daño.</p><p>ARMAS DE ELECTROCHOQUE a Causan 1 + PER/2 puntos de daño y obligan a superar una tirada de Fuerza bruta a dificultad 20 si no se quiere caer incapacitado durante 3D minutos (más una penalización de 1D a todas las tiradas en la hora siguiente).</p><p>ASFIXIA a Se aguantan FUE + 5 turnos. Después, tirada de Fuerza bruta a dificultad 15 cada turno hasta que se falle, momento en el que se empiezan a perder 3 puntos de Salud por turno.</p><p>BORRACHERAS a Tirada de Fuerza bruta a dificultad 10, 15 o 20 o pérdida de 1, 2 o 3 puntos de Salud y 1D menos a todas las tiradas durante seis horas. CAÍDAS a 3 puntos de Salud por cada metro de caída libre a partir de los dos metros de altura. Tirada de Atletismo a dificultad 12 para rodar al caer y reducir el daño total en 3 puntos.</p><p>CONGELACIONES a A partir de 1 punto de Salud por cada quince minutos de tiempo de juego. ENVENENAMIENTOS a Tirada de Fuerza bruta a una dificultad = POT del veneno. Daño menor si se saca la tirada; mayor si se falla.</p><p>HAMBRE Y SED a 1 punto de Salud por cada seis horas sin beber o veinticuatro sin ingerir alimento alguno. QUEMADURAS a 3 puntos de Salud por turno por fuego abierto o 1 por quemaduras solares.</p><p>SOBREESFUERZOS a Tirada de Fuerza bruta a dificultad 15 o pérdida de 2 puntos de Salud.</p><h3>Resumen</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!dQzYnfpNuoroR28m.IHz3i4pNCtqDcvE6"
+    }
+  ],
+  "folder": null,
+  "sort": 100013,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

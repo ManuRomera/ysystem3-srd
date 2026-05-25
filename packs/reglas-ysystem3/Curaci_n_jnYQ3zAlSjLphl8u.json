@@ -1,0 +1,62 @@
+{
+  "name": "Curación",
+  "type": "JournalEntry",
+  "_id": "jnYQ3zAlSjLphl8u",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Curación",
+      "type": "text",
+      "_id": "TdgqssMn32nKX6oV",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<article class=\"ims-journal-adventure ims-rules-journal ims-pdf-rules\"><h1>Curación</h1>\n<p class=\"ims-pdf-source\">Texto extraído y recompuesto desde el PDF de Ysystem3 para consulta en mesa. Conserva la paginación de referencia.</p>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 62</h2><h3>Curación</h3><h3>Curación</h3><p>La curación engloba en un mismo concepto todas las posibles formas de recuperar los puntos de Salud o Estabilidad perdidos por golpes, disparos, encuentros aterradores, heridas, accidentes o cualesquiera otros factores. Algunas de estas formas permiten recuperar puntos cada día o cada semana de tiempo de juego, mientras que otras solo lo hacen una vez por sesión, pero en todos los casos dependen en última instancia de las posibilidades concretas de la ambientación en la que se esté jugando (por ejemplo, en la Edad Media no existen verdaderos hospitales, mientras que en un entorno de ciencia ficción puede que haya tanques de inmersión de cicatrización acelerada). Por otra parte, no se puede sobrepasar el número de puntos de Salud o Estabilidad que el PJ tenía al inicio de la aventura salvo por causas mágicas, implantes cibernéticos u otros elementos fantásticos (siempre a discreción del DJ).</p><p>Los siguientes hechos permiten recuperar puntos de Salud por día o puntos de Estabilidad por cada tres días de tiempo de juego, respectivamente:</p><ul><li>Ser tratado en un hospital, institución psiquiátrica o centro médico adecuadamente equipado para el tratamiento requerido,</li></ul><p>sea este físico o mental: 2 puntos.</p><ul><li>Descansar en un entorno confortable y en completo reposo en</li></ul><p>donde el PJ no se vea sometido a estrés físico ni mental: 1 punto. NOTA: Este supuesto de ganancia no es compatible con el anterior.</p><ul><li>Ser curado mediante una tirada de Auxilio a dificultad 10: 2 puntos (solo válido para recuperar puntos de Salud, no de Estabilidad). Se puede realizar un único intento por herida y personaje.</li></ul><p>Un crítico en la tirada hace que se recupere el doble, 4 puntos, pero una pifia provoca 2 puntos de daño.</p><ul><li>Ser tranquilizado mediante una tirada de Psicología a dificultad</li></ul><p>10: 2 puntos (solo válido para recuperar puntos de Estabilidad, no de Salud). Se puede realizar un único intento por PJ cada tres días de juego. Un crítico en la tirada hace que se recuperen 4 puntos, pero una pifia provoca 2 puntos de pérdida adicional.</p><p>Por otro lado, las acciones que permiten recuperar puntos de Salud o Estabilidad una sola vez por sesión, al margen del tiempo de juego, son:</p><ul><li>Dormir más de ocho horas: 1 punto.</li><li>Mantener un contacto físico prolongado con otro personaje, ya</li></ul><p>sea PJ o PNJ (como, por ejemplo, hacer el amor): 1 punto.</p><ul><li>Tomarse un largo baño o llevar a cabo cualquier actividad relajante que el DJ acepte a propuesta del jugador: 1 punto.</li></ul></section>\n<section class=\"ims-rule-card ims-pdf-page\"><h2>Página 63</h2><p>D’ Artagnan había perdido la friolera de 8 puntos de Salud de una sola estocada de florete. Aunque finalmente se impuso a su odioso enemigo, el asesino de la espada española, ahora necesitaría descansar y recuperarse. Por desgracia, el mosquetero no puede dedicarse a reposar en estos momentos: justo antes de morir, el asesino de la espada española le reveló un complot que está en curso para acabar con la vida del delfín de Francia. ¡Es terrible; no hay tiempo que perder!</p><p>La única posibilidad que tiene D’ Artagnan de mejorar su maltrecho estado de salud es que su compañera de aventuras, Milady de Winter, le realice los primeros auxilios. Gemma, la jugadora que interpreta a Milady, mira su ficha de PJ y observa que solo tiene 1D en la habilidad de Auxilio, a lo que suma el + 4 correspondiente a la inteligencia de la espía (atributo del que depende la habilidad). Comoquiera que la dificultad de acción establecida para curar a alguien es de 10 puntos, Gemma necesita sacar un 6 con el dado para que los cuidados de Milady tengan efecto. Al ser tan difícil (solo un 16,7 % de probabilidad), la jugadora decide gastar una proeza y tirar así 2D + 4, lo que aumenta sus posibilidades de éxito por encima del 72 %. Decide hacerlo de este modo porque D’ Artagnan sufre ahora mismo 1D de penalización a todas sus acciones, mientras que si gana 2 puntos de Salud podrá actuar ya con total normalidad. Milady de Winter se pone manos a la obra de inmediato, mientras que D’ Artagnan se ruboriza ligeramente...</p><h3>Ejemplo</h3><p>Además de todo lo anterior, los PJ cuyos bonificadores de FUE sean +4 y +6 recuperan de forma automática 1 y 2 puntos de Salud cada día de tiempo de juego respectivamente, mientras que los que tienen CAR +4 y +6 recuperan 1 y 2 puntos de Estabilidad cada tres días de tiempo de juego, respectivamente.</p><p>CURACIÓN a Se produce por hechos acontecidos cada día (para los puntos de Salud) o cada tres días (para los puntos de Estabilidad), así como por hechos ocurridos una sola vez por sesión. Además, los PJ recuperan 1 y 2 puntos de Salud/Estabilidad por cada día/cada tres días de tiempo de juego si su bonificador de FUE/CAR es de +4 y +6, respectivamente.</p><p>Las tiradas de Auxilio a dificultad 10 (una sola por herida) permiten recuperar puntos de Salud, pero no de Estabilidad. Cada tirada hace ganar 2 puntos, que son 4 si se obtiene un crítico. Una pifia provoca 2 puntos de daño.</p><p>Las tiradas de Psicología a dificultad 10 (una sola por PJ cada tres días de juego) permiten recuperar puntos de Estabilidad, pero no de Salud. Cada tirada hace ganar 2 puntos, que son 4 si se obtiene un crítico. Una pifia provoca 2 puntos de pérdida adicional.</p><p>Un PJ no puede sobrepasar los puntos de Salud/Estabilidad que tiene al principio de la aventura salvo por causas mágicas, implantes cibernéticos u otros elementos fantásticos.</p><h3>Resumen</h3></section>\n</article>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ysystem3-srd",
+        "systemVersion": "0.3.6",
+        "createdTime": 1779701815768,
+        "modifiedTime": 1779701815768,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!jnYQ3zAlSjLphl8u.TdgqssMn32nKX6oV"
+    }
+  ],
+  "folder": null,
+  "sort": 100018,
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "ysystem3-srd",
+    "systemVersion": "0.3.6",
+    "createdTime": 1779701815768,
+    "modifiedTime": 1779701815768,
+    "lastModifiedBy": null
+  }
+}

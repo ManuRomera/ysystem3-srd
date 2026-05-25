@@ -135,8 +135,8 @@
         <section class="ys-card ys-compact-card" data-help-type="rule" data-help-key="defectos">
           <header><h2>Defectos y recuerdo</h2></header>
           <div class="ys-form-grid compact">
-            <label>Defecto leve<input name="system.defectos.leve" value="{{system.defectos.leve}}"></label>
-            <label>Defecto grave<input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
+            <label>Defecto leve<textarea class="ys-mini-textarea" name="system.defectos.leve">{{system.defectos.leve}}</textarea></label>
+            <label>Defecto grave<textarea class="ys-mini-textarea" name="system.defectos.grave">{{system.defectos.grave}}</textarea></label>
             <label class="check"><input type="checkbox" name="system.defectos.leveUsado" {{imsChecked system.defectos.leveUsado}}> Defecto leve usado</label>
             <label class="check"><input type="checkbox" name="system.recuerdo.usado" {{imsChecked system.recuerdo.usado}}> Recuerdo usado</label>
             <label>Nota del recuerdo<textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
@@ -148,7 +148,12 @@
     <div class="tab ims-tab-panel ys-panel" data-group="primary" data-tab="combate">
       <main class="ys-panel-grid">
         <section class="ys-card">
-          <header><h2>Acciones</h2></header>
+          <header><h2>Ataque activo</h2></header>
+          <div class="ys-effective-attack {{#if effectiveAttack.equipped}}equipped{{/if}}">
+            <b>{{effectiveAttack.name}}</b>
+            <span>{{effectiveAttack.source}}</span>
+            <small>{{effectiveAttack.skillLabel}} · Daño {{effectiveAttack.damage}} + {{effectiveAttack.attrLabel}} · Ini +{{effectiveAttack.initiative}}</small>
+          </div>
           <div class="ys-action-grid">
             <button type="button" data-roll-initiative><i class="fas fa-forward"></i> Iniciativa</button>
             <button type="button" data-help-type="rule" data-help-key="ataque" data-roll-attack><i class="fas fa-burst"></i> Ataque rápido</button>
@@ -157,21 +162,7 @@
             <button type="button" data-roll-fear><i class="fas fa-eye"></i> Miedo</button>
             <button type="button" data-help-type="rule" data-help-key="danoReglado" data-hazard-damage><i class="fas fa-triangle-exclamation"></i> Daño reglado</button>
           </div>
-        </section>
-
-        <section class="ys-card">
-          <header><h2>Configuración de combate</h2></header>
-          <div class="ys-form-grid">
-            <label>Arma para iniciativa
-              <select name="system.combate.armaIniciativa">
-                {{#each config.ataqueTipos}}<option value="{{@key}}" {{imsSelected @key ../system.combate.armaIniciativa}}>{{label}}</option>{{/each}}
-              </select>
-            </label>
-            <label>Ataque
-              <select name="system.combate.ataque">
-                {{#each config.ataqueTipos}}<option value="{{@key}}" {{imsSelected @key ../system.combate.ataque}}>{{label}}</option>{{/each}}
-              </select>
-            </label>
+          <div class="ys-form-grid compact">
             <label class="check"><input type="checkbox" name="system.combate.sorprendido" {{imsChecked system.combate.sorprendido}}> Pillado por sorpresa</label>
           </div>
         </section>
@@ -189,8 +180,6 @@
               <button type="button" data-item-chat title="Enviar al chat"><i class="fas fa-comment"></i></button>
               <button type="button" data-item-edit title="Editar"><i class="fas fa-pen"></i></button>
             </div>
-            {{else}}
-            <p class="ims-empty-inventory">Arrastra aquí equipo, armas o talentos.</p>
             {{/each}}
           </div>
         </section>
@@ -281,10 +270,10 @@
         {{#if equipmentNotes.length}}
         <p class="ims-equipped-note">Equipado: {{#each equipmentNotes}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</p>
         {{/if}}
-        {{#each itemsByType}}
-        <h3>{{@key}}</h3>
+        {{#each itemSections}}
+        <h3>{{label}}</h3>
         <ol class="ys-item-list">
-          {{#each this}}
+          {{#each items}}
           <li class="item {{#if system.equipado}}equipped{{/if}}" data-item-id="{{id}}">
             <img src="{{img}}" alt="">
             <span>{{name}}</span>
@@ -294,8 +283,6 @@
             <button type="button" data-item-edit title="Editar"><i class="fas fa-pen"></i></button>
             <button type="button" data-item-delete title="Borrar"><i class="fas fa-trash"></i></button>
           </li>
-          {{else}}
-          <li class="ims-empty-row">Sin elementos.</li>
           {{/each}}
         </ol>
         {{/each}}
