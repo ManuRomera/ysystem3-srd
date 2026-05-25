@@ -18,12 +18,6 @@
         <label>Lugar de nacimiento<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
       </div>
     </section>
-    <aside class="ys-quick-stats">
-      <button type="button" data-roll-initiative title="Iniciativa"><i class="fas fa-forward"></i><span>Ini</span></button>
-      <button type="button" data-roll-attack title="Ataque rápido"><i class="fas fa-burst"></i><span>Atq</span></button>
-      <button type="button" data-roll-resistencia-fisica title='{{ysTerm "resistancePhysical"}}'><i class="fas fa-heart-pulse"></i><span>RF</span></button>
-      <button type="button" data-roll-resistencia-mental title='{{ysTerm "resistanceMental"}}'><i class="fas fa-brain"></i><span>RM</span></button>
-    </aside>
   </header>
 
   <nav class="ims-tabs ys-tabs" data-group="primary">
@@ -32,6 +26,15 @@
     <a class="item" data-tab="estado"><i class="fas fa-heart-pulse"></i><span>Estado</span></a>
     <a class="item" data-tab="equipo"><i class="fas fa-suitcase"></i><span>Equipo</span></a>
     <a class="item" data-tab="notas"><i class="fas fa-book-open"></i><span>Notas</span></a>
+    <div class="ys-tab-actions">
+      <button type="button" data-roll-initiative title="Iniciativa"><i class="fas fa-forward"></i><span>Ini</span></button>
+      <button type="button" data-roll-attack title="Ataque rápido"><i class="fas fa-burst"></i><span>Atq</span></button>
+      <button type="button" data-damage title="Aplicar daño"><i class="fas fa-kit-medical"></i><span>Daño</span></button>
+      <button type="button" data-heal title="Curar"><i class="fas fa-hand-holding-medical"></i><span>Curar</span></button>
+      <button type="button" data-rules-heal title="Curación reglada"><i class="fas fa-briefcase-medical"></i><span>Reglada</span></button>
+      <button type="button" data-roll-resistencia-fisica title='{{ysTerm "resistancePhysical"}}'><i class="fas fa-heart-pulse"></i><span>RF</span></button>
+      <button type="button" data-roll-resistencia-mental title='{{ysTerm "resistanceMental"}}'><i class="fas fa-brain"></i><span>RM</span></button>
+    </div>
   </nav>
 
   <section class="ims-body ys-body">
@@ -53,31 +56,35 @@
           <header>
             <h2>Valores</h2>
             <div class="ys-icon-actions">
-              <button type="button" data-gain-yayo title='Ganar {{ysTerm "resource"}}'><i class="fas fa-plus"></i><span>{{ysTerm "resource"}}</span></button>
-              <button type="button" data-spend-yayo title='Gastar {{ysTerm "resource"}}'><i class="fas fa-minus"></i><span>{{ysTerm "resource"}}</span></button>
-              <button type="button" data-gain-punto-guion title="Recuperar punto de guion"><i class="fas fa-circle-plus"></i><span>Punto de guion</span></button>
-              <button type="button" data-spend-punto-guion title="Gastar punto de guion"><i class="fas fa-circle-minus"></i><span>Punto de guion</span></button>
-              <button type="button" data-boost-defense title='+{{ysFixed "aplomo"}}/{{ysFixed "agilidad"}}'><i class="fas fa-shield"></i><span>Defensa</span></button>
+              <button type="button" data-boost-defense title='+{{ysFixed "aplomo"}}/{{ysFixed "agilidad"}}'><i class="fas fa-shield"></i><span>Reforzar</span></button>
             </div>
           </header>
           <div class="ys-value-grid">
             <button type="button" data-help-type="rule" data-help-key="agilidad"><span>{{ysFixed "agilidad"}}</span><strong>{{system.agilidad}}</strong></button>
             <button type="button" data-help-type="rule" data-help-key="aplomo"><span>{{ysFixed "aplomo"}}</span><strong>{{system.aplomo}}</strong></button>
             <button type="button" data-help-type="rule" data-help-key="perspicacia"><span>{{ysFixed "perspicacia"}}</span><strong>{{system.perspicacia}}</strong></button>
-            <button type="button" data-help-type="rule" data-help-key="proezas"><span>{{ysTerm "resource"}}</span><strong>{{system.proezas.valor}}/{{system.proezas.inicial}}</strong></button>
-            <button type="button" data-help-type="rule" data-help-key="puntoGuion"><span>Punto guion</span><strong>{{system.puntoGuion.valor}}/{{system.puntoGuion.max}}</strong></button>
+            <div class="ys-value-card" data-help-type="rule" data-help-key="proezas">
+              <span>{{ysTerm "resource"}}</span>
+              <strong>{{system.proezas.valor}}/{{system.proezas.inicial}}</strong>
+              <div class="ys-value-controls">
+                <button type="button" data-gain-yayo title='Ganar {{ysTerm "resource"}}'><i class="fas fa-plus"></i></button>
+                <button type="button" data-spend-yayo title='Gastar {{ysTerm "resource"}}'><i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="ys-value-card" data-help-type="rule" data-help-key="puntoGuion">
+              <span>Punto guion</span>
+              <strong>{{system.puntoGuion.valor}}/{{system.puntoGuion.max}}</strong>
+              <div class="ys-value-controls">
+                <button type="button" data-gain-punto-guion title="Recuperar punto de guion"><i class="fas fa-plus"></i></button>
+                <button type="button" data-spend-punto-guion title="Gastar punto de guion"><i class="fas fa-minus"></i></button>
+              </div>
+            </div>
           </div>
         </section>
 
         <section class="ys-card ys-wide-card ys-summary-state" data-help-type="rule" data-help-key="salud">
           <header>
             <h2>Estado</h2>
-            <div class="ys-icon-actions">
-              <button type="button" data-damage title="Aplicar daño"><i class="fas fa-kit-medical"></i><span>Daño</span></button>
-              <button type="button" data-heal title="Curar"><i class="fas fa-hand-holding-medical"></i><span>Curar</span></button>
-              <button type="button" data-roll-resistencia-fisica title='{{ysTerm "resistancePhysical"}}'><i class="fas fa-heart-pulse"></i><span>RF</span></button>
-              <button type="button" data-roll-resistencia-mental title='{{ysTerm "resistanceMental"}}'><i class="fas fa-brain"></i><span>RM</span></button>
-            </div>
           </header>
           <div class="ys-state-grid compact">
             <label>Salud<input type="number" name="system.salud.valor" value="{{system.salud.valor}}"></label>
@@ -194,11 +201,6 @@
         <section class="ys-card ys-wide-card ys-health-card" data-help-type="rule" data-help-key="salud">
           <header>
             <h2>Salud</h2>
-            <div class="ys-status-actions">
-              <button type="button" data-damage><i class="fas fa-kit-medical"></i> Aplicar daño</button>
-              <button type="button" data-heal><i class="fas fa-hand-holding-medical"></i> Curar</button>
-              <button type="button" data-rules-heal><i class="fas fa-briefcase-medical"></i> Curación reglada</button>
-            </div>
           </header>
           <div class="ys-state-grid">
             <label>Salud actual<input type="number" name="system.salud.valor" value="{{system.salud.valor}}"></label>

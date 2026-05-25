@@ -7,6 +7,19 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.10] — 2026-05-25
+
+### Corregido
+- Los compendios LevelDB usan las claves internas que Foundry VTT 13 espera (`!items!`, `!actors!`, `!journal!`, `!tables!`) para que sus documentos aparezcan en la interfaz.
+- Las páginas de diarios del compendio de reglas se guardan como documentos embebidos indexables por Foundry.
+
+### Cambiado
+- Los botones rápidos de iniciativa, ataque, daño, curación, RF y RM pasan a la barra azul de pestañas para liberar espacio en la cabecera y en las secciones.
+- La cabecera usa una imagen de personaje más grande y proporcionada, y el bloque de marca queda más centrado y sin marco añadido.
+- Los controles de Proezas y Punto de guion se integran dentro de sus tarjetas; el refuerzo de valores queda junto al título de `Valores`.
+- El diálogo de ataque manual se ensancha y usa una disposición en rejilla para evitar cortes y reducir altura.
+- La sombra de las tarjetas usa un color propio por variante visual.
+
 ## [0.3.9] — 2026-05-25
 
 ### Corregido

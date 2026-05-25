@@ -676,18 +676,24 @@ export class ImsersoActor extends Actor {
     const data = await simpleDialog({
       title: item ? `Ataque: ${item.name}` : `Ataque: ${this.name}`,
       content: `
-        <form class="ims-dialog">
-          <p>${target ? "Objetivo tarjeteado" : "Objetivo manual"}: <strong>${escapeHtml(targetName)}</strong>.</p>
-          ${item ? `<p>Objeto usado: <strong>${escapeHtml(item.name)}</strong>.</p>` : ""}
-          ${target ? "" : `<label>Nombre del objetivo<input name="targetName" value="${escapeHtml(targetName)}"></label>`}
-          <label>Tipo de ataque<select name="tipo">${typeOptions}</select></label>
-          <label>Agilidad objetivo${stepper("dificultad", targetAgilidad, { min: 1, max: 30 })}</label>
-          ${target ? "" : `<label>Armadura/protección objetivo${stepper("armadura", 0, { min: 0, max: 30 })}</label>`}
-          <label>Dados sacrificados para apuntar${stepper("dadosSacrificados", 0, { min: 0, max: 2 })}</label>
-          <label>Dados extra/al alimón${stepper("extraDados", 0, { min: -3, max: 3 })}</label>
-          <label class="check"><input type="checkbox" name="proezaDado"> Gastar 1 proeza para +1D a impactar</label>
-          <label>Proezas a daño${stepper("proezasDano", 0, { min: 0, max: 3 })}</label>
-          <label class="check"><input type="checkbox" name="profesion"> Antigua profesión relacionada (+3)</label>
+        <form class="ims-dialog ims-attack-dialog">
+          <div class="ims-dialog-summary">
+            <p>${target ? "Objetivo tarjeteado" : "Objetivo manual"}: <strong>${escapeHtml(targetName)}</strong>.</p>
+            ${item ? `<p>Objeto usado: <strong>${escapeHtml(item.name)}</strong>.</p>` : ""}
+          </div>
+          <div class="ims-dialog-grid">
+            ${target ? "" : `<label><span>Nombre del objetivo</span><input name="targetName" value="${escapeHtml(targetName)}"></label>`}
+            <label><span>Tipo de ataque</span><select name="tipo">${typeOptions}</select></label>
+            <label><span>Agilidad objetivo</span>${stepper("dificultad", targetAgilidad, { min: 1, max: 30 })}</label>
+            ${target ? "" : `<label><span>Armadura/protección objetivo</span>${stepper("armadura", 0, { min: 0, max: 30 })}</label>`}
+            <label><span>Dados sacrificados para apuntar</span>${stepper("dadosSacrificados", 0, { min: 0, max: 2 })}</label>
+            <label><span>Dados extra/al alimón</span>${stepper("extraDados", 0, { min: -3, max: 3 })}</label>
+            <label><span>Proezas a daño</span>${stepper("proezasDano", 0, { min: 0, max: 3 })}</label>
+          </div>
+          <div class="ims-dialog-checks">
+            <label class="check"><input type="checkbox" name="proezaDado"> Gastar 1 proeza para +1D a impactar</label>
+            <label class="check"><input type="checkbox" name="profesion"> Antigua profesión relacionada (+3)</label>
+          </div>
         </form>`
     });
     if (!data) return;
