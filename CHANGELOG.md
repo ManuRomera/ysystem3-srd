@@ -7,6 +7,16 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.12] — 2026-05-25
+
+### Corregido
+- La sombra 3D de las tarjetas de sección cambia ahora con la ambientación seleccionada también dentro de las ventanas de hoja ya abiertas.
+- El logo de YSYSTEM en la cabecera deja de mostrar un marco exterior negro.
+- Las tarjetas de `Rasgos` y `Defectos y recuerdo` se estiran a la misma altura cuando comparten fila.
+
+### Confirmado
+- La configuración por defecto sigue siendo hoja optimizada para Foundry y apariencia `YSYSTEM3 SRD`.
+
 ## [0.3.11] — 2026-05-25
 
 ### Añadido

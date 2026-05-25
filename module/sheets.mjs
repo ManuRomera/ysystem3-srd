@@ -67,6 +67,8 @@ export class ImsersoActorSheet extends ActorSheet {
     context.config = IMSERSO;
     context.isGM = game.user.isGM;
     context.sheetLayout = game.settings?.get?.(IMSERSO.ID, "sheetLayout") ?? "screen";
+    const variantKey = game.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
+    context.themeClass = IMSERSO.variants[variantKey]?.themeClass ?? IMSERSO.variants.base.themeClass;
     context.skillEditEnabled = !!this._summarySkillEdit;
     context.logoPath = `systems/${IMSERSO.ID}/assets/ysystem-icon.png`;
     context.atributos = entries(IMSERSO.atributos).map(([key, cfg]) => ({

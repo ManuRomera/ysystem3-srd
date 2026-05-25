@@ -273,6 +273,60 @@ body.ys-theme-terror {
   --ys-section-shadow-color: #b4544b;
 }
 
+.ys-screen-sheet.ys-theme-base,
+.ys-a4-sheet.ys-theme-base {
+  --ys-section-shadow-color: #c0c9d6;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-yayo,
+.ys-a4-sheet.ys-theme-yayo {
+  --ys-section-shadow-color: #95cfb3;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-pulp,
+.ys-a4-sheet.ys-theme-pulp {
+  --ys-section-shadow-color: #d2a15c;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-fantasia,
+.ys-a4-sheet.ys-theme-fantasia {
+  --ys-section-shadow-color: #b99155;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-scifi,
+.ys-a4-sheet.ys-theme-scifi {
+  --ys-section-shadow-color: #7583a7;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-lovecraft,
+.ys-a4-sheet.ys-theme-lovecraft {
+  --ys-section-shadow-color: #87999a;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-capa,
+.ys-a4-sheet.ys-theme-capa {
+  --ys-section-shadow-color: #c19879;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-ciberpunk,
+.ys-a4-sheet.ys-theme-ciberpunk {
+  --ys-section-shadow-color: #f04cb2;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-terror,
+.ys-a4-sheet.ys-theme-terror {
+  --ys-section-shadow-color: #b4544b;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
 body.ys-theme-pulp .ims-paper::before,
 body.ys-theme-lovecraft .ims-paper::before,
 body.ys-theme-terror .ims-paper::before {
@@ -3331,6 +3385,11 @@ body.ys-theme-capa .ims-number-section h2 {
   object-fit: contain;
   object-position: center;
   flex: 0 0 auto;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  clip-path: inset(2px);
+  transform: scale(1.08);
 }
 
 .ys-brand strong {
@@ -4008,6 +4067,8 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-compact-card {
   min-height: 0;
+  align-self: stretch;
+  height: 100%;
 }
 
 .ys-quick-inventory {
