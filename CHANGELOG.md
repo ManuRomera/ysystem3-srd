@@ -7,6 +7,11 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.7] — 2026-05-25
+
+### Corregido
+- El ZIP de release vuelve a incluir los ficheros `*.log` necesarios para los compendios LevelDB regenerados.
+
 ## [0.3.6] — 2026-05-25
 
 ### Corregido

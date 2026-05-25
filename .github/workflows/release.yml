@@ -54,8 +54,7 @@ jobs:
             --exclude 'dist' \
             --exclude '.DS_Store' \
             --exclude '._*' \
-            --exclude '__MACOSX' \
-            --exclude '*.log'
+            --exclude '__MACOSX'
           cd dist
           zip -r "ysystem3-srd.zip" ysystem3-srd
           cd ..
