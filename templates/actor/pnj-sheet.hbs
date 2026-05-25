@@ -104,24 +104,22 @@
 
     <div class="tab ims-tab-panel ys-panel" data-group="primary" data-tab="combate">
       <main class="ys-panel-grid">
-        <section class="ys-card">
+        <section class="ys-card ys-wide-card ys-combat-actions-card">
           <header><h2>Ataque activo</h2></header>
-          <div class="ys-effective-attack {{#if effectiveAttack.equipped}}equipped{{/if}}">
-            <b>{{effectiveAttack.name}}</b>
-            <span>{{effectiveAttack.source}}</span>
-            <small>{{effectiveAttack.skillLabel}} · Daño {{effectiveAttack.damage}} + {{effectiveAttack.attrLabel}} · Ini +{{effectiveAttack.initiative}}</small>
-          </div>
-          <div class="ys-action-grid">
-            <button type="button" data-roll-initiative><i class="fas fa-forward"></i> Iniciativa</button>
-            <button type="button" data-help-type="rule" data-help-key="ataque" data-roll-attack><i class="fas fa-dice-six"></i> Ataque</button>
-            <button type="button" data-roll-reserve><i class="fas fa-hourglass-half"></i> Reservar</button>
-          </div>
-        </section>
-
-        <section class="ys-card">
-          <header><h2>Estado táctico</h2></header>
-          <div class="ys-form-grid compact">
-            <label class="check"><input type="checkbox" name="system.combate.sorprendido" {{imsChecked system.combate.sorprendido}}> Pillado por sorpresa</label>
+          <div class="ys-combat-action-layout">
+            <div class="ys-effective-attack {{#if effectiveAttack.equipped}}equipped{{/if}}">
+              <b>{{effectiveAttack.name}}</b>
+              <span>{{effectiveAttack.source}}</span>
+              <small>{{effectiveAttack.skillLabel}} · Daño {{effectiveAttack.damage}} + {{effectiveAttack.attrLabel}} · Ini +{{effectiveAttack.initiative}}</small>
+            </div>
+            <div class="ys-combat-action-tools">
+              <div class="ys-action-grid">
+                <button type="button" data-roll-initiative><i class="fas fa-forward"></i> Iniciativa</button>
+                <button type="button" data-help-type="rule" data-help-key="ataque" data-roll-attack><i class="fas fa-dice-six"></i> Ataque</button>
+                <button type="button" data-roll-reserve><i class="fas fa-hourglass-half"></i> Reservar</button>
+              </div>
+              <label class="check"><input type="checkbox" name="system.combate.sorprendido" {{imsChecked system.combate.sorprendido}}> Pillado por sorpresa</label>
+            </div>
           </div>
         </section>
       </main>

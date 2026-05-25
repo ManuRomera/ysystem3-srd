@@ -4,7 +4,7 @@
   "_id": "b0oX3jToGLwdvyfV",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Creas una llamarada a la vista que calcina todo durante un turno. Inflige 5 daño que ignora armadura y puede afectar hasta dos personas próximas.</p><p>Coste: 5 puntos de poder.</p>",
+    "descripcion": "Creas una llamarada a la vista que calcina todo durante un turno. Inflige 5 daño que ignora armadura y puede afectar hasta dos personas próximas.\n\nCoste: 5 puntos de poder.",
     "tipo": "Hechizo de Benjamín",
     "habilidad": "cultura",
     "atributo": "int",
@@ -29,7 +29,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

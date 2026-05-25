@@ -4,7 +4,7 @@
   "_id": "6e5e0UL98s43R3M6",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Puedes convertir en éxito automático una tirada fallada de una habilidad dependiente de CAR, salvo Intimidar, hasta dos veces por sesión.</p><p><strong>Categoría:</strong> Sangre En El Agua</p>",
+    "descripcion": "Puedes convertir en éxito automático una tirada fallada de una habilidad dependiente de CAR, salvo Intimidar, hasta dos veces por sesión.\n\nCategoría: Sangre En El Agua",
     "usos": {
       "valor": 1,
       "max": 1
@@ -27,7 +27,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

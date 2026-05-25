@@ -4,7 +4,7 @@
   "_id": "sCx0XfJExWtj0F9W",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Siempre que leas y comprendas un texto escrito por otra persona, puedes intentar una tirada de Psicología contra dificultad 10 para que el DJ te dé información relevante sobre el autor.</p><p><strong>Categoría:</strong> Gestion</p>",
+    "descripcion": "Siempre que leas y comprendas un texto escrito por otra persona, puedes intentar una tirada de Psicología contra dificultad 10 para que el DJ te dé información relevante sobre el autor.\n\nCategoría: Gestion",
     "usos": {
       "valor": 1,
       "max": 1
@@ -27,7 +27,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

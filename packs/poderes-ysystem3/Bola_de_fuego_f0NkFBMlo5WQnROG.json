@@ -4,7 +4,7 @@
   "_id": "f0NkFBMlo5WQnROG",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Si impacta, causa 6 daño automático; desde el turno siguiente el objetivo arde y sufre daño por fuego abierto hasta extinguir llamas.</p><p>Preparación: palabras mágicas y una mano libre. Lanzamiento: 1 turno completo. Duración: hasta extinguir fuego. Coste: habitual según dificultad + 3 poder.</p>",
+    "descripcion": "Si impacta, causa 6 daño automático; desde el turno siguiente el objetivo arde y sufre daño por fuego abierto hasta extinguir llamas.\n\nPreparación: palabras mágicas y una mano libre. Lanzamiento: 1 turno completo. Duración: hasta extinguir fuego. Coste: habitual según dificultad + 3 poder.",
     "tipo": "Hechizo de alta fantasía",
     "habilidad": "cultura",
     "atributo": "des",
@@ -29,7 +29,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

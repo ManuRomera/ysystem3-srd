@@ -4,7 +4,7 @@
   "_id": "62SwFIoS9IRfumE5",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Puedes gastar una proeza en cualquier momento para tirar por Resistencia Física o Resistencia Mental con 1D adicional. También puedes gastar otra proeza para repetir la tirada.</p><p><strong>Categoría:</strong> Proezas</p>",
+    "descripcion": "Puedes gastar una proeza en cualquier momento para tirar por Resistencia Física o Resistencia Mental con 1D adicional. También puedes gastar otra proeza para repetir la tirada.\n\nCategoría: Proezas",
     "usos": {
       "valor": 1,
       "max": 1
@@ -27,7 +27,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

@@ -8,7 +8,7 @@
     "habilidad": "punteria",
     "danoBase": 15,
     "atributoDano": "per",
-    "descripcion": "<p>Carga explosiva de gran potencia, capaz de destruir coberturas y causar daño severo en un área de impacto.</p><p><strong>Regla SRD:</strong> Arma de fuego especialmente letal, explosivo o armamento pesado. Su daño representa una amenaza grave incluso con protección.</p><p><strong>Tirada:</strong> Puntería (PER). <strong>Daño:</strong> 15 + PER.</p>",
+    "descripcion": "Carga explosiva de gran potencia, capaz de destruir coberturas y causar daño severo en un área de impacto.\n\nRegla SRD: Arma de fuego especialmente letal, explosivo o armamento pesado. Su daño representa una amenaza grave incluso con protección.\n\nTirada: Puntería (PER). Daño: 15 + PER.",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,7 +25,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.6",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779701815768,
     "lastModifiedBy": null

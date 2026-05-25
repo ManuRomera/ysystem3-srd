@@ -8,7 +8,7 @@
     "habilidad": "lucha",
     "danoBase": 2,
     "atributoDano": "fue",
-    "descripcion": "<p>Ataque sin arma entrenado o reforzado: artes marciales, botas pesadas, guanteletes, nudillos metálicos o una técnica especialmente dañina.</p><p><strong>Regla SRD:</strong> Ataque sin arma entrenado o reforzado: artes marciales, botas pesadas, guanteletes, nudillos metálicos o una técnica especialmente dañina.</p><p><strong>Tirada:</strong> Lucha (DES). <strong>Daño:</strong> 2 + FUE/2.</p>",
+    "descripcion": "Ataque sin arma entrenado o reforzado: artes marciales, botas pesadas, guanteletes, nudillos metálicos o una técnica especialmente dañina.\n\nRegla SRD: Ataque sin arma entrenado o reforzado: artes marciales, botas pesadas, guanteletes, nudillos metálicos o una técnica especialmente dañina.\n\nTirada: Lucha (DES). Daño: 2 + FUE/2.",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,7 +25,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.6",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779701815768,
     "lastModifiedBy": null

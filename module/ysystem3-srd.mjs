@@ -82,13 +82,13 @@ Hooks.on("renderChatMessage", (message, html) => {
   html.find("[data-ims-action]").on("click", (event) => handleChatAction(event, message));
 });
 
-Hooks.on("renderJournalSheet", (_sheet, html) => {
-  html.find("[data-ims-action]").on("click", (event) => handleLooseAction(event));
-});
-
-Hooks.on("renderJournalPageSheet", (_sheet, html) => {
-  html.find("[data-ims-action]").on("click", (event) => handleLooseAction(event));
-});
+for (const hook of ["renderJournalSheet", "renderJournalEntrySheet", "renderJournalPageSheet", "renderJournalEntryPageTextSheet", "renderJournalEntryPageProseMirrorSheet"]) {
+  Hooks.on(hook, (_sheet, html) => {
+    const jq = asJQuery(html);
+    jq.find("[data-ims-action]").on("click", (event) => handleLooseAction(event));
+    restoreRulesJournalContent(_sheet, jq);
+  });
+}
 
 Hooks.on("renderDialog", (_dialog, html) => {
   html.find(".ims-stepper [data-ims-step]").on("click", (event) => {
@@ -111,6 +111,30 @@ Hooks.on("renderActorDirectory", (_app, html) => {
   if (!game.user.isGM) return;
   html.find("[data-ims-create-jubilado]").remove();
 });
+
+function restoreRulesJournalContent(sheet, html) {
+  const document = sheet.document ?? sheet.object ?? sheet.page;
+  const pack = document?.pack ?? document?.parent?.pack ?? "";
+  if (pack !== `${IMSERSO.ID}.reglas-ysystem3`) return;
+  const contents = [];
+  if (document?.documentName === "JournalEntryPage") {
+    contents.push(document.text?.content ?? "");
+  } else if (document?.pages) {
+    contents.push(...document.pages.map((page) => page.text?.content ?? ""));
+  }
+  if (!contents.some(Boolean)) return;
+  const containers = html.find(".journal-page-content");
+  containers.each((index, element) => {
+    if (element.textContent.trim() || element.children.length) return;
+    const content = contents[index] || contents[0];
+    if (content) element.innerHTML = content;
+  });
+}
+
+function asJQuery(html) {
+  if (html?.find) return html;
+  return $(html);
+}
 
 function registerSystemSettings() {
   game.settings.register(IMSERSO.ID, "variant", {

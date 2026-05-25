@@ -4,7 +4,7 @@
   "_id": "CG8bnIYHu0eKlNKc",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Afecta a células de organismos; permite recuperar o perder hasta 3 Salud por turno.</p><p>Tiempo de activación: 1 turno completo. Duración: tantos turnos como el mutante desee mientras siga modificando Salud. Coste: 4 poder + 1 por cada punto de Salud que se reste o añada.</p>",
+    "descripcion": "Afecta a células de organismos; permite recuperar o perder hasta 3 Salud por turno.\n\nTiempo de activación: 1 turno completo. Duración: tantos turnos como el mutante desee mientras siga modificando Salud. Coste: 4 poder + 1 por cada punto de Salud que se reste o añada.",
     "tipo": "Poder psiónico gamma",
     "habilidad": "psicologia",
     "atributo": "per",
@@ -29,7 +29,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

@@ -4,7 +4,7 @@
   "_id": "qMPrAgH0Lci0nAIl",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Cada vez que sacas una tirada de Auxilio, tu paciente recupera 3 Salud en lugar de 2; 6 con crítico. Cualquier pifia se convierte en fallo normal.</p><p><strong>Categoría:</strong> Sangre En El Agua</p>",
+    "descripcion": "Cada vez que sacas una tirada de Auxilio, tu paciente recupera 3 Salud en lugar de 2; 6 con crítico. Cualquier pifia se convierte en fallo normal.\n\nCategoría: Sangre En El Agua",
     "usos": {
       "valor": 1,
       "max": 1
@@ -27,7 +27,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

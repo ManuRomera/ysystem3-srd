@@ -604,15 +604,24 @@ export class ImsersoItemSheet extends ItemSheet {
 }
 
 function stripHtmlDescription(value) {
-  const raw = String(value ?? "");
-  if (!raw.includes("<")) return raw;
+  const raw = decodeHtmlEntities(String(value ?? ""));
+  if (!raw.includes("<")) return raw.trim();
   const withoutImages = raw.replace(/<img\b[^>]*>/gi, "");
   const withBreaks = withoutImages
     .replace(/<\/p\s*>/gi, "\n\n")
+    .replace(/<\/div\s*>/gi, "\n")
+    .replace(/<\/li\s*>/gi, "\n")
     .replace(/<br\s*\/?>/gi, "\n");
   const div = document.createElement("div");
   div.innerHTML = withBreaks;
   return (div.textContent ?? div.innerText ?? "")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
+}
+
+function decodeHtmlEntities(value) {
+  if (!String(value).includes("&")) return String(value ?? "");
+  const div = document.createElement("div");
+  div.innerHTML = value;
+  return div.textContent ?? div.innerText ?? String(value ?? "");
 }

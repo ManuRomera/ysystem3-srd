@@ -39,7 +39,7 @@ export class ImsersoItem extends Item {
 
   async mostrarEnChat() {
     const description = this.system.descripcion ?? this.system.uso ?? "";
-    const descriptionHtml = String(description).includes("<") ? description : `<p>${description}</p>`;
+    const descriptionHtml = descriptionToHtml(description);
     const content = `
       <div class="ims-chat-card ims-item-card">
         <header><img src="${this.img}" alt=""><h3>${this.name}</h3></header>
@@ -57,4 +57,29 @@ export class ImsersoItem extends Item {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "");
   }
+}
+
+function descriptionToHtml(value) {
+  const raw = decodeHtmlEntities(String(value ?? "").trim());
+  if (!raw) return "";
+  if (/<[a-z][\s\S]*>/i.test(raw)) return raw;
+  return raw
+    .split(/\n{2,}/)
+    .map((paragraph) => `<p>${escapeHtml(paragraph.trim()).replace(/\n/g, "<br>")}</p>`)
+    .join("");
+}
+
+function decodeHtmlEntities(value) {
+  if (!String(value).includes("&") || !globalThis.document) return String(value ?? "");
+  const div = document.createElement("div");
+  div.innerHTML = value;
+  return div.textContent ?? div.innerText ?? String(value ?? "");
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }

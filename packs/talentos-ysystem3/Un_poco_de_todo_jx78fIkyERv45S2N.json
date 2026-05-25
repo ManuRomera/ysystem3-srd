@@ -4,7 +4,7 @@
   "_id": "jx78fIkyERv45S2N",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Una vez por partida, puedes gastar una proeza para añadirte permanentemente una nueva profesión. En una tirada solo podrás disfrutar del +3 de una profesión.</p><p><strong>Categoría:</strong> Proezas</p>",
+    "descripcion": "Una vez por partida, puedes gastar una proeza para añadirte permanentemente una nueva profesión. En una tirada solo podrás disfrutar del +3 de una profesión.\n\nCategoría: Proezas",
     "usos": {
       "valor": 1,
       "max": 1
@@ -27,7 +27,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

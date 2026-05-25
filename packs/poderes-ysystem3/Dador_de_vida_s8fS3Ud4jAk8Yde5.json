@@ -4,7 +4,7 @@
   "_id": "s8fS3Ud4jAk8Yde5",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Sanas al beneficiario 5 puntos de Salud.</p><p>Coste: 3 puntos de poder.</p>",
+    "descripcion": "Sanas al beneficiario 5 puntos de Salud.\n\nCoste: 3 puntos de poder.",
     "tipo": "Hechizo de Benjamín",
     "habilidad": "cultura",
     "atributo": "int",
@@ -29,7 +29,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

@@ -7,6 +7,14 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.8] — 2026-05-25
+
+### Corregido
+- La pestaña Combate aprovecha mejor el ancho de la hoja y reduce espacio vertical desperdiciado.
+- El inventario rápido de combate permite borrar items sin pasar por la pestaña Equipo.
+- Las descripciones de items de compendio se guardan como texto limpio para evitar etiquetas HTML visibles.
+- Añadido respaldo de renderizado para que las páginas del compendio de reglas muestren su contenido si Foundry deja `text.enriched` vacío.
+
 ## [0.3.7] — 2026-05-25
 
 ### Corregido

@@ -8,7 +8,7 @@
     "habilidad": "lucha",
     "danoBase": 3,
     "atributoDano": "fue",
-    "descripcion": "<p>Látigo corto y flexible, usado para arrear animales o lanzar golpes rápidos que intimidan, distraen o hieren superficialmente.</p><p><strong>Regla SRD:</strong> Arma de mano para combate cercano. Permite cortar, pinchar o golpear en distancias cortas y se resuelve con Lucha.</p><p><strong>Tirada:</strong> Lucha (DES). <strong>Daño:</strong> 3 + FUE.</p>",
+    "descripcion": "Látigo corto y flexible, usado para arrear animales o lanzar golpes rápidos que intimidan, distraen o hieren superficialmente.\n\nRegla SRD: Arma de mano para combate cercano. Permite cortar, pinchar o golpear en distancias cortas y se resuelve con Lucha.\n\nTirada: Lucha (DES). Daño: 3 + FUE.",
     "equipado": false,
     "automatismo": ""
   },
@@ -25,7 +25,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.6",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779701815768,
     "lastModifiedBy": null

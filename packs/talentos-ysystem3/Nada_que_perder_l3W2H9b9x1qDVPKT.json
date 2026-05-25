@@ -4,7 +4,7 @@
   "_id": "l3W2H9b9x1qDVPKT",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>En una situación desesperada puedes volver a lanzar uno solo de los dados de la tirada recién realizada y quedarte con el nuevo valor.</p><p><strong>Categoría:</strong> Especificos</p>",
+    "descripcion": "En una situación desesperada puedes volver a lanzar uno solo de los dados de la tirada recién realizada y quedarte con el nuevo valor.\n\nCategoría: Especificos",
     "usos": {
       "valor": 1,
       "max": 1
@@ -27,7 +27,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null

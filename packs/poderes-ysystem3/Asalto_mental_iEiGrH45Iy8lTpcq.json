@@ -4,7 +4,7 @@
   "_id": "iEiGrH45Iy8lTpcq",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "descripcion": "<p>Sobrecarga sensorial: -1D a acciones, -1 Salud, -3 a Agilidad/Aplomo/Perspicacia. Uso agresivo no defensivo sobre una persona obliga al psíquico a tirada de pánico gravedad 3.</p><p>Activación: 1 turno completo. Duración: 3 turnos. No se puede lanzar de nuevo sobre víctima ya afectada hasta que acabe. Coste: 4 poder + 5 poder.</p>",
+    "descripcion": "Sobrecarga sensorial: -1D a acciones, -1 Salud, -3 a Agilidad/Aplomo/Perspicacia. Uso agresivo no defensivo sobre una persona obliga al psíquico a tirada de pánico gravedad 3.\n\nActivación: 1 turno completo. Duración: 3 turnos. No se puede lanzar de nuevo sobre víctima ya afectada hasta que acabe. Coste: 4 poder + 5 poder.",
     "tipo": "Poder de médium",
     "habilidad": "cultura",
     "atributo": "int",
@@ -29,7 +29,7 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "ysystem3-srd",
-    "systemVersion": "0.3.4",
+    "systemVersion": "0.3.8",
     "createdTime": 1779666008608,
     "modifiedTime": 1779666008608,
     "lastModifiedBy": null
