@@ -7,6 +7,13 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.14] — 2026-05-25
+
+### Cambiado
+- Los dialogos de tirada, ataque y persecucion se compactan para consumir menos pantalla: el cuerpo hace scroll cuando hace falta y los botones quedan pegados al contenido real.
+- Dialogos, tarjetas de chat, ayuda contextual, fichas de objeto y creador guiado adoptan los colores y sombras de la apariencia/variante activa.
+- Las fichas de objeto abiertas se refrescan tambien al cambiar de variante.
+
 ## [0.3.13] — 2026-05-25
 
 ### Corregido

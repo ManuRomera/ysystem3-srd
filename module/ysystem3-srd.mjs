@@ -80,8 +80,12 @@ Hooks.on("updateSetting", (setting) => {
 });
 
 Hooks.on("renderChatMessage", (message, html) => {
-  if (html.find(".ims-chat-card").length) html.addClass("ims-chat-message");
-  html.find("[data-ims-action]").on("click", (event) => handleChatAction(event, message));
+  const jq = asJQuery(html);
+  if (jq.find(".ims-chat-card").length) {
+    jq.addClass("ims-chat-message");
+    applyThemeClassToElement(jq[0]);
+  }
+  jq.find("[data-ims-action]").on("click", (event) => handleChatAction(event, message));
 });
 
 for (const hook of ["renderJournalSheet", "renderJournalEntrySheet", "renderJournalPageSheet", "renderJournalEntryPageTextSheet", "renderJournalEntryPageProseMirrorSheet"]) {
@@ -93,7 +97,10 @@ for (const hook of ["renderJournalSheet", "renderJournalEntrySheet", "renderJour
 }
 
 Hooks.on("renderDialog", (_dialog, html) => {
-  html.find(".ims-stepper [data-ims-step]").on("click", (event) => {
+  const jq = asJQuery(html);
+  const root = jq.closest(".window-app")[0] ?? jq[0]?.closest?.(".window-app") ?? jq[0];
+  applyThemeClassToElement(root);
+  jq.find(".ims-stepper [data-ims-step]").on("click", (event) => {
     event.preventDefault();
     const button = event.currentTarget;
     const stepper = button.closest(".ims-stepper");
@@ -190,15 +197,23 @@ function applyVariantClass() {
   const themeClasses = Object.values(IMSERSO.variants).map((cfg) => cfg.themeClass);
   document.body?.classList.remove(...themeClasses);
   document.body?.classList.add(variant.themeClass);
-  for (const sheet of document.querySelectorAll(".ys-screen-sheet, .ys-a4-sheet")) {
+  for (const sheet of document.querySelectorAll(".ys-screen-sheet, .ys-a4-sheet, .ims-item, .ims-creator, .window-app.dialog, .ims-context-help, .ims-chat-message")) {
     sheet.classList.remove(...themeClasses);
     sheet.classList.add(variant.themeClass);
   }
 }
 
+function applyThemeClassToElement(element) {
+  if (!element) return;
+  const variant = currentVariant();
+  const themeClasses = Object.values(IMSERSO.variants).map((cfg) => cfg.themeClass);
+  element.classList.remove(...themeClasses);
+  element.classList.add(variant.themeClass);
+}
+
 function handleVariantChange() {
   applyVariantClass();
-  rerenderActorSheets();
+  rerenderSystemSheets();
 }
 
 function currentSheetLayout() {
@@ -211,8 +226,13 @@ function applySheetLayoutClass() {
 }
 
 function rerenderActorSheets() {
+  rerenderSystemSheets({ actorsOnly: true });
+}
+
+function rerenderSystemSheets({ actorsOnly = false } = {}) {
   for (const app of Object.values(ui.windows ?? {})) {
     if (app?.actor?.type && app?.render) app.render(true);
+    if (!actorsOnly && app?.item?.type && app?.render) app.render(true);
   }
 }
 

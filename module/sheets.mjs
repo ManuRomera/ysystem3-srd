@@ -505,7 +505,9 @@ export class ImsersoActorSheet extends ActorSheet {
   _renderHelpPopover(entry, x, y, { hover = false } = {}) {
     document.querySelectorAll(".ims-context-help").forEach((el) => el.remove());
     const pop = document.createElement("aside");
-    pop.className = `ims-context-help${hover ? " hover-help" : ""}`;
+    const variantKey = game.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
+    const themeClass = IMSERSO.variants[variantKey]?.themeClass ?? IMSERSO.variants.base.themeClass;
+    pop.className = `ims-context-help ${themeClass}${hover ? " hover-help" : ""}`;
     pop.innerHTML = `
       <button type="button" class="ims-help-close" aria-label="Cerrar"><i class="fas fa-xmark"></i></button>
       <header>
@@ -584,6 +586,8 @@ export class ImsersoItemSheet extends ItemSheet {
     context.system = this.item.system;
     context.descripcionTexto = stripHtmlDescription(this.item.system?.descripcion ?? "");
     context.config = IMSERSO;
+    const variantKey = game.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
+    context.themeClass = IMSERSO.variants[variantKey]?.themeClass ?? IMSERSO.variants.base.themeClass;
     const protectionLevel = Number(this.item.system?.nivel) || 0;
     context.protectionPenalty = this.item.type === "armadura"
       ? Math.floor(protectionLevel / 2)

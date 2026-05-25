@@ -292,6 +292,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     return {
       state: this.state,
       actor: this.actor,
+      themeClass: currentThemeClass(),
       isPnj: this.state.actorType === "pnj",
       steps,
       stepKey: this.steps[this.state.step]?.key ?? "datos",
@@ -646,6 +647,11 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       "system.resistenciaFisica.manual": false
     };
   }
+}
+
+function currentThemeClass() {
+  const key = game.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
+  return IMSERSO.variants[key]?.themeClass ?? IMSERSO.variants.base.themeClass;
 }
 
 export function openCharacterCreator(actorOrOptions = null) {
