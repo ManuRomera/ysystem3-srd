@@ -72,7 +72,7 @@ Hooks.once("ready", async () => {
 });
 
 Hooks.on("updateSetting", (setting) => {
-  if (setting.key === `${IMSERSO.ID}.variant`) applyVariantClass();
+  if (setting.key === `${IMSERSO.ID}.variant`) handleVariantChange();
   if (setting.key === `${IMSERSO.ID}.sheetLayout`) {
     applySheetLayoutClass();
     rerenderActorSheets();
@@ -160,7 +160,7 @@ function registerSystemSettings() {
     type: String,
     choices: Object.fromEntries(Object.entries(IMSERSO.variants).map(([key, cfg]) => [key, cfg.label])),
     default: "base",
-    onChange: applyVariantClass
+    onChange: handleVariantChange
   });
   game.settings.register(IMSERSO.ID, "sheetLayout", {
     name: "Distribucion de fichas",
@@ -187,8 +187,18 @@ function currentVariant() {
 
 function applyVariantClass() {
   const variant = currentVariant();
-  document.body?.classList.remove(...Object.values(IMSERSO.variants).map((cfg) => cfg.themeClass));
+  const themeClasses = Object.values(IMSERSO.variants).map((cfg) => cfg.themeClass);
+  document.body?.classList.remove(...themeClasses);
   document.body?.classList.add(variant.themeClass);
+  for (const sheet of document.querySelectorAll(".ys-screen-sheet, .ys-a4-sheet")) {
+    sheet.classList.remove(...themeClasses);
+    sheet.classList.add(variant.themeClass);
+  }
+}
+
+function handleVariantChange() {
+  applyVariantClass();
+  rerenderActorSheets();
 }
 
 function currentSheetLayout() {

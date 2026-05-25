@@ -7,6 +7,12 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.13] — 2026-05-25
+
+### Corregido
+- Al cambiar la apariencia/variante se actualizan también las hojas abiertas, por lo que cambian al momento la sombra 3D y el texto de ambientación.
+- La cabecera pasa a mostrar `YSYSTEM 3` junto a la ambientación elegida en lugar de `YSYSTEM SRD actualizado`.
+
 ## [0.3.12] — 2026-05-25
 
 ### Corregido

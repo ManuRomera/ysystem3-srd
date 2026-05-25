@@ -68,6 +68,7 @@ También puedes instalar directamente cualquier versión antigua usando la URL d
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
+| 0.3.13 | v11 | v13.351 |
 | 0.3.12 | v11 | v13.351 |
 | 0.3.11 | v11 | v13.351 |
 | 0.3.10 | v11 | v13.351 |
