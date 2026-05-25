@@ -7,6 +7,17 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.11] — 2026-05-25
+
+### Añadido
+- Creador guiado de PJ desde el directorio de actores, con creación libre, por arquetipo o aleatoria adaptada a YSYSTEM3 SRD.
+- Creador guiado de PNJ desde el directorio de actores, con generación rápida de rol, bando, atributos, habilidades, salud y valores derivados.
+
+### Cambiado
+- Los controles de Proezas y Punto de guion quedan en la parte inferior de cada tarjeta para no cortar las etiquetas ni los valores.
+- Los botones rápidos de la barra azul se integran visualmente como acciones de pestaña, con margen superior e inferior.
+- Las sombras de tarjetas y del creador usan colores diferenciados por variante visual.
+
 ## [0.3.10] — 2026-05-25
 
 ### Corregido

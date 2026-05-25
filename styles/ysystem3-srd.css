@@ -59,7 +59,7 @@ body.ys-theme-base {
   --ys-logo-border-width: 0;
   --ys-logo-radius: 0;
   --ys-logo-transform: none;
-  --ys-section-shadow-color: #c5ccd8;
+  --ys-section-shadow-color: #c0c9d6;
 }
 
 body.ys-theme-yayo {
@@ -70,7 +70,7 @@ body.ys-theme-yayo {
   --ims-plum: #5d173c;
   --ims-blue-ink: #233f96;
   --ims-paper: #fffefa;
-  --ys-section-shadow-color: #8fc9ad;
+  --ys-section-shadow-color: #95cfb3;
 }
 
 body.ys-theme-pulp {
@@ -97,7 +97,7 @@ body.ys-theme-pulp {
   --ys-logo-radius: 10px;
   --ys-field-line: 3px dotted #5f4430;
   --ys-heading-font: Impact, "Arial Black", var(--ys-sheet-font);
-  --ys-section-shadow-color: #b99166;
+  --ys-section-shadow-color: #d2a15c;
 }
 
 body.ys-theme-fantasia {
@@ -126,7 +126,7 @@ body.ys-theme-fantasia {
   --ys-section-title-decoration: underline;
   --ys-heading-font: Georgia, "Times New Roman", serif;
   --ys-script-font: Georgia, "Times New Roman", serif;
-  --ys-section-shadow-color: #b7874f;
+  --ys-section-shadow-color: #b99155;
 }
 
 body.ys-theme-scifi {
@@ -156,7 +156,7 @@ body.ys-theme-scifi {
   --ys-dot-radius: 4px;
   --ys-control-radius: 2px;
   --ys-heading-font: "Avenir Next Condensed", "Arial Narrow", var(--ys-sheet-font);
-  --ys-section-shadow-color: #706a83;
+  --ys-section-shadow-color: #7583a7;
 }
 
 body.ys-theme-lovecraft {
@@ -184,7 +184,7 @@ body.ys-theme-lovecraft {
   --ys-logo-radius: 0;
   --ys-field-line: 3px dotted #5f6462;
   --ys-heading-font: Georgia, "Times New Roman", serif;
-  --ys-section-shadow-color: #9aa7a5;
+  --ys-section-shadow-color: #87999a;
 }
 
 body.ys-theme-capa {
@@ -212,7 +212,7 @@ body.ys-theme-capa {
   --ys-script-font: Georgia, "Times New Roman", serif;
   --ys-field-line: 3px solid #554134;
   --ys-heading-font: Georgia, "Times New Roman", serif;
-  --ys-section-shadow-color: #a88c76;
+  --ys-section-shadow-color: #c19879;
 }
 
 body.ys-theme-ciberpunk {
@@ -243,7 +243,7 @@ body.ys-theme-ciberpunk {
   --ys-control-radius: 0;
   --ys-photo-radius: 8px;
   --ys-heading-font: "Avenir Next Condensed", "Arial Narrow", var(--ys-sheet-font);
-  --ys-section-shadow-color: #ff79bd;
+  --ys-section-shadow-color: #f04cb2;
 }
 
 body.ys-theme-terror {
@@ -270,7 +270,7 @@ body.ys-theme-terror {
   --ys-logo-radius: 2px;
   --ys-field-line: 3px dotted #312a26;
   --ys-heading-font: Impact, "Arial Black", var(--ys-sheet-font);
-  --ys-section-shadow-color: #9f4b43;
+  --ys-section-shadow-color: #b4544b;
 }
 
 body.ys-theme-pulp .ims-paper::before,
@@ -2201,7 +2201,7 @@ body.ys-theme-capa .ims-number-section h2 {
   padding: 10px 14px;
   background: #fff;
   border: 4px solid var(--ims-ink);
-  box-shadow: 6px 6px 0 var(--ims-mint);
+  box-shadow: 6px 6px 0 var(--ys-section-shadow-color);
 }
 
 .ims-creator-header h1 {
@@ -2223,7 +2223,7 @@ body.ys-theme-capa .ims-number-section h2 {
   padding: 14px;
   background: #fff;
   border: 4px solid var(--ims-ink);
-  box-shadow: 6px 6px 0 var(--ims-green-soft);
+  box-shadow: 6px 6px 0 var(--ys-section-shadow-color);
 }
 
 .ims-creator-card h2 {
@@ -2460,6 +2460,31 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ims-creator-footer button:first-child {
   background: var(--ims-muted);
+}
+
+.ys-directory-create {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ys-directory-create button {
+  flex: 1 1 0;
+  min-height: 28px;
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 6px;
+  color: #fff;
+  background: var(--ims-plum);
+  border: 2px solid var(--ims-ink);
+  border-radius: var(--ys-control-radius);
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
 }
 
 .ims-chat-card {
@@ -3432,30 +3457,38 @@ body.ys-theme-capa .ims-number-section h2 {
 
 .ys-tab-actions {
   display: flex;
-  gap: 5px;
-  align-items: center;
+  gap: 6px;
+  align-items: stretch;
   justify-content: flex-end;
   margin-left: auto;
-  padding: 4px 0 4px 8px;
+  padding: 4px 0 4px 10px;
 }
 
 .ys-tab-actions button {
-  min-width: 48px;
+  min-width: 54px;
   min-height: 30px;
   display: inline-flex;
   gap: 4px;
   align-items: center;
   justify-content: center;
-  padding: 3px 7px;
+  margin-block: 2px;
+  padding: 4px 9px;
   color: #fff;
-  background: var(--ims-plum-dark);
-  border: 2px solid var(--ims-ink);
-  border-radius: var(--ys-control-radius);
+  background: rgba(255, 255, 255, 0.08);
+  border: 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.28);
+  border-right: 2px solid rgba(0, 0, 0, 0.30);
+  border-radius: 0;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18);
   font-size: 10px;
   font-weight: 950;
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+.ys-tab-actions button:hover {
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .ys-tab-actions button i {
@@ -3593,11 +3626,11 @@ body.ys-theme-capa .ims-number-section h2 {
 .ys-value-grid label,
 .ys-value-card {
   position: relative;
-  min-height: 58px;
+  min-height: 66px;
   display: grid;
   gap: 2px;
   align-content: center;
-  padding: 4px;
+  padding: 5px;
   color: var(--ims-ink);
   background: var(--ys-section-bg);
   border: 2px solid var(--ims-ink);
@@ -3623,27 +3656,27 @@ body.ys-theme-capa .ims-number-section h2 {
 }
 
 .ys-value-card > strong {
-  padding: 0 26px;
+  padding: 0;
 }
 
 .ys-value-controls {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  display: grid;
-  gap: 3px;
+  align-self: end;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 1px;
 }
 
 .ys-value-controls button {
-  width: 20px !important;
-  min-width: 20px !important;
-  height: 20px !important;
-  min-height: 20px !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  height: 18px !important;
+  min-height: 18px !important;
   padding: 0 !important;
   color: #fff;
   background: var(--ims-plum);
   border: 2px solid var(--ims-ink);
-  border-radius: var(--ys-control-radius);
+  border-radius: min(var(--ys-control-radius), 4px);
   font-size: 10px;
   line-height: 1;
 }

@@ -1,5 +1,6 @@
 import { IMSERSO, attackConfig, attackAttributeDamage, normalizeSkills } from "./config.mjs";
 import { ARQUETIPOS } from "./arquetipos-data.mjs";
+import { openCharacterCreator } from "./character-creator.mjs";
 import { getAchaque } from "./reglas-data.mjs";
 import { ImsersoActor } from "./actor.mjs";
 import { ImsersoItem } from "./item.mjs";
@@ -16,7 +17,8 @@ Hooks.once("init", async () => {
     rollSkill: (actorId, skill) => game.actors.get(actorId)?.rollSkill(skill),
     rollResistenciaFisica: (actorId) => game.actors.get(actorId)?.rollResistenciaFisica(),
     rollAchaques,
-    rollMiedo
+    rollMiedo,
+    openCharacterCreator
   };
   game.ysystem = game.ysystem3Srd;
   game.imserso = game.ysystem3Srd;
@@ -109,7 +111,20 @@ Hooks.on("renderDialog", (_dialog, html) => {
 
 Hooks.on("renderActorDirectory", (_app, html) => {
   if (!game.user.isGM) return;
-  html.find("[data-ims-create-jubilado]").remove();
+  const jq = asJQuery(html);
+  jq.find("[data-ims-create-jubilado]").remove();
+  if (jq.find("[data-ys-create-personaje]").length) return;
+  const controls = $(`
+    <div class="ys-directory-create">
+      <button type="button" data-ys-create-personaje><i class="fas fa-id-card"></i> Crear PJ</button>
+      <button type="button" data-ys-create-pnj><i class="fas fa-user-shield"></i> Crear PNJ</button>
+    </div>
+  `);
+  const target = jq.find(".directory-header .header-actions, .directory-header, .directory-footer").first();
+  if (target.length) target.append(controls);
+  else jq.prepend(controls);
+  controls.find("[data-ys-create-personaje]").on("click", () => openCharacterCreator({ type: "personaje" }));
+  controls.find("[data-ys-create-pnj]").on("click", () => openCharacterCreator({ type: "pnj" }));
 });
 
 function restoreRulesJournalContent(sheet, html) {
