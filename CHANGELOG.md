@@ -7,6 +7,15 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.17] — 2026-06-02
+
+### Corregido
+- El creador de PJ en `Dungeons & Yayos` usa ahora cuatro atributos y valida el reparto `0, +2, +4 y +6`, evitando el bloqueo heredado de YSYSTEM3.
+- Las habilidades de `Dungeons & Yayos` se muestran ordenadas alfabeticamente y con sus nombres propios: Atletismo, Memoria y Oido ya no heredan etiquetas de IMSERSO.
+- La hoja `Dungeons & Yayos` oculta el punto de guion y permite editar manualmente Bemoles y Nervio desde la zona de Valores.
+- El calculo inicial de Yayopoints en `Dungeons & Yayos` usa una reserva mas acorde a la variante.
+- La paleta de `Dungeons & Yayos` reduce el dominante marron y ajusta la sombra 3D a un verde propio de la variante.
+
 ## [0.3.16] — 2026-06-02
 
 ### Corregido

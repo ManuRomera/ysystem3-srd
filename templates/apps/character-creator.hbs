@@ -11,7 +11,7 @@
   <main class="ims-creator-main">
     <header class="ims-creator-header">
       <h1>{{#if isPnj}}Creador guiado de PNJ{{else}}Creador guiado de PJ{{/if}}</h1>
-      <p>{{#if isPnj}}Genera un PNJ funcional con valores derivados, salud, habilidades y notas de escena.{{else}}Creacion libre, por arquetipo o aleatoria segun YSYSTEM3 SRD.{{/if}}</p>
+      <p>{{#if isPnj}}Genera un PNJ funcional con valores derivados, salud, habilidades y notas de escena.{{else}}{{#if isDungeonsYayos}}Creacion libre o aleatoria segun Dungeons & Yayos.{{else}}Creacion libre, por arquetipo o aleatoria segun YSYSTEM3 SRD.{{/if}}{{/if}}</p>
     </header>
 
     {{#if (eq stepKey "modo")}}
@@ -21,12 +21,12 @@
         <label class="ims-choice">
           <input type="radio" name="mode" value="libre" data-creator-mode {{imsChecked (eq state.mode "libre")}}>
           <strong>Creacion libre</strong>
-          <span>Reparte 0, +1, +2, +4 y +6 entre atributos; marca 4 habilidades a 3D y 8 a 2D.</span>
+          <span>{{attrRequirementText}} Marca 4 habilidades a 3D y 8 a 2D.</span>
         </label>
         <label class="ims-choice">
           <input type="radio" name="mode" value="arquetipo" data-creator-mode {{imsChecked (eq state.mode "arquetipo")}}>
           <strong>Mediante arquetipo</strong>
-          <span>Usa una plantilla SRD con atributos, habilidades, proezas, resistencias y talento ya definidos.</span>
+          <span>{{#if isDungeonsYayos}}Usa una plantilla de Dungeons & Yayos si esta disponible.{{else}}Usa una plantilla SRD con atributos, habilidades, proezas, resistencias y talento ya definidos.{{/if}}</span>
         </label>
         <label class="ims-choice">
           <input type="radio" name="mode" value="aleatorio" data-creator-mode {{imsChecked (eq state.mode "aleatorio")}}>
@@ -124,7 +124,7 @@
       {{else}}
       <section class="ims-creator-card">
         <h2>3. Atributos y habilidades</h2>
-        <p class="ims-creator-note">Reparte una vez cada valor entre atributos: 0, +1, +2, +4 y +6. Despues marca 4 habilidades a 3D y 8 a 2D.</p>
+        <p class="ims-creator-note">{{attrRequirementText}} Despues marca 4 habilidades a 3D y 8 a 2D.</p>
         <div class="ims-creator-grid four">
           {{#each atributos}}
           <label>{{short}} · {{label}}
@@ -176,10 +176,12 @@
       <h2>{{#if isPnj}}3. Resumen antes de crear{{else}}5. Resumen antes de crear{{/if}}</h2>
       <div class="ims-summary-grid">
         <div><strong>Salud</strong><span>{{#if state.healthRoll}}{{effective.health}}{{else}}pendiente{{/if}}</span></div>
-        <div><strong>{{#if isPnj}}RF{{else}}Proezas{{/if}}</strong><span>{{#if isPnj}}{{effective.rf}}{{else}}{{effective.proezas}}{{/if}}</span></div>
-        <div><strong>Agilidad</strong><span>{{effective.agilidad}}</span></div>
-        <div><strong>Aplomo</strong><span>{{effective.aplomo}}</span></div>
+        <div><strong>{{#if isPnj}}{{rfLabel}}{{else}}{{resourceLabel}}{{/if}}</strong><span>{{#if isPnj}}{{effective.rf}}{{else}}{{effective.proezas}}{{/if}}</span></div>
+        <div><strong>{{agilityLabel}}</strong><span>{{effective.agilidad}}</span></div>
+        <div><strong>{{aplomoLabel}}</strong><span>{{effective.aplomo}}</span></div>
+        {{#unless isDungeonsYayos}}
         <div><strong>Perspicacia</strong><span>{{effective.perspicacia}}</span></div>
+        {{/unless}}
         {{#unless isPnj}}<div><strong>Estabilidad</strong><span>{{effective.estabilidad}}</span></div>{{/unless}}
       </div>
       {{#if warnings.length}}

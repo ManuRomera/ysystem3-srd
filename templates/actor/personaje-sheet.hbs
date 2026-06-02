@@ -60,11 +60,20 @@
             </div>
           </header>
           <div class="ys-value-grid">
+            {{#if isDungeonsYayos}}
+            <label class="ys-value-card ys-value-input-card" data-help-type="rule" data-help-key="agilidad">
+              <span>{{ysFixed "agilidad"}}</span>
+              <input type="number" name="system.valoresManual.agilidad" value="{{system.agilidad}}" step="1">
+            </label>
+            <label class="ys-value-card ys-value-input-card" data-help-type="rule" data-help-key="aplomo">
+              <span>{{ysFixed "aplomo"}}</span>
+              <input type="number" name="system.valoresManual.aplomo" value="{{system.aplomo}}" step="1">
+            </label>
+            {{else}}
             <button type="button" data-help-type="rule" data-help-key="agilidad"><span>{{ysFixed "agilidad"}}</span><strong>{{system.agilidad}}</strong></button>
             <button type="button" data-help-type="rule" data-help-key="aplomo"><span>{{ysFixed "aplomo"}}</span><strong>{{system.aplomo}}</strong></button>
-            {{#unless isDungeonsYayos}}
             <button type="button" data-help-type="rule" data-help-key="perspicacia"><span>{{ysFixed "perspicacia"}}</span><strong>{{system.perspicacia}}</strong></button>
-            {{/unless}}
+            {{/if}}
             <div class="ys-value-card" data-help-type="rule" data-help-key="proezas">
               <span>{{ysTerm "resource"}}</span>
               <strong>{{system.proezas.valor}}/{{system.proezas.inicial}}</strong>
@@ -73,6 +82,7 @@
                 <button type="button" data-spend-yayo title='Gastar {{ysTerm "resource"}}'><i class="fas fa-minus"></i></button>
               </div>
             </div>
+            {{#unless isDungeonsYayos}}
             <div class="ys-value-card" data-help-type="rule" data-help-key="puntoGuion">
               <span>Punto guion</span>
               <strong>{{system.puntoGuion.valor}}/{{system.puntoGuion.max}}</strong>
@@ -81,6 +91,7 @@
                 <button type="button" data-spend-punto-guion title="Gastar punto de guion"><i class="fas fa-minus"></i></button>
               </div>
             </div>
+            {{/unless}}
           </div>
         </section>
 

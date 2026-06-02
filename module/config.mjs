@@ -334,8 +334,16 @@ export const IMSERSO = {
   estabilidadUmbrales: [16, 11, 7, 4, 2]
 };
 
+function bySpanishLabel(entries) {
+  return entries.sort(([, a], [, b]) => String(a.label ?? "").localeCompare(String(b.label ?? ""), "es", { sensitivity: "base" }));
+}
+
+function sortedByLabel(object) {
+  return Object.fromEntries(bySpanishLabel(Object.entries(object ?? {})));
+}
+
 export function allSkills() {
-  return { ...IMSERSO.habilidades, ...IMSERSO.habilidadesDungeonsYayos };
+  return sortedByLabel({ ...IMSERSO.habilidades, ...IMSERSO.habilidadesDungeonsYayos });
 }
 
 export function allSkillKeys() {
@@ -347,7 +355,7 @@ export function attributesForRuleset(ruleset = currentRuleset()) {
 }
 
 export function skillsForRuleset(ruleset = currentRuleset()) {
-  return ruleset === "dungeonsYayos" ? IMSERSO.habilidadesDungeonsYayos : IMSERSO.habilidades;
+  return sortedByLabel(ruleset === "dungeonsYayos" ? IMSERSO.habilidadesDungeonsYayos : IMSERSO.habilidades);
 }
 
 export function skillConfig(key, ruleset = currentRuleset()) {

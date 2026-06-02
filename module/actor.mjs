@@ -70,6 +70,16 @@ function calcNervio(system) {
   return number(system.atributos?.int, 0) + number(system.atributos?.car, 0) + 5;
 }
 
+function calcYayopoints(system) {
+  return Math.max(6, Math.floor((number(system.atributos?.fue, 0) + number(system.atributos?.int, 0)) / 2) + 6);
+}
+
+function manualValue(resource, fallback) {
+  const raw = typeof resource === "object" ? resource?.valor : resource;
+  if (raw === "" || raw === null || raw === undefined) return fallback;
+  return number(raw, fallback);
+}
+
 function ensureThresholds(target, thresholds = [16, 11, 7, 4, 2]) {
   target.umbrales ??= {};
   for (const threshold of thresholds) target.umbrales[threshold] ??= false;
@@ -340,11 +350,14 @@ export class ImsersoActor extends Actor {
     sys.habilidades = normalizeSkills(sys.habilidades);
     if (this.type === "personaje") {
       sys.atributos ??= {};
+      sys.valoresManual ??= {};
       sys.salud = prepareResource(sys.salud, { valor: 18, max: 18 });
       sys.estabilidad = prepareResource(sys.estabilidad, { valor: 18, max: 18 });
       sys.resistenciaFisica = prepareResistance(sys.resistenciaFisica, calcResistenciaFisica(sys));
       sys.resistenciaMental = prepareResistance(sys.resistenciaMental, calcResistenciaMental(sys));
-      sys.proezas = prepareResource(sys.proezas, { valor: 4, max: number(sys.proezas?.inicial, 4) });
+      const ruleset = currentRuleset();
+      const resourceDefault = ruleset === "dungeonsYayos" ? calcYayopoints(sys) : 4;
+      sys.proezas = prepareResource(sys.proezas, { valor: resourceDefault, max: number(sys.proezas?.inicial, resourceDefault) });
       sys.proezas.inicial = numberOrFallback(sys.proezas.inicial, sys.proezas.max);
       sys.puntoGuion = prepareResource(sys.puntoGuion, { valor: 1, max: 1 });
     }
@@ -368,8 +381,10 @@ export class ImsersoActor extends Actor {
     const effective = effectiveSystem(this);
     const derived = { ...sys, atributos: effective.atributos, habilidades: effective.habilidades };
     sys.efectivos = effective;
-    sys.agilidad = ruleset === "dungeonsYayos" ? calcBemoles(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0));
-    sys.aplomo = ruleset === "dungeonsYayos" ? calcNervio(derived) : calcAplomo(derived);
+    const autoAgilidad = ruleset === "dungeonsYayos" ? calcBemoles(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0));
+    const autoAplomo = ruleset === "dungeonsYayos" ? calcNervio(derived) : calcAplomo(derived);
+    sys.agilidad = ruleset === "dungeonsYayos" ? manualValue(sys.valoresManual?.agilidad, autoAgilidad) : autoAgilidad;
+    sys.aplomo = ruleset === "dungeonsYayos" ? manualValue(sys.valoresManual?.aplomo, autoAplomo) : autoAplomo;
     sys.perspicacia = calcPerspicacia(derived);
     sys.resistenciaFisica ??= {};
     if (!sys.resistenciaFisica?.valor) sys.resistenciaFisica.valor = calcResistenciaFisica(derived);
@@ -383,7 +398,7 @@ export class ImsersoActor extends Actor {
       penalizacion: number(effective.mods.proteccionPenalizacion, 0)
     };
     sys.proezas ??= { valor: 0, inicial: 0 };
-    if (!sys.proezas.inicial) sys.proezas.inicial = Math.floor((number(sys.atributos?.fue, 0) + number(sys.atributos?.int, 0)) / 2) + 3;
+    if (!sys.proezas.inicial) sys.proezas.inicial = ruleset === "dungeonsYayos" ? calcYayopoints(sys) : Math.floor((number(sys.atributos?.fue, 0) + number(sys.atributos?.int, 0)) / 2) + 3;
     sys.puntoGuion ??= { valor: 1, max: 1, usado: false, nota: "" };
     sys.penalizadorDados = healthPenalty(sys.salud?.valor);
     sys.inconscienteAuto = number(sys.salud?.valor, 0) === 1;

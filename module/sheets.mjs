@@ -228,9 +228,12 @@ export class ImsersoActorSheet extends ActorSheet {
       "system.proezas.valor",
       "system.proezas.inicial",
       "system.puntoGuion.valor",
-      "system.puntoGuion.max"
+      "system.puntoGuion.max",
+      "system.valoresManual.agilidad",
+      "system.valoresManual.aplomo"
     ];
-    for (const key of Object.keys(IMSERSO.atributos)) numericPaths.push(`system.atributos.${key}`);
+    const attrKeys = new Set([...Object.keys(IMSERSO.atributos), ...Object.keys(IMSERSO.atributosDungeonsYayos ?? {})]);
+    for (const key of attrKeys) numericPaths.push(`system.atributos.${key}`);
     for (const key of allSkillKeys()) numericPaths.push(`system.habilidades.${key}.dados`);
 
     for (const path of numericPaths) {

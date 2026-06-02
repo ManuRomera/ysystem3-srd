@@ -6,13 +6,15 @@ import {
   labelForAttribute,
   labelForSkill,
   normalizeSkills,
-  skillsForRuleset
+  skillsForRuleset,
+  currentRuleset
 } from "./config.mjs";
 import { ARQUETIPOS, archetypeSkills, archetypeSystem, archetypeTalentItem, arquetipoByKey } from "./arquetipos-data.mjs";
 
 const ApplicationV1 = foundry.appv1?.api?.Application ?? globalThis.Application;
 
 const ATTR_VALUES = [0, 1, 2, 4, 6];
+const DUNGEONS_ATTR_VALUES = [0, 2, 4, 6];
 const DEFECTOS_LEVES = [
   "Impulsivo cuando alguien cuestiona su criterio.",
   "Demasiado confiado con las personas amables.",
@@ -113,11 +115,28 @@ function keepExistingName(name, fallback) {
 }
 
 function legalDefaultAttributes() {
-  return { car: 0, des: 1, fue: 2, int: 4, per: 6 };
+  const values = attrValuesForRuleset();
+  return Object.fromEntries(Object.keys(attributesForRuleset()).map((key, index) => [key, values[index] ?? 0]));
+}
+
+function zeroAttributesForRuleset() {
+  return Object.fromEntries(Object.keys(attributesForRuleset()).map((key) => [key, 0]));
+}
+
+function attrValuesForRuleset() {
+  return currentRuleset() === "dungeonsYayos" ? DUNGEONS_ATTR_VALUES : ATTR_VALUES;
+}
+
+function attrValuesText() {
+  return attrValuesForRuleset().map((value) => (value ? `+${value}` : "0")).join(", ");
+}
+
+function isDungeonsYayos() {
+  return currentRuleset() === "dungeonsYayos";
 }
 
 function normalizeAttributes(source = {}, { legal = true } = {}) {
-  const fallback = legal ? legalDefaultAttributes() : { car: 0, des: 0, fue: 0, int: 0, per: 0 };
+  const fallback = legal ? legalDefaultAttributes() : zeroAttributesForRuleset();
   return Object.fromEntries(Object.keys(attributesForRuleset()).map((key) => [key, number(source?.[key], fallback[key])]));
 }
 
@@ -147,6 +166,18 @@ function calcHealth(attrs, roll) {
 
 function calcStability(attrs) {
   return number(attrs.car, 0) + number(attrs.int, 0) + 16;
+}
+
+function calcBemoles(attrs) {
+  return Math.floor((number(attrs.int, 0) + number(attrs.fue, 0)) / 2) + 2;
+}
+
+function calcNervio(attrs) {
+  return number(attrs.int, 0) + number(attrs.car, 0) + 5;
+}
+
+function calcYayopoints(attrs) {
+  return Math.max(6, Math.floor((number(attrs.fue, 0) + number(attrs.int, 0)) / 2) + 6);
 }
 
 function defaultState(actor = null, type = actor?.type ?? "personaje") {
@@ -187,7 +218,7 @@ function defaultState(actor = null, type = actor?.type ?? "personaje") {
 
 async function generateRandomState(base) {
   const attrKeys = Object.keys(attributesForRuleset());
-  const attrValues = shuffle(ATTR_VALUES);
+  const attrValues = shuffle(attrValuesForRuleset());
   const attrs = Object.fromEntries(attrKeys.map((key, index) => [key, attrValues[index]]));
   const skillKeys = shuffle(Object.keys(skillsForRuleset()));
   const skills = defaultSkills(1);
@@ -205,7 +236,7 @@ async function generateRandomState(base) {
       lugarNacimiento: choice(RANDOM.lugares),
       edad: `${18 + Math.floor(Math.random() * 48)}`,
       profesion: choice(RANDOM.perfiles),
-      perfil: "Creacion aleatoria SRD",
+      perfil: isDungeonsYayos() ? "Creacion aleatoria Dungeons & Yayos" : "Creacion aleatoria SRD",
       motivacion: choice(RANDOM.motivaciones),
       descripcionFisica: choice(RANDOM.fisico),
       situacionFamiliar: choice(RANDOM.familia)
@@ -287,6 +318,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     }));
     const effective = this._effectiveBuild();
     const counts = this._selectedSkillCounts();
+    const isDungeons = isDungeonsYayos();
     const skillRows = Object.entries(skillsForRuleset()).map(([key, cfg]) => {
       const dice = number(this.state.habilidades?.[key]?.dados, 1);
       return {
@@ -303,6 +335,14 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       actor: this.actor,
       themeClass: currentThemeClass(),
       isPnj: this.state.actorType === "pnj",
+      isDungeonsYayos: isDungeons,
+      attrValuesText: attrValuesText(),
+      attrRequirementText: isDungeons ? "Reparte 0, +2, +4 y +6 entre los cuatro atributos." : "Reparte 0, +1, +2, +4 y +6 entre atributos.",
+      resourceLabel: isDungeons ? "Yayopoints" : "Proezas",
+      agilityLabel: isDungeons ? "Bemoles" : "Agilidad",
+      aplomoLabel: isDungeons ? "Nervio" : "Aplomo",
+      perspicaciaLabel: isDungeons ? "Vista" : "Perspicacia",
+      rfLabel: isDungeons ? "Jamacuco" : "RF",
       steps,
       stepKey: this.steps[this.state.step]?.key ?? "datos",
       arquetipos: ARQUETIPOS.map((entry) => ({ ...entry, selected: entry.key === this.state.arquetipoKey })),
@@ -312,7 +352,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
         label: cfg.label,
         short: cfg.short,
         value: number(this.state.atributos?.[key], 0),
-        options: (this.state.actorType === "pnj" ? [0, 1, 2, 3, 4, 5, 6] : ATTR_VALUES).map((value) => ({
+        options: (this.state.actorType === "pnj" ? [0, 1, 2, 3, 4, 5, 6] : attrValuesForRuleset()).map((value) => ({
           value,
           label: value ? `+${value}` : "0"
         }))
@@ -388,7 +428,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
   }
 
   _selectedSkillCounts(habilidades = this.state.habilidades) {
-    const rows = Object.values(habilidades ?? {});
+    const rows = Object.keys(skillsForRuleset()).map((key) => habilidades?.[key] ?? { dados: 1 });
     return {
       d3: rows.filter((row) => number(row?.dados, 1) === 3).length,
       d2: rows.filter((row) => number(row?.dados, 1) === 2).length
@@ -523,6 +563,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     const skills = arquetipo ? archetypeSkills(arquetipo) : normalizeSkills(this.state.habilidades);
     const healthBase = arquetipo ? arquetipo.saludBase : 10 + number(attrs.fue, 0) * 2;
     const healthRoll = number(this.state.healthRoll, 0);
+    const dungeons = isDungeonsYayos();
     return {
       arquetipo,
       attrs,
@@ -533,11 +574,11 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       estabilidad: calcStability(attrs),
       rf: arquetipo?.resistenciaFisica ?? calcRf(attrs),
       rm: calcRm(attrs),
-      agilidad: calcAgilidad(attrs, skills),
-      aplomo: calcAplomo(attrs),
-      perspicacia: calcPerspicacia(attrs),
-      proezas: arquetipo?.proezas ?? Math.floor((number(attrs.fue, 0) + number(attrs.int, 0)) / 2) + 3,
-      puntoGuion: 1
+      agilidad: dungeons ? calcBemoles(attrs) : calcAgilidad(attrs, skills),
+      aplomo: dungeons ? calcNervio(attrs) : calcAplomo(attrs),
+      perspicacia: dungeons ? 0 : calcPerspicacia(attrs),
+      proezas: arquetipo?.proezas ?? (dungeons ? calcYayopoints(attrs) : Math.floor((number(attrs.fue, 0) + number(attrs.int, 0)) / 2) + 3),
+      puntoGuion: dungeons ? 0 : 1
     };
   }
 
@@ -549,7 +590,8 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       if (this.state.mode === "arquetipo" && !effective.arquetipo) warnings.push("Selecciona un arquetipo.");
       if (["libre", "aleatorio"].includes(this.state.mode)) {
         const values = Object.values(this.state.atributos).map((value) => number(value, -1));
-        if (new Set(values).size !== 5 || !ATTR_VALUES.every((value) => values.includes(value))) warnings.push("Reparte una vez cada valor de atributo: 0, +1, +2, +4 y +6.");
+        const expected = attrValuesForRuleset();
+        if (new Set(values).size !== expected.length || !expected.every((value) => values.includes(value))) warnings.push(`Reparte una vez cada valor de atributo: ${attrValuesText()}.`);
         if (counts.d3 !== 4) warnings.push(`Selecciona exactamente 4 habilidades a 3D. Ahora: ${counts.d3}.`);
         if (counts.d2 !== 8) warnings.push(`Selecciona exactamente 8 habilidades a 2D. Ahora: ${counts.d2}.`);
       }
@@ -614,6 +656,8 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       "system.proezas.inicial": effective.proezas,
       "system.puntoGuion.valor": effective.puntoGuion,
       "system.puntoGuion.max": effective.puntoGuion,
+      "system.valoresManual.agilidad": isDungeonsYayos() ? effective.agilidad : "",
+      "system.valoresManual.aplomo": isDungeonsYayos() ? effective.aplomo : "",
       "system.salud.valor": effective.health,
       "system.salud.max": effective.health,
       "system.resistenciaFisica.valor": effective.rf,

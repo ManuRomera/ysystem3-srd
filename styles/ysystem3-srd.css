@@ -274,35 +274,35 @@ body.ys-theme-terror {
 }
 
 body.ys-theme-dungeons {
-  --ims-green: #6b4a24;
-  --ims-green-soft: #c8a066;
-  --ims-mint: #bf8b3b;
-  --ims-pink: #9b2f20;
-  --ims-plum: #4f351c;
-  --ims-plum-dark: #2d1d10;
-  --ims-ink: #20160d;
-  --ims-text: #20160d;
-  --ims-muted: #684f36;
-  --ims-paper: #ead2a4;
-  --ims-blue-ink: #4f351c;
+  --ims-green: #245f49;
+  --ims-green-soft: #9ac0a3;
+  --ims-mint: #86b894;
+  --ims-pink: #8f3157;
+  --ims-plum: #3a263f;
+  --ims-plum-dark: #211526;
+  --ims-ink: #211526;
+  --ims-text: #211526;
+  --ims-muted: #5e4c61;
+  --ims-paper: #f0e5cc;
+  --ims-blue-ink: #3a263f;
   --ys-paper-bg:
-    radial-gradient(circle at 5% 12%, rgba(116, 67, 25, 0.14), transparent 16%),
-    radial-gradient(circle at 95% 88%, rgba(96, 46, 22, 0.18), transparent 18%),
-    linear-gradient(180deg, rgba(251, 232, 190, 0.92), rgba(220, 180, 118, 0.88)),
+    radial-gradient(circle at 5% 12%, rgba(36, 95, 73, 0.12), transparent 16%),
+    radial-gradient(circle at 95% 88%, rgba(143, 49, 87, 0.14), transparent 18%),
+    linear-gradient(180deg, rgba(251, 244, 224, 0.96), rgba(226, 211, 177, 0.9)),
     var(--ims-paper);
-  --ys-paper-border: #5b361b;
+  --ys-paper-border: #3a263f;
   --ys-paper-border-width: 7px;
   --ys-paper-radius: 6px;
-  --ys-tab-gradient: linear-gradient(90deg, #2d1d10, #6f461f);
+  --ys-tab-gradient: linear-gradient(90deg, #211526, #245f49);
   --ys-logo-bg: transparent;
   --ys-logo-border-width: 0;
   --ys-logo-radius: 0;
   --ys-logo-transform: none;
-  --ys-field-line: 3px dotted #5b361b;
+  --ys-field-line: 3px dotted #3a263f;
   --ys-heading-font: Georgia, "Times New Roman", serif;
   --ys-logo-font: Georgia, "Times New Roman", serif;
   --ys-script-font: Georgia, "Times New Roman", serif;
-  --ys-section-shadow-color: #a46f2a;
+  --ys-section-shadow-color: #86b894;
 }
 
 .ys-screen-sheet.ys-theme-base,
@@ -363,7 +363,7 @@ body.ys-theme-dungeons {
 .ys-a4-sheet.ys-theme-dungeons,
 .ims-item.ys-theme-dungeons,
 .ims-creator.ys-theme-dungeons {
-  --ys-section-shadow-color: #a46f2a;
+  --ys-section-shadow-color: #86b894;
   --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
 }
 
