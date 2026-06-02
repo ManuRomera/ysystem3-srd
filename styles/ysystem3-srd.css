@@ -447,6 +447,97 @@ body.ys-theme-capa .ims-number-section h2 {
   background: var(--ys-paper-bg);
 }
 
+/* Foundry native file/image browser: keep it readable when a YSYSTEM theme is active. */
+body[class*="ys-theme-"] .window-app.filepicker,
+body[class*="ys-theme-"] .window-app.file-picker,
+body[class*="ys-theme-"] .window-app.image-browser,
+body[class*="ys-theme-"] #file-picker,
+body[class*="ys-theme-"] .application.filepicker,
+body[class*="ys-theme-"] .application.file-picker,
+body[class*="ys-theme-"] .application.image-browser {
+  --color-text-primary: #3c291d;
+  --color-text-secondary: #5e4938;
+  --color-text-emphatic: #1f160f;
+  --color-text-light-highlight: #ffffff;
+  --color-border-light-1: #b47a3d;
+  --color-border-light-2: #c99555;
+  --color-border-dark-1: #3c291d;
+  --color-border-dark-2: #5e4938;
+  --color-bg-btn-minor-inactive: #fff7df;
+  color: #3c291d;
+}
+
+body[class*="ys-theme-"] .window-app.filepicker .window-content,
+body[class*="ys-theme-"] .window-app.file-picker .window-content,
+body[class*="ys-theme-"] .window-app.image-browser .window-content,
+body[class*="ys-theme-"] #file-picker .window-content,
+body[class*="ys-theme-"] .application.filepicker .window-content,
+body[class*="ys-theme-"] .application.file-picker .window-content,
+body[class*="ys-theme-"] .application.image-browser .window-content {
+  color: #3c291d;
+  background: #fff3d8;
+}
+
+body[class*="ys-theme-"] .window-app.filepicker :is(label, p, span, strong, em, h1, h2, h3, h4, a, li, td, th, figcaption),
+body[class*="ys-theme-"] .window-app.file-picker :is(label, p, span, strong, em, h1, h2, h3, h4, a, li, td, th, figcaption),
+body[class*="ys-theme-"] .window-app.image-browser :is(label, p, span, strong, em, h1, h2, h3, h4, a, li, td, th, figcaption),
+body[class*="ys-theme-"] #file-picker :is(label, p, span, strong, em, h1, h2, h3, h4, a, li, td, th, figcaption),
+body[class*="ys-theme-"] .application.filepicker :is(label, p, span, strong, em, h1, h2, h3, h4, a, li, td, th, figcaption),
+body[class*="ys-theme-"] .application.file-picker :is(label, p, span, strong, em, h1, h2, h3, h4, a, li, td, th, figcaption),
+body[class*="ys-theme-"] .application.image-browser :is(label, p, span, strong, em, h1, h2, h3, h4, a, li, td, th, figcaption) {
+  color: #3c291d;
+}
+
+body[class*="ys-theme-"] .window-app.filepicker input,
+body[class*="ys-theme-"] .window-app.filepicker select,
+body[class*="ys-theme-"] .window-app.filepicker textarea,
+body[class*="ys-theme-"] .window-app.file-picker input,
+body[class*="ys-theme-"] .window-app.file-picker select,
+body[class*="ys-theme-"] .window-app.file-picker textarea,
+body[class*="ys-theme-"] .window-app.image-browser input,
+body[class*="ys-theme-"] .window-app.image-browser select,
+body[class*="ys-theme-"] .window-app.image-browser textarea,
+body[class*="ys-theme-"] #file-picker input,
+body[class*="ys-theme-"] #file-picker select,
+body[class*="ys-theme-"] #file-picker textarea,
+body[class*="ys-theme-"] .application.filepicker input,
+body[class*="ys-theme-"] .application.filepicker select,
+body[class*="ys-theme-"] .application.filepicker textarea,
+body[class*="ys-theme-"] .application.file-picker input,
+body[class*="ys-theme-"] .application.file-picker select,
+body[class*="ys-theme-"] .application.file-picker textarea,
+body[class*="ys-theme-"] .application.image-browser input,
+body[class*="ys-theme-"] .application.image-browser select,
+body[class*="ys-theme-"] .application.image-browser textarea {
+  color: #2e1e15;
+  background: #fffdfa;
+  border-color: #8d5f32;
+}
+
+body[class*="ys-theme-"] .window-app.filepicker button,
+body[class*="ys-theme-"] .window-app.file-picker button,
+body[class*="ys-theme-"] .window-app.image-browser button,
+body[class*="ys-theme-"] #file-picker button,
+body[class*="ys-theme-"] .application.filepicker button,
+body[class*="ys-theme-"] .application.file-picker button,
+body[class*="ys-theme-"] .application.image-browser button {
+  color: #2e1e15;
+  background: #fff7df;
+  border-color: #b47a3d;
+}
+
+body[class*="ys-theme-"] .window-app.filepicker :is(.directory, .files-list, .file-list, .tiles-list, .list, ol, ul) li,
+body[class*="ys-theme-"] .window-app.file-picker :is(.directory, .files-list, .file-list, .tiles-list, .list, ol, ul) li,
+body[class*="ys-theme-"] .window-app.image-browser :is(.directory, .files-list, .file-list, .tiles-list, .list, ol, ul) li,
+body[class*="ys-theme-"] #file-picker :is(.directory, .files-list, .file-list, .tiles-list, .list, ol, ul) li,
+body[class*="ys-theme-"] .application.filepicker :is(.directory, .files-list, .file-list, .tiles-list, .list, ol, ul) li,
+body[class*="ys-theme-"] .application.file-picker :is(.directory, .files-list, .file-list, .tiles-list, .list, ol, ul) li,
+body[class*="ys-theme-"] .application.image-browser :is(.directory, .files-list, .file-list, .tiles-list, .list, ol, ul) li {
+  color: #3c291d;
+  background: #e6dcc5;
+  border-color: #5e4938;
+}
+
 #actors [data-ims-create-jubilado],
 .actors-sidebar [data-ims-create-jubilado],
 .directory [data-ims-create-jubilado] {

@@ -110,7 +110,7 @@ for (const hook of ["renderJournalSheet", "renderJournalEntrySheet", "renderJour
 Hooks.on("renderDialog", (_dialog, html) => {
   const jq = asJQuery(html);
   const root = jq.closest(".window-app")[0] ?? jq[0]?.closest?.(".window-app") ?? jq[0];
-  applyThemeClassToElement(root);
+  if (jq.find(".ims-dialog").length) applyThemeClassToElement(root);
   jq.find(".ims-stepper [data-ims-step]").on("click", (event) => {
     event.preventDefault();
     const button = event.currentTarget;
@@ -208,7 +208,7 @@ function applyVariantClass() {
   const themeClasses = Object.values(IMSERSO.variants).map((cfg) => cfg.themeClass);
   document.body?.classList.remove(...themeClasses);
   document.body?.classList.add(variant.themeClass);
-  for (const sheet of document.querySelectorAll(".ys-screen-sheet, .ys-a4-sheet, .ims-item, .ims-creator, .window-app.dialog, .ims-context-help, .ims-chat-message")) {
+  for (const sheet of document.querySelectorAll(".ys-screen-sheet, .ys-a4-sheet, .ims-item, .ims-creator, .window-app.dialog:has(.ims-dialog), .ims-context-help, .ims-chat-message")) {
     sheet.classList.remove(...themeClasses);
     sheet.classList.add(variant.themeClass);
   }

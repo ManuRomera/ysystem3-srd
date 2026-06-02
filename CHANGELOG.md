@@ -7,6 +7,12 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.16] — 2026-06-02
+
+### Corregido
+- Las ventanas nativas de Foundry para selección de archivos e imágenes recuperan contraste legible cuando una apariencia de YSYSTEM está activa.
+- Los estilos de variante ya no se aplican a todos los diálogos de Foundry, solo a los diálogos propios del sistema.
+
 ## [0.3.15] — 2026-06-02
 
 ### Añadido
