@@ -54,6 +54,51 @@ export const SHEET_HELP = {
   }
 };
 
-export function helpEntry(type, key) {
+const DUNGEONS_YAYOS_HELP = {
+  attribute: {
+    int: { title: "Cacumen", subtitle: "CAC", body: "Ingenio, memoria, sapiencia, magia y recursos mentales del aventurero talludito." },
+    car: { title: "Gracia", subtitle: "GRA", body: "Desparpajo, labia, salero, mala leche verbal y capacidad de convencer o embaucar." },
+    des: { title: "Prestancia", subtitle: "PRE", body: "Movimiento, reflejos, elegancia improbable, punteria con proyectiles y manos rapidas." },
+    fue: { title: "Robustez", subtitle: "ROB", body: "Resistencia corporal, fuerza de mula parda, aguante y pegada fisica." }
+  },
+  skill: {
+    atletismo: { title: "Atletismo", subtitle: "PRE", body: "Correr, trepar, saltar, nadar, esquivar y defenderse activamente cuando la aventura exige moverse sin romperse nada.", details: ["En defensa activa se tira contra la dificultad marcada por el tipo de ataque y el uso de escudo."] },
+    lanzamiento: { title: "Lanzamiento", subtitle: "PRE", body: "Atacar o acertar con armas de proyectiles, objetos arrojados y recursos parecidos." },
+    robar: { title: "Robar", subtitle: "PRE", body: "Sustraer objetos, birlar bolsillos y llevarse cosas sin que el respetable se percate." },
+    batallitas: { title: "Batallitas", subtitle: "GRA", body: "Recordar y contar historias de gloria pasada, exagerar hazañas y sacar partido social a la experiencia acumulada." },
+    magiaPotagia: { title: "Magia Potagia", subtitle: "CAC", body: "Lanzar hechizos de Forgotten Pills. Solo funciona si la habilidad tiene 2D o 3D; con 1D se considera que el aventurero no sabe usarla.", details: ["Intentos diarios: dados en Magia Potagia + CAC.", "La dificultad depende del hechizo, de Bemoles o de Nervio."] },
+    salero: { title: "Salero", subtitle: "GRA", body: "Caer en gracia, animar, improvisar, entretener y ganarse al personal con simpatia o descaro." },
+    cerrojosTrampas: { title: "Cerrojos y Trampas", subtitle: "PRE", body: "Abrir cerraduras, detectar o inutilizar trampas y manipular mecanismos de mazmorra." },
+    medicina: { title: "Medicina", subtitle: "CAC", body: "Aplicar curas, interpretar males del cuerpo y usar conocimientos sanadores en aventuras de fantasia yayuna." },
+    sapiencia: { title: "Sapiencia", subtitle: "CAC", body: "Conocimiento teorico, erudicion, saberes arcanos, historia y datos utiles sobre el mundo y sus monstruos." },
+    cosasCampo: { title: "Cosas del Campo", subtitle: "PRE", body: "Moverse, orientarse y apañarse en naturaleza, granjas, caminos, montes y entornos rurales." },
+    memoria: { title: "Memoria", subtitle: "CAC", body: "Recordar nombres, rostros, detalles, rumores, viejas lecciones y datos que parecian perdidos." },
+    silbido: { title: "Silbido", subtitle: "GRA", body: "Llamar la atencion, avisar, distraer, comunicarse a distancia corta o ejecutar florituras sonoras." },
+    cotilleo: { title: "Cotilleo", subtitle: "GRA", body: "Enterarse de rumores, sacar informacion social y mover hilos mediante charla aparentemente inofensiva." },
+    mulaParda: { title: "Mula Parda", subtitle: "ROB", body: "Empujar, cargar, resistir esfuerzos y resolver proezas de fuerza bruta con terquedad fisica." },
+    tollinas: { title: "Tollinas", subtitle: "ROB", body: "Pegar, golpear, zurrar, repartir mandobles y resolver combate cuerpo a cuerpo." },
+    discusion: { title: "Discusion", subtitle: "GRA", body: "Disputar, regatear, protestar y vencer enfrentamientos verbales por insistencia, razon o puro caracter." },
+    nietos: { title: "Nietos", subtitle: "PRE", body: "Lidiar con descendencia, aprovechar recursos familiares y resolver escenas donde la experiencia domestica importe." },
+    vista: { title: "Vista", subtitle: "CAC", body: "Percibir detalles relevantes, reconocer peligros y darse cuenta de lo que otros pasan por alto." },
+    ingesta: { title: "Ingesta", subtitle: "ROB", body: "Comer, beber, tragar, resistir excesos gastronomicos y sobrevivir a sustancias dudosas." },
+    oido: { title: "Oido", subtitle: "CAC", body: "Escuchar sonidos, conversaciones y pistas auditivas pese a la edad y al ruido de la mazmorra." }
+  },
+  rule: {
+    proezas: { title: "Yayopoints", body: "Recurso heroico de Dungeons & Yayos. Se usa como las proezas del SRD: repetir dados de una tirada fallada, sumar 1D antes de tirar, reforzar valores o aumentar dano cuando la regla lo permite." },
+    agilidad: { title: "Bemoles", body: "Valor fijo de descaro fisico y defensivo. Se calcula como (CAC + ROB) / 2 + 2." },
+    aplomo: { title: "Nervio", body: "Temple y resistencia de caracter. Se calcula como CAC + GRA + 5 y tambien da nombre a la resistencia mental de esta variante." },
+    perspicacia: { title: "Vista", body: "Referencia de percepcion propia de Dungeons & Yayos. En la hoja optimizada queda como habilidad y no como tarjeta fija independiente." },
+    resistenciaFisica: { title: "Jamacuco", body: "Sustituye a la Resistencia fisica. Sirve para comprobar si el aventurero aguanta los umbrales de Salud sin caer hecho polvo." },
+    ataque: { title: "Combate en Dungeons & Yayos", body: "La iniciativa no suma modificadores por arma. No hay armas de fuego. Las armas y hechizos ofensivos tienen dano fijo y suman ROB.", details: ["Defensa activa: DF 10 contra cuerpo a cuerpo con escudo; DF 15 contra cuerpo a cuerpo sin escudo o proyectiles con escudo; DF 20 contra proyectiles sin escudo."] }
+  },
+  section: {
+    datos: { title: "Datos de aventurero", body: "Identidad, raza, alineamiento, profesion y motivacion del aventurero en Forgotten Pills." },
+    arquetipos: { title: "Arquetipo y talento", body: "Papel de fantasia yayuna, rasgo principal y notas de interpretacion." },
+    pertenencias: { title: "Equipo de mazmorra", body: "Armas, protecciones, hechizos, objetos y otros trastos arrastrables." }
+  }
+};
+
+export function helpEntry(type, key, ruleset = "") {
+  if (ruleset === "dungeonsYayos" && DUNGEONS_YAYOS_HELP[type]?.[key]) return DUNGEONS_YAYOS_HELP[type][key];
   return SHEET_HELP[type]?.[key] ?? null;
 }

@@ -58,10 +58,13 @@ export async function sendRollToChat(result) {
   const cls = result.critico ? "critico" : result.pifia ? "pifia" : result.exito ? "exito" : "fallo";
   const cssClass = `${cls}${result.exito && (result.proezaSpent || result.yayoReroll) ? " proeza-exito" : ""}`;
   const title = result.critico ? "Éxito crítico" : result.pifia ? "Pifia" : result.exito ? "Éxito" : "Fallo";
+  const variantKey = globalThis.game?.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
+  const resourceLabel = IMSERSO.variants[variantKey]?.resource ?? "Proezas";
   const content = await renderTemplate(`systems/${IMSERSO.ID}/templates/chat/roll-card.hbs`, {
     ...result,
     cssClass,
     title,
+    resourceLabel,
     diceFaces: result.roll.dice.flatMap((die) => die.results).map((r) => r.result),
     formula: result.roll.formula,
     tooltip: await result.roll.getTooltip()

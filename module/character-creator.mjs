@@ -1,4 +1,13 @@
-import { IMSERSO, defaultSkills, labelForAttribute, labelForSkill, normalizeSkills } from "./config.mjs";
+import {
+  IMSERSO,
+  allSkillKeys,
+  attributesForRuleset,
+  defaultSkills,
+  labelForAttribute,
+  labelForSkill,
+  normalizeSkills,
+  skillsForRuleset
+} from "./config.mjs";
 import { ARQUETIPOS, archetypeSkills, archetypeSystem, archetypeTalentItem, arquetipoByKey } from "./arquetipos-data.mjs";
 
 const ApplicationV1 = foundry.appv1?.api?.Application ?? globalThis.Application;
@@ -109,7 +118,7 @@ function legalDefaultAttributes() {
 
 function normalizeAttributes(source = {}, { legal = true } = {}) {
   const fallback = legal ? legalDefaultAttributes() : { car: 0, des: 0, fue: 0, int: 0, per: 0 };
-  return Object.fromEntries(Object.keys(IMSERSO.atributos).map((key) => [key, number(source?.[key], fallback[key])]));
+  return Object.fromEntries(Object.keys(attributesForRuleset()).map((key) => [key, number(source?.[key], fallback[key])]));
 }
 
 function calcAgilidad(attrs, skills) {
@@ -177,10 +186,10 @@ function defaultState(actor = null, type = actor?.type ?? "personaje") {
 }
 
 async function generateRandomState(base) {
-  const attrKeys = Object.keys(IMSERSO.atributos);
+  const attrKeys = Object.keys(attributesForRuleset());
   const attrValues = shuffle(ATTR_VALUES);
   const attrs = Object.fromEntries(attrKeys.map((key, index) => [key, attrValues[index]]));
-  const skillKeys = shuffle(Object.keys(IMSERSO.habilidades));
+  const skillKeys = shuffle(Object.keys(skillsForRuleset()));
   const skills = defaultSkills(1);
   for (const key of skillKeys.slice(0, 4)) skills[key] = { dados: 3 };
   for (const key of skillKeys.slice(4, 12)) skills[key] = { dados: 2 };
@@ -207,9 +216,9 @@ async function generateRandomState(base) {
 }
 
 async function generateRandomPnjState(base) {
-  const attrKeys = Object.keys(IMSERSO.atributos);
+  const attrKeys = Object.keys(attributesForRuleset());
   const attrs = Object.fromEntries(attrKeys.map((key) => [key, Math.floor(Math.random() * 5)]));
-  const skillKeys = shuffle(Object.keys(IMSERSO.habilidades));
+  const skillKeys = shuffle(Object.keys(skillsForRuleset()));
   const skills = defaultSkills(1);
   for (const key of skillKeys.slice(0, 2)) skills[key] = { dados: 3 };
   for (const key of skillKeys.slice(2, 7)) skills[key] = { dados: 2 };
@@ -278,7 +287,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     }));
     const effective = this._effectiveBuild();
     const counts = this._selectedSkillCounts();
-    const skillRows = Object.entries(IMSERSO.habilidades).map(([key, cfg]) => {
+    const skillRows = Object.entries(skillsForRuleset()).map(([key, cfg]) => {
       const dice = number(this.state.habilidades?.[key]?.dados, 1);
       return {
         key,
@@ -298,7 +307,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       stepKey: this.steps[this.state.step]?.key ?? "datos",
       arquetipos: ARQUETIPOS.map((entry) => ({ ...entry, selected: entry.key === this.state.arquetipoKey })),
       selectedArquetipo: arquetipoByKey(this.state.arquetipoKey),
-      atributos: Object.entries(IMSERSO.atributos).map(([key, cfg]) => ({
+      atributos: Object.entries(attributesForRuleset()).map(([key, cfg]) => ({
         key,
         label: cfg.label,
         short: cfg.short,
@@ -344,7 +353,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       this._readForm();
       if (this.state.actorType === "personaje") {
         const selected = number(this.state.atributos?.[key], previous);
-        const swapKey = Object.keys(IMSERSO.atributos).find((other) => other !== key && number(this.state.atributos?.[other], -1) === selected);
+        const swapKey = Object.keys(attributesForRuleset()).find((other) => other !== key && number(this.state.atributos?.[other], -1) === selected);
         if (swapKey) this.state.atributos[swapKey] = previous;
       }
       this.render(false);
@@ -395,11 +404,11 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     this.state.arquetipoKey = String(data.get("arquetipoKey") ?? this.state.arquetipoKey);
     for (const key of Object.keys(this.state.datos)) this.state.datos[key] = String(data.get(`datos.${key}`) ?? this.state.datos[key] ?? "");
     for (const key of Object.keys(this.state.pnj)) this.state.pnj[key] = String(data.get(`pnj.${key}`) ?? this.state.pnj[key] ?? "");
-    for (const key of Object.keys(IMSERSO.atributos)) {
+    for (const key of Object.keys(attributesForRuleset())) {
       const field = `atributos.${key}`;
       if (data.has(field)) this.state.atributos[key] = number(data.get(field), this.state.atributos[key]);
     }
-    for (const key of Object.keys(IMSERSO.habilidades)) {
+    for (const key of allSkillKeys()) {
       const field = `habilidades.${key}`;
       if (data.has(field)) this.state.habilidades[key] = { dados: number(data.get(field), this.state.habilidades[key]?.dados ?? 1) };
     }

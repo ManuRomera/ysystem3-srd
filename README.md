@@ -28,7 +28,7 @@ Este paquete implementa únicamente automatismos, hojas de personaje y herramien
 - Items separados para armas, armaduras, escudos, objetos, poderes, talentos y arquetipos.
 - Compendio de reglas y ayudas de juego.
 - Identidad visual del SRD: carátula «SRD actualizado» e icono oficial de la web de Walhalla.
-- Selector de apariencia/variante en configuración del mundo.
+- Selector de apariencia/variante en configuración del mundo, incluyendo SRD base, Pulp, ambientaciones visuales y Dungeons & Yayos.
 
 ---
 
@@ -68,6 +68,7 @@ También puedes instalar directamente cualquier versión antigua usando la URL d
 
 | Versión del sistema | Foundry VTT mínimo | Foundry VTT verificado |
 |---|---|---|
+| 0.3.15 | v11 | v13.351 |
 | 0.3.14 | v11 | v13.351 |
 | 0.3.12 | v11 | v13.351 |
 | 0.3.11 | v11 | v13.351 |

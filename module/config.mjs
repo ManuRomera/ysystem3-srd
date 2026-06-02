@@ -120,6 +120,21 @@ export const IMSERSO = {
         perspicacia: "Perspicacia"
       }
     },
+    dungeonsYayos: {
+      label: "Dungeons & Yayos",
+      themeClass: "ys-theme-dungeons",
+      ruleset: "dungeonsYayos",
+      logoMark: "YSYSTEM 3",
+      logoScript: "Dungeons & Yayos",
+      resource: "Yayopoints",
+      resistancePhysical: "Jamacuco",
+      resistanceMental: "Nervio",
+      fixed: {
+        agilidad: "Bemoles",
+        aplomo: "Nervio",
+        perspicacia: "Vista"
+      }
+    },
   },
   /** Reglas Ysystem3 SRD (Walhalla Ediciones) */
   srd: {
@@ -134,6 +149,12 @@ export const IMSERSO = {
     fue: { label: "Fuerza", short: "FUE" },
     int: { label: "Inteligencia", short: "INT" },
     per: { label: "Percepcion", short: "PER" }
+  },
+  atributosDungeonsYayos: {
+    int: { label: "Cacumen", short: "CAC" },
+    car: { label: "Gracia", short: "GRA" },
+    des: { label: "Prestancia", short: "PRE" },
+    fue: { label: "Robustez", short: "ROB" }
   },
   habilidades: {
     atletismo: { label: "Atletismo", atributo: "des", oposicion: "agilidad" },
@@ -160,6 +181,28 @@ export const IMSERSO = {
     sigilo: { label: "Sigilo", atributo: "des", oposicion: "perspicacia" },
     simulacion: { label: "Simulacion", atributo: "car", oposicion: "perspicacia" },
     supervivencia: { label: "Supervivencia", atributo: "per", oposicion: "" }
+  },
+  habilidadesDungeonsYayos: {
+    atletismo: { label: "Atletismo", atributo: "des", oposicion: "agilidad" },
+    lanzamiento: { label: "Lanzamiento", atributo: "des", oposicion: "agilidad" },
+    robar: { label: "Robar", atributo: "des", oposicion: "perspicacia" },
+    batallitas: { label: "Batallitas", atributo: "car", oposicion: "" },
+    magiaPotagia: { label: "Magia Potagia", atributo: "int", oposicion: "" },
+    salero: { label: "Salero", atributo: "car", oposicion: "aplomo" },
+    cerrojosTrampas: { label: "Cerrojos y Trampas", atributo: "des", oposicion: "" },
+    medicina: { label: "Medicina", atributo: "int", oposicion: "" },
+    sapiencia: { label: "Sapiencia", atributo: "int", oposicion: "" },
+    cosasCampo: { label: "Cosas del Campo", atributo: "des", oposicion: "" },
+    memoria: { label: "Memoria", atributo: "int", oposicion: "" },
+    silbido: { label: "Silbido", atributo: "car", oposicion: "aplomo" },
+    cotilleo: { label: "Cotilleo", atributo: "car", oposicion: "perspicacia" },
+    mulaParda: { label: "Mula Parda", atributo: "fue", oposicion: "agilidad" },
+    tollinas: { label: "Tollinas", atributo: "fue", oposicion: "agilidad" },
+    discusion: { label: "Discusion", atributo: "car", oposicion: "aplomo" },
+    nietos: { label: "Nietos", atributo: "des", oposicion: "" },
+    vista: { label: "Vista", atributo: "int", oposicion: "agilidad" },
+    ingesta: { label: "Ingesta", atributo: "fue", oposicion: "" },
+    oido: { label: "Oido", atributo: "int", oposicion: "agilidad" }
   },
   dificultades: [
     { value: 5, label: "5-6 Muy facil" },
@@ -245,12 +288,78 @@ export const IMSERSO = {
     cuerpoPesada: "cuerpoDosManos",
     fuegoLaser: "fuegoLetal"
   },
+  ataqueTiposDungeonsYayos: {
+    desarmado: {
+      label: "Tollina desarmada",
+      habilidad: "tollinas",
+      dano: 1,
+      atributo: "fue",
+      apuntar: "1d6",
+      maxProezasDano: 2
+    },
+    cuerpoUnaMano: {
+      label: "Arma cuerpo a cuerpo",
+      habilidad: "tollinas",
+      dano: 3,
+      atributo: "fue",
+      apuntar: "1d6",
+      maxProezasDano: 2
+    },
+    cuerpoDosManos: {
+      label: "Arma cuerpo a cuerpo a dos manos",
+      habilidad: "tollinas",
+      dano: 5,
+      atributo: "fue",
+      apuntar: "1d6",
+      maxProezasDano: 2
+    },
+    distancia: {
+      label: "Arma de proyectiles",
+      habilidad: "lanzamiento",
+      dano: 3,
+      atributo: "fue",
+      apuntar: "2d6",
+      maxProezasDano: 2
+    },
+    hechizoOfensivo: {
+      label: "Hechizo ofensivo",
+      habilidad: "magiaPotagia",
+      dano: 3,
+      atributo: "fue",
+      apuntar: "0",
+      maxProezasDano: 2
+    }
+  },
   saludUmbrales: [16, 11, 7, 4, 2],
   estabilidadUmbrales: [16, 11, 7, 4, 2]
 };
 
+export function allSkills() {
+  return { ...IMSERSO.habilidades, ...IMSERSO.habilidadesDungeonsYayos };
+}
+
+export function allSkillKeys() {
+  return Object.keys(allSkills());
+}
+
+export function attributesForRuleset(ruleset = currentRuleset()) {
+  return ruleset === "dungeonsYayos" ? IMSERSO.atributosDungeonsYayos : IMSERSO.atributos;
+}
+
+export function skillsForRuleset(ruleset = currentRuleset()) {
+  return ruleset === "dungeonsYayos" ? IMSERSO.habilidadesDungeonsYayos : IMSERSO.habilidades;
+}
+
+export function skillConfig(key, ruleset = currentRuleset()) {
+  return skillsForRuleset(ruleset)?.[key] ?? allSkills()[key] ?? null;
+}
+
+export function attackTypesForRuleset(ruleset = currentRuleset()) {
+  return ruleset === "dungeonsYayos" ? IMSERSO.ataqueTiposDungeonsYayos : IMSERSO.ataqueTipos;
+}
+
 export function defaultSkills(fill = 1) {
-  return Object.fromEntries(Object.keys(IMSERSO.habilidades).map((key) => [key, { dados: fill }]));
+  return Object.fromEntries(allSkillKeys().map((key) => [key, { dados: fill }]));
 }
 
 export function normalizeSkills(source = {}) {
@@ -264,11 +373,11 @@ export function normalizeSkills(source = {}) {
 }
 
 export function labelForSkill(key) {
-  return IMSERSO.habilidades[key]?.label ?? key;
+  return skillConfig(key)?.label ?? key;
 }
 
 export function labelForAttribute(key) {
-  return IMSERSO.atributos[key]?.short ?? key?.toUpperCase?.() ?? key;
+  return attributesForRuleset()?.[key]?.short ?? IMSERSO.atributos[key]?.short ?? key?.toUpperCase?.() ?? key;
 }
 
 export function resolveAttackType(tipo) {
@@ -277,11 +386,13 @@ export function resolveAttackType(tipo) {
 
 export function attackConfig(tipo) {
   const key = resolveAttackType(tipo);
-  return IMSERSO.ataqueTipos[key] ?? IMSERSO.ataqueTipos.desarmado;
+  const types = attackTypesForRuleset();
+  return types[key] ?? IMSERSO.ataqueTipos[key] ?? IMSERSO.ataqueTipos.desarmado;
 }
 
-export function attackAttributeDamage(attackCfg, rawAttr) {
+export function attackAttributeDamage(attackCfg, rawAttr, ruleset = currentRuleset()) {
   const v = Number(rawAttr) || 0;
+  if (ruleset === "dungeonsYayos") return v;
   if (attackCfg?.mitadAtributo) return Math.floor(v / 2);
   if (attackCfg?.attrMultiplier === 1.5) return Math.floor(v * 1.5);
   return v;
@@ -298,6 +409,6 @@ export function estabilidadUmbralesForRuleset(ruleset = "srd") {
 }
 
 export function currentRuleset() {
-  const key = game.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
+  const key = globalThis.game?.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
   return IMSERSO.variants[key]?.ruleset ?? "srd";
 }

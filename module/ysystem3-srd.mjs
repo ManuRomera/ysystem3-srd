@@ -1,5 +1,15 @@
-import { IMSERSO, attackConfig, attackAttributeDamage, normalizeSkills } from "./config.mjs";
+import {
+  IMSERSO,
+  allSkillKeys,
+  attackConfig,
+  attackAttributeDamage,
+  currentRuleset,
+  labelForAttribute,
+  labelForSkill,
+  normalizeSkills
+} from "./config.mjs";
 import { ARQUETIPOS } from "./arquetipos-data.mjs";
+import { DUNGEONS_YAYOS_PACKS } from "./dungeons-yayos-data.mjs";
 import { openCharacterCreator } from "./character-creator.mjs";
 import { getAchaque } from "./reglas-data.mjs";
 import { ImsersoActor } from "./actor.mjs";
@@ -48,8 +58,8 @@ Hooks.once("init", async () => {
 
   Handlebars.registerHelper("imsChecked", (value) => value ? "checked" : "");
   Handlebars.registerHelper("imsSelected", (a, b) => String(a) === String(b) ? "selected" : "");
-  Handlebars.registerHelper("imsAttr", (key) => IMSERSO.atributos[key]?.short ?? key);
-  Handlebars.registerHelper("imsSkill", (key) => IMSERSO.habilidades[key]?.label ?? key);
+  Handlebars.registerHelper("imsAttr", (key) => labelForAttribute(key));
+  Handlebars.registerHelper("imsSkill", (key) => labelForSkill(key));
   Handlebars.registerHelper("ysTerm", (key) => currentVariant()[key] ?? key);
   Handlebars.registerHelper("ysFixed", (key) => currentVariant().fixed?.[key] ?? key);
   Handlebars.registerHelper("eq", (a, b) => a === b);
@@ -66,6 +76,7 @@ Hooks.once("ready", async () => {
   await cleanupLegacyRulesWorldPack();
   await cleanupLegacyArchetypeActorPack();
   seeded += await ensureCoreMacros();
+  seeded += await ensureDungeonsYayosPacks();
 
   await showWelcomeDialog();
   if (seeded > 0) ui.notifications?.info(`YSYSTEM3 SRD: ${seeded} datos o entradas preparados.`);
@@ -218,6 +229,11 @@ function handleVariantChange() {
 
 function currentSheetLayout() {
   return game.settings?.get?.(IMSERSO.ID, "sheetLayout") ?? "screen";
+}
+
+function resourceLabel() {
+  const key = globalThis.game?.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
+  return IMSERSO.variants[key]?.resource ?? "Proezas";
 }
 
 function applySheetLayoutClass() {
@@ -440,10 +456,11 @@ function renderHazardCard(data) {
 
 async function rerollWithYayo(message) {
   const data = foundry.utils.deepClone(message.getFlag(IMSERSO.ID, "rollData") ?? {});
-  if (!data?.canReroll || data.rerolled) return ui.notifications.warn("Esta tirada ya no se puede repetir con proeza.");
+  const resource = resourceLabel();
+  if (!data?.canReroll || data.rerolled) return ui.notifications.warn(`Esta tirada ya no se puede repetir con ${resource}.`);
   const actor = await fromUuid(data.actorUuid);
   if (!canUseActor(actor)) return ui.notifications.warn("No tienes permisos sobre este personaje.");
-  if ((actor.system.proezas?.valor ?? 0) < 1) return ui.notifications.warn(`${actor.name} no tiene proezas suficientes.`);
+  if ((actor.system.proezas?.valor ?? 0) < 1) return ui.notifications.warn(`${actor.name} no tiene ${resource} suficientes.`);
   const faces = Array.isArray(data.diceFaces) ? data.diceFaces.map(Number).filter(Number.isFinite) : [];
   if (!faces.length) return ui.notifications.warn("Esta tirada no conserva el detalle de dados necesario para elegir repetición.");
   const selected = await chooseRerollDice(data, faces);
@@ -480,13 +497,14 @@ async function showRollOnCanvas(roll) {
 }
 
 async function chooseRerollDice(data, faces) {
+  const resource = resourceLabel();
   const checks = faces.map((face, index) => `
     <label class="ims-die-choice">
       <input type="checkbox" name="die" value="${index}" ${face < 5 ? "checked" : ""}>
       <b aria-label="Resultado ${face}">${face}</b>
     </label>`).join("");
   return Dialog.prompt({
-    title: `Repetir con proeza: ${escapeHtml(data.label)}`,
+    title: `Repetir con ${resource}: ${escapeHtml(data.label)}`,
     content: `
       <form class="ims-dialog ims-reroll-dialog">
         <p>Marca los dados que quieres repetir. Los no marcados se quedan tal cual.</p>
@@ -550,10 +568,11 @@ function evaluateYayoFaces(data, finalFaces) {
 }
 
 async function renderSelectedReroll(actor, data, result, details) {
+  const resource = resourceLabel();
   const formula = `${details.keptFaces.length} dados guardados + ${details.rerolledFaces.length}d6 + ${Number(data.atributo) || 0} + ${Number(data.bonus) || 0}`;
   return renderTemplate(`systems/${IMSERSO.ID}/templates/chat/roll-card.hbs`, {
     actor,
-    label: `${data.label} · repeticion con proeza`,
+    label: `${data.label} · repeticion con ${resource}`,
     roll: details.reroll,
     dice: details.finalFaces.length,
     atributo: data.atributo,
@@ -567,6 +586,7 @@ async function renderSelectedReroll(actor, data, result, details) {
     pifia: result.pifia,
     exito: result.exito,
     canReroll: false,
+    resourceLabel: resource,
     cssClass: `${result.cssClass}${result.exito ? " proeza-exito" : ""}`,
     title: result.title,
     diceFaces: details.finalFaces,
@@ -587,18 +607,19 @@ async function buildAttackWorkflowFromReroll(actor, context, result) {
   const attack = context.attack ?? {};
   const attackData = context.attackData ?? {};
   const attackCfg = attackConfig(attack.tipo ?? "desarmado");
+  const resource = resourceLabel();
   let yays = Math.min(attackCfg.maxProezasDano ?? 2, Math.max(0, Number(attackData.proezasDano ?? attackData.yayoDano) || 0));
   if (yays && actor.type === "personaje") {
     const available = Math.max(0, Number(actor.system.proezas?.valor) || 0);
     if (available < yays) {
-      ui.notifications.warn(`${actor.name} solo tiene ${available} proeza(s) para dano tras la repeticion.`);
+      ui.notifications.warn(`${actor.name} solo tiene ${available} ${resource} para dano tras la repeticion.`);
       yays = available;
     }
     if (yays) await actor.spendProezas(yays);
   }
   const attrKey = attack.atributo ?? attackCfg.atributo ?? "fue";
   const rawAttrDamage = Number(actor.system.efectivos?.atributos?.[attrKey] ?? actor.system.atributos?.[attrKey]) || 0;
-  const attrDamage = attackAttributeDamage(attackCfg, rawAttrDamage);
+  const attrDamage = attackAttributeDamage(attackCfg, rawAttrDamage, currentRuleset());
   const aimedDice = (Number(attackData.dadosSacrificados) || 0) * (attack.apuntar === "2d6" ? 2 : 1);
   const proezaDamage = await rollExplodingD6(yays);
   const aimedRoll = aimedDice > 0 ? await new Roll(`${aimedDice}d6`).evaluate({ async: true }) : null;
@@ -616,12 +637,12 @@ async function buildAttackWorkflowFromReroll(actor, context, result) {
     attackTipo: attack.tipo ?? "",
     damage: totalDamage,
     originalDamage: totalDamage,
-    formulaText: `${Number(attack.dano) || 0} + ${String(attrKey).toUpperCase()} ${attrDamage}${proezaDamage.total ? ` + proezas ${proezaDamage.total}` : ""}${aimedRoll ? ` + apuntar ${aimedRoll.total}` : ""}${armorReduction ? ` - armadura ${armorReduction}` : ""}`,
-    defenseDifficulty: Number(context.difficulty) || 10,
+    formulaText: `${Number(attack.dano) || 0} + ${String(attrKey).toUpperCase()} ${attrDamage}${proezaDamage.total ? ` + ${resource} ${proezaDamage.total}` : ""}${aimedRoll ? ` + apuntar ${aimedRoll.total}` : ""}${armorReduction ? ` - armadura ${armorReduction}` : ""}`,
+    defenseDifficulty: Number(context.defenseDifficulty ?? context.difficulty) || 10,
     applied: false,
     defended: false,
     cancelled: false,
-    defenseText: "Impacto confirmado tras repeticion con proeza."
+    defenseText: `Impacto confirmado tras repeticion con ${resource}.`
   };
 }
 
@@ -888,6 +909,15 @@ async function ensureMacroFolder(name) {
   return Folder.create({ name, type: "Macro" });
 }
 
+async function ensureDungeonsYayosPacks() {
+  let changes = 0;
+  for (const definition of DUNGEONS_YAYOS_PACKS) {
+    const result = await seedPack(definition);
+    changes += result.changes;
+  }
+  return changes;
+}
+
 async function upsertPack(pack, documentName, data) {
   const existing = new Map((await pack.getDocuments()).map((doc) => [doc.name, doc]));
   let changes = 0;
@@ -946,7 +976,7 @@ async function repairActorSkillData() {
     if (!["personaje", "pnj"].includes(actor.type)) continue;
     const normalized = normalizeSkills(actor.system?.habilidades ?? {});
     const current = actor.system?.habilidades ?? {};
-    const needsRepair = Object.keys(IMSERSO.habilidades).some((key) => {
+    const needsRepair = allSkillKeys().some((key) => {
       const dice = Number(current[key]?.dados ?? current[key]);
       return !Number.isFinite(dice) || dice < 1 || dice > 3;
     });

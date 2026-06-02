@@ -18,17 +18,17 @@
     <div class="ims-item-fields arma-fields">
       <label>Tipo
         <select name="system.tipo">
-          {{#each config.ataqueTipos}}<option value="{{@key}}" {{imsSelected @key ../system.tipo}}>{{label}}</option>{{/each}}
+          {{#each attackOptions}}<option value="{{key}}" {{imsSelected key ../system.tipo}}>{{label}}</option>{{/each}}
         </select>
       </label>
       <label>Habilidad
         <select name="system.habilidad">
-          {{#each config.habilidades}}<option value="{{@key}}" {{imsSelected @key ../system.habilidad}}>{{label}}</option>{{/each}}
+          {{#each skillOptions}}<option value="{{key}}" {{imsSelected key ../system.habilidad}}>{{label}}</option>{{/each}}
         </select>
       </label>
       <label>Atributo al daño
         <select name="system.atributoDano">
-          {{#each config.atributos}}<option value="{{@key}}" {{imsSelected @key ../system.atributoDano}}>{{short}}</option>{{/each}}
+          {{#each attributeOptions}}<option value="{{key}}" {{imsSelected key ../system.atributoDano}}>{{short}}</option>{{/each}}
         </select>
       </label>
       <label>Daño base<input type="number" name="system.danoBase" value="{{system.danoBase}}"></label>
@@ -74,12 +74,12 @@
       <label>Tipo<input name="system.tipo" value="{{system.tipo}}"></label>
       <label>Habilidad
         <select name="system.habilidad">
-          {{#each config.habilidades}}<option value="{{@key}}" {{imsSelected @key ../system.habilidad}}>{{label}}</option>{{/each}}
+          {{#each skillOptions}}<option value="{{key}}" {{imsSelected key ../system.habilidad}}>{{label}}</option>{{/each}}
         </select>
       </label>
       <label>Atributo de referencia
         <select name="system.atributo">
-          {{#each config.atributos}}<option value="{{@key}}" {{imsSelected @key ../system.atributo}}>{{short}}</option>{{/each}}
+          {{#each attributeOptions}}<option value="{{key}}" {{imsSelected key ../system.atributo}}>{{short}}</option>{{/each}}
         </select>
       </label>
       <label>Dificultad<input type="number" name="system.dificultad" value="{{system.dificultad}}"></label>
@@ -101,7 +101,7 @@
       <label>Habilidad de uso
         <select name="system.habilidadUso">
           <option value="">Sin tirada</option>
-          {{#each config.habilidades}}<option value="{{@key}}" {{imsSelected @key ../system.habilidadUso}}>{{label}}</option>{{/each}}
+          {{#each skillOptions}}<option value="{{key}}" {{imsSelected key ../system.habilidadUso}}>{{label}}</option>{{/each}}
         </select>
       </label>
       <label>Dificultad de uso<input type="number" name="system.dificultadUso" value="{{system.dificultadUso}}"></label>
@@ -123,7 +123,7 @@
       <label>Habilidad de uso
         <select name="system.habilidadUso">
           <option value="">Sin tirada</option>
-          {{#each config.habilidades}}<option value="{{@key}}" {{imsSelected @key ../system.habilidadUso}}>{{label}}</option>{{/each}}
+          {{#each skillOptions}}<option value="{{key}}" {{imsSelected key ../system.habilidadUso}}>{{label}}</option>{{/each}}
         </select>
       </label>
       <label>Dificultad de uso<input type="number" name="system.dificultadUso" value="{{system.dificultadUso}}"></label>
@@ -145,7 +145,7 @@
       <label>Habilidad de uso
         <select name="system.habilidadUso">
           <option value="">Sin tirada</option>
-          {{#each config.habilidades}}<option value="{{@key}}" {{imsSelected @key ../system.habilidadUso}}>{{label}}</option>{{/each}}
+          {{#each skillOptions}}<option value="{{key}}" {{imsSelected key ../system.habilidadUso}}>{{label}}</option>{{/each}}
         </select>
       </label>
       <label>Dificultad de uso<input type="number" name="system.dificultadUso" value="{{system.dificultadUso}}"></label>

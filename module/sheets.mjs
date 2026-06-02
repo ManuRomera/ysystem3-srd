@@ -3,6 +3,10 @@ import {
   labelForAttribute,
   labelForSkill,
   attackConfig,
+  attackTypesForRuleset,
+  attributesForRuleset,
+  skillsForRuleset,
+  allSkillKeys,
   saludUmbralesForRuleset,
   estabilidadUmbralesForRuleset,
   currentRuleset
@@ -69,22 +73,28 @@ export class ImsersoActorSheet extends ActorSheet {
     context.sheetLayout = game.settings?.get?.(IMSERSO.ID, "sheetLayout") ?? "screen";
     const variantKey = game.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
     context.themeClass = IMSERSO.variants[variantKey]?.themeClass ?? IMSERSO.variants.base.themeClass;
+    const ruleset = currentRuleset();
+    const activeAttributes = attributesForRuleset(ruleset);
+    const activeSkills = skillsForRuleset(ruleset);
+    context.attackOptions = entries(attackTypesForRuleset(ruleset)).map(([key, cfg]) => ({ key, ...cfg }));
+    context.skillOptions = entries(activeSkills).map(([key, cfg]) => ({ key, ...cfg, attrLabel: labelForAttribute(cfg.atributo) }));
+    context.attributeOptions = entries(activeAttributes).map(([key, cfg]) => ({ key, ...cfg }));
+    context.isDungeonsYayos = ruleset === "dungeonsYayos";
     context.skillEditEnabled = !!this._summarySkillEdit;
     context.logoPath = `systems/${IMSERSO.ID}/assets/ysystem-icon.png`;
-    context.atributos = entries(IMSERSO.atributos).map(([key, cfg]) => ({
+    context.atributos = entries(activeAttributes).map(([key, cfg]) => ({
       key,
       ...cfg,
       value: system.atributos?.[key] ?? 0
     }));
     context.attrOptions = [0, 1, 2, 4, 6].map((value) => ({ value, label: value >= 0 ? `+${value}` : `${value}` }));
-    context.habilidades = entries(IMSERSO.habilidades).map(([key, cfg]) => ({
+    context.habilidades = entries(activeSkills).map(([key, cfg]) => ({
       key,
       ...cfg,
       attrLabel: labelForAttribute(cfg.atributo),
       dados: system.habilidades?.[key]?.dados ?? 1,
       dots: [1, 2, 3].map((n) => ({ value: n, active: (system.habilidades?.[key]?.dados ?? 1) >= n }))
     }));
-    const ruleset = currentRuleset();
     const saludUmbrales = saludUmbralesForRuleset(ruleset);
     const estabilidadUmbrales = estabilidadUmbralesForRuleset(ruleset);
     const saludValor = Number(system.salud?.valor) || 0;
@@ -95,7 +105,7 @@ export class ImsersoActorSheet extends ActorSheet {
     const maxHealthTrack = Math.max(28, saludMax);
     context.healthGridStyle = `grid-template-columns: repeat(${maxHealthTrack}, minmax(24px, 1fr));`;
     context.healthZones = [
-      { label: "UCI", class: "zone-uci", style: "grid-column: 1 / 2;" },
+      { label: ruleset === "dungeonsYayos" ? "¡ARG!" : "UCI", class: "zone-uci", style: "grid-column: 1 / 2;" },
       { label: "-3D", class: "zone-minus3", style: "grid-column: 2 / 5;" },
       { label: "-2D", class: "zone-minus2", style: "grid-column: 5 / 8;" },
       { label: "-1D", class: "zone-minus1", style: "grid-column: 8 / 12;" },
@@ -166,8 +176,8 @@ export class ImsersoActorSheet extends ActorSheet {
     ];
     context.itemsFlat = this.actor.items.contents ?? this.actor.items.map((item) => item);
     context.equipmentNotes = system.efectivos?.mods?.notas ?? [];
-    context.attackTypes = entries(IMSERSO.ataqueTipos).map(([key, cfg]) => ({ key, ...cfg }));
-    context.skillOptions = entries(IMSERSO.habilidades).map(([key, cfg]) => ({ key, ...cfg, attrLabel: labelForAttribute(cfg.atributo) }));
+    context.attackTypes = entries(attackTypesForRuleset(ruleset)).map(([key, cfg]) => ({ key, ...cfg }));
+    context.skillOptions = entries(activeSkills).map(([key, cfg]) => ({ key, ...cfg, attrLabel: labelForAttribute(cfg.atributo) }));
     context.arquetipos = [];
     const equippedWeapon = this.actor.items.find((item) => item.type === "arma" && item.system?.equipado) ?? null;
     const attackType = equippedWeapon?.system?.tipo ?? "desarmado";
@@ -185,7 +195,7 @@ export class ImsersoActorSheet extends ActorSheet {
       damage: equippedWeapon?.system?.danoBase ?? baseAttack.dano,
       attr: attackAttr,
       attrLabel: labelForAttribute(attackAttr),
-      initiative: equippedWeapon?.system?.iniciativa ?? baseAttack.iniciativa
+      initiative: ruleset === "dungeonsYayos" ? 0 : (equippedWeapon?.system?.iniciativa ?? baseAttack.iniciativa)
     };
     return context;
   }
@@ -221,7 +231,7 @@ export class ImsersoActorSheet extends ActorSheet {
       "system.puntoGuion.max"
     ];
     for (const key of Object.keys(IMSERSO.atributos)) numericPaths.push(`system.atributos.${key}`);
-    for (const key of Object.keys(IMSERSO.habilidades)) numericPaths.push(`system.habilidades.${key}.dados`);
+    for (const key of allSkillKeys()) numericPaths.push(`system.habilidades.${key}.dados`);
 
     for (const path of numericPaths) {
       if (!(path in data)) continue;
@@ -457,7 +467,7 @@ export class ImsersoActorSheet extends ActorSheet {
   }
 
   _openContextHelp(target, x, y, { hover = false } = {}) {
-    const entry = target.dataset.itemId ? this._itemHelp(target.dataset.itemId) : helpEntry(target.dataset.helpType, target.dataset.helpKey);
+    const entry = target.dataset.itemId ? this._itemHelp(target.dataset.itemId) : helpEntry(target.dataset.helpType, target.dataset.helpKey, currentRuleset());
     if (!entry) return;
     const rect = target.getBoundingClientRect?.();
     const left = Number.isFinite(x) ? x : (rect?.left ?? 24);
@@ -588,6 +598,12 @@ export class ImsersoItemSheet extends ItemSheet {
     context.config = IMSERSO;
     const variantKey = game.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
     context.themeClass = IMSERSO.variants[variantKey]?.themeClass ?? IMSERSO.variants.base.themeClass;
+    const ruleset = currentRuleset();
+    const activeSkills = skillsForRuleset(ruleset);
+    const activeAttributes = attributesForRuleset(ruleset);
+    context.attackOptions = entries(attackTypesForRuleset(ruleset)).map(([key, cfg]) => ({ key, ...cfg }));
+    context.skillOptions = entries(activeSkills).map(([key, cfg]) => ({ key, ...cfg, attrLabel: labelForAttribute(cfg.atributo) }));
+    context.attributeOptions = entries(activeAttributes).map(([key, cfg]) => ({ key, ...cfg }));
     const protectionLevel = Number(this.item.system?.nivel) || 0;
     context.protectionPenalty = this.item.type === "armadura"
       ? Math.floor(protectionLevel / 2)
@@ -596,7 +612,7 @@ export class ImsersoItemSheet extends ItemSheet {
         : 0;
     context.automationOptions = [
       { value: "", label: "Sin automatismo" },
-      { value: "botiquin", label: "Botiquin: Auxilio DF 10, cura 2/4" }
+      { value: "botiquin", label: ruleset === "dungeonsYayos" ? "Botiquin: Medicina DF 10, cura 2/4" : "Botiquin: Auxilio DF 10, cura 2/4" }
     ];
     return context;
   }

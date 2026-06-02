@@ -273,6 +273,38 @@ body.ys-theme-terror {
   --ys-section-shadow-color: #b4544b;
 }
 
+body.ys-theme-dungeons {
+  --ims-green: #6b4a24;
+  --ims-green-soft: #c8a066;
+  --ims-mint: #bf8b3b;
+  --ims-pink: #9b2f20;
+  --ims-plum: #4f351c;
+  --ims-plum-dark: #2d1d10;
+  --ims-ink: #20160d;
+  --ims-text: #20160d;
+  --ims-muted: #684f36;
+  --ims-paper: #ead2a4;
+  --ims-blue-ink: #4f351c;
+  --ys-paper-bg:
+    radial-gradient(circle at 5% 12%, rgba(116, 67, 25, 0.14), transparent 16%),
+    radial-gradient(circle at 95% 88%, rgba(96, 46, 22, 0.18), transparent 18%),
+    linear-gradient(180deg, rgba(251, 232, 190, 0.92), rgba(220, 180, 118, 0.88)),
+    var(--ims-paper);
+  --ys-paper-border: #5b361b;
+  --ys-paper-border-width: 7px;
+  --ys-paper-radius: 6px;
+  --ys-tab-gradient: linear-gradient(90deg, #2d1d10, #6f461f);
+  --ys-logo-bg: transparent;
+  --ys-logo-border-width: 0;
+  --ys-logo-radius: 0;
+  --ys-logo-transform: none;
+  --ys-field-line: 3px dotted #5b361b;
+  --ys-heading-font: Georgia, "Times New Roman", serif;
+  --ys-logo-font: Georgia, "Times New Roman", serif;
+  --ys-script-font: Georgia, "Times New Roman", serif;
+  --ys-section-shadow-color: #a46f2a;
+}
+
 .ys-screen-sheet.ys-theme-base,
 .ys-a4-sheet.ys-theme-base {
   --ys-section-shadow-color: #c0c9d6;
@@ -324,6 +356,14 @@ body.ys-theme-terror {
 .ys-screen-sheet.ys-theme-terror,
 .ys-a4-sheet.ys-theme-terror {
   --ys-section-shadow-color: #b4544b;
+  --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
+}
+
+.ys-screen-sheet.ys-theme-dungeons,
+.ys-a4-sheet.ys-theme-dungeons,
+.ims-item.ys-theme-dungeons,
+.ims-creator.ys-theme-dungeons {
+  --ys-section-shadow-color: #a46f2a;
   --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
 }
 

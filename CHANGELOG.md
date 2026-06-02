@@ -7,6 +7,17 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.15] — 2026-06-02
+
+### Añadido
+- Integrada la variante `Dungeons & Yayos` como apariencia/reglas seleccionables desde la configuración del mundo.
+- Añadidos atributos, habilidades, valores, armas, protecciones, hechizos y PJ pregenerados de `Forgotten Pills` en compendios sembrados automáticamente.
+- Añadida ayuda contextual específica para Cacumen, Gracia, Prestancia, Robustez y las habilidades propias de Dungeons & Yayos.
+
+### Cambiado
+- Las tiradas, ataques, defensas activas, resistencias, botones de chat y objetos usan la terminología de la variante activa: Yayopoints, Bemoles, Nervio y Jamacuco cuando corresponde.
+- En Dungeons & Yayos la iniciativa no aplica modificadores de arma, no se usan armas de fuego y el daño suma ROB completo.
+
 ## [0.3.14] — 2026-05-25
 
 ### Cambiado
