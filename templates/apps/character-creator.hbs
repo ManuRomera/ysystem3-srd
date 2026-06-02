@@ -23,11 +23,13 @@
           <strong>Creacion libre</strong>
           <span>{{attrRequirementText}} Marca 4 habilidades a 3D y 8 a 2D.</span>
         </label>
+        {{#if supportsArchetypes}}
         <label class="ims-choice">
           <input type="radio" name="mode" value="arquetipo" data-creator-mode {{imsChecked (eq state.mode "arquetipo")}}>
           <strong>Mediante arquetipo</strong>
-          <span>{{#if isDungeonsYayos}}Usa una plantilla de Dungeons & Yayos si esta disponible.{{else}}Usa una plantilla SRD con atributos, habilidades, proezas, resistencias y talento ya definidos.{{/if}}</span>
+          <span>Usa una plantilla SRD con atributos, habilidades, proezas, resistencias y talento ya definidos.</span>
         </label>
+        {{/if}}
         <label class="ims-choice">
           <input type="radio" name="mode" value="aleatorio" data-creator-mode {{imsChecked (eq state.mode "aleatorio")}}>
           <strong>Aleatorio rapido</strong>

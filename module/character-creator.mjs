@@ -31,10 +31,12 @@ const DEFECTOS_GRAVES = [
   "Ha prometido proteger a alguien por encima de la prudencia.",
   "Tiene un enemigo que conoce demasiado bien sus debilidades."
 ];
-const RANDOM = {
-  nombres: ["Aamir al-Yasin", "Clara Vento", "Dario Montalvo", "Elena Roque", "Iria Salcedo", "Marcos Dalmau", "Nadia Corbera", "Tomas Ariza"],
+const GENERATOR_BASE = {
+  nombres: ["Aamir al-Yasin", "Clara Vento", "Dario Montalvo", "Elena Roque", "Iria Salcedo", "Marcos Dalmau", "Nadia Corbera", "Tomas Ariza", "Vera Cifuentes", "Leo Sastre", "Mara Bellver", "Hugo Alcaide"],
+  apodos: ["la Prudente", "el Incansable", "la del Mapa", "el de la Mala Idea", "la del Juramento", "el del Silencio"],
   perfiles: ["Artesano veterano", "Investigadora independiente", "Escolta discreto", "Medica de campo", "Contrabandista menor", "Erudita local", "Piloto improvisado", "Interprete de confianza"],
-  lugares: ["Granada", "Valencia", "Lisboa", "Marsella", "Toledo", "Tanger", "Zaragoza", "un enclave fronterizo"],
+  especialidades: ["con reputacion discutible", "con una deuda antigua", "con contactos peligrosos", "con demasiada curiosidad", "con un secreto familiar", "con fama de resolver lo imposible"],
+  lugares: ["Granada", "Valencia", "Lisboa", "Marsella", "Toledo", "Tanger", "Zaragoza", "un enclave fronterizo", "un barrio portuario", "una estacion olvidada"],
   motivaciones: [
     "Quiere saldar una deuda sin perder lo que le queda de honor.",
     "Busca una verdad concreta, aunque incomode a gente poderosa.",
@@ -62,6 +64,101 @@ const RANDOM = {
     "Actua con nerviosismo, pero no necesariamente con mala fe.",
     "Parece secundario hasta que se descubre lo que sabe.",
     "Quiere sobrevivir al conflicto y elegir el bando ganador."
+  ]
+};
+const GENERATOR_VARIANTS = {
+  pulp: {
+    perfiles: ["Reportera temeraria", "Aventurero con gabardina", "Piloto de hidroavion", "Ocultista de salon", "Boxeador retirado", "Arqueologa de campo", "Detective privado", "Inventora autodidacta"],
+    especialidades: ["con un mapa incompleto", "con una reliquia maldita", "con un patrocinador dudoso", "con titulares pendientes"],
+    lugares: ["Shanghai", "El Cairo", "La Habana", "Nueva York", "una isla sin cartografiar", "un tren nocturno"],
+    motivaciones: ["Quiere publicar la exclusiva antes de que la censuren.", "Busca una reliquia que nadie deberia despertar.", "Necesita limpiar el nombre de una vieja amistad.", "Persigue una expedicion desaparecida."],
+    pnjRoles: ["Maton de club", "Magnate sospechoso", "Guia local", "Piloto rival", "Espia de opereta", "Cultista elegante"]
+  },
+  fantasiaHeroica: {
+    perfiles: ["Mercenaria juramentada", "Sanadora errante", "Aprendiz de torre", "Explorador de frontera", "Noble desterrado", "Guardabosques", "Bardo de taberna", "Herrera de clan"],
+    especialidades: ["con una espada heredada", "con un pacto incomodo", "con un linaje discutido", "con promesas de gloria"],
+    lugares: ["una ciudad amurallada", "el Valle de los Robles", "una frontera nevada", "un puerto de corsarios", "la torre del viejo camino"],
+    motivaciones: ["Quiere recuperar un nombre familiar manchado.", "Busca una cura para una maldicion menor pero persistente.", "Necesita demostrar su valor ante su compania.", "Protege un juramento que otros dan por perdido."],
+    pnjRoles: ["Mercader de reliquias", "Capitan de guardia", "Hechicera local", "Tabernero informado", "Bandido arrepentido", "Noble menor"]
+  },
+  cienciaFiccion: {
+    perfiles: ["Piloto orbital", "Tecnica de soporte vital", "Diplomatico de frontera", "Cazarrecompensas", "Mineraloga de asteroides", "Medico de nave", "IA legalmente confusa", "Contrabandista de datos"],
+    especialidades: ["con licencia caducada", "con implantes baratos", "con una nave hipotecada", "con acceso a canales negros"],
+    lugares: ["Cinturon de Eos", "Estacion Mirlo", "Colonia Nadir", "Puerto Lagrange", "un carguero de tercera mano"],
+    motivaciones: ["Quiere pagar el oxigeno del mes sin vender a nadie.", "Busca una coordenada borrada de todos los mapas.", "Necesita escapar de una corporacion propietaria.", "Quiere demostrar que la senal no era un error."],
+    pnjRoles: ["Oficial portuario", "Tecnico de esclusas", "Pirata de datos", "Colono agotado", "Ejecutiva corporativa", "Mecanico de drones"]
+  },
+  lovecraft: {
+    perfiles: ["Anticuario nervioso", "Profesora de folklore", "Medico de sanatorio", "Periodista local", "Bibliotecaria nocturna", "Marinero retirado", "Fotografa forense", "Heredera intranquila"],
+    especialidades: ["con suenos recurrentes", "con cartas sin remitente", "con una mancha en el expediente", "con miedo a los sotanos"],
+    lugares: ["Arkham", "Dunwich", "Kingsport", "una pension costera", "un archivo universitario", "un pueblo que no sale en mapas"],
+    motivaciones: ["Quiere saber por que su familia quemaba los diarios.", "Busca a alguien que desaparecio tras leer un expediente.", "Necesita cerrar una investigacion antes del amanecer.", "Sospecha que una muerte natural no tuvo nada de natural."],
+    pnjRoles: ["Conserje palido", "Sacerdote evasivo", "Paciente lucidissimo", "Profesor retirado", "Pescador supersticioso", "Agente funerario"]
+  },
+  capaEspada: {
+    perfiles: ["Duelista sin padrino", "Espia de corte", "Comediante con daga", "Capitana sin barco", "Noble arruinado", "Mosquetera", "Confesor indiscreto", "Alquimista teatral"],
+    especialidades: ["con una carta sellada", "con enemigos en palacio", "con una deuda de honor", "con demasiados amantes"],
+    lugares: ["Paris", "Madrid", "Venecia", "un palacio de verano", "una taberna junto al rio", "un convento discreto"],
+    motivaciones: ["Quiere vengar un insulto sin provocar una guerra.", "Debe entregar una carta antes del baile.", "Persigue un secreto que vale mas que una corona.", "Necesita salvar a alguien condenado por politica."],
+    pnjRoles: ["Guardia de palacio", "Dama intrigante", "Duelista contratado", "Criado con informacion", "Embajador sospechoso", "Tabernera leal"]
+  },
+  ciberpunk: {
+    perfiles: ["Hacker de barrio", "Mensajera cromada", "Medica clandestina", "Exseguridad corporativo", "Artista de realidad aumentada", "Netrunner sin licencia", "Chatarrera de drones", "Abogada de pobres"],
+    especialidades: ["con firmware ilegal", "con un patrocinador toxico", "con recuerdos editados", "con deuda de clinica"],
+    lugares: ["Distrito Neon", "Bloque 88", "Puerto de Datos", "subsuelo corporativo", "azoteas de lluvia acida", "mercado de implantes"],
+    motivaciones: ["Quiere liberar una prueba antes de que la borren.", "Necesita comprar un cuerpo nuevo para alguien querido.", "Busca al tecnico que altero sus recuerdos.", "Pretende tumbar una torre desde dentro."],
+    pnjRoles: ["Fixer", "Maton aumentado", "Ejecutiva de zona", "Vendedora de implantes", "Drone con dueno oculto", "Periodista pirata"]
+  },
+  terrorContemporaneo: {
+    perfiles: ["Paramedica agotada", "Profesor sustituto", "Policia de pueblo", "Streamer de sucesos", "Operaria nocturna", "Psicologa escolar", "Tecnico de emergencias", "Conserje de hospital"],
+    especialidades: ["con una llamada perdida", "con llaves de sitios prohibidos", "con trauma reciente", "con intuicion para lo raro"],
+    lugares: ["un motel de carretera", "un hospital comarcal", "un instituto cerrado", "una urbanizacion sin cobertura", "un bosque recreativo", "un poligono abandonado"],
+    motivaciones: ["Quiere encontrar a una persona desaparecida antes de la policia.", "Necesita terminar el turno sin otra muerte inexplicable.", "Sabe que la version oficial no encaja.", "Pretende sacar a su familia del pueblo esta noche."],
+    pnjRoles: ["Vecina asustada", "Sheriff cansado", "Tecnico de camaras", "Paciente alterado", "Conductor perdido", "Encargada de gasolinera"]
+  }
+};
+const DUNGEONS_RACES = [
+  { label: "Humano", min: 68, max: 96, alignments: ["legal refunfunon", "neutral cansado", "bueno de baston facil"] },
+  { label: "Enano", min: 185, max: 312, alignments: ["legal testarudo", "neutral de taberna", "bueno con rodilleras"] },
+  { label: "Elfo", min: 620, max: 920, alignments: ["caotico nostalgico", "neutral insoportable", "bueno pero con siesta larga"] },
+  { label: "Mediano", min: 102, max: 168, alignments: ["legal merendero", "neutral merendador", "bueno de doble desayuno"] },
+  { label: "Gnomo", min: 210, max: 355, alignments: ["caotico inventor", "neutral chisposo", "bueno con cataratas magicas"] },
+  { label: "Semielfo", min: 155, max: 240, alignments: ["neutral melodramatico", "bueno elegante", "caotico de reunion familiar"] },
+  { label: "Semiorco", min: 74, max: 112, alignments: ["legal sorprendentemente educado", "neutral grunon", "bueno de abrazo peligroso"] },
+  { label: "Tiefling", min: 92, max: 146, alignments: ["caotico con reuma", "neutral de cuerno pulido", "bueno aunque no lo parezca"] }
+];
+const DUNGEONS_PROFILE = {
+  nombres: ["Baldomero", "Rigoberta", "Apolonio", "Gertrudis", "Anacleto", "Filomena", "Casilda", "Eustaquio", "Maruja", "Venancio", "Herminia", "Gumersindo", "Petronila", "Celedonio"],
+  apellidos: ["del Baston Roto", "Catarata de Plata", "Matadragones Jubilado", "de la Siesta Eterna", "Sopasombra", "del Bingo Arcano", "Rodillafirme", "Nietobane", "del Caldero Flojo", "Reumatrueno"],
+  clases: ["guerrero jubilado", "cleriga de ambulatorio", "picara de ventanilla", "mago de manual grande", "barbara de residencia", "bardo de sobremesa", "druida de huerto urbano", "paladina de la queja formal", "explorador de pasillo", "monje de aquagym"],
+  manias: ["odia las escaleras de caracol", "lleva caramelos de menta sagrada", "duerme con la armadura puesta", "discute con las antorchas", "recuerda la mazmorra de antes", "exige descuento de jubilacion en cada taberna"],
+  lugares: ["la Residencia del Grifo", "el Club del Dado Dorado", "Villa Cataplasma", "las Termas del Kobold", "el Hogar del Beholder Tuerto", "el Reino de la Paga Extra", "la Cripta con Ascensor", "el Balneario de los Mil Limos"],
+  motivaciones: [
+    "Quiere recuperar una dentadura magica antes de que despierte al lich equivocado.",
+    "Busca demostrar a sus nietos que aun puede saquear una mazmorra sin GPS.",
+    "Necesita pagar una derrama de la residencia con tesoro de dragon.",
+    "Ha confundido la excursion cultural con una gesta epica y ya no piensa retirarse.",
+    "Persigue al monstruo que le robo la silla plegable encantada."
+  ],
+  fisico: [
+    "Postura orgullosa, rodillas traicioneras y una mirada que ya ha visto demasiados goblins fiscales.",
+    "Arrastra una mochila llena de remedios, reliquias y bocadillos envueltos en papel.",
+    "Viste equipo heroico remendado con lana, cuero viejo y parches de excursiones pasadas.",
+    "Camina despacio hasta que alguien menciona tesoro, turno de cena o descuentos."
+  ],
+  familia: [
+    "Sus nietos creen que juega a las cartas; nadie les ha explicado lo de las catacumbas.",
+    "Tiene familia en tres reinos y discusiones pendientes en todos.",
+    "Recibe mensajes por paloma, cristal y grupo familiar, ninguno tranquilizador.",
+    "Prometio volver antes de la merienda y ya lleva dos reinos de retraso."
+  ],
+  pnjRoles: ["Jubilado rival", "Goblin fisioterapeuta", "Dragona administradora", "Tabernera de residencia", "Nieto preocupado", "Clerigo de guardia", "Reina pensionista", "Limo de mantenimiento"],
+  pnjBandos: ["Quiere evitar papeleo", "Aliado si hay merienda", "Hostil por error administrativo", "Neutral hasta la hora de la siesta", "Defiende una cola", "Protege un descuento"],
+  pnjDescripcion: [
+    "Tiene mas informacion que paciencia y solo habla si alguien se sienta a escuchar.",
+    "Confunde protocolo de mazmorra con normas de comunidad, pero manda mucho.",
+    "Parece inofensivo hasta que recuerda donde guardo el arma buena.",
+    "Ofrece ayuda, reproches y una historia larguisima en el mismo turno."
   ]
 };
 
@@ -99,6 +196,10 @@ function choice(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+function randomInt(min, max) {
+  return min + Math.floor(Math.random() * (max - min + 1));
+}
+
 function shuffle(array) {
   const out = [...array];
   for (let i = out.length - 1; i > 0; i -= 1) {
@@ -106,6 +207,97 @@ function shuffle(array) {
     [out[i], out[j]] = [out[j], out[i]];
   }
   return out;
+}
+
+function currentVariantKey() {
+  return globalThis.game?.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
+}
+
+function generatorProfile() {
+  const key = currentVariantKey();
+  if (key === "dungeonsYayos") return DUNGEONS_PROFILE;
+  const specific = GENERATOR_VARIANTS[key] ?? {};
+  return {
+    ...GENERATOR_BASE,
+    ...specific,
+    nombres: specific.nombres ?? GENERATOR_BASE.nombres,
+    apodos: specific.apodos ?? GENERATOR_BASE.apodos,
+    perfiles: specific.perfiles ?? GENERATOR_BASE.perfiles,
+    especialidades: specific.especialidades ?? GENERATOR_BASE.especialidades,
+    lugares: specific.lugares ?? GENERATOR_BASE.lugares,
+    motivaciones: specific.motivaciones ?? GENERATOR_BASE.motivaciones,
+    fisico: specific.fisico ?? GENERATOR_BASE.fisico,
+    familia: specific.familia ?? GENERATOR_BASE.familia,
+    pnjRoles: specific.pnjRoles ?? GENERATOR_BASE.pnjRoles,
+    pnjBandos: specific.pnjBandos ?? GENERATOR_BASE.pnjBandos,
+    pnjDescripcion: specific.pnjDescripcion ?? GENERATOR_BASE.pnjDescripcion
+  };
+}
+
+function variantLabel() {
+  const key = currentVariantKey();
+  return IMSERSO.variants[key]?.label ?? IMSERSO.variants.base.label;
+}
+
+function genericIdentity(kind = "pj") {
+  const profile = generatorProfile();
+  const name = `${choice(profile.nombres)} ${choice(profile.apodos)}`;
+  const role = choice(profile.perfiles);
+  const detail = choice(profile.especialidades);
+  const place = choice(profile.lugares);
+  const profileText = `${variantLabel()} · ${detail}`;
+  if (kind === "pnj") {
+    return {
+      name,
+      role: choice(profile.pnjRoles),
+      bando: choice(profile.pnjBandos),
+      description: `${choice(profile.pnjDescripcion)} ${choice(profile.fisico)}`,
+      notes: `${role} ${detail}. Procede de ${place}. Motivacion: ${choice(profile.motivaciones)}`
+    };
+  }
+  return {
+    name,
+    place,
+    age: `${randomInt(18, 68)}`,
+    profession: `${role} ${detail}`,
+    profile: profileText,
+    motivation: choice(profile.motivaciones),
+    physical: choice(profile.fisico),
+    family: choice(profile.familia)
+  };
+}
+
+function dungeonsIdentity(kind = "pj") {
+  const race = choice(DUNGEONS_RACES);
+  const age = randomInt(race.min, race.max);
+  const alignment = choice(race.alignments);
+  const name = `${choice(DUNGEONS_PROFILE.nombres)} ${choice(DUNGEONS_PROFILE.apellidos)}`;
+  const role = choice(DUNGEONS_PROFILE.clases);
+  const quirk = choice(DUNGEONS_PROFILE.manias);
+  const place = choice(DUNGEONS_PROFILE.lugares);
+  if (kind === "pnj") {
+    return {
+      name,
+      role: `${choice(DUNGEONS_PROFILE.pnjRoles)} ${race.label}`,
+      bando: choice(DUNGEONS_PROFILE.pnjBandos),
+      description: `${choice(DUNGEONS_PROFILE.pnjDescripcion)} Tiene ${age} años, es ${race.label.toLowerCase()} ${alignment} y ${quirk}.`,
+      notes: `Raza/alineamiento: ${race.label} ${alignment}. Oficio: ${role}. Lugar: ${place}.`
+    };
+  }
+  return {
+    name,
+    place: `${race.label} ${alignment}`,
+    age: `${age}`,
+    profession: `${role} (${quirk})`,
+    profile: `Dungeons & Yayos · ${place}`,
+    motivation: choice(DUNGEONS_PROFILE.motivaciones),
+    physical: choice(DUNGEONS_PROFILE.fisico),
+    family: choice(DUNGEONS_PROFILE.familia)
+  };
+}
+
+function randomIdentity(kind = "pj") {
+  return isDungeonsYayos() ? dungeonsIdentity(kind) : genericIdentity(kind);
 }
 
 function keepExistingName(name, fallback) {
@@ -217,6 +409,7 @@ function defaultState(actor = null, type = actor?.type ?? "personaje") {
 }
 
 async function generateRandomState(base) {
+  const identity = randomIdentity("pj");
   const attrKeys = Object.keys(attributesForRuleset());
   const attrValues = shuffle(attrValuesForRuleset());
   const attrs = Object.fromEntries(attrKeys.map((key, index) => [key, attrValues[index]]));
@@ -226,20 +419,20 @@ async function generateRandomState(base) {
   for (const key of skillKeys.slice(4, 12)) skills[key] = { dados: 2 };
   const healthRoll = await new Roll("1d6").evaluate({ async: true });
   return {
-    name: keepExistingName(base.name, choice(RANDOM.nombres)),
+    name: keepExistingName(base.name, identity.name),
     atributos: attrs,
     habilidades: skills,
     healthRoll: healthRoll.total,
     defectos: { leve: choice(DEFECTOS_LEVES), grave: choice(DEFECTOS_GRAVES) },
     datos: {
       jugador: base.datos?.jugador ?? game.user.name ?? "",
-      lugarNacimiento: choice(RANDOM.lugares),
-      edad: `${18 + Math.floor(Math.random() * 48)}`,
-      profesion: choice(RANDOM.perfiles),
-      perfil: isDungeonsYayos() ? "Creacion aleatoria Dungeons & Yayos" : "Creacion aleatoria SRD",
-      motivacion: choice(RANDOM.motivaciones),
-      descripcionFisica: choice(RANDOM.fisico),
-      situacionFamiliar: choice(RANDOM.familia)
+      lugarNacimiento: identity.place,
+      edad: identity.age,
+      profesion: identity.profession,
+      perfil: identity.profile,
+      motivacion: identity.motivation,
+      descripcionFisica: identity.physical,
+      situacionFamiliar: identity.family
     },
     selected3: skillKeys.slice(0, 4),
     selected2: skillKeys.slice(4, 12)
@@ -247,6 +440,7 @@ async function generateRandomState(base) {
 }
 
 async function generateRandomPnjState(base) {
+  const identity = randomIdentity("pnj");
   const attrKeys = Object.keys(attributesForRuleset());
   const attrs = Object.fromEntries(attrKeys.map((key) => [key, Math.floor(Math.random() * 5)]));
   const skillKeys = shuffle(Object.keys(skillsForRuleset()));
@@ -255,15 +449,15 @@ async function generateRandomPnjState(base) {
   for (const key of skillKeys.slice(2, 7)) skills[key] = { dados: 2 };
   const healthRoll = await new Roll("1d6").evaluate({ async: true });
   return {
-    name: keepExistingName(base.name, choice(RANDOM.nombres)),
+    name: keepExistingName(base.name, identity.name),
     atributos: attrs,
     habilidades: skills,
     healthRoll: healthRoll.total,
     pnj: {
-      rol: choice(RANDOM.pnjRoles),
-      bando: choice(RANDOM.pnjBandos),
-      descripcion: choice(RANDOM.pnjDescripcion),
-      notas: `Especialidades: ${skillKeys.slice(0, 7).map(labelForSkill).join(", ")}.`
+      rol: identity.role,
+      bando: identity.bando,
+      descripcion: identity.description,
+      notas: `${identity.notes} Especialidades: ${skillKeys.slice(0, 7).map(labelForSkill).join(", ")}.`
     }
   };
 }
@@ -310,6 +504,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
   }
 
   getData() {
+    if (isDungeonsYayos() && this.state.mode === "arquetipo") this.state.mode = "libre";
     const steps = this.steps.map((step, index) => ({
       ...step,
       index,
@@ -336,6 +531,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       themeClass: currentThemeClass(),
       isPnj: this.state.actorType === "pnj",
       isDungeonsYayos: isDungeons,
+      supportsArchetypes: !isDungeons,
       attrValuesText: attrValuesText(),
       attrRequirementText: isDungeons ? "Reparte 0, +2, +4 y +6 entre los cuatro atributos." : "Reparte 0, +1, +2, +4 y +6 entre atributos.",
       resourceLabel: isDungeons ? "Yayopoints" : "Proezas",
@@ -441,6 +637,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     const data = new FormData(form);
     this.state.name = String(data.get("name") ?? this.state.name);
     this.state.mode = String(data.get("mode") ?? this.state.mode);
+    if (isDungeonsYayos() && this.state.mode === "arquetipo") this.state.mode = "libre";
     this.state.arquetipoKey = String(data.get("arquetipoKey") ?? this.state.arquetipoKey);
     for (const key of Object.keys(this.state.datos)) this.state.datos[key] = String(data.get(`datos.${key}`) ?? this.state.datos[key] ?? "");
     for (const key of Object.keys(this.state.pnj)) this.state.pnj[key] = String(data.get(`pnj.${key}`) ?? this.state.pnj[key] ?? "");
@@ -558,7 +755,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
   }
 
   _effectiveBuild() {
-    const arquetipo = this.state.actorType === "personaje" && this.state.mode === "arquetipo" ? arquetipoByKey(this.state.arquetipoKey) : null;
+    const arquetipo = this.state.actorType === "personaje" && this.state.mode === "arquetipo" && !isDungeonsYayos() ? arquetipoByKey(this.state.arquetipoKey) : null;
     const attrs = arquetipo ? clone(arquetipo.attrs) : normalizeAttributes(this.state.atributos, { legal: this.state.actorType !== "pnj" });
     const skills = arquetipo ? archetypeSkills(arquetipo) : normalizeSkills(this.state.habilidades);
     const healthBase = arquetipo ? arquetipo.saludBase : 10 + number(attrs.fue, 0) * 2;

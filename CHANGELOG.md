@@ -7,6 +7,18 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.18] — 2026-06-03
+
+### Añadido
+- El creador guiado de PJ y PNJ genera nombres, perfiles, motivaciones, descripciones y roles segun la variante activa.
+- `Dungeons & Yayos` incorpora generacion propia con razas, alineamientos y edades ancianas adaptadas a cada raza.
+- Añadido el logotipo especifico de `Dungeons & Yayos` a las hojas de la variante.
+
+### Cambiado
+- `Dungeons & Yayos` ya no ofrece arquetipos SRD en el creador guiado.
+- El tema visual de `Dungeons & Yayos` pasa a una paleta de pergamino, rojo oscuro y dorado inspirada en fichas fantasticas.
+- La hoja A4 muestra `Raza / alineamiento` y `Años` cuando esta activa la variante `Dungeons & Yayos`.
+
 ## [0.3.17] — 2026-06-02
 
 ### Corregido

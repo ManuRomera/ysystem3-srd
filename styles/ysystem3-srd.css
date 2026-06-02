@@ -274,35 +274,35 @@ body.ys-theme-terror {
 }
 
 body.ys-theme-dungeons {
-  --ims-green: #245f49;
-  --ims-green-soft: #9ac0a3;
-  --ims-mint: #86b894;
-  --ims-pink: #8f3157;
-  --ims-plum: #3a263f;
-  --ims-plum-dark: #211526;
-  --ims-ink: #211526;
-  --ims-text: #211526;
-  --ims-muted: #5e4c61;
-  --ims-paper: #f0e5cc;
-  --ims-blue-ink: #3a263f;
+  --ims-green: #8b1f2e;
+  --ims-green-soft: #c8a24f;
+  --ims-mint: #c7a14d;
+  --ims-pink: #a62a38;
+  --ims-plum: #2a2220;
+  --ims-plum-dark: #15100f;
+  --ims-ink: #241916;
+  --ims-text: #241916;
+  --ims-muted: #6d5948;
+  --ims-paper: #f3ead8;
+  --ims-blue-ink: #2a2220;
   --ys-paper-bg:
-    radial-gradient(circle at 5% 12%, rgba(36, 95, 73, 0.12), transparent 16%),
-    radial-gradient(circle at 95% 88%, rgba(143, 49, 87, 0.14), transparent 18%),
-    linear-gradient(180deg, rgba(251, 244, 224, 0.96), rgba(226, 211, 177, 0.9)),
+    radial-gradient(circle at 8% 12%, rgba(139, 31, 46, 0.12), transparent 18%),
+    radial-gradient(circle at 94% 86%, rgba(199, 161, 77, 0.18), transparent 20%),
+    linear-gradient(180deg, rgba(250, 244, 232, 0.96), rgba(228, 213, 184, 0.9)),
     var(--ims-paper);
-  --ys-paper-border: #3a263f;
+  --ys-paper-border: #2a2220;
   --ys-paper-border-width: 7px;
   --ys-paper-radius: 6px;
-  --ys-tab-gradient: linear-gradient(90deg, #211526, #245f49);
+  --ys-tab-gradient: linear-gradient(90deg, #241916, #7f1b2d 56%, #3a1514);
   --ys-logo-bg: transparent;
   --ys-logo-border-width: 0;
   --ys-logo-radius: 0;
   --ys-logo-transform: none;
-  --ys-field-line: 3px dotted #3a263f;
+  --ys-field-line: 3px dotted #8b1f2e;
   --ys-heading-font: Georgia, "Times New Roman", serif;
   --ys-logo-font: Georgia, "Times New Roman", serif;
   --ys-script-font: Georgia, "Times New Roman", serif;
-  --ys-section-shadow-color: #86b894;
+  --ys-section-shadow-color: #c7a14d;
 }
 
 .ys-screen-sheet.ys-theme-base,
@@ -363,7 +363,7 @@ body.ys-theme-dungeons {
 .ys-a4-sheet.ys-theme-dungeons,
 .ims-item.ys-theme-dungeons,
 .ims-creator.ys-theme-dungeons {
-  --ys-section-shadow-color: #86b894;
+  --ys-section-shadow-color: #c7a14d;
   --ys-card-shadow: 6px 6px 0 var(--ys-section-shadow-color);
 }
 
@@ -3592,6 +3592,23 @@ body[class*="ys-theme-"] .application.image-browser :is(.directory, .files-list,
   box-shadow: none !important;
   clip-path: inset(2px);
   transform: scale(1.08);
+}
+
+.ys-theme-dungeons .ys-brand {
+  min-height: 58px;
+  padding-left: 0;
+}
+
+.ys-theme-dungeons .ys-brand img {
+  width: min(260px, 36vw);
+  height: 58px;
+  clip-path: none;
+  transform: none;
+}
+
+.ys-theme-dungeons .ys-brand strong,
+.ys-theme-dungeons .ys-brand span {
+  display: none;
 }
 
 .ys-brand strong {

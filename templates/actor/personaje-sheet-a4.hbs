@@ -17,8 +17,8 @@
               <h2>1. Datos del personaje</h2>
               <label class="span-2">Nombre del jugador<input name="system.datos.jugador" value="{{system.datos.jugador}}"></label>
               <label class="span-2">Nombre del PJ<input name="name" value="{{actor.name}}"></label>
-              <label>Lugar de nacimiento<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
-              <label>Edad<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
+              <label>{{#if isDungeonsYayos}}Raza / alineamiento{{else}}Lugar de nacimiento{{/if}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
+              <label>{{#if isDungeonsYayos}}Años{{else}}Edad{{/if}}<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
               <label>Profesión / perfil (+3)<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
               <label>Ambientación<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
               <label class="span-2 tall">Motivación<textarea name="system.datos.motivacion">{{system.datos.motivacion}}</textarea></label>

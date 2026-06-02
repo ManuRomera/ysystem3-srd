@@ -72,7 +72,8 @@ export class ImsersoActorSheet extends ActorSheet {
     context.isGM = game.user.isGM;
     context.sheetLayout = game.settings?.get?.(IMSERSO.ID, "sheetLayout") ?? "screen";
     const variantKey = game.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
-    context.themeClass = IMSERSO.variants[variantKey]?.themeClass ?? IMSERSO.variants.base.themeClass;
+    const variant = IMSERSO.variants[variantKey] ?? IMSERSO.variants.base;
+    context.themeClass = variant.themeClass ?? IMSERSO.variants.base.themeClass;
     const ruleset = currentRuleset();
     const activeAttributes = attributesForRuleset(ruleset);
     const activeSkills = skillsForRuleset(ruleset);
@@ -81,7 +82,7 @@ export class ImsersoActorSheet extends ActorSheet {
     context.attributeOptions = entries(activeAttributes).map(([key, cfg]) => ({ key, ...cfg }));
     context.isDungeonsYayos = ruleset === "dungeonsYayos";
     context.skillEditEnabled = !!this._summarySkillEdit;
-    context.logoPath = `systems/${IMSERSO.ID}/assets/ysystem-icon.png`;
+    context.logoPath = variant.logoPath ?? `systems/${IMSERSO.ID}/assets/ysystem-icon.png`;
     context.atributos = entries(activeAttributes).map(([key, cfg]) => ({
       key,
       ...cfg,
