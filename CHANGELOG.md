@@ -7,6 +7,14 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.19] — 2026-06-03
+
+### Corregido
+- `Dungeons & Yayos` calcula ahora `Yayopoints` como `(CAC + ROB) / 2 + 2`, `Bemoles` como `CAC + 7` y `Nervio` como `3 x dados de Atletismo + PRE`.
+- El creador guiado de PJ en `Dungeons & Yayos` pide 6 habilidades a 2D, no las 8 de YSYSTEM3.
+- Los PJ pregenerados y la ayuda contextual de `Dungeons & Yayos` usan las formulas correctas de la variante.
+- Las fichas de `Dungeons & Yayos` creadas con la formula antigua recuperan automaticamente el valor derivado correcto cuando el valor manual coincide con el calculo previo erroneo.
+
 ## [0.3.18] — 2026-06-03
 
 ### Añadido

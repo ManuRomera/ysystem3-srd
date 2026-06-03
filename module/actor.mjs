@@ -63,21 +63,38 @@ function calcResistenciaMental(system) {
 }
 
 function calcBemoles(system) {
-  return Math.floor((number(system.atributos?.int, 0) + number(system.atributos?.fue, 0)) / 2) + 2;
+  return number(system.atributos?.int, 0) + 7;
 }
 
 function calcNervio(system) {
-  return number(system.atributos?.int, 0) + number(system.atributos?.car, 0) + 5;
+  const atletismo = finiteNumber(system.habilidades?.atletismo?.dados, 1);
+  return (atletismo * 3) + number(system.atributos?.des, 0);
 }
 
 function calcYayopoints(system) {
-  return Math.max(6, Math.floor((number(system.atributos?.fue, 0) + number(system.atributos?.int, 0)) / 2) + 6);
+  return Math.floor((number(system.atributos?.int, 0) + number(system.atributos?.fue, 0)) / 2) + 2;
 }
 
 function manualValue(resource, fallback) {
   const raw = typeof resource === "object" ? resource?.valor : resource;
   if (raw === "" || raw === null || raw === undefined) return fallback;
   return number(raw, fallback);
+}
+
+function legacyDungeonsBemoles(system) {
+  return Math.floor((number(system.atributos?.int, 0) + number(system.atributos?.fue, 0)) / 2) + 2;
+}
+
+function legacyDungeonsNervio(system) {
+  return number(system.atributos?.int, 0) + number(system.atributos?.car, 0) + 5;
+}
+
+function dungeonsManualValue(resource, fallback, legacy) {
+  const raw = typeof resource === "object" ? resource?.valor : resource;
+  if (raw === "" || raw === null || raw === undefined) return fallback;
+  const value = number(raw, fallback);
+  if (value === legacy && value !== fallback) return fallback;
+  return value;
 }
 
 function ensureThresholds(target, thresholds = [16, 11, 7, 4, 2]) {
@@ -383,8 +400,8 @@ export class ImsersoActor extends Actor {
     sys.efectivos = effective;
     const autoAgilidad = ruleset === "dungeonsYayos" ? calcBemoles(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0));
     const autoAplomo = ruleset === "dungeonsYayos" ? calcNervio(derived) : calcAplomo(derived);
-    sys.agilidad = ruleset === "dungeonsYayos" ? manualValue(sys.valoresManual?.agilidad, autoAgilidad) : autoAgilidad;
-    sys.aplomo = ruleset === "dungeonsYayos" ? manualValue(sys.valoresManual?.aplomo, autoAplomo) : autoAplomo;
+    sys.agilidad = ruleset === "dungeonsYayos" ? dungeonsManualValue(sys.valoresManual?.agilidad, autoAgilidad, legacyDungeonsBemoles(derived)) : autoAgilidad;
+    sys.aplomo = ruleset === "dungeonsYayos" ? dungeonsManualValue(sys.valoresManual?.aplomo, autoAplomo, legacyDungeonsNervio(derived)) : autoAplomo;
     sys.perspicacia = calcPerspicacia(derived);
     sys.resistenciaFisica ??= {};
     if (!sys.resistenciaFisica?.valor) sys.resistenciaFisica.valor = calcResistenciaFisica(derived);

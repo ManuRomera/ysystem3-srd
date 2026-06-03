@@ -126,7 +126,7 @@
       {{else}}
       <section class="ims-creator-card">
         <h2>3. Atributos y habilidades</h2>
-        <p class="ims-creator-note">{{attrRequirementText}} Despues marca 4 habilidades a 3D y 8 a 2D.</p>
+        <p class="ims-creator-note">{{attrRequirementText}} Despues marca {{skill3Target}} habilidades a 3D y {{skill2Target}} a 2D.</p>
         <div class="ims-creator-grid four">
           {{#each atributos}}
           <label>{{short}} · {{label}}
@@ -137,7 +137,7 @@
           {{/each}}
         </div>
         <div class="ims-skill-builder">
-          <header><strong>Habilidades</strong><span>3D: {{selected3}}/4 · 2D: {{selected2}}/8</span></header>
+          <header><strong>Habilidades</strong><span>3D: {{selected3}}/{{skill3Target}} · 2D: {{selected2}}/{{skill2Target}}</span></header>
           {{#each habilidades}}
           <label>
             <span>{{label}} <small>{{attr}}</small></span>

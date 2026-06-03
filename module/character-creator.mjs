@@ -361,15 +361,19 @@ function calcStability(attrs) {
 }
 
 function calcBemoles(attrs) {
-  return Math.floor((number(attrs.int, 0) + number(attrs.fue, 0)) / 2) + 2;
+  return number(attrs.int, 0) + 7;
 }
 
-function calcNervio(attrs) {
-  return number(attrs.int, 0) + number(attrs.car, 0) + 5;
+function calcNervio(attrs, skills = {}) {
+  return number(skills.atletismo?.dados, 1) * 3 + number(attrs.des, 0);
 }
 
 function calcYayopoints(attrs) {
-  return Math.max(6, Math.floor((number(attrs.fue, 0) + number(attrs.int, 0)) / 2) + 6);
+  return Math.floor((number(attrs.int, 0) + number(attrs.fue, 0)) / 2) + 2;
+}
+
+function skillTargetsForRuleset() {
+  return isDungeonsYayos() ? { d3: 4, d2: 6 } : { d3: 4, d2: 8 };
 }
 
 function defaultState(actor = null, type = actor?.type ?? "personaje") {
@@ -415,8 +419,9 @@ async function generateRandomState(base) {
   const attrs = Object.fromEntries(attrKeys.map((key, index) => [key, attrValues[index]]));
   const skillKeys = shuffle(Object.keys(skillsForRuleset()));
   const skills = defaultSkills(1);
-  for (const key of skillKeys.slice(0, 4)) skills[key] = { dados: 3 };
-  for (const key of skillKeys.slice(4, 12)) skills[key] = { dados: 2 };
+  const targets = skillTargetsForRuleset();
+  for (const key of skillKeys.slice(0, targets.d3)) skills[key] = { dados: 3 };
+  for (const key of skillKeys.slice(targets.d3, targets.d3 + targets.d2)) skills[key] = { dados: 2 };
   const healthRoll = await new Roll("1d6").evaluate({ async: true });
   return {
     name: keepExistingName(base.name, identity.name),
@@ -434,8 +439,8 @@ async function generateRandomState(base) {
       descripcionFisica: identity.physical,
       situacionFamiliar: identity.family
     },
-    selected3: skillKeys.slice(0, 4),
-    selected2: skillKeys.slice(4, 12)
+    selected3: skillKeys.slice(0, targets.d3),
+    selected2: skillKeys.slice(targets.d3, targets.d3 + targets.d2)
   };
 }
 
@@ -514,6 +519,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     const effective = this._effectiveBuild();
     const counts = this._selectedSkillCounts();
     const isDungeons = isDungeonsYayos();
+    const skillTargets = skillTargetsForRuleset();
     const skillRows = Object.entries(skillsForRuleset()).map(([key, cfg]) => {
       const dice = number(this.state.habilidades?.[key]?.dados, 1);
       return {
@@ -521,8 +527,8 @@ export class YsystemCharacterCreator extends ApplicationV1 {
         label: cfg.label,
         attr: labelForAttribute(cfg.atributo),
         dice,
-        lock2: this.state.actorType === "personaje" && counts.d2 >= 8 && dice !== 2,
-        lock3: this.state.actorType === "personaje" && counts.d3 >= 4 && dice !== 3
+        lock2: this.state.actorType === "personaje" && counts.d2 >= skillTargets.d2 && dice !== 2,
+        lock3: this.state.actorType === "personaje" && counts.d3 >= skillTargets.d3 && dice !== 3
       };
     });
     return {
@@ -556,6 +562,8 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       habilidades: skillRows,
       selected3: counts.d3,
       selected2: counts.d2,
+      skill3Target: skillTargets.d3,
+      skill2Target: skillTargets.d2,
       effective,
       warnings: this._warnings(effective, counts)
     };
@@ -601,13 +609,14 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       const rank = number(event.currentTarget.value, 1);
       this.state.habilidades[key] = { dados: rank };
       const counts = this._selectedSkillCounts();
-      if (this.state.actorType === "personaje" && rank === 3 && previous !== 3 && counts.d3 > 4) {
+      const skillTargets = skillTargetsForRuleset();
+      if (this.state.actorType === "personaje" && rank === 3 && previous !== 3 && counts.d3 > skillTargets.d3) {
         this.state.habilidades[key] = { dados: previous };
-        ui.notifications.warn("Ya hay 4 habilidades a 3D. Baja otra habilidad antes de subir esta.");
+        ui.notifications.warn(`Ya hay ${skillTargets.d3} habilidades a 3D. Baja otra habilidad antes de subir esta.`);
       }
-      if (this.state.actorType === "personaje" && rank === 2 && previous !== 2 && counts.d2 > 8) {
+      if (this.state.actorType === "personaje" && rank === 2 && previous !== 2 && counts.d2 > skillTargets.d2) {
         this.state.habilidades[key] = { dados: previous };
-        ui.notifications.warn("Ya hay 8 habilidades a 2D. Baja otra habilidad antes de subir esta.");
+        ui.notifications.warn(`Ya hay ${skillTargets.d2} habilidades a 2D. Baja otra habilidad antes de subir esta.`);
       }
       this.render(false);
     });
@@ -772,7 +781,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       rf: arquetipo?.resistenciaFisica ?? calcRf(attrs),
       rm: calcRm(attrs),
       agilidad: dungeons ? calcBemoles(attrs) : calcAgilidad(attrs, skills),
-      aplomo: dungeons ? calcNervio(attrs) : calcAplomo(attrs),
+      aplomo: dungeons ? calcNervio(attrs, skills) : calcAplomo(attrs),
       perspicacia: dungeons ? 0 : calcPerspicacia(attrs),
       proezas: arquetipo?.proezas ?? (dungeons ? calcYayopoints(attrs) : Math.floor((number(attrs.fue, 0) + number(attrs.int, 0)) / 2) + 3),
       puntoGuion: dungeons ? 0 : 1
@@ -786,11 +795,12 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     if (this.state.actorType === "personaje") {
       if (this.state.mode === "arquetipo" && !effective.arquetipo) warnings.push("Selecciona un arquetipo.");
       if (["libre", "aleatorio"].includes(this.state.mode)) {
+        const skillTargets = skillTargetsForRuleset();
         const values = Object.values(this.state.atributos).map((value) => number(value, -1));
         const expected = attrValuesForRuleset();
         if (new Set(values).size !== expected.length || !expected.every((value) => values.includes(value))) warnings.push(`Reparte una vez cada valor de atributo: ${attrValuesText()}.`);
-        if (counts.d3 !== 4) warnings.push(`Selecciona exactamente 4 habilidades a 3D. Ahora: ${counts.d3}.`);
-        if (counts.d2 !== 8) warnings.push(`Selecciona exactamente 8 habilidades a 2D. Ahora: ${counts.d2}.`);
+        if (counts.d3 !== skillTargets.d3) warnings.push(`Selecciona exactamente ${skillTargets.d3} habilidades a 3D. Ahora: ${counts.d3}.`);
+        if (counts.d2 !== skillTargets.d2) warnings.push(`Selecciona exactamente ${skillTargets.d2} habilidades a 2D. Ahora: ${counts.d2}.`);
       }
       if (!this.state.defectos.leve.trim() || !this.state.defectos.grave.trim()) warnings.push("Faltan defecto leve y defecto grave.");
     }

@@ -84,9 +84,9 @@ const DUNGEONS_YAYOS_HELP = {
     oido: { title: "Oido", subtitle: "CAC", body: "Escuchar sonidos, conversaciones y pistas auditivas pese a la edad y al ruido de la mazmorra." }
   },
   rule: {
-    proezas: { title: "Yayopoints", body: "Recurso heroico de Dungeons & Yayos. Se usa como las proezas del SRD: repetir dados de una tirada fallada, sumar 1D antes de tirar, reforzar valores o aumentar dano cuando la regla lo permite." },
-    agilidad: { title: "Bemoles", body: "Valor fijo de descaro fisico y defensivo. Se calcula como (CAC + ROB) / 2 + 2." },
-    aplomo: { title: "Nervio", body: "Temple y resistencia de caracter. Se calcula como CAC + GRA + 5 y tambien da nombre a la resistencia mental de esta variante." },
+    proezas: { title: "Yayopoints", body: "Recurso heroico de Dungeons & Yayos. Se calcula como (CAC + ROB) / 2 + 2, redondeando hacia abajo cuando haga falta. Se usa como las proezas del SRD: repetir dados de una tirada fallada, sumar 1D antes de tirar, reforzar valores o aumentar dano cuando la regla lo permite." },
+    agilidad: { title: "Bemoles", body: "Valor fijo de descaro fisico y defensivo. Se calcula como CAC + 7." },
+    aplomo: { title: "Nervio", body: "Temple y resistencia de caracter. Se calcula como 3 x dados de Atletismo + PRE y tambien da nombre a la resistencia mental de esta variante." },
     perspicacia: { title: "Vista", body: "Referencia de percepcion propia de Dungeons & Yayos. En la hoja optimizada queda como habilidad y no como tarjeta fija independiente." },
     resistenciaFisica: { title: "Jamacuco", body: "Sustituye a la Resistencia fisica. Sirve para comprobar si el aventurero aguanta los umbrales de Salud sin caer hecho polvo." },
     ataque: { title: "Combate en Dungeons & Yayos", body: "La iniciativa no suma modificadores por arma. No hay armas de fuego. Las armas y hechizos ofensivos tienen dano fijo y suman ROB.", details: ["Defensa activa: DF 10 contra cuerpo a cuerpo con escudo; DF 15 contra cuerpo a cuerpo sin escudo o proyectiles con escudo; DF 20 contra proyectiles sin escudo."] }
