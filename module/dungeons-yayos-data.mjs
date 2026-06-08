@@ -15,10 +15,10 @@ function pj({ name, raza, edad, profesion, alineamiento, attrs, salud, jamacuco,
     system: {
       datos: {
         jugador: "",
-        lugarNacimiento: `${raza} · ${alineamiento}`,
+        lugarNacimiento: raza,
         edad: String(edad),
         profesion,
-        perfil: "Dungeons & Yayos",
+        perfil: alineamiento,
         motivacion: "Buscar el secreto de la eterna juventud en una mazmorra que no promete nada bueno.",
         descripcionFisica: arquetipo,
         situacionFamiliar: familia,
@@ -64,7 +64,7 @@ export const DUNGEONS_YAYOS_PACKS = [
               <h2>Dungeons & Yayos</h2>
               <p>Variante de YayoSystem para fantasia heroica parodica en Forgotten Pills. El Sr. Ministro pasa a ser el <strong>Dungeon Minister</strong> y los PJ son aventureros talluditos.</p>
               <h3>Atributos y valores</h3>
-              <p>La ficha usa <strong>CAC</strong> (Cacumen), <strong>GRA</strong> (Gracia), <strong>PRE</strong> (Prestancia) y <strong>ROB</strong> (Robustez). En el sistema se guardan internamente como INT, CAR, DES y FUE para conservar compatibilidad.</p>
+              <p>La ficha usa <strong>CAC</strong> (Cacumen), <strong>GRA</strong> (Gracejo), <strong>PRE</strong> (Presteza) y <strong>ROB</strong> (Robustez). En el sistema se guardan internamente como INT, CAR, DES y FUE para conservar compatibilidad.</p>
               <p><strong>Bemoles</strong>: CAC + 7. <strong>Nervio</strong>: 3 x dados de Atletismo + PRE. <strong>Yayopoints</strong>: (CAC + ROB) / 2 + 2, redondeando hacia abajo cuando haga falta. <strong>Jamacuco</strong> sustituye a Resistencia fisica.</p>
               <h3>Habilidades</h3>
               <p>Se usa la lista propia: Atletismo, Lanzamiento, Robar, Batallitas, Magia Potagia, Salero, Cerrojos y Trampas, Medicina, Sapiencia, Cosas del Campo, Memoria, Silbido, Cotilleo, Mula Parda, Tollinas, Discusion, Nietos, Vista, Ingesta y Oido.</p>

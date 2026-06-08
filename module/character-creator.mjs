@@ -286,13 +286,13 @@ function dungeonsIdentity(kind = "pj") {
   }
   return {
     name,
-    place: `${race.label} ${alignment}`,
+    place: race.label,
     age: `${age}`,
     profession: `${role} (${quirk})`,
-    profile: `Dungeons & Yayos · ${place}`,
+    profile: alignment,
     motivation: choice(DUNGEONS_PROFILE.motivaciones),
     physical: choice(DUNGEONS_PROFILE.fisico),
-    family: choice(DUNGEONS_PROFILE.familia)
+    family: `${choice(DUNGEONS_PROFILE.familia)} Procede de ${place}.`
   };
 }
 
@@ -510,15 +510,16 @@ export class YsystemCharacterCreator extends ApplicationV1 {
 
   getData() {
     if (isDungeonsYayos() && this.state.mode === "arquetipo") this.state.mode = "libre";
+    const isDungeons = isDungeonsYayos();
     const steps = this.steps.map((step, index) => ({
       ...step,
+      label: isDungeons && step.key === "defectos" ? "Achaques" : step.label,
       index,
       active: index === this.state.step,
       done: index < this.state.step
     }));
     const effective = this._effectiveBuild();
     const counts = this._selectedSkillCounts();
-    const isDungeons = isDungeonsYayos();
     const skillTargets = skillTargetsForRuleset();
     const skillRows = Object.entries(skillsForRuleset()).map(([key, cfg]) => {
       const dice = number(this.state.habilidades?.[key]?.dados, 1);
@@ -545,6 +546,13 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       aplomoLabel: isDungeons ? "Nervio" : "Aplomo",
       perspicaciaLabel: isDungeons ? "Vista" : "Perspicacia",
       rfLabel: isDungeons ? "Jamacuco" : "RF",
+      professionLabel: isDungeons ? "Antigua profesion (+3)" : "Profesion / perfil (+3)",
+      profileLabel: isDungeons ? "Alineamiento" : "Ambientacion",
+      ageLabel: isDungeons ? "Años" : "Edad",
+      originLabel: isDungeons ? "Raza" : "Lugar de nacimiento",
+      minorDefectLabel: isDungeons ? "Achaque menor" : "Defecto leve",
+      majorDefectLabel: isDungeons ? "Achaque mayor" : "Defecto grave",
+      defectsTitle: isDungeons ? "Achaques y Salud inicial" : "Defectos y Salud inicial",
       steps,
       stepKey: this.steps[this.state.step]?.key ?? "datos",
       arquetipos: ARQUETIPOS.map((entry) => ({ ...entry, selected: entry.key === this.state.arquetipoKey })),
@@ -802,7 +810,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
         if (counts.d3 !== skillTargets.d3) warnings.push(`Selecciona exactamente ${skillTargets.d3} habilidades a 3D. Ahora: ${counts.d3}.`);
         if (counts.d2 !== skillTargets.d2) warnings.push(`Selecciona exactamente ${skillTargets.d2} habilidades a 2D. Ahora: ${counts.d2}.`);
       }
-      if (!this.state.defectos.leve.trim() || !this.state.defectos.grave.trim()) warnings.push("Faltan defecto leve y defecto grave.");
+      if (!this.state.defectos.leve.trim() || !this.state.defectos.grave.trim()) warnings.push(isDungeonsYayos() ? "Faltan achaque menor y achaque mayor." : "Faltan defecto leve y defecto grave.");
     }
     return warnings;
   }

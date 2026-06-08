@@ -7,6 +7,14 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.20] — 2026-06-08
+
+### Cambiado
+- `Dungeons & Yayos` usa las etiquetas propias `Antigua profesion (+3)`, `Alineamiento`, `Raza`, `Gracejo`, `Presteza` y `Achaques`.
+- La hoja de `Dungeons & Yayos` oculta la estabilidad, la resistencia mental de umbrales y los estados heredados de YSYSTEM3.
+- La pestaña de notas de `Dungeons & Yayos` incluye un recuadro para la explicacion del talento.
+- El creador guiado y los PJ pregenerados de `Dungeons & Yayos` separan raza y alineamiento en sus campos correspondientes.
+
 ## [0.3.19] — 2026-06-03
 
 ### Corregido

@@ -21,7 +21,7 @@
         <label class="ims-choice">
           <input type="radio" name="mode" value="libre" data-creator-mode {{imsChecked (eq state.mode "libre")}}>
           <strong>Creacion libre</strong>
-          <span>{{attrRequirementText}} Marca 4 habilidades a 3D y 8 a 2D.</span>
+          <span>{{attrRequirementText}} Marca {{skill3Target}} habilidades a 3D y {{skill2Target}} a 2D.</span>
         </label>
         {{#if supportsArchetypes}}
         <label class="ims-choice">
@@ -58,10 +58,10 @@
       <div class="ims-creator-grid two">
         <label>Nombre del jugador<input name="datos.jugador" value="{{state.datos.jugador}}"></label>
         <label>Nombre del PJ<input name="name" value="{{state.name}}"></label>
-        <label>Profesion / perfil (+3)<input name="datos.profesion" value="{{state.datos.profesion}}"></label>
-        <label>Ambientacion<input name="datos.perfil" value="{{state.datos.perfil}}"></label>
-        <label>Edad<input name="datos.edad" value="{{state.datos.edad}}"></label>
-        <label>Lugar de nacimiento<input name="datos.lugarNacimiento" value="{{state.datos.lugarNacimiento}}"></label>
+        <label>{{professionLabel}}<input name="datos.profesion" value="{{state.datos.profesion}}"></label>
+        <label>{{profileLabel}}<input name="datos.perfil" value="{{state.datos.perfil}}"></label>
+        <label>{{ageLabel}}<input name="datos.edad" value="{{state.datos.edad}}"></label>
+        <label>{{originLabel}}<input name="datos.lugarNacimiento" value="{{state.datos.lugarNacimiento}}"></label>
         <label class="span-2">Motivacion<textarea name="datos.motivacion">{{state.datos.motivacion}}</textarea></label>
         <label class="span-2">Descripcion fisica<textarea name="datos.descripcionFisica">{{state.datos.descripcionFisica}}</textarea></label>
         <label class="span-2">Situacion familiar<textarea name="datos.situacionFamiliar">{{state.datos.situacionFamiliar}}</textarea></label>
@@ -156,13 +156,13 @@
 
     {{#if (eq stepKey "defectos")}}
     <section class="ims-creator-card">
-      <h2>4. Defectos y Salud inicial</h2>
+      <h2>4. {{defectsTitle}}</h2>
       <div class="ims-creator-grid two">
-        <label>Defecto leve<input name="defectos.leve" value="{{state.defectos.leve}}"></label>
-        <label>Defecto grave<input name="defectos.grave" value="{{state.defectos.grave}}"></label>
+        <label>{{minorDefectLabel}}<input name="defectos.leve" value="{{state.defectos.leve}}"></label>
+        <label>{{majorDefectLabel}}<input name="defectos.grave" value="{{state.defectos.grave}}"></label>
       </div>
       <div class="ims-creator-actions-inline">
-        <button type="button" data-roll-defects><i class="fas fa-table-list"></i> Generar defectos</button>
+        <button type="button" data-roll-defects><i class="fas fa-table-list"></i> Generar {{#if isDungeonsYayos}}achaques{{else}}defectos{{/if}}</button>
         <button type="button" data-roll-health><i class="fas fa-dice-six"></i> Tirar Salud inicial</button>
       </div>
       <div class="ims-derived-panel">
@@ -184,7 +184,7 @@
         {{#unless isDungeonsYayos}}
         <div><strong>Perspicacia</strong><span>{{effective.perspicacia}}</span></div>
         {{/unless}}
-        {{#unless isPnj}}<div><strong>Estabilidad</strong><span>{{effective.estabilidad}}</span></div>{{/unless}}
+        {{#unless isDungeonsYayos}}{{#unless isPnj}}<div><strong>Estabilidad</strong><span>{{effective.estabilidad}}</span></div>{{/unless}}{{/unless}}
       </div>
       {{#if warnings.length}}
       <div class="ims-creator-warnings">

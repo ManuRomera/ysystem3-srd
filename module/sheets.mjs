@@ -81,6 +81,7 @@ export class ImsersoActorSheet extends ActorSheet {
     context.skillOptions = entries(activeSkills).map(([key, cfg]) => ({ key, ...cfg, attrLabel: labelForAttribute(cfg.atributo) }));
     context.attributeOptions = entries(activeAttributes).map(([key, cfg]) => ({ key, ...cfg }));
     context.isDungeonsYayos = ruleset === "dungeonsYayos";
+    context.hasMentalState = ruleset !== "dungeonsYayos";
     context.skillEditEnabled = !!this._summarySkillEdit;
     context.logoPath = variant.logoPath ?? `systems/${IMSERSO.ID}/assets/ysystem-icon.png`;
     context.atributos = entries(activeAttributes).map(([key, cfg]) => ({

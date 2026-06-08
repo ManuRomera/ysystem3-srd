@@ -153,8 +153,8 @@ export const IMSERSO = {
   },
   atributosDungeonsYayos: {
     int: { label: "Cacumen", short: "CAC" },
-    car: { label: "Gracia", short: "GRA" },
-    des: { label: "Prestancia", short: "PRE" },
+    car: { label: "Gracejo", short: "GRA" },
+    des: { label: "Presteza", short: "PRE" },
     fue: { label: "Robustez", short: "ROB" }
   },
   habilidades: {

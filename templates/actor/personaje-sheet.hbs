@@ -12,10 +12,10 @@
         <label>Jugador<input name="system.datos.jugador" value="{{system.datos.jugador}}"></label>
       </div>
       <div class="ys-meta-grid">
-        <label>Profesión / perfil (+3)<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
-        <label>Ambientación<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
+        <label>{{#if isDungeonsYayos}}Antigua profesión (+3){{else}}Profesión / perfil (+3){{/if}}<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
+        <label>{{#if isDungeonsYayos}}Alineamiento{{else}}Ambientación{{/if}}<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
         <label>{{#if isDungeonsYayos}}Años{{else}}Edad{{/if}}<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
-        <label>{{#if isDungeonsYayos}}Raza / alineamiento{{else}}Lugar de nacimiento{{/if}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
+        <label>{{#if isDungeonsYayos}}Raza{{else}}Lugar de nacimiento{{/if}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
       </div>
     </section>
   </header>
@@ -33,7 +33,7 @@
       <button type="button" data-heal title="Curar"><i class="fas fa-hand-holding-medical"></i><span>Curar</span></button>
       <button type="button" data-rules-heal title="Curación reglada"><i class="fas fa-briefcase-medical"></i><span>Reglada</span></button>
       <button type="button" data-roll-resistencia-fisica title='{{ysTerm "resistancePhysical"}}'><i class="fas fa-heart-pulse"></i><span>RF</span></button>
-      <button type="button" data-roll-resistencia-mental title='{{ysTerm "resistanceMental"}}'><i class="fas fa-brain"></i><span>RM</span></button>
+      {{#if hasMentalState}}<button type="button" data-roll-resistencia-mental title='{{ysTerm "resistanceMental"}}'><i class="fas fa-brain"></i><span>RM</span></button>{{/if}}
     </div>
   </nav>
 
@@ -103,7 +103,7 @@
             <label>Salud<input type="number" name="system.salud.valor" value="{{system.salud.valor}}"></label>
             <label>Max<input type="number" name="system.salud.max" value="{{system.salud.max}}"></label>
             <label>{{ysTerm "resistancePhysical"}}<input type="number" name="system.resistenciaFisica.valor" value="{{system.resistenciaFisica.valor}}"></label>
-            <label>{{ysTerm "resistanceMental"}}<input type="number" name="system.resistenciaMental.valor" value="{{system.resistenciaMental.valor}}"></label>
+            {{#if hasMentalState}}<label>{{ysTerm "resistanceMental"}}<input type="number" name="system.resistenciaMental.valor" value="{{system.resistenciaMental.valor}}"></label>{{/if}}
             <label>Armadura<input type="number" value="{{system.proteccion.dano}}" disabled></label>
             <label>Escudo<input type="number" value="{{system.proteccion.agilidad}}" disabled></label>
             <strong>{{penaltyLabel}}</strong>
@@ -153,11 +153,11 @@
         </section>
 
         <section class="ys-card ys-compact-card" data-help-type="rule" data-help-key="defectos">
-          <header><h2>Defectos y recuerdo</h2></header>
+          <header><h2>{{#if isDungeonsYayos}}Achaques y recuerdo{{else}}Defectos y recuerdo{{/if}}</h2></header>
           <div class="ys-form-grid compact">
-            <label>Defecto leve<textarea class="ys-mini-textarea" name="system.defectos.leve">{{system.defectos.leve}}</textarea></label>
-            <label>Defecto grave<textarea class="ys-mini-textarea" name="system.defectos.grave">{{system.defectos.grave}}</textarea></label>
-            <label class="check"><input type="checkbox" name="system.defectos.leveUsado" {{imsChecked system.defectos.leveUsado}}> Defecto leve usado</label>
+            <label>{{#if isDungeonsYayos}}Achaque menor{{else}}Defecto leve{{/if}}<textarea class="ys-mini-textarea" name="system.defectos.leve">{{system.defectos.leve}}</textarea></label>
+            <label>{{#if isDungeonsYayos}}Achaque mayor{{else}}Defecto grave{{/if}}<textarea class="ys-mini-textarea" name="system.defectos.grave">{{system.defectos.grave}}</textarea></label>
+            <label class="check"><input type="checkbox" name="system.defectos.leveUsado" {{imsChecked system.defectos.leveUsado}}> {{#if isDungeonsYayos}}Achaque menor usado{{else}}Defecto leve usado{{/if}}</label>
             <label class="check"><input type="checkbox" name="system.recuerdo.usado" {{imsChecked system.recuerdo.usado}}> Recuerdo usado</label>
             <label>{{#if isDungeonsYayos}}Es que yo a tus años...{{else}}Nota del recuerdo{{/if}}<textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
           </div>
@@ -236,6 +236,7 @@
           </div>
         </section>
 
+        {{#if hasMentalState}}
         <section class="ys-card ys-wide-card ys-stability-card" data-help-type="rule" data-help-key="estabilidad">
           <header>
             <h2>Estabilidad</h2>
@@ -263,7 +264,9 @@
             {{/each}}
           </div>
         </section>
+        {{/if}}
 
+        {{#if hasMentalState}}
         <section class="ys-card ys-wide-card">
           <header><h2>Estado del personaje</h2></header>
           <div class="ys-form-grid two">
@@ -272,6 +275,7 @@
             <label class="check"><input type="checkbox" name="system.estado.muerto" {{imsChecked system.estado.muerto}}> Muerto</label>
           </div>
         </section>
+        {{/if}}
       </main>
     </div>
 
@@ -313,8 +317,11 @@
         <header><h2>{{#if isDungeonsYayos}}Hechizos del aventurero{{else}}Notas e historia{{/if}}</h2></header>
         <div class="ys-form-grid">
           <label>{{#if isDungeonsYayos}}Hechizos del aventurero{{else}}Historia{{/if}}<textarea name="system.datos.historia">{{system.datos.historia}}</textarea></label>
+          {{#if isDungeonsYayos}}<label>Explicación del talento<textarea name="system.datos.talentoExplicacion">{{system.datos.talentoExplicacion}}</textarea></label>{{/if}}
           <label>Relaciones<textarea name="system.datos.relaciones">{{system.datos.relaciones}}</textarea></label>
+          {{#if hasMentalState}}
           <label>Notas de estado<textarea name="system.estado.notas">{{system.estado.notas}}</textarea></label>
+          {{/if}}
         </div>
       </section>
     </div>

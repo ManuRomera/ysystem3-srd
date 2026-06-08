@@ -1355,6 +1355,10 @@ export class ImsersoActor extends Actor {
     const skill = skillConfig(skillKey);
     const op = skill.oposicion ? `<option value="${skill.oposicion}">Contra ${skill.oposicion}</option>` : "";
     const resource = resourceLabel();
+    const ruleset = currentRuleset();
+    const professionLabel = ruleset === "dungeonsYayos" ? "Antigua profesión (+3)" : "Profesion/perfil (+3)";
+    const majorDefectLabel = ruleset === "dungeonsYayos" ? `Achaque mayor (-1D, +1 ${resource})` : `Defecto grave (-1D, +1 ${resource})`;
+    const minorDefectLabel = ruleset === "dungeonsYayos" ? "Achaque menor (repeticion normal)" : "Defecto leve (repeticion normal)";
     return simpleDialog({
       title: `Tirada: ${labelForSkill(skillKey)}`,
       content: `
@@ -1375,11 +1379,11 @@ export class ImsersoActor extends Actor {
           </div>
           ${defaults.oppositionText ? `<p class="notes">Oposicion detectada: ${escapeHtml(defaults.oppositionText)}.</p>` : ""}
           <div class="ims-dialog-checks">
-            <label class="check"><input type="checkbox" name="profesion"> Profesion/perfil (+3)</label>
+            <label class="check"><input type="checkbox" name="profesion"> ${professionLabel}</label>
             <label class="check"><input type="checkbox" name="proezaDado"> ${resource} antes de tirar (+1D)</label>
             <label class="check"><input type="checkbox" name="recuerdo" ${this.system.recuerdo?.usado ? "disabled" : ""}> Recuerdo cuando... (+2D)</label>
-            <label class="check"><input type="checkbox" name="defectoGrave"> Defecto grave (-1D, +1 ${resource})</label>
-            <label class="check"><input type="checkbox" name="defectoLeve" ${this.system.defectos?.leveUsado ? "disabled" : ""}> Defecto leve (repeticion normal)</label>
+            <label class="check"><input type="checkbox" name="defectoGrave"> ${majorDefectLabel}</label>
+            <label class="check"><input type="checkbox" name="defectoLeve" ${this.system.defectos?.leveUsado ? "disabled" : ""}> ${minorDefectLabel}</label>
           </div>
           <select name="oposicion" hidden><option value="">Dificultad fija</option>${op}</select>
         </form>`

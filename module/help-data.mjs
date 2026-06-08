@@ -57,8 +57,8 @@ export const SHEET_HELP = {
 const DUNGEONS_YAYOS_HELP = {
   attribute: {
     int: { title: "Cacumen", subtitle: "CAC", body: "Ingenio, memoria, sapiencia, magia y recursos mentales del aventurero talludito." },
-    car: { title: "Gracia", subtitle: "GRA", body: "Desparpajo, labia, salero, mala leche verbal y capacidad de convencer o embaucar." },
-    des: { title: "Prestancia", subtitle: "PRE", body: "Movimiento, reflejos, elegancia improbable, punteria con proyectiles y manos rapidas." },
+    car: { title: "Gracejo", subtitle: "GRA", body: "Desparpajo, labia, salero, mala leche verbal y capacidad de convencer o embaucar." },
+    des: { title: "Presteza", subtitle: "PRE", body: "Movimiento, reflejos, elegancia improbable, punteria con proyectiles y manos rapidas." },
     fue: { title: "Robustez", subtitle: "ROB", body: "Resistencia corporal, fuerza de mula parda, aguante y pegada fisica." }
   },
   skill: {
@@ -89,6 +89,7 @@ const DUNGEONS_YAYOS_HELP = {
     aplomo: { title: "Nervio", body: "Temple y resistencia de caracter. Se calcula como 3 x dados de Atletismo + PRE y tambien da nombre a la resistencia mental de esta variante." },
     perspicacia: { title: "Vista", body: "Referencia de percepcion propia de Dungeons & Yayos. En la hoja optimizada queda como habilidad y no como tarjeta fija independiente." },
     resistenciaFisica: { title: "Jamacuco", body: "Sustituye a la Resistencia fisica. Sirve para comprobar si el aventurero aguanta los umbrales de Salud sin caer hecho polvo." },
+    defectos: { title: "Achaques", body: "Los achaques permiten al Dungeon Minister complicar una tirada cuando encajan con la ficcion. Un achaque mayor funciona como un defecto grave y un achaque menor como un defecto leve." },
     ataque: { title: "Combate en Dungeons & Yayos", body: "La iniciativa no suma modificadores por arma. No hay armas de fuego. Las armas y hechizos ofensivos tienen dano fijo y suman ROB.", details: ["Defensa activa: DF 10 contra cuerpo a cuerpo con escudo; DF 15 contra cuerpo a cuerpo sin escudo o proyectiles con escudo; DF 20 contra proyectiles sin escudo."] }
   },
   section: {

@@ -17,10 +17,10 @@
               <h2>1. Datos del personaje</h2>
               <label class="span-2">Nombre del jugador<input name="system.datos.jugador" value="{{system.datos.jugador}}"></label>
               <label class="span-2">Nombre del PJ<input name="name" value="{{actor.name}}"></label>
-              <label>{{#if isDungeonsYayos}}Raza / alineamiento{{else}}Lugar de nacimiento{{/if}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
+              <label>{{#if isDungeonsYayos}}Raza{{else}}Lugar de nacimiento{{/if}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
               <label>{{#if isDungeonsYayos}}Años{{else}}Edad{{/if}}<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
-              <label>Profesión / perfil (+3)<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
-              <label>Ambientación<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
+              <label>{{#if isDungeonsYayos}}Antigua profesión (+3){{else}}Profesión / perfil (+3){{/if}}<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
+              <label>{{#if isDungeonsYayos}}Alineamiento{{else}}Ambientación{{/if}}<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
               <label class="span-2 tall">Motivación<textarea name="system.datos.motivacion">{{system.datos.motivacion}}</textarea></label>
             </section>
             <div class="ims-photo-frame">
@@ -78,8 +78,8 @@
         </section>
 
         <section class="ims-number-section ims-aches" data-help-type="rule" data-help-key="defectos">
-          <label><strong>Defecto grave</strong><input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
-          <label><strong>Defecto leve</strong><input name="system.defectos.leve" value="{{system.defectos.leve}}"></label>
+          <label><strong>{{#if isDungeonsYayos}}Achaque mayor{{else}}Defecto grave{{/if}}</strong><input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
+          <label><strong>{{#if isDungeonsYayos}}Achaque menor{{else}}Defecto leve{{/if}}</strong><input name="system.defectos.leve" value="{{system.defectos.leve}}"></label>
           <label><strong>Recuerdo cuando...</strong><textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
         </section>
 
@@ -112,6 +112,7 @@
           </div>
         </section>
 
+        {{#if hasMentalState}}
         <section class="ims-number-section ims-stability" data-help-type="rule" data-help-key="estabilidad">
           <h2>5. Estabilidad</h2>
           <div class="ims-jamacuco-row">
@@ -134,6 +135,7 @@
             {{/each}}
           </div>
         </section>
+        {{/if}}
       </main>
     </div>
 
@@ -162,8 +164,11 @@
     <div class="tab ims-tab-panel" data-group="primary" data-tab="notas">
       <section class="ims-notes">
         <label>Historia<textarea name="system.datos.historia">{{system.datos.historia}}</textarea></label>
+        {{#if isDungeonsYayos}}<label>Explicación del talento<textarea name="system.datos.talentoExplicacion">{{system.datos.talentoExplicacion}}</textarea></label>{{/if}}
         <label>Relaciones<textarea name="system.datos.relaciones">{{system.datos.relaciones}}</textarea></label>
+        {{#if hasMentalState}}
         <label>Notas de estado<textarea name="system.estado.notas">{{system.estado.notas}}</textarea></label>
+        {{/if}}
       </section>
     </div>
   </section>
