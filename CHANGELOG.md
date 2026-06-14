@@ -7,6 +7,11 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.22] — 2026-06-14
+
+### Corregido
+- Se han restringido los selectores de la hoja de estilo de la variante IMSERSO (`ysystem3-imserso.css`) para que los fondos, colores de texto, botones y campos no se apliquen de forma global en diálogos nativos o ajenos de Foundry VTT (como el de gestión de módulos), corrigiendo los problemas de bajo contraste y legibilidad.
+
 ## [0.3.21] — 2026-06-14
 
 ### Añadido

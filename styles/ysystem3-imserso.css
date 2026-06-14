@@ -19,7 +19,10 @@ body.ys-imserso-module-active {
 }
 
 .ysystem3-imserso-theme.window-app,
-.ysystem3-imserso-theme .window-content,
+.ysystem3-imserso-theme .window-content:has(.ims-sheet),
+.ysystem3-imserso-theme .window-content:has(.ims-creator),
+.ysystem3-imserso-theme .window-content:has(.ims-item),
+.ysystem3-imserso-theme .window-content:has(.ims-dialog),
 .ysystem3-imserso-theme.ims-sheet,
 .ysystem3-imserso-theme.ims-creator {
   color: var(--ims-ink);
@@ -133,8 +136,7 @@ body.ys-imserso-module-active {
   color: white;
 }
 
-.ysystem3-imserso-theme button,
-.ysystem3-imserso-theme .ys-action-grid button,
+:is(.ysystem3-imserso-theme.window-app, .window-app:has(.ysystem3-imserso-theme), .ysystem3-imserso-theme.ims-sheet, .ysystem3-imserso-theme.ims-creator) button,
 .ysystem3-imserso-theme .ims-chat-action {
   border: 1px solid var(--ims-border);
   border-radius: 6px;
@@ -148,9 +150,7 @@ body.ys-imserso-module-active {
   box-shadow: 0 0 0 2px rgba(225, 108, 45, 0.18);
 }
 
-.ysystem3-imserso-theme input,
-.ysystem3-imserso-theme textarea,
-.ysystem3-imserso-theme select {
+:is(.ysystem3-imserso-theme.window-app, .window-app:has(.ysystem3-imserso-theme), .ysystem3-imserso-theme.ims-sheet, .ysystem3-imserso-theme.ims-creator) :is(input, textarea, select) {
   border: 1px solid #b8905a;
   border-radius: 5px;
   background: #fffdf6;
