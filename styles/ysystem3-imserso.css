@@ -1,0 +1,462 @@
+:root {
+  --ims-paper: #f7e8c5;
+  --ims-paper-2: #fff5de;
+  --ims-ink: #3b2c22;
+  --ims-muted-ink: #6a5547;
+  --ims-primary: #e16c2d;
+  --ims-secondary: #2d8195;
+  --ims-accent: #e4b556;
+  --ims-olive: #728248;
+  --ims-danger: #b34a35;
+  --ims-panel: #fff9ea;
+  --ims-border: #b8905a;
+  --ims-shadow: rgba(0, 0, 0, 0.18);
+}
+
+body.ys-imserso-module-active {
+  --color-border-highlight: var(--ims-primary);
+  --color-shadow-primary: rgba(225, 108, 45, 0.35);
+}
+
+.ysystem3-imserso-theme.window-app,
+.ysystem3-imserso-theme .window-content,
+.ysystem3-imserso-theme.ims-sheet,
+.ysystem3-imserso-theme.ims-creator {
+  color: var(--ims-ink);
+  background: #fff5de;
+}
+
+.ysystem3-imserso-theme.window-app .window-header {
+  background: #2f2119;
+  color: #fff8e8;
+  text-shadow: none;
+}
+
+.ysystem3-imserso-theme.window-app .window-header .window-title,
+.ysystem3-imserso-theme.window-app .window-header a,
+.ysystem3-imserso-theme.window-app .window-header button {
+  color: #fff8e8;
+}
+
+.ysystem3-imserso-theme.window-app .window-header a:hover,
+.ysystem3-imserso-theme.window-app .window-header button:hover {
+  color: #ffffff;
+  text-shadow: 0 0 5px rgba(255, 245, 222, 0.65);
+}
+
+.ysystem3-imserso-theme.ims-sheet,
+.ysystem3-imserso-theme.ims-creator {
+  position: relative;
+}
+
+.ysystem3-imserso-theme .ys-screen-header,
+.ysystem3-imserso-theme .ims-paper-header,
+.ysystem3-imserso-theme .ims-extra-header,
+.ysystem3-imserso-theme .ims-item-header,
+.ysystem3-imserso-theme .ims-creator-header {
+  border-color: var(--ims-border);
+  background: linear-gradient(90deg, #f7e8c5, #fff9ea);
+  color: var(--ims-ink);
+}
+
+.ysystem3-imserso-theme .ys-brand img,
+.ysystem3-imserso-theme .ys-a4-logo,
+.ysystem3-imserso-theme .ys-a4-extra-logo {
+  width: auto;
+  max-width: 128px;
+  height: 44px;
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.ysystem3-imserso-theme .ys-brand img {
+  max-width: 160px;
+  height: 50px;
+}
+
+.ysystem3-imserso-theme .ys-a4-logo,
+.ysystem3-imserso-theme .ys-a4-extra-logo {
+  height: 64px;
+  max-width: 180px;
+}
+
+.ysystem3-imserso-theme .ys-brand {
+  align-items: center;
+  gap: 10px;
+}
+
+.ysystem3-imserso-theme .ys-brand strong {
+  display: none;
+}
+
+.ysystem3-imserso-theme .ys-brand strong,
+.ysystem3-imserso-theme .ims-paper h2,
+.ysystem3-imserso-theme .ims-extra-card h3,
+.ysystem3-imserso-theme .ims-item-title-block span {
+  color: var(--ims-primary);
+  letter-spacing: 0;
+}
+
+.ysystem3-imserso-theme .ys-brand span {
+  color: var(--ims-secondary);
+  font-weight: 800;
+}
+
+.ysystem3-imserso-theme .ys-card,
+.ysystem3-imserso-theme .ims-number-section,
+.ysystem3-imserso-theme .ims-extra-card,
+.ysystem3-imserso-theme .ims-item-panel,
+.ysystem3-imserso-theme .ims-creator-card,
+.ysystem3-imserso-theme .ims-archetype-summary,
+.ysystem3-imserso-theme .ims-derived-panel,
+.ysystem3-imserso-theme .ims-summary-grid > div {
+  border: 1px solid var(--ims-border);
+  border-radius: 8px;
+  background: rgba(255, 249, 234, 0.94);
+  box-shadow: 0 2px 8px rgba(59, 44, 34, 0.12);
+}
+
+.ysystem3-imserso-theme .ys-tabs,
+.ysystem3-imserso-theme .ims-tabs,
+.ysystem3-imserso-theme .ims-creator-steps {
+  background: #f7e8c5;
+  border-color: var(--ims-border);
+}
+
+.ysystem3-imserso-theme .ys-tabs .item.active,
+.ysystem3-imserso-theme .ims-tabs .item.active,
+.ysystem3-imserso-theme .ims-creator-steps button.active {
+  background: var(--ims-secondary);
+  color: white;
+}
+
+.ysystem3-imserso-theme button,
+.ysystem3-imserso-theme .ys-action-grid button,
+.ysystem3-imserso-theme .ims-chat-action {
+  border: 1px solid var(--ims-border);
+  border-radius: 6px;
+  background: linear-gradient(#fff9ea, #f7e8c5);
+  color: var(--ims-ink);
+}
+
+.ysystem3-imserso-theme button:hover,
+.ysystem3-imserso-theme button:focus {
+  border-color: var(--ims-primary);
+  box-shadow: 0 0 0 2px rgba(225, 108, 45, 0.18);
+}
+
+.ysystem3-imserso-theme input,
+.ysystem3-imserso-theme textarea,
+.ysystem3-imserso-theme select {
+  border: 1px solid #b8905a;
+  border-radius: 5px;
+  background: #fffdf6;
+  color: var(--ims-ink);
+}
+
+.ysystem3-imserso-theme .ys-title-input,
+.ysystem3-imserso-theme .ims-title-input {
+  color: var(--ims-ink);
+  background: rgba(255, 253, 246, 0.92);
+}
+
+.ysystem3-imserso-theme .ims-help-box {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 12px;
+  align-items: start;
+  margin: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--ims-border);
+  border-radius: 8px;
+  background: #fff9ea;
+  color: var(--ims-ink);
+}
+
+.ysystem3-imserso-theme .ims-help-box strong {
+  color: var(--ims-secondary);
+}
+
+.ysystem3-imserso-theme .ims-help-box p {
+  margin: 0;
+  color: var(--ims-muted-ink);
+}
+
+.ysystem3-imserso-theme .ims-health-track button,
+.ysystem3-imserso-theme .ys-health-track button,
+.ysystem3-imserso-theme .ims-health-track button.active,
+.ysystem3-imserso-theme .ys-health-track button.active {
+  background: transparent;
+  color: var(--ims-ink);
+}
+
+.ysystem3-imserso-theme .ims-health-zone-labels .zone-safe,
+.ysystem3-imserso-theme .ys-health-labels .zone-safe {
+  background: #d7efd9;
+  color: #173d21;
+}
+
+.ysystem3-imserso-theme .ims-health-zone-labels .zone-minus1,
+.ysystem3-imserso-theme .ys-health-labels .zone-minus1 {
+  background: #fff0a8;
+  color: #503900;
+}
+
+.ysystem3-imserso-theme .ims-health-zone-labels .zone-minus2,
+.ysystem3-imserso-theme .ys-health-labels .zone-minus2 {
+  background: #ffd083;
+  color: #552b00;
+}
+
+.ysystem3-imserso-theme .ims-health-zone-labels .zone-minus3,
+.ysystem3-imserso-theme .ys-health-labels .zone-minus3,
+.ysystem3-imserso-theme .ims-health-zone-labels .zone-uci,
+.ysystem3-imserso-theme .ys-health-labels .zone-uci {
+  background: #f3b0a8;
+  color: #5b100a;
+}
+
+.ysystem3-imserso-theme .ims-health-track .zone-safe span,
+.ysystem3-imserso-theme .ys-health-track .zone-safe span {
+  border-color: #13652f;
+  background: #d7efd9;
+}
+
+.ysystem3-imserso-theme .ims-health-track .zone-warning span,
+.ysystem3-imserso-theme .ys-health-track .zone-warning span,
+.ysystem3-imserso-theme .ims-health-track .zone-minus1 span,
+.ysystem3-imserso-theme .ys-health-track .zone-minus1 span {
+  border-color: #916300;
+  background: #fff0a8;
+}
+
+.ysystem3-imserso-theme .ims-health-track .zone-minus2 span,
+.ysystem3-imserso-theme .ys-health-track .zone-minus2 span {
+  border-color: #a85500;
+  background: #ffd083;
+}
+
+.ysystem3-imserso-theme .ims-health-track .zone-danger span,
+.ysystem3-imserso-theme .ys-health-track .zone-danger span,
+.ysystem3-imserso-theme .ims-health-track .zone-minus3 span,
+.ysystem3-imserso-theme .ys-health-track .zone-minus3 span,
+.ysystem3-imserso-theme .ims-health-track .zone-uci span,
+.ysystem3-imserso-theme .ys-health-track .zone-uci span {
+  border-color: #8f1010;
+  background: #f3b0a8;
+}
+
+.ysystem3-imserso-theme .ims-health-track .zone-safe.active span,
+.ysystem3-imserso-theme .ys-health-track .zone-safe.active span {
+  background: #2fa84f;
+}
+
+.ysystem3-imserso-theme .ims-health-track .zone-warning.active span,
+.ysystem3-imserso-theme .ys-health-track .zone-warning.active span,
+.ysystem3-imserso-theme .ims-health-track .zone-minus1.active span,
+.ysystem3-imserso-theme .ys-health-track .zone-minus1.active span {
+  background: #f5c542;
+}
+
+.ysystem3-imserso-theme .ims-health-track .zone-minus2.active span,
+.ysystem3-imserso-theme .ys-health-track .zone-minus2.active span {
+  background: #f28c28;
+}
+
+.ysystem3-imserso-theme .ims-health-track .zone-danger.active span,
+.ysystem3-imserso-theme .ys-health-track .zone-danger.active span,
+.ysystem3-imserso-theme .ims-health-track .zone-minus3.active span,
+.ysystem3-imserso-theme .ys-health-track .zone-minus3.active span,
+.ysystem3-imserso-theme .ims-health-track .zone-uci.active span,
+.ysystem3-imserso-theme .ys-health-track .zone-uci.active span {
+  background: #d93b30;
+}
+
+.ysystem3-imserso-theme .ims-health-track .active span,
+.ysystem3-imserso-theme .ys-health-track .active span {
+  box-shadow: inset 0 0 0 4px #fff;
+}
+
+.ysystem3-imserso-theme .ims-stability-track button.active,
+.ysystem3-imserso-theme .ys-stability-track button.active {
+  background: var(--ims-secondary);
+  color: white;
+}
+
+.ysystem3-imserso-theme .ims-health-track button.threshold,
+.ysystem3-imserso-theme .ys-health-track button.threshold,
+.ysystem3-imserso-theme .ims-stability-track button.threshold,
+.ysystem3-imserso-theme .ys-stability-track button.threshold {
+  outline: 2px solid var(--ims-accent);
+}
+
+.ysystem3-imserso-theme .item img,
+.ysystem3-imserso-theme .ys-quick-item img,
+.ysystem3-imserso-theme .ims-item-header > img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border: 1px solid var(--ims-border);
+  border-radius: 6px;
+  background: var(--ims-paper-2);
+}
+
+.ysystem3-imserso-theme .item.equipped,
+.ysystem3-imserso-theme .ys-quick-item.equipped {
+  border-color: var(--ims-secondary);
+  background: rgba(45, 129, 149, 0.12);
+}
+
+.ims-chat-message.ysystem3-imserso-theme,
+.ims-chat-card.ysystem3-imserso-theme,
+.ys-imserso-module-active .chat-message .ims-chat-card {
+  border: 1px solid var(--ims-border);
+  border-radius: 8px;
+  background: #fff9ea;
+  color: var(--ims-ink);
+}
+
+.ys-imserso-module-active .chat-message .ims-chat-card header {
+  border-bottom: 1px solid rgba(184, 144, 90, 0.5);
+}
+
+.ys-imserso-module-active .chat-message .ims-chat-card header img,
+.ys-imserso-module-active .chat-message .ims-imserso-card header img {
+  display: block;
+  width: auto;
+  max-width: 150px;
+  height: 46px;
+  object-fit: contain;
+  border: 0;
+  background: transparent;
+}
+
+.ys-imserso-module-active .chat-message .ims-chat-card > img,
+.ys-imserso-module-active .chat-message .ims-imserso-card > img {
+  display: block;
+  width: auto;
+  max-width: 160px;
+  max-height: 64px;
+  object-fit: contain;
+  margin: 0 auto 8px;
+  border: 0;
+  background: transparent;
+}
+
+.ys-imserso-module-active .chat-message .ims-roll-total {
+  color: white;
+  background: var(--ims-primary);
+}
+
+.ims-context-help.ysystem3-imserso-theme {
+  border: 1px solid var(--ims-border);
+  border-radius: 8px;
+  background: #fff9ea;
+  color: var(--ims-ink);
+  box-shadow: 0 14px 40px var(--ims-shadow);
+}
+
+.ims-context-help.ysystem3-imserso-theme header span {
+  color: var(--ims-secondary);
+}
+
+body.ys-imserso-module-active #context-menu,
+body.ys-imserso-module-active .context-menu {
+  border: 1px solid #b8905a;
+  background: #2f2119;
+  color: #fff8e8;
+}
+
+body.ys-imserso-module-active #context-menu li,
+body.ys-imserso-module-active .context-menu li,
+body.ys-imserso-module-active #context-menu a,
+body.ys-imserso-module-active .context-menu a {
+  color: #fff8e8;
+}
+
+body.ys-imserso-module-active #context-menu li:hover,
+body.ys-imserso-module-active .context-menu li:hover {
+  background: #e16c2d;
+  color: #ffffff;
+}
+
+.ysystem3-imserso-directory {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+}
+
+.ys-imserso-module-active [data-ys-create-personaje],
+.ys-imserso-module-active [data-ys-create-pnj] {
+  display: none;
+}
+
+.ysystem3-imserso-theme .ims-creator-main,
+.ysystem3-imserso-theme .ys-body,
+.ysystem3-imserso-theme .ims-body {
+  scrollbar-color: var(--ims-primary) var(--ims-paper);
+}
+
+.ysystem3-imserso-directory {
+  flex-wrap: wrap;
+  border-top: 1px solid var(--ims-border);
+  background: #0b0a12;
+}
+
+.ysystem3-imserso-directory button {
+  min-width: 0;
+  flex: 1 1 130px;
+  height: 32px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: none;
+  background: #fff5de;
+  color: var(--ims-ink);
+}
+
+.ysystem3-imserso-theme .ys-skill-row button span,
+.ysystem3-imserso-theme .ims-skill-row button {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.1;
+}
+
+.ys-imserso-classic [data-tab="estado"],
+.ys-imserso-classic .ys-tab-actions [data-roll-resistencia-mental],
+.ys-imserso-classic .ys-tab-actions [data-rules-heal],
+.ys-imserso-classic [data-roll-reserve],
+.ys-imserso-classic [data-roll-pursuit],
+.ys-imserso-classic [data-roll-fear],
+.ys-imserso-classic [data-hazard-damage],
+.ys-imserso-classic [data-help-key="perspicacia"],
+.ys-imserso-classic [data-help-key="resistenciaMental"],
+.ys-imserso-classic [data-help-key="estabilidad"],
+.ys-imserso-classic [data-help-key="puntoGuion"],
+.ys-imserso-classic .ys-stability-card,
+.ys-imserso-classic [name="system.estabilidad.valor"],
+.ys-imserso-classic [name="system.estabilidad.max"],
+.ys-imserso-classic [name="system.resistenciaMental.valor"],
+.ys-imserso-classic [name="system.puntoGuion.valor"],
+.ys-imserso-classic [name="system.puntoGuion.max"],
+.ys-imserso-classic label:has([name="system.estabilidad.valor"]),
+.ys-imserso-classic label:has([name="system.estabilidad.max"]),
+.ys-imserso-classic label:has([name="system.resistenciaMental.valor"]),
+.ys-imserso-classic label:has([name="system.perspicacia.valor"]),
+.ys-imserso-classic label:has([name="system.perspicacia.manual"]) {
+  display: none !important;
+}
+
+.ys-imserso-classic .ys-value-grid {
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+}
+
+.ys-imserso-classic .ys-health-card,
+.ys-imserso-classic .ys-summary-state {
+  grid-column: 1 / -1;
+}

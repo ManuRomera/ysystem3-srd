@@ -11,7 +11,7 @@
   <main class="ims-creator-main">
     <header class="ims-creator-header">
       <h1>{{#if isPnj}}Creador guiado de PNJ{{else}}Creador guiado de PJ{{/if}}</h1>
-      <p>{{#if isPnj}}Genera un PNJ funcional con valores derivados, salud, habilidades y notas de escena.{{else}}{{#if isDungeonsYayos}}Creacion libre o aleatoria segun Dungeons & Yayos.{{else}}Creacion libre, por arquetipo o aleatoria segun YSYSTEM3 SRD.{{/if}}{{/if}}</p>
+      <p>{{#if isPnj}}Genera un PNJ funcional con valores derivados, salud, habilidades y notas de escena.{{else}}{{#if isImserso}}Creacion libre o aleatoria de jubilado.{{else}}{{#if isDungeonsYayos}}Creacion libre o aleatoria segun Dungeons & Yayos.{{else}}Creacion libre, por arquetipo o aleatoria segun YSYSTEM3 SRD.{{/if}}{{/if}}{{/if}}</p>
     </header>
 
     {{#if (eq stepKey "modo")}}
@@ -162,7 +162,7 @@
         <label>{{majorDefectLabel}}<input name="defectos.grave" value="{{state.defectos.grave}}"></label>
       </div>
       <div class="ims-creator-actions-inline">
-        <button type="button" data-roll-defects><i class="fas fa-table-list"></i> Generar {{#if isDungeonsYayos}}achaques{{else}}defectos{{/if}}</button>
+        <button type="button" data-roll-defects><i class="fas fa-table-list"></i> Generar {{#if isDungeonsYayos}}achaques{{else}}{{#if isImserso}}achaques{{else}}defectos{{/if}}{{/if}}</button>
         <button type="button" data-roll-health><i class="fas fa-dice-six"></i> Tirar Salud inicial</button>
       </div>
       <div class="ims-derived-panel">
@@ -181,10 +181,10 @@
         <div><strong>{{#if isPnj}}{{rfLabel}}{{else}}{{resourceLabel}}{{/if}}</strong><span>{{#if isPnj}}{{effective.rf}}{{else}}{{effective.proezas}}{{/if}}</span></div>
         <div><strong>{{agilityLabel}}</strong><span>{{effective.agilidad}}</span></div>
         <div><strong>{{aplomoLabel}}</strong><span>{{effective.aplomo}}</span></div>
-        {{#unless isDungeonsYayos}}
+        {{#unless isDungeonsYayos}}{{#unless isImserso}}
         <div><strong>Perspicacia</strong><span>{{effective.perspicacia}}</span></div>
-        {{/unless}}
-        {{#unless isDungeonsYayos}}{{#unless isPnj}}<div><strong>Estabilidad</strong><span>{{effective.estabilidad}}</span></div>{{/unless}}{{/unless}}
+        {{/unless}}{{/unless}}
+        {{#unless isDungeonsYayos}}{{#unless isImserso}}{{#unless isPnj}}<div><strong>Estabilidad</strong><span>{{effective.estabilidad}}</span></div>{{/unless}}{{/unless}}{{/unless}}
       </div>
       {{#if warnings.length}}
       <div class="ims-creator-warnings">

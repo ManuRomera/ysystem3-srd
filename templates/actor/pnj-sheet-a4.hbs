@@ -34,7 +34,9 @@
         <div class="ims-extra-value-grid">
           <label data-help-type="rule" data-help-key="aplomo"><span>{{ysFixed "aplomo"}}</span><input type="number" name="system.aplomo.valor" value="{{system.aplomo.valor}}"></label>
           <label data-help-type="rule" data-help-key="agilidad"><span>{{ysFixed "agilidad"}}</span><input type="number" name="system.agilidad.valor" value="{{system.agilidad.valor}}"></label>
+          {{#unless isImserso}}
           <label data-help-type="rule" data-help-key="perspicacia"><span>{{ysFixed "perspicacia"}}</span><input type="number" name="system.perspicacia.valor" value="{{system.perspicacia.valor}}"></label>
+          {{/unless}}
           <label data-help-type="rule" data-help-key="resistenciaFisica"><span>{{ysTerm "resistancePhysical"}}</span><input type="number" name="system.resistenciaFisica.valor" value="{{system.resistenciaFisica.valor}}"></label>
           <label><span>Salud</span><input type="number" name="system.salud.valor" value="{{system.salud.valor}}"></label>
           <label><span>Max</span><input type="number" name="system.salud.max" value="{{system.salud.max}}"></label>

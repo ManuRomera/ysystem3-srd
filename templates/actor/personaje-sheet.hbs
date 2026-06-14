@@ -12,10 +12,10 @@
         <label>Jugador<input name="system.datos.jugador" value="{{system.datos.jugador}}"></label>
       </div>
       <div class="ys-meta-grid">
-        <label>{{#if isDungeonsYayos}}Antigua profesión (+3){{else}}Profesión / perfil (+3){{/if}}<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
-        <label>{{#if isDungeonsYayos}}Alineamiento{{else}}Ambientación{{/if}}<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
-        <label>{{#if isDungeonsYayos}}Años{{else}}Edad{{/if}}<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
-        <label>{{#if isDungeonsYayos}}Raza{{else}}Lugar de nacimiento{{/if}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
+        <label>{{ysTerm "profesion"}} (+3)<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
+        <label>{{ysTerm "perfil"}}<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
+        <label>{{ysTerm "edad"}}<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
+        <label>{{ysTerm "lugarNacimiento"}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
       </div>
     </section>
   </header>
@@ -153,13 +153,15 @@
         </section>
 
         <section class="ys-card ys-compact-card" data-help-type="rule" data-help-key="defectos">
-          <header><h2>{{#if isDungeonsYayos}}Achaques y recuerdo{{else}}Defectos y recuerdo{{/if}}</h2></header>
+          <header><h2>{{ysTerm "defectos"}}</h2></header>
           <div class="ys-form-grid compact">
-            <label>{{#if isDungeonsYayos}}Achaque menor{{else}}Defecto leve{{/if}}<textarea class="ys-mini-textarea" name="system.defectos.leve">{{system.defectos.leve}}</textarea></label>
-            <label>{{#if isDungeonsYayos}}Achaque mayor{{else}}Defecto grave{{/if}}<textarea class="ys-mini-textarea" name="system.defectos.grave">{{system.defectos.grave}}</textarea></label>
-            <label class="check"><input type="checkbox" name="system.defectos.leveUsado" {{imsChecked system.defectos.leveUsado}}> {{#if isDungeonsYayos}}Achaque menor usado{{else}}Defecto leve usado{{/if}}</label>
+            <label>{{ysTerm "defectoLeve"}}<textarea class="ys-mini-textarea" name="system.defectos.leve">{{system.defectos.leve}}</textarea></label>
+            <label>{{ysTerm "defectoGrave"}}<textarea class="ys-mini-textarea" name="system.defectos.grave">{{system.defectos.grave}}</textarea></label>
+            <label class="check"><input type="checkbox" name="system.defectos.leveUsado" {{imsChecked system.defectos.leveUsado}}> {{ysTerm "defectoLeve"}} usado</label>
+            {{#unless isImserso}}
             <label class="check"><input type="checkbox" name="system.recuerdo.usado" {{imsChecked system.recuerdo.usado}}> Recuerdo usado</label>
-            <label>{{#if isDungeonsYayos}}Es que yo a tus años...{{else}}Nota del recuerdo{{/if}}<textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
+            <label>{{ysTerm "recuerdoEsYo"}}<textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
+            {{/unless}}
           </div>
         </section>
       </main>

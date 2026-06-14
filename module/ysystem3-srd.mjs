@@ -60,7 +60,7 @@ Hooks.once("init", async () => {
   Handlebars.registerHelper("imsSelected", (a, b) => String(a) === String(b) ? "selected" : "");
   Handlebars.registerHelper("imsAttr", (key) => labelForAttribute(key));
   Handlebars.registerHelper("imsSkill", (key) => labelForSkill(key));
-  Handlebars.registerHelper("ysTerm", (key) => currentVariant()[key] ?? key);
+  Handlebars.registerHelper("ysTerm", (key) => currentVariant()[key] ?? IMSERSO.variants.base[key] ?? key);
   Handlebars.registerHelper("ysFixed", (key) => currentVariant().fixed?.[key] ?? key);
   Handlebars.registerHelper("eq", (a, b) => a === b);
 });
@@ -132,10 +132,13 @@ Hooks.on("renderActorDirectory", (_app, html) => {
   const jq = asJQuery(html);
   jq.find("[data-ims-create-jubilado]").remove();
   if (jq.find("[data-ys-create-personaje]").length) return;
+  const ruleset = currentRuleset();
+  const pjBtnLabel = ruleset === "imserso" ? "Crear jubilado" : "Crear PJ";
+  const pnjBtnLabel = ruleset === "imserso" ? "Crear PNJ del viaje" : "Crear PNJ";
   const controls = $(`
     <div class="ys-directory-create">
-      <button type="button" data-ys-create-personaje><i class="fas fa-id-card"></i> Crear PJ</button>
-      <button type="button" data-ys-create-pnj><i class="fas fa-user-shield"></i> Crear PNJ</button>
+      <button type="button" data-ys-create-personaje><i class="fas fa-id-card"></i> ${pjBtnLabel}</button>
+      <button type="button" data-ys-create-pnj><i class="fas fa-user-shield"></i> ${pnjBtnLabel}</button>
     </div>
   `);
   const target = jq.find(".directory-header .header-actions, .directory-header, .directory-footer").first();

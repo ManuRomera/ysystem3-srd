@@ -81,7 +81,8 @@ export class ImsersoActorSheet extends ActorSheet {
     context.skillOptions = entries(activeSkills).map(([key, cfg]) => ({ key, ...cfg, attrLabel: labelForAttribute(cfg.atributo) }));
     context.attributeOptions = entries(activeAttributes).map(([key, cfg]) => ({ key, ...cfg }));
     context.isDungeonsYayos = ruleset === "dungeonsYayos";
-    context.hasMentalState = ruleset !== "dungeonsYayos";
+    context.isImserso = ruleset === "imserso";
+    context.hasMentalState = ruleset !== "dungeonsYayos" && ruleset !== "imserso";
     context.skillEditEnabled = !!this._summarySkillEdit;
     context.logoPath = variant.logoPath ?? `systems/${IMSERSO.ID}/assets/ysystem-icon.png`;
     context.atributos = entries(activeAttributes).map(([key, cfg]) => ({
@@ -106,18 +107,26 @@ export class ImsersoActorSheet extends ActorSheet {
 
     const maxHealthTrack = Math.max(28, saludMax);
     context.healthGridStyle = `grid-template-columns: repeat(${maxHealthTrack}, minmax(24px, 1fr));`;
-    context.healthZones = [
+    context.healthZones = (ruleset === "imserso" ? [
+      { label: "UCI", class: "zone-uci", style: "grid-column: 1 / 2;" },
+      { label: "-3D", class: "zone-minus3", style: "grid-column: 2 / 4;" },
+      { label: "-2D", class: "zone-minus2", style: "grid-column: 4 / 7;" },
+      { label: "-1D", class: "zone-minus1", style: "grid-column: 7 / 11;" },
+      { label: "Sin penalizador", class: "zone-safe", style: `grid-column: 11 / ${maxHealthTrack + 1};` }
+    ] : [
       { label: ruleset === "dungeonsYayos" ? "¡ARG!" : "UCI", class: "zone-uci", style: "grid-column: 1 / 2;" },
       { label: "-3D", class: "zone-minus3", style: "grid-column: 2 / 5;" },
       { label: "-2D", class: "zone-minus2", style: "grid-column: 5 / 8;" },
       { label: "-1D", class: "zone-minus1", style: "grid-column: 8 / 12;" },
       { label: "Sin penalizador", class: "zone-safe", style: `grid-column: 12 / ${maxHealthTrack + 1};` }
-    ].filter((zone) => {
+    ]).filter((zone) => {
       const end = Number(zone.style.match(/\/ (\d+)/)?.[1] ?? maxHealthTrack + 1);
       const start = Number(zone.style.match(/: (\d+)/)?.[1] ?? 0);
       return end > start;
     });
-    const healthThresholdLabels = { 16: "RF", 11: "-1D", 7: "-2D", 4: "-3D", 2: "RF" };
+    const healthThresholdLabels = ruleset === "imserso"
+      ? { 15: "J", 10: "-1D", 6: "-2D", 3: "-3D", 1: "J" }
+      : { 16: "RF", 11: "-1D", 7: "-2D", 4: "-3D", 2: "RF" };
     context.healthTrack = buildPointTrack({
       length: maxHealthTrack,
       current: saludValor,
@@ -164,10 +173,23 @@ export class ImsersoActorSheet extends ActorSheet {
       talento: this.actor.items.filter((i) => i.type === "talento"),
       arquetipo: this.actor.items.filter((i) => i.type === "arquetipo")
     };
+    const itemLabels = ruleset === "imserso" ? {
+      arma: "Arma",
+      objeto: "Cachivache",
+      talento: "Talento"
+    } : {
+      arma: "Arma",
+      armadura: "Armadura",
+      escudo: "Escudo",
+      objeto: "Objeto",
+      poder: "Poder",
+      talento: "Talento",
+      arquetipo: "Arquetipo"
+    };
     context.itemSections = Object.entries(context.itemsByType)
-      .filter(([, items]) => items.length)
-      .map(([key, items]) => ({ key, label: key, items }));
-    context.itemCreateTypes = [
+      .filter(([key, items]) => items.length && (ruleset !== "imserso" || ["arma", "objeto", "talento"].includes(key)))
+      .map(([key, items]) => ({ key, label: itemLabels[key] ?? key, items }));
+    let itemCreateTypes = [
       { type: "arma", label: "Arma", icon: "fa-gavel" },
       { type: "armadura", label: "Armadura", icon: "fa-vest" },
       { type: "escudo", label: "Escudo", icon: "fa-shield-halved" },
@@ -176,6 +198,14 @@ export class ImsersoActorSheet extends ActorSheet {
       { type: "talento", label: "Talento", icon: "fa-star" },
       { type: "arquetipo", label: "Arquetipo", icon: "fa-id-card" }
     ];
+    if (ruleset === "imserso") {
+      itemCreateTypes = [
+        { type: "arma", label: "Arma", icon: "fa-gavel" },
+        { type: "objeto", label: "Cachivache", icon: "fa-suitcase" },
+        { type: "talento", label: "Talento", icon: "fa-star" }
+      ];
+    }
+    context.itemCreateTypes = itemCreateTypes;
     context.itemsFlat = this.actor.items.contents ?? this.actor.items.map((item) => item);
     context.equipmentNotes = system.efectivos?.mods?.notas ?? [];
     context.attackTypes = entries(attackTypesForRuleset(ruleset)).map(([key, cfg]) => ({ key, ...cfg }));

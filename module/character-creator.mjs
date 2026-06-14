@@ -10,6 +10,7 @@ import {
   currentRuleset
 } from "./config.mjs";
 import { ARQUETIPOS, archetypeSkills, archetypeSystem, archetypeTalentItem, arquetipoByKey } from "./arquetipos-data.mjs";
+import { IMSERSO_GENERATOR_DATA } from "./imserso-generator-data.mjs";
 
 const ApplicationV1 = foundry.appv1?.api?.Application ?? globalThis.Application;
 
@@ -239,6 +240,60 @@ function variantLabel() {
   return IMSERSO.variants[key]?.label ?? IMSERSO.variants.base.label;
 }
 
+function capitalize(val) {
+  return val ? val.charAt(0).toUpperCase() + val.slice(1) : "";
+}
+
+function imsersoIdentity(kind = "pj") {
+  const first = choice(IMSERSO_GENERATOR_DATA.firstNames);
+  const surname = choice(IMSERSO_GENERATOR_DATA.surnames);
+  const nickname = Math.random() < 0.55 ? ` "${choice(IMSERSO_GENERATOR_DATA.nicknames)}"` : "";
+  const name = `${first} ${surname}${nickname}`;
+  const role = choice(IMSERSO_GENERATOR_DATA.formerProfessions);
+  const place = choice(IMSERSO_GENERATOR_DATA.origins);
+  const achaque = choice(IMSERSO_GENERATOR_DATA.achaques);
+  const achaqueMenor = choice(IMSERSO_GENERATOR_DATA.achaques.filter((entry) => entry !== achaque)) || achaque;
+  const talante = choice(IMSERSO_GENERATOR_DATA.attitudes);
+  const aficion = choice(IMSERSO_GENERATOR_DATA.hobbies);
+  const objetivo = choice(IMSERSO_GENERATOR_DATA.tripGoals);
+  const arquetipo = choice(IMSERSO_GENERATOR_DATA.pjArchetypes);
+  const mania = choice(IMSERSO_GENERATOR_DATA.quirks);
+
+  if (kind === "pnj") {
+    const pnjRol = choice(IMSERSO_GENERATOR_DATA.npcRoles);
+    const secreto = choice(IMSERSO_GENERATOR_DATA.npcSecrets);
+    const colectivo = choice(IMSERSO_GENERATOR_DATA.namesPNJCollectives);
+    const places = [
+      "recepcion del hotel", "autobus de excursion", "comedor del buffet",
+      "salon de bingo", "paseo maritimo", "balneario", "mercadillo local",
+      "museo municipal", "verbena nocturna", "consulta del centro de salud",
+      "bar de la esquina", "cola del ascensor"
+    ];
+    const pnjLugar = choice(places);
+    return {
+      name: `${choice(IMSERSO_GENERATOR_DATA.firstNames)} ${choice(IMSERSO_GENERATOR_DATA.surnames)}`,
+      role: pnjRol,
+      bando: talante,
+      description: `${capitalize(talante)}; ${mania}. Suele aparecer en ${pnjLugar}.`,
+      notes: `Secreto: ${secreto}. Vinculo: ${colectivo}.`
+    };
+  }
+
+  return {
+    name,
+    place,
+    age: `${63 + Math.floor(Math.random() * 22)}`,
+    profession: role,
+    profile: arquetipo,
+    motivation: `Objetivo del viaje: ${objetivo}.`,
+    physical: `${capitalize(talante)}. Afición: ${aficion}. Achaque visible: ${achaque}.`,
+    family: `Viaja desde ${place}; ${mania}.`,
+    achaqueMayor: achaque,
+    achaqueMenor: achaqueMenor,
+    quirk: mania
+  };
+}
+
 function genericIdentity(kind = "pj") {
   const profile = generatorProfile();
   const name = `${choice(profile.nombres)} ${choice(profile.apodos)}`;
@@ -297,6 +352,8 @@ function dungeonsIdentity(kind = "pj") {
 }
 
 function randomIdentity(kind = "pj") {
+  const ruleset = currentRuleset();
+  if (ruleset === "imserso") return imsersoIdentity(kind);
   return isDungeonsYayos() ? dungeonsIdentity(kind) : genericIdentity(kind);
 }
 
@@ -316,7 +373,8 @@ function zeroAttributesForRuleset() {
 }
 
 function attrValuesForRuleset() {
-  return currentRuleset() === "dungeonsYayos" ? DUNGEONS_ATTR_VALUES : ATTR_VALUES;
+  const ruleset = currentRuleset();
+  return ruleset === "dungeonsYayos" || ruleset === "imserso" ? DUNGEONS_ATTR_VALUES : ATTR_VALUES;
 }
 
 function attrValuesText() {
@@ -325,6 +383,10 @@ function attrValuesText() {
 
 function isDungeonsYayos() {
   return currentRuleset() === "dungeonsYayos";
+}
+
+function isImserso() {
+  return currentRuleset() === "imserso";
 }
 
 function normalizeAttributes(source = {}, { legal = true } = {}) {
@@ -373,7 +435,7 @@ function calcYayopoints(attrs) {
 }
 
 function skillTargetsForRuleset() {
-  return isDungeonsYayos() ? { d3: 4, d2: 6 } : { d3: 4, d2: 8 };
+  return isDungeonsYayos() || isImserso() ? { d3: 4, d2: 6 } : { d3: 4, d2: 8 };
 }
 
 function defaultState(actor = null, type = actor?.type ?? "personaje") {
@@ -423,12 +485,19 @@ async function generateRandomState(base) {
   for (const key of skillKeys.slice(0, targets.d3)) skills[key] = { dados: 3 };
   for (const key of skillKeys.slice(targets.d3, targets.d3 + targets.d2)) skills[key] = { dados: 2 };
   const healthRoll = await new Roll("1d6").evaluate({ async: true });
+  const isIms = currentRuleset() === "imserso";
   return {
     name: keepExistingName(base.name, identity.name),
     atributos: attrs,
     habilidades: skills,
     healthRoll: healthRoll.total,
-    defectos: { leve: choice(DEFECTOS_LEVES), grave: choice(DEFECTOS_GRAVES) },
+    defectos: isIms ? {
+      leve: `Achaque menor: ${identity.achaqueMenor}.`,
+      grave: `Achaque mayor: ${identity.achaqueMayor}. Mania: ${identity.quirk}.`
+    } : {
+      leve: choice(DEFECTOS_LEVES),
+      grave: choice(DEFECTOS_GRAVES)
+    },
     datos: {
       jugador: base.datos?.jugador ?? game.user.name ?? "",
       lugarNacimiento: identity.place,
@@ -509,11 +578,13 @@ export class YsystemCharacterCreator extends ApplicationV1 {
   }
 
   getData() {
-    if (isDungeonsYayos() && this.state.mode === "arquetipo") this.state.mode = "libre";
-    const isDungeons = isDungeonsYayos();
+    const ruleset = currentRuleset();
+    const isDungeons = ruleset === "dungeonsYayos";
+    const isIms = ruleset === "imserso";
+    if ((isDungeons || isIms) && this.state.mode === "arquetipo") this.state.mode = "libre";
     const steps = this.steps.map((step, index) => ({
       ...step,
-      label: isDungeons && step.key === "defectos" ? "Achaques" : step.label,
+      label: (isDungeons || isIms) && step.key === "defectos" ? "Achaques" : step.label,
       index,
       active: index === this.state.step,
       done: index < this.state.step
@@ -538,21 +609,22 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       themeClass: currentThemeClass(),
       isPnj: this.state.actorType === "pnj",
       isDungeonsYayos: isDungeons,
-      supportsArchetypes: !isDungeons,
+      isImserso: isIms,
+      supportsArchetypes: !isDungeons && !isIms,
       attrValuesText: attrValuesText(),
-      attrRequirementText: isDungeons ? "Reparte 0, +2, +4 y +6 entre los cuatro atributos." : "Reparte 0, +1, +2, +4 y +6 entre atributos.",
-      resourceLabel: isDungeons ? "Yayopoints" : "Proezas",
-      agilityLabel: isDungeons ? "Bemoles" : "Agilidad",
-      aplomoLabel: isDungeons ? "Nervio" : "Aplomo",
-      perspicaciaLabel: isDungeons ? "Vista" : "Perspicacia",
-      rfLabel: isDungeons ? "Jamacuco" : "RF",
-      professionLabel: isDungeons ? "Antigua profesion (+3)" : "Profesion / perfil (+3)",
-      profileLabel: isDungeons ? "Alineamiento" : "Ambientacion",
+      attrRequirementText: isDungeons || isIms ? "Reparte 0, +2, +4 y +6 entre los cuatro atributos." : "Reparte 0, +1, +2, +4 y +6 entre atributos.",
+      resourceLabel: isDungeons || isIms ? "Yayopoints" : "Proezas",
+      agilityLabel: isDungeons ? "Bemoles" : (isIms ? "Nervio" : "Agilidad"),
+      aplomoLabel: isDungeons ? "Nervio" : (isIms ? "Bemoles" : "Aplomo"),
+      perspicaciaLabel: isDungeons ? "Vista" : (isIms ? "Ojo clínico" : "Perspicacia"),
+      rfLabel: isDungeons || isIms ? "Jamacuco" : "RF",
+      professionLabel: isDungeons ? "Antigua profesion (+3)" : (isIms ? "Antiguo oficio (+3)" : "Profesion / perfil (+3)"),
+      profileLabel: isDungeons ? "Alineamiento" : (isIms ? "Arquetipo de jubilado" : "Ambientacion"),
       ageLabel: isDungeons ? "Años" : "Edad",
       originLabel: isDungeons ? "Raza" : "Lugar de nacimiento",
-      minorDefectLabel: isDungeons ? "Achaque menor" : "Defecto leve",
-      majorDefectLabel: isDungeons ? "Achaque mayor" : "Defecto grave",
-      defectsTitle: isDungeons ? "Achaques y Salud inicial" : "Defectos y Salud inicial",
+      minorDefectLabel: isDungeons || isIms ? "Achaque menor" : "Defecto leve",
+      majorDefectLabel: isDungeons || isIms ? "Achaque mayor" : "Defecto grave",
+      defectsTitle: isDungeons || isIms ? "Achaques y Salud inicial" : "Defectos y Salud inicial",
       steps,
       stepKey: this.steps[this.state.step]?.key ?? "datos",
       arquetipos: ARQUETIPOS.map((entry) => ({ ...entry, selected: entry.key === this.state.arquetipoKey })),
@@ -654,7 +726,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     const data = new FormData(form);
     this.state.name = String(data.get("name") ?? this.state.name);
     this.state.mode = String(data.get("mode") ?? this.state.mode);
-    if (isDungeonsYayos() && this.state.mode === "arquetipo") this.state.mode = "libre";
+    if ((isDungeonsYayos() || isImserso()) && this.state.mode === "arquetipo") this.state.mode = "libre";
     this.state.arquetipoKey = String(data.get("arquetipoKey") ?? this.state.arquetipoKey);
     for (const key of Object.keys(this.state.datos)) this.state.datos[key] = String(data.get(`datos.${key}`) ?? this.state.datos[key] ?? "");
     for (const key of Object.keys(this.state.pnj)) this.state.pnj[key] = String(data.get(`pnj.${key}`) ?? this.state.pnj[key] ?? "");
@@ -727,8 +799,16 @@ export class YsystemCharacterCreator extends ApplicationV1 {
 
   _rollDefects() {
     this._readForm();
-    this.state.defectos.leve = choice(DEFECTOS_LEVES);
-    this.state.defectos.grave = choice(DEFECTOS_GRAVES);
+    if (currentRuleset() === "imserso") {
+      const achaqueMayor = choice(IMSERSO_GENERATOR_DATA.achaques);
+      const achaqueMenor = choice(IMSERSO_GENERATOR_DATA.achaques.filter((entry) => entry !== achaqueMayor)) || achaqueMayor;
+      const quirk = choice(IMSERSO_GENERATOR_DATA.quirks);
+      this.state.defectos.leve = `Achaque menor: ${achaqueMenor}.`;
+      this.state.defectos.grave = `Achaque mayor: ${achaqueMayor}. Mania: ${quirk}.`;
+    } else {
+      this.state.defectos.leve = choice(DEFECTOS_LEVES);
+      this.state.defectos.grave = choice(DEFECTOS_GRAVES);
+    }
     this.render(false);
   }
 
@@ -744,15 +824,25 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     this.state.defectos = generated.defectos;
     this.state.step = this.steps.findIndex((step) => step.key === "resumen");
     if (announce) {
+      const isIms = currentRuleset() === "imserso";
+      const cardTitle = isIms ? "Jubilado preparado" : "PJ aleatorio preparado";
+      const details = isIms ? `
+        <p><strong>${escapeHtml(this.state.name)}</strong> · ${escapeHtml(this.state.datos.perfil)}.</p>
+        <p><strong>Antiguo oficio:</strong> ${escapeHtml(this.state.datos.profesion)}.</p>
+        <p><strong>Achaque mayor:</strong> ${escapeHtml(generated.defectos.grave)}.</p>
+        <p><strong>3D:</strong> ${escapeHtml(generated.selected3.map(labelForSkill).join(", "))}.</p>
+      ` : `
+        <p><strong>${escapeHtml(this.state.name)}</strong> · ${escapeHtml(this.state.datos.profesion)}.</p>
+        <p><strong>Salud inicial:</strong> ${generated.healthRoll} en 1D6.</p>
+        <p><strong>3D:</strong> ${escapeHtml(generated.selected3.map(labelForSkill).join(", "))}.</p>
+        <p><strong>2D:</strong> ${escapeHtml(generated.selected2.map(labelForSkill).join(", "))}.</p>
+      `;
       await ChatMessage.create({
-        speaker: this.actor ? ChatMessage.getSpeaker({ actor: this.actor }) : { alias: "Creador YSYSTEM3" },
+        speaker: this.actor ? ChatMessage.getSpeaker({ actor: this.actor }) : { alias: isIms ? "Generador de jubilados" : "Creador YSYSTEM3" },
         content: `
           <div class="ims-chat-card">
-            <h3>PJ aleatorio preparado</h3>
-            <p><strong>${escapeHtml(this.state.name)}</strong> · ${escapeHtml(this.state.datos.profesion)}.</p>
-            <p><strong>Salud inicial:</strong> ${generated.healthRoll} en 1D6.</p>
-            <p><strong>3D:</strong> ${escapeHtml(generated.selected3.map(labelForSkill).join(", "))}.</p>
-            <p><strong>2D:</strong> ${escapeHtml(generated.selected2.map(labelForSkill).join(", "))}.</p>
+            <h3>${cardTitle}</h3>
+            ${details}
           </div>`
       });
     }
@@ -768,16 +858,29 @@ export class YsystemCharacterCreator extends ApplicationV1 {
     this.state.healthRoll = generated.healthRoll;
     this.state.pnj = { ...this.state.pnj, ...generated.pnj };
     this.state.step = this.steps.findIndex((step) => step.key === "resumen");
+    const isIms = currentRuleset() === "imserso";
+    await ChatMessage.create({
+      speaker: this.actor ? ChatMessage.getSpeaker({ actor: this.actor }) : { alias: isIms ? "Generador de PNJ del viaje" : "Creador YSYSTEM3" },
+      content: `
+        <div class="ims-chat-card">
+          <h3>${isIms ? "PNJ del viaje preparado" : "PNJ aleatorio preparado"}</h3>
+          <p><strong>${escapeHtml(this.state.name)}</strong> · ${escapeHtml(this.state.pnj.rol)}.</p>
+          <p><strong>Bando/Actitud:</strong> ${escapeHtml(this.state.pnj.bando)}.</p>
+          <p><strong>Descripción:</strong> ${escapeHtml(this.state.pnj.descripcion)}.</p>
+        </div>`
+    });
     this.render(false);
   }
 
   _effectiveBuild() {
-    const arquetipo = this.state.actorType === "personaje" && this.state.mode === "arquetipo" && !isDungeonsYayos() ? arquetipoByKey(this.state.arquetipoKey) : null;
+    const ruleset = currentRuleset();
+    const isDungeons = ruleset === "dungeonsYayos";
+    const isIms = ruleset === "imserso";
+    const arquetipo = this.state.actorType === "personaje" && this.state.mode === "arquetipo" && !isDungeons && !isIms ? arquetipoByKey(this.state.arquetipoKey) : null;
     const attrs = arquetipo ? clone(arquetipo.attrs) : normalizeAttributes(this.state.atributos, { legal: this.state.actorType !== "pnj" });
     const skills = arquetipo ? archetypeSkills(arquetipo) : normalizeSkills(this.state.habilidades);
     const healthBase = arquetipo ? arquetipo.saludBase : 10 + number(attrs.fue, 0) * 2;
     const healthRoll = number(this.state.healthRoll, 0);
-    const dungeons = isDungeonsYayos();
     return {
       arquetipo,
       attrs,
@@ -788,11 +891,11 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       estabilidad: calcStability(attrs),
       rf: arquetipo?.resistenciaFisica ?? calcRf(attrs),
       rm: calcRm(attrs),
-      agilidad: dungeons ? calcBemoles(attrs) : calcAgilidad(attrs, skills),
-      aplomo: dungeons ? calcNervio(attrs, skills) : calcAplomo(attrs),
-      perspicacia: dungeons ? 0 : calcPerspicacia(attrs),
-      proezas: arquetipo?.proezas ?? (dungeons ? calcYayopoints(attrs) : Math.floor((number(attrs.fue, 0) + number(attrs.int, 0)) / 2) + 3),
-      puntoGuion: dungeons ? 0 : 1
+      agilidad: isDungeons ? calcBemoles(attrs) : (isIms ? calcNervio(attrs, skills) : calcAgilidad(attrs, skills)),
+      aplomo: isDungeons ? calcNervio(attrs, skills) : (isIms ? calcBemoles(attrs) : calcAplomo(attrs)),
+      perspicacia: isDungeons || isIms ? 0 : calcPerspicacia(attrs),
+      proezas: arquetipo?.proezas ?? (isDungeons || isIms ? calcYayopoints(attrs) : Math.floor((number(attrs.fue, 0) + number(attrs.int, 0)) / 2) + 3),
+      puntoGuion: isDungeons || isIms ? 0 : 1
     };
   }
 
@@ -810,7 +913,7 @@ export class YsystemCharacterCreator extends ApplicationV1 {
         if (counts.d3 !== skillTargets.d3) warnings.push(`Selecciona exactamente ${skillTargets.d3} habilidades a 3D. Ahora: ${counts.d3}.`);
         if (counts.d2 !== skillTargets.d2) warnings.push(`Selecciona exactamente ${skillTargets.d2} habilidades a 2D. Ahora: ${counts.d2}.`);
       }
-      if (!this.state.defectos.leve.trim() || !this.state.defectos.grave.trim()) warnings.push(isDungeonsYayos() ? "Faltan achaque menor y achaque mayor." : "Faltan defecto leve y defecto grave.");
+      if (!this.state.defectos.leve.trim() || !this.state.defectos.grave.trim()) warnings.push(isDungeonsYayos() || isImserso() ? "Faltan achaque menor y achaque mayor." : "Faltan defecto leve y defecto grave.");
     }
     return warnings;
   }
@@ -871,8 +974,8 @@ export class YsystemCharacterCreator extends ApplicationV1 {
       "system.proezas.inicial": effective.proezas,
       "system.puntoGuion.valor": effective.puntoGuion,
       "system.puntoGuion.max": effective.puntoGuion,
-      "system.valoresManual.agilidad": isDungeonsYayos() ? effective.agilidad : "",
-      "system.valoresManual.aplomo": isDungeonsYayos() ? effective.aplomo : "",
+      "system.valoresManual.agilidad": isDungeonsYayos() || isImserso() ? effective.agilidad : "",
+      "system.valoresManual.aplomo": isDungeonsYayos() || isImserso() ? effective.aplomo : "",
       "system.salud.valor": effective.health,
       "system.salud.max": effective.health,
       "system.resistenciaFisica.valor": effective.rf,

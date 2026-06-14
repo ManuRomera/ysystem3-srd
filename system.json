@@ -34,7 +34,8 @@
     "module/ysystem3-srd.mjs"
   ],
   "styles": [
-    "styles/ysystem3-srd.css"
+    "styles/ysystem3-srd.css",
+    "styles/ysystem3-imserso.css"
   ],
   "languages": [
     {

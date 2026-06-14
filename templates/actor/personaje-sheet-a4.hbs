@@ -17,10 +17,10 @@
               <h2>1. Datos del personaje</h2>
               <label class="span-2">Nombre del jugador<input name="system.datos.jugador" value="{{system.datos.jugador}}"></label>
               <label class="span-2">Nombre del PJ<input name="name" value="{{actor.name}}"></label>
-              <label>{{#if isDungeonsYayos}}Raza{{else}}Lugar de nacimiento{{/if}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
-              <label>{{#if isDungeonsYayos}}Años{{else}}Edad{{/if}}<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
-              <label>{{#if isDungeonsYayos}}Antigua profesión (+3){{else}}Profesión / perfil (+3){{/if}}<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
-              <label>{{#if isDungeonsYayos}}Alineamiento{{else}}Ambientación{{/if}}<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
+              <label>{{ysTerm "lugarNacimiento"}}<input name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
+              <label>{{ysTerm "edad"}}<input name="system.datos.edad" value="{{system.datos.edad}}"></label>
+              <label>{{ysTerm "profesion"}} (+3)<input name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
+              <label>{{ysTerm "perfil"}}<input name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
               <label class="span-2 tall">Motivación<textarea name="system.datos.motivacion">{{system.datos.motivacion}}</textarea></label>
             </section>
             <div class="ims-photo-frame">
@@ -78,9 +78,11 @@
         </section>
 
         <section class="ims-number-section ims-aches" data-help-type="rule" data-help-key="defectos">
-          <label><strong>{{#if isDungeonsYayos}}Achaque mayor{{else}}Defecto grave{{/if}}</strong><input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
-          <label><strong>{{#if isDungeonsYayos}}Achaque menor{{else}}Defecto leve{{/if}}</strong><input name="system.defectos.leve" value="{{system.defectos.leve}}"></label>
+          <label><strong>{{ysTerm "defectoGrave"}}</strong><input name="system.defectos.grave" value="{{system.defectos.grave}}"></label>
+          <label><strong>{{ysTerm "defectoLeve"}}</strong><input name="system.defectos.leve" value="{{system.defectos.leve}}"></label>
+          {{#unless isImserso}}
           <label><strong>Recuerdo cuando...</strong><textarea name="system.recuerdo.nota">{{system.recuerdo.nota}}</textarea></label>
+          {{/unless}}
         </section>
 
         <section class="ims-number-section ims-toolbar-band">

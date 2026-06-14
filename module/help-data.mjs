@@ -99,7 +99,51 @@ const DUNGEONS_YAYOS_HELP = {
   }
 };
 
+const IMSERSO_HELP = {
+  attribute: {
+    int: { title: "Cacumen", subtitle: "CAC", body: "Ingenio, reflejos mentales, memoria, perspicacia y conocimientos generales." },
+    car: { title: "Gracejo", subtitle: "GRA", body: "Simpatía, labia, capacidad de persuasión, desparpajo y carisma." },
+    des: { title: "Presteza", subtitle: "PRE", body: "Habilidad manual, rapidez, reflejos y coordinación física general." },
+    fue: { title: "Robustez", subtitle: "ROB", body: "Fuerza física bruta, constitución, aguante físico y resistencia general." }
+  },
+  skill: {
+    auxilio: { title: "Ambulatorio", subtitle: "INT", body: "Primeros auxilios, curas rápidas y administración de pastillas." },
+    mecanica: { title: "Archiperres", subtitle: "DES", body: "Uso y reparación de cerraduras, aparatos, prótesis y cachivaches mecánicos." },
+    conversacion: { title: "Batallitas", subtitle: "CAR", body: "Convencer a alguien contándole viejas vivencias e insistiendo en historias pasadas.", details: ["La dificultad suele ser el Nervio o Bemoles del oponente."] },
+    supervivencia: { title: "Cosas del campo", subtitle: "DES", body: "Orientarse y apañarse en el campo, montes y zonas rurales." },
+    simulacion: { title: "Cotilleo", subtitle: "CAR", body: "Sonsacar secretos, enterarse de cotilleos y cotillear sin levantar sospechas." },
+    intimidacion: { title: "Discusión", subtitle: "CAR", body: "Hacer valer tu opinión alzando la voz o por pura cabezonería." },
+    atletismo: { title: "Gimnasia", subtitle: "DES", body: "Esquivar, agacharse, subir bordillos y moverse rápido dentro de lo que permite el cuerpo." },
+    conducir: { title: "Ingesta", subtitle: "FUE", body: "Comer y beber sin control en el bufé libre, y digerir comidas pesadas." },
+    informacion: { title: "Internes", subtitle: "INT", body: "Manejar móviles, mandar mensajes de texto, redes sociales y usar la tecnología moderna." },
+    observacion: { title: "Lentes progresivas", subtitle: "INT", body: "Fijarse en detalles, leer letra pequeña, encontrar cosas perdidas o ver de lejos." },
+    memoria: { title: "Memoria", subtitle: "INT", body: "Recordar nombres, caras, sucesos del pasado o dónde has guardado tus cosas." },
+    fuerzaBruta: { title: "Mula parda", subtitle: "FUE", body: "Acciones de fuerza física pura: levantar maletas pesadas, empujar carros, abrir tarros." },
+    entorno: { title: "Nietos", subtitle: "DES", body: "Comprender a los jóvenes, cuidar de niños y resolver situaciones domésticas." },
+    punteria: { title: "Petanca", subtitle: "DES", body: "Lanzar objetos con puntería, ya sea jugando a la petanca o tirando cosas." },
+    seduccion: { title: "Salero", subtitle: "CAR", body: "Caer simpático, coquetear levemente y ganarse el favor ajeno con gracia natural." },
+    idiomaExtranjero1: { title: "Silbido", subtitle: "CAR", body: "Silbar para llamar la atención silbando o comunicarse a distancia corta." },
+    oido: { title: "Sonotone", subtitle: "INT", body: "Escuchar ruidos o conversaciones pese a la sordera propia de la edad." },
+    ocultacion: { title: "Sus labores", subtitle: "DES", body: "Pasar desapercibido disimulando con punto de cruz, labores o costura." },
+    cultura: { title: "Telediarios", subtitle: "INT", body: "Saber de todo un poco a base de ver telediarios y hablar con los vecinos." },
+    lucha: { title: "Tollinas", subtitle: "FUE", body: "Golpear desarmado o usando un bastón, paraguas o bolso." }
+  },
+  rule: {
+    proezas: { title: "Yayopoints", body: "Recurso de veteranía para repetir dados fallados o mejorar una tirada. Se calcula como la mitad de CAC + ROB + 2." },
+    agilidad: { title: "Nervio", body: "Resistencia física/defensa pasiva en IMSERSO. Se calcula como 3 x Gimnasia + PRE." },
+    aplomo: { title: "Bemoles", body: "Temple mental y resistencia pasiva en IMSERSO. Se calcula como CAC + 7." },
+    resistenciaFisica: { title: "Jamacuco", body: "Sustituye a la resistencia física. Determina si el jubilado aguanta umbrales de Salud sin caer desplomado." },
+    defectos: { title: "Achaques", body: "Complicaciones de salud o manías que pueden dificultar las tiradas a cambio de Yayopuntos (achaques mayores) o por pura diversión (achaques menores)." }
+  },
+  section: {
+    datos: { title: "Datos del jubilado", body: "Identidad, procedencia, antiguo oficio y motivaciones del viaje." },
+    arquetipos: { title: "Arquetipo y talento", body: "Tipo de jubilado y talentos definidos." },
+    pertenencias: { title: "Equipaje", body: "Cachivaches, armas improvisadas y talentos del jubilado." }
+  }
+};
+
 export function helpEntry(type, key, ruleset = "") {
   if (ruleset === "dungeonsYayos" && DUNGEONS_YAYOS_HELP[type]?.[key]) return DUNGEONS_YAYOS_HELP[type][key];
+  if (ruleset === "imserso" && IMSERSO_HELP[type]?.[key]) return IMSERSO_HELP[type][key];
   return SHEET_HELP[type]?.[key] ?? null;
 }

@@ -19,7 +19,15 @@ export const IMSERSO = {
         agilidad: "Agilidad",
         aplomo: "Aplomo",
         perspicacia: "Perspicacia"
-      }
+      },
+      profesion: "Profesión / perfil",
+      perfil: "Ambientación",
+      edad: "Edad",
+      lugarNacimiento: "Lugar de nacimiento",
+      defectos: "Defectos y recuerdo",
+      defectoLeve: "Defecto leve",
+      defectoGrave: "Defecto grave",
+      recuerdoEsYo: "Nota del recuerdo"
     },
     pulp: {
       label: "Anexo Pulp",
@@ -134,7 +142,39 @@ export const IMSERSO = {
         agilidad: "Bemoles",
         aplomo: "Nervio",
         perspicacia: "Vista"
-      }
+      },
+      profesion: "Antiga profesión",
+      perfil: "Alineamiento",
+      edad: "Años",
+      lugarNacimiento: "Raza",
+      defectos: "Achaques y recuerdo",
+      defectoLeve: "Achaque menor",
+      defectoGrave: "Achaque mayor",
+      recuerdoEsYo: "Es que yo a tus años..."
+    },
+    imserso: {
+      label: "IMSERSO to the Limit",
+      themeClass: "ysystem3-imserso-theme",
+      ruleset: "imserso",
+      logoMark: "IMSERSO",
+      logoScript: "To the Limit",
+      logoPath: "systems/ysystem3-srd/assets/imserso/branding/imserso-logo.webp",
+      resource: "Yayopoints",
+      resistancePhysical: "Jamacuco",
+      resistanceMental: "Resistencia mental",
+      fixed: {
+        agilidad: "Nervio",
+        aplomo: "Bemoles",
+        perspicacia: "Ojo clínico"
+      },
+      profesion: "Antiguo oficio",
+      perfil: "Arquetipo de jubilado",
+      edad: "Edad",
+      lugarNacimiento: "Lugar de nacimiento",
+      defectos: "Achaques",
+      defectoLeve: "Achaque menor",
+      defectoGrave: "Achaque mayor",
+      recuerdoEsYo: "Nota del recuerdo"
     },
   },
   /** Reglas Ysystem3 SRD (Walhalla Ediciones) */
@@ -152,6 +192,12 @@ export const IMSERSO = {
     per: { label: "Percepcion", short: "PER" }
   },
   atributosDungeonsYayos: {
+    int: { label: "Cacumen", short: "CAC" },
+    car: { label: "Gracejo", short: "GRA" },
+    des: { label: "Presteza", short: "PRE" },
+    fue: { label: "Robustez", short: "ROB" }
+  },
+  atributosImserso: {
     int: { label: "Cacumen", short: "CAC" },
     car: { label: "Gracejo", short: "GRA" },
     des: { label: "Presteza", short: "PRE" },
@@ -204,6 +250,28 @@ export const IMSERSO = {
     vista: { label: "Vista", atributo: "int", oposicion: "agilidad" },
     ingesta: { label: "Ingesta", atributo: "fue", oposicion: "" },
     oido: { label: "Oido", atributo: "int", oposicion: "agilidad" }
+  },
+  habilidadesImserso: {
+    auxilio: { label: "Ambulatorio", atributo: "int", oposicion: "" },
+    mecanica: { label: "Archiperres", atributo: "des", oposicion: "" },
+    conversacion: { label: "Batallitas", atributo: "car", oposicion: "aplomo" },
+    supervivencia: { label: "Cosas del campo", atributo: "des", oposicion: "" },
+    simulacion: { label: "Cotilleo", atributo: "car", oposicion: "perspicacia" },
+    intimidacion: { label: "Discusion", atributo: "car", oposicion: "aplomo" },
+    atletismo: { label: "Gimnasia", atributo: "des", oposicion: "agilidad" },
+    conducir: { label: "Ingesta", atributo: "fue", oposicion: "" },
+    informacion: { label: "Internes", atributo: "int", oposicion: "" },
+    observacion: { label: "Lentes progresivas", atributo: "int", oposicion: "agilidad" },
+    memoria: { label: "Memoria", atributo: "int", oposicion: "" },
+    fuerzaBruta: { label: "Mula parda", atributo: "fue", oposicion: "agilidad" },
+    entorno: { label: "Nietos", atributo: "des", oposicion: "" },
+    punteria: { label: "Petanca", atributo: "des", oposicion: "agilidad" },
+    seduccion: { label: "Salero", atributo: "car", oposicion: "aplomo" },
+    idiomaExtranjero1: { label: "Silbido", atributo: "car", oposicion: "" },
+    oido: { label: "Sonotone", atributo: "int", oposicion: "agilidad" },
+    ocultacion: { label: "Sus labores", atributo: "des", oposicion: "perspicacia" },
+    cultura: { label: "Telediarios", atributo: "int", oposicion: "" },
+    lucha: { label: "Tollinas", atributo: "fue", oposicion: "agilidad" }
   },
   dificultades: [
     { value: 5, label: "5-6 Muy facil" },
@@ -352,10 +420,12 @@ export function allSkillKeys() {
 }
 
 export function attributesForRuleset(ruleset = currentRuleset()) {
+  if (ruleset === "imserso") return IMSERSO.atributosImserso;
   return ruleset === "dungeonsYayos" ? IMSERSO.atributosDungeonsYayos : IMSERSO.atributos;
 }
 
 export function skillsForRuleset(ruleset = currentRuleset()) {
+  if (ruleset === "imserso") return sortedByLabel(IMSERSO.habilidadesImserso);
   return sortedByLabel(ruleset === "dungeonsYayos" ? IMSERSO.habilidadesDungeonsYayos : IMSERSO.habilidades);
 }
 
@@ -408,6 +478,7 @@ export function attackAttributeDamage(attackCfg, rawAttr, ruleset = currentRules
 }
 
 export function saludUmbralesForRuleset(ruleset = "srd") {
+  if (ruleset === "imserso") return [15, 10, 6, 3, 1];
   if (ruleset === "pulp") return IMSERSO.saludUmbrales.filter((t) => t !== 16);
   return IMSERSO.saludUmbrales;
 }

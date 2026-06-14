@@ -398,11 +398,11 @@ export class ImsersoActor extends Actor {
     const effective = effectiveSystem(this);
     const derived = { ...sys, atributos: effective.atributos, habilidades: effective.habilidades };
     sys.efectivos = effective;
-    const autoAgilidad = ruleset === "dungeonsYayos" ? calcBemoles(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0));
-    const autoAplomo = ruleset === "dungeonsYayos" ? calcNervio(derived) : calcAplomo(derived);
-    sys.agilidad = ruleset === "dungeonsYayos" ? dungeonsManualValue(sys.valoresManual?.agilidad, autoAgilidad, legacyDungeonsBemoles(derived)) : autoAgilidad;
-    sys.aplomo = ruleset === "dungeonsYayos" ? dungeonsManualValue(sys.valoresManual?.aplomo, autoAplomo, legacyDungeonsNervio(derived)) : autoAplomo;
-    sys.perspicacia = calcPerspicacia(derived);
+    const autoAgilidad = ruleset === "dungeonsYayos" ? calcBemoles(derived) : (ruleset === "imserso" ? calcNervio(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0)));
+    const autoAplomo = ruleset === "dungeonsYayos" ? calcNervio(derived) : (ruleset === "imserso" ? calcBemoles(derived) : calcAplomo(derived));
+    sys.agilidad = ruleset === "dungeonsYayos" || ruleset === "imserso" ? dungeonsManualValue(sys.valoresManual?.agilidad, autoAgilidad, legacyDungeonsBemoles(derived)) : autoAgilidad;
+    sys.aplomo = ruleset === "dungeonsYayos" || ruleset === "imserso" ? dungeonsManualValue(sys.valoresManual?.aplomo, autoAplomo, legacyDungeonsNervio(derived)) : autoAplomo;
+    sys.perspicacia = ruleset === "imserso" ? "" : calcPerspicacia(derived);
     sys.resistenciaFisica ??= {};
     if (!sys.resistenciaFisica?.valor) sys.resistenciaFisica.valor = calcResistenciaFisica(derived);
     sys.resistenciaFisica.efectivo = calcResistenciaFisica(derived);
@@ -427,9 +427,9 @@ export class ImsersoActor extends Actor {
     const effective = effectiveSystem(this);
     const derived = { ...sys, atributos: effective.atributos, habilidades: effective.habilidades };
     sys.efectivos = effective;
-    if (!sys.agilidad?.manual) sys.agilidad.valor = ruleset === "dungeonsYayos" ? calcBemoles(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0));
-    if (!sys.aplomo?.manual) sys.aplomo.valor = ruleset === "dungeonsYayos" ? calcNervio(derived) : calcAplomo(derived);
-    if (!sys.perspicacia?.manual) sys.perspicacia.valor = calcPerspicacia(derived);
+    if (!sys.agilidad?.manual) sys.agilidad.valor = ruleset === "dungeonsYayos" ? calcBemoles(derived) : (ruleset === "imserso" ? calcNervio(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0)));
+    if (!sys.aplomo?.manual) sys.aplomo.valor = ruleset === "dungeonsYayos" ? calcNervio(derived) : (ruleset === "imserso" ? calcBemoles(derived) : calcAplomo(derived));
+    if (!sys.perspicacia?.manual) sys.perspicacia.valor = ruleset === "imserso" ? "" : calcPerspicacia(derived);
     if (!sys.resistenciaFisica?.manual) sys.resistenciaFisica.valor = calcResistenciaFisica(derived);
     sys.proteccion = {
       dano: number(effective.mods.proteccionDano, 0),
@@ -745,7 +745,7 @@ export class ImsersoActor extends Actor {
     const resolvedType = attackTypes[currentType] ? currentType : resolveAttackType(currentType);
     const typeOptions = Object.entries(attackTypes).map(([key, value]) => `<option value="${key}" ${key === resolvedType ? "selected" : ""}>${value.label}</option>`).join("");
     const resource = resourceLabel();
-    const defenseLabel = ruleset === "dungeonsYayos" ? "Bemoles objetivo" : "Agilidad objetivo";
+    const defenseLabel = ruleset === "dungeonsYayos" ? "Bemoles objetivo" : (ruleset === "imserso" ? "Nervio objetivo" : "Agilidad objetivo");
     const targetName = target?.name ?? "Objetivo manual";
     const targetAgilidad = target ? actorAgilidad(target) : 9;
     const data = await simpleDialog({
@@ -1011,7 +1011,7 @@ export class ImsersoActor extends Actor {
     const sources = {
       hospital: { label: "Hospital / centro medico", amount: 2, skill: "" },
       reposo: { label: "Reposo confortable", amount: 1, skill: "" },
-      auxilio: { label: currentRuleset() === "dungeonsYayos" ? "Medicina DF 10" : "Auxilio DF 10", amount: 2, critAmount: 4, fumbleDamage: 2, skill: currentRuleset() === "dungeonsYayos" ? "medicina" : "auxilio", difficulty: 10 },
+      auxilio: { label: currentRuleset() === "dungeonsYayos" ? "Medicina DF 10" : (currentRuleset() === "imserso" ? "Ambulatorio DF 10" : "Auxilio DF 10"), amount: 2, critAmount: 4, fumbleDamage: 2, skill: currentRuleset() === "dungeonsYayos" ? "medicina" : "auxilio", difficulty: 10 },
       dormir: { label: "Dormir mas de 8 horas", amount: 1, skill: "" },
       contacto: { label: "Contacto fisico prolongado", amount: 1, skill: "" },
       actividad: { label: "Actividad relajante", amount: 1, skill: "" }
@@ -1194,9 +1194,12 @@ export class ImsersoActor extends Actor {
       ui.notifications.info("La persecución funciona mejor con un token seleccionado o tarjeteado; se resolverá con una referencia manual.");
     }
     const difficulty = target ? actorAgilidad(target) : 9;
-    const pursuitOptions = currentRuleset() === "dungeonsYayos"
+    const ruleset = currentRuleset();
+    const pursuitOptions = ruleset === "dungeonsYayos"
       ? `<option value="atletismo">Atletismo</option><option value="lanzamiento">Lanzamiento</option><option value="mulaParda">Mula Parda</option>`
-      : `<option value="atletismo">Atletismo</option><option value="conducir">Conducir</option>`;
+      : (ruleset === "imserso"
+        ? `<option value="atletismo">Gimnasia</option><option value="mecanica">Archiperres</option>`
+        : `<option value="atletismo">Atletismo</option><option value="conducir">Conducir</option>`);
     const data = await simpleDialog({
       title: `Persecucion: ${this.name}`,
       content: `
@@ -1356,9 +1359,9 @@ export class ImsersoActor extends Actor {
     const op = skill.oposicion ? `<option value="${skill.oposicion}">Contra ${skill.oposicion}</option>` : "";
     const resource = resourceLabel();
     const ruleset = currentRuleset();
-    const professionLabel = ruleset === "dungeonsYayos" ? "Antigua profesión (+3)" : "Profesion/perfil (+3)";
-    const majorDefectLabel = ruleset === "dungeonsYayos" ? `Achaque mayor (-1D, +1 ${resource})` : `Defecto grave (-1D, +1 ${resource})`;
-    const minorDefectLabel = ruleset === "dungeonsYayos" ? "Achaque menor (repeticion normal)" : "Defecto leve (repeticion normal)";
+    const professionLabel = ruleset === "dungeonsYayos" ? "Antigua profesión (+3)" : (ruleset === "imserso" ? "Antiguo oficio (+3)" : "Profesion/perfil (+3)");
+    const majorDefectLabel = ruleset === "dungeonsYayos" || ruleset === "imserso" ? `Achaque mayor (-1D, +1 ${resource})` : `Defecto grave (-1D, +1 ${resource})`;
+    const minorDefectLabel = ruleset === "dungeonsYayos" || ruleset === "imserso" ? "Achaque menor (repeticion normal)" : "Defecto leve (repeticion normal)";
     return simpleDialog({
       title: `Tirada: ${labelForSkill(skillKey)}`,
       content: `
