@@ -7,6 +7,14 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.21] — 2026-06-14
+
+### Añadido
+- Integrada la variante de ambientación `IMSERSO to the Limit` de forma nativa en el sistema.
+- Se ha añadido la ayuda contextual adaptada a IMSERSO para todos los atributos y habilidades clásicas de la variante.
+- El generador de jubilados y PNJs del viaje utiliza ahora tablas de datos estáticos en el creador.
+- Se implementaron botones dinámicos en el directorio de actores ("Crear jubilado" / "Crear PNJ del viaje") bajo esta variante.
+
 ## [0.3.20] — 2026-06-08
 
 ### Cambiado
