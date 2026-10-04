@@ -7,6 +7,10 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.0.1] — 2026-10-04
+
+Corrige la compilación de compendios en la publicación automática (sin cambios funcionales).
+
 ## [1.0.0] — 2026-10-04
 
 Reescritura completa. El sistema pasa de ser una copia V1 del sistema IMSERSO con maquillaje del SRD a implementar de verdad Ysystem3 y sus variantes. Detalle de cada fallo corregido en [`docs/AUDITORIA.md`](docs/AUDITORIA.md).
