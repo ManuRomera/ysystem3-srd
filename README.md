@@ -7,10 +7,11 @@
 **Todo el reglamento de Ysystem3 automatizado: proezas, defectos, Recuerdo cuando…, combate con ráfagas y noquear, Salud y Estabilidad con umbrales, pánico, persecuciones, curación, Experiencia y magia.**
 Dos ediciones (Ysystem3 y Edición Revisada), nueve ambientaciones y el SRD completo en el compendio.
 
-[![Versión](https://img.shields.io/github/v/release/ManuRomera/ysystem3-srd?color=2a3b78&label=versi%C3%B3n&style=for-the-badge)](https://github.com/ManuRomera/ysystem3-srd/releases/latest)
-[![Foundry](https://img.shields.io/badge/Foundry%20VTT-13%2B-ff6400?style=for-the-badge)](https://foundryvtt.com)
-[![Descargas](https://img.shields.io/github/downloads/ManuRomera/ysystem3-srd/total?color=e0a526&label=descargas&style=for-the-badge)](https://github.com/ManuRomera/ysystem3-srd/releases)
-[![Licencia](https://img.shields.io/badge/c%C3%B3digo-MIT%20%C2%B7%20SRD%20CC%20BY%204.0-555?style=for-the-badge)](LICENSE.md)
+  <a href="https://github.com/ManuRomera/ysystem3-srd/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/ManuRomera/ysystem3-srd?include_prereleases&style=for-the-badge&color=2a3b78&label=release"></a>
+  <a href="https://foundryvtt.com"><img alt="Foundry VTT V13" src="https://img.shields.io/badge/Foundry%20VTT-V13-57d8c8?style=for-the-badge"></a>
+  <a href="https://github.com/ManuRomera/ysystem3-srd/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/ManuRomera/ysystem3-srd/total?style=for-the-badge&color=ff7a1f"></a>
+  <img alt="Game system" src="https://img.shields.io/badge/type-game%20system-2b3245?style=for-the-badge">
+  <a href="LICENSE.md"><img alt="License" src="https://img.shields.io/badge/license-MIT%20%C2%B7%20CC%20BY%204.0-2b3245?style=for-the-badge"></a>
 
 ### [⬇️ Descargar la última versión](https://github.com/ManuRomera/ysystem3-srd/releases/latest) · [🌐 Web del proyecto](https://manuromera.github.io/ysystem3-srd/)
 
