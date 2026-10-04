@@ -1,0 +1,104 @@
+<div class="ys-ficha">
+  {{> "systems/ysystem3-srd/templates/partes/cabecera.hbs"}}
+
+  <section class="ys-vitales">
+    <div class="ys-tarjeta ys-salud" data-tooltip="{{ayuda.salud}}">
+      <div class="ys-tarjeta-cab">
+        <span class="ys-rotulo">Salud</span>
+        {{#if penalizador}}<span class="ys-chip aviso">−{{penalizador}}D a todo</span>{{else}}<span class="ys-chip">Sin penalizador</span>{{/if}}
+      </div>
+      <div class="ys-num-fila">
+        {{#if editable}}<button type="button" class="ys-mini" data-action="saludMenos" aria-label="Pierde 1 de Salud">−</button>{{/if}}
+        <span class="ys-grande">
+          {{#if editando}}<input type="number" name="system.salud.valor" value="{{system.salud.valor}}" min="0" aria-label="Salud actual">/<input type="number" name="system.salud.max" value="{{system.salud.max}}" min="1" aria-label="Salud máxima">{{else}}<b>{{system.salud.valor}}</b><small>/ {{system.salud.max}}</small>{{/if}}
+        </span>
+        {{#if editable}}<button type="button" class="ys-mini" data-action="saludMas" aria-label="Recupera 1 de Salud">+</button>
+        <button type="button" class="ys-mini" data-action="saludOtra" data-tooltip="Daño o curación de varios puntos"><i class="fa-solid fa-ellipsis"></i></button>{{/if}}
+      </div>
+      {{> "systems/ysystem3-srd/templates/partes/barra.hbs" segs=segmentos etiqueta="Salud" valor=system.salud.valor max=system.salud.max}}
+    </div>
+  </section>
+
+  <section class="ys-valores">
+    {{#each fijos}}
+    <div class="ys-fijo" data-tooltip="{{ayuda}}">
+      <span class="ys-rotulo">{{etiqueta}}</span>
+      {{#if @root.editando}}<input type="number" name="{{campo}}.valor" value="{{valor}}" aria-label="{{etiqueta}}"><label class="check" data-tooltip="Marcado: valor fijo a mano; sin marcar: se calcula de los atributos"><input type="checkbox" name="{{campo}}.manual" {{#if manual}}checked{{/if}}> a mano</label>{{else}}<b>{{valor}}</b>{{#if manual}}<small class="base">a mano</small>{{/if}}{{/if}}
+    </div>
+    {{/each}}
+    <div class="ys-fijo res" data-tooltip="{{ayuda.rf}}">
+      <span class="ys-rotulo">{{etiquetaRF}}</span>
+      {{#if editando}}<input type="number" name="system.resistenciaFisica.valor" value="{{system.resistenciaFisica.valor}}"><label class="check"><input type="checkbox" name="system.resistenciaFisica.manual" {{#if system.resistenciaFisica.manual}}checked{{/if}}> a mano</label>{{else}}<b>{{rf}}</b>{{/if}}
+      {{#if editable}}<button type="button" class="ys-mini" data-action="tirarRF" data-tooltip="Tirar {{etiquetaRF}} (3D6)"><i class="fa-solid fa-heart-pulse"></i></button>{{/if}}
+    </div>
+    <div class="ys-fijo"><span class="ys-rotulo">Iniciativa</span><b>+{{iniciativa}}</b></div>
+  </section>
+
+  <nav class="tabs ys-pestanas" aria-label="Secciones">
+    <button type="button" data-action="tab" data-group="primary" data-tab="habilidades" class="{{#if (eq pestana 'habilidades')}}active{{/if}}"><i class="fa-solid fa-dice-six"></i> Habilidades</button>
+    <button type="button" data-action="tab" data-group="primary" data-tab="combate" class="{{#if (eq pestana 'combate')}}active{{/if}}"><i class="fa-solid fa-shield-halved"></i> Combate</button>
+    <button type="button" data-action="tab" data-group="primary" data-tab="notas" class="{{#if (eq pestana 'notas')}}active{{/if}}"><i class="fa-solid fa-book-open"></i> Notas</button>
+    {{#if editable}}<span class="ys-rapidas">
+      <button type="button" data-action="iniciativa" data-tooltip="Iniciativa: 1D6 + {{iniciativa}}"><i class="fa-solid fa-forward"></i></button>
+      <button type="button" data-action="ataque" data-tooltip="Atacar al objetivo marcado"><i class="fa-solid fa-burst"></i></button>
+      <button type="button" data-action="defensaCompleta" data-tooltip="Defenderse completamente: +1D de Agilidad este turno"><i class="fa-solid fa-shield"></i></button>
+    </span>{{/if}}
+  </nav>
+
+  <div class="ys-cuerpo">
+    <section class="tab {{#if (eq pestana 'habilidades')}}active{{/if}}" data-group="primary" data-tab="habilidades">
+      {{> "systems/ysystem3-srd/templates/partes/habilidades.hbs"}}
+      <p class="ys-nota">Los PNJ solo tienen cuatro habilidades (Atletismo, Fuerza bruta, Lucha y Puntería); el DJ tira solo en combate, el resto de conflictos los resuelve el jugador contra los valores fijos.</p>
+      {{#if mods.length}}<p class="ys-nota"><i class="fa-solid fa-shirt"></i> Equipado: {{#each mods}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</p>{{/if}}
+    </section>
+
+    <section class="tab {{#if (eq pestana 'combate')}}active{{/if}}" data-group="primary" data-tab="combate">
+      <div class="ys-datos">
+        <label class="ys-campo"><span>Ataque</span><input type="text" name="system.ataque.nombre" value="{{system.ataque.nombre}}"></label>
+        <label class="ys-campo"><span>Tipo</span><select name="system.ataque.tipo">{{selectOptions tiposAtaque selected=system.ataque.tipo valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+        <label class="ys-campo"><span>Habilidad</span><select name="system.ataque.habilidad">{{selectOptions habilidadesAtaque selected=system.ataque.habilidad valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+        <label class="ys-campo"><span>Daño base <small>(0 = el del tipo)</small></span><input type="number" name="system.ataque.dano" value="{{system.ataque.dano}}" min="0"></label>
+      </div>
+      <div class="ys-acciones grande">
+        <button type="button" class="principal" data-action="ataque"><i class="fa-solid fa-burst"></i> Atacar</button>
+        <button type="button" data-action="iniciativa"><i class="fa-solid fa-forward"></i> Iniciativa</button>
+        <button type="button" data-action="defensaCompleta"><i class="fa-solid fa-shield"></i> Defensa completa</button>
+        <button type="button" data-action="inmovilizar"><i class="fa-solid fa-hand"></i> Inmovilizar</button>
+        <button type="button" data-action="zafarse"><i class="fa-solid fa-link-slash"></i> Zafarse</button>
+        <button type="button" data-action="huir"><i class="fa-solid fa-person-walking-arrow-right"></i> Huir</button>
+        <button type="button" data-action="perseguir"><i class="fa-solid fa-person-running"></i> Persecución</button>
+        <button type="button" data-action="danoRegla"><i class="fa-solid fa-triangle-exclamation"></i> Otras fuentes de daño</button>
+      </div>
+      <div class="ys-fila-estados">
+        <button type="button" class="ys-estado {{#if system.combate.sorprendido}}activo{{/if}}" data-action="alternar" data-campo="system.combate.sorprendido"><i class="fa-solid fa-eye-slash"></i> Sorprendido</button>
+        <button type="button" class="ys-estado {{#if system.combate.inmovilizado}}activo{{/if}}" data-action="alternar" data-campo="system.combate.inmovilizado"><i class="fa-solid fa-hand"></i> Inmovilizado</button>
+        <button type="button" class="ys-estado {{#if system.estado.inconsciente}}activo{{/if}}" data-action="alternar" data-campo="system.estado.inconsciente"><i class="fa-solid fa-bed"></i> Inconsciente</button>
+        <button type="button" class="ys-estado {{#if system.estado.muerto}}activo{{/if}}" data-action="alternar" data-campo="system.estado.muerto"><i class="fa-solid fa-skull"></i> Muerto</button>
+      </div>
+      <div class="ys-segmentado" role="group" aria-label="Cobertura frente a ataques a distancia">
+        <span class="ys-rotulo">Cobertura</span>
+        {{#each coberturas}}<button type="button" class="{{#if activo}}activo{{/if}}" data-action="cobertura" data-nivel="{{valor}}">{{etiqueta}}</button>{{/each}}
+      </div>
+      <h3 class="ys-seccion">Armas y protecciones</h3>
+      <ul class="ys-objetos">
+        {{#each grupos.arma}}{{> "systems/ysystem3-srd/templates/partes/objeto-fila.hbs"}}{{/each}}
+        {{#each grupos.proteccion}}{{> "systems/ysystem3-srd/templates/partes/objeto-fila.hbs"}}{{/each}}
+      </ul>
+      {{#if editable}}<div class="ys-anadir"><button type="button" data-action="itemNuevo" data-tipo="arma"><i class="fa-solid fa-plus"></i> Arma</button><button type="button" data-action="itemNuevo" data-tipo="armadura"><i class="fa-solid fa-plus"></i> Armadura</button><button type="button" data-action="itemNuevo" data-tipo="escudo"><i class="fa-solid fa-plus"></i> Escudo</button></div>{{/if}}
+    </section>
+
+    <section class="tab {{#if (eq pestana 'notas')}}active{{/if}}" data-group="primary" data-tab="notas">
+      <div class="ys-datos">
+        <label class="ys-campo"><span>Rol</span><input type="text" name="system.rol" value="{{system.rol}}"></label>
+        <label class="ys-campo"><span>Bando</span><input type="text" name="system.bando" value="{{system.bando}}"></label>
+      </div>
+      <label class="ys-campo"><span>Descripción</span><textarea name="system.descripcion" rows="3">{{system.descripcion}}</textarea></label>
+      <label class="ys-campo"><span>Notas</span><textarea name="system.notas" rows="6">{{system.notas}}</textarea></label>
+      {{#if editable}}<div class="ys-acciones">
+        <button type="button" data-action="referencia"><i class="fa-solid fa-chart-simple"></i> Atributos de referencia…</button>
+        <button type="button" data-action="saludFija"><i class="fa-solid fa-heart"></i> Salud sin dados…</button>
+        <button type="button" data-action="aleatorio"><i class="fa-solid fa-dice"></i> Generar al azar</button>
+      </div>{{/if}}
+    </section>
+  </div>
+</div>

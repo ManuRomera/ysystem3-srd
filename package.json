@@ -1,0 +1,15 @@
+{
+  "name": "ysystem3-srd",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Ysystem3 SRD: sistema no oficial para Foundry VTT 13+ que automatiza el reglamento genérico de Walhalla Ediciones.",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "classic-level": "2.0.0"
+  }
+}

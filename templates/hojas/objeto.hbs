@@ -1,0 +1,78 @@
+<div class="ys-ficha ys-ficha-objeto">
+  <header class="ys-cab">
+    <img class="ys-retrato" src="{{item.img}}" alt="" data-edit="img">
+    <div class="ys-cab-main">
+      <input class="ys-nombre" type="text" name="name" value="{{item.name}}" placeholder="Nombre" {{#unless editable}}disabled{{/unless}}>
+      <p class="ys-sub">{{tipoEtiqueta}}{{#if esArma}} · daño {{system.danoBase}}{{/if}}{{#if esProteccion}} · nivel {{system.nivel}}{{/if}}{{#if esPoder}} · dificultad {{system.dificultad}}{{/if}}</p>
+    </div>
+    <div class="ys-cab-botones">
+      <button type="button" class="ys-ico" data-action="usar" data-tooltip="Usar"><i class="fa-solid fa-dice-six"></i></button>
+      <button type="button" class="ys-ico" data-action="chat" data-tooltip="Mostrar en el chat"><i class="fa-solid fa-comment"></i></button>
+    </div>
+  </header>
+
+  <div class="ys-cuerpo">
+    {{#if esArma}}
+    <div class="ys-datos">
+      <label class="ys-campo"><span>Tipo de ataque</span><select name="system.tipo">{{selectOptions tiposAtaque selected=system.tipo valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+      <label class="ys-campo"><span>Habilidad</span><select name="system.habilidad">{{selectOptions habilidadesArma selected=system.habilidad valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+      <label class="ys-campo"><span>Atributo que suma al daño</span><select name="system.atributoDano">{{selectOptions atributosOpc selected=system.atributoDano valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+      <label class="ys-campo"><span>Daño base <small>(el de la tabla de la edición, salvo que lo cambies)</small></span><input type="number" name="system.danoBase" value="{{system.danoBase}}" min="0"></label>
+      <label class="ys-campo"><span>Bonificador de iniciativa <small>(solo IMSERSO)</small></span><input type="number" name="system.iniciativa" value="{{system.iniciativa}}"></label>
+      <label class="ys-campo"><span>Alcance o notas</span><input type="text" name="system.alcance" value="{{system.alcance}}"></label>
+    </div>
+    {{/if}}
+
+    {{#if esProteccion}}
+    <div class="ys-datos">
+      <label class="ys-campo"><span>Nivel de calidad <small>(1 a 5)</small></span><input type="number" name="system.nivel" value="{{system.nivel}}" min="0" max="10"></label>
+      <p class="ys-nota">{{#if (eq tipo 'armadura')}}Resta {{system.nivel}} al daño de cada golpe y penaliza {{penalizacion}} a las habilidades afectadas (la mitad del nivel, hacia abajo).{{else}}Suma {{system.nivel}} a la Agilidad cuando te atacan y penaliza {{penalizacion}} a las habilidades afectadas.{{/if}} Un crítico ignora la armadura (Ysystem3).</p>
+    </div>
+    {{/if}}
+
+    {{#if esPoder}}
+    <div class="ys-datos">
+      <label class="ys-campo"><span>Tipo</span><input type="text" name="system.tipo" value="{{system.tipo}}" placeholder="Hechizo, poder psiónico…"></label>
+      <label class="ys-campo"><span>Atributo del que depende</span><select name="system.atributo">{{selectOptions atributosOpc selected=system.atributo valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+      <label class="ys-campo"><span>Dificultad</span><select name="system.dificultad">{{selectOptions dificultadesPoder selected=system.dificultad valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+      <label class="ys-campo"><span>Coste extra de Poder</span><input type="number" name="system.costeExtra" value="{{system.costeExtra}}" min="0"></label>
+      <label class="ys-campo"><span>Si afecta a otro personaje, supera su…</span><select name="system.contra">{{selectOptions contraOpc selected=system.contra valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+      <label class="ys-campo"><span>Preparación</span><input type="text" name="system.preparacion" value="{{system.preparacion}}"></label>
+      <label class="ys-campo"><span>Lanzamiento o activación</span><input type="text" name="system.lanzamiento" value="{{system.lanzamiento}}"></label>
+      <label class="ys-campo"><span>Duración</span><input type="text" name="system.duracion" value="{{system.duracion}}"></label>
+      <label class="ys-campo"><span>Caducidad</span><input type="text" name="system.caducidad" value="{{system.caducidad}}"></label>
+    </div>
+    {{/if}}
+
+    {{#if esTalento}}
+    <div class="ys-datos">
+      <label class="ys-campo"><span>Usos</span><span class="ys-fila-sel"><input type="number" name="system.usos.valor" value="{{system.usos.valor}}" min="0"> / <input type="number" name="system.usos.max" value="{{system.usos.max}}" min="0"></span></label>
+      <label class="ys-campo"><span>Se renueva</span><select name="system.frecuencia">{{selectOptions frecuencias selected=system.frecuencia valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+      <label class="ys-campo"><span>Categoría</span><input type="text" name="system.categoria" value="{{system.categoria}}"></label>
+    </div>
+    {{/if}}
+
+    {{#if esEquipo}}
+    <div class="ys-datos">
+      <label class="ys-campo"><span>Cantidad</span><input type="number" name="system.cantidad" value="{{system.cantidad}}" min="0"></label>
+      <label class="ys-campo"><span>Habilidad al usarlo</span><select name="system.habilidadUso">{{selectOptions habilidades selected=system.habilidadUso valueAttr="valor" labelAttr="etiqueta"}}</select></label>
+      <label class="ys-campo"><span>Dificultad al usarlo</span><input type="number" name="system.dificultadUso" value="{{system.dificultadUso}}" min="0"></label>
+      <label class="ys-campo"><span>Automatismo <small>(botiquin = curación reglada)</small></span><input type="text" name="system.automatismo" value="{{system.automatismo}}"></label>
+    </div>
+    {{/if}}
+
+    {{#if esArquetipo}}
+    <div class="ys-datos">
+      <label class="ys-campo"><span>Perfil</span><input type="text" name="system.perfil" value="{{system.perfil}}"></label>
+      <label class="ys-campo"><span>Proezas iniciales</span><input type="number" name="system.proezas" value="{{system.proezas}}" min="0"></label>
+      <label class="ys-campo"><span>Salud base <small>(FUE × 2 + 10)</small></span><input type="number" name="system.saludBase" value="{{system.saludBase}}" min="0"></label>
+      <label class="ys-campo"><span>Resistencia física</span><input type="number" name="system.resistenciaFisica" value="{{system.resistenciaFisica}}" min="0"></label>
+      <label class="ys-campo"><span>Talento</span><input type="text" name="system.talentoNombre" value="{{system.talentoNombre}}"></label>
+    </div>
+    <label class="ys-campo"><span>Texto del talento</span><textarea name="system.talento" rows="3">{{system.talento}}</textarea></label>
+    {{/if}}
+
+    <label class="ys-campo"><span>Descripción</span><textarea name="system.descripcion" rows="6">{{system.descripcion}}</textarea></label>
+    {{#unless esArquetipo}}{{#unless esPoder}}{{#unless esTalento}}<label class="ys-campo check"><input type="checkbox" name="system.equipado" {{#if system.equipado}}checked{{/if}}> <span>Equipado</span></label>{{/unless}}{{/unless}}{{/unless}}
+  </div>
+</div>

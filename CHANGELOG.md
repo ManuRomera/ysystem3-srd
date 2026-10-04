@@ -7,6 +7,43 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.0.0] — 2026-10-04
+
+Reescritura completa. El sistema pasa de ser una copia V1 del sistema IMSERSO con maquillaje del SRD a implementar de verdad Ysystem3 y sus variantes. Detalle de cada fallo corregido en [`docs/AUDITORIA.md`](docs/AUDITORIA.md).
+
+### Añadido
+- **Dos ediciones** (Ysystem3 y Edición Revisada) con sus cifras propias, seleccionables por mundo.
+- **Nueve ambientaciones** más la base: las de YayoSystem (IMSERSO, Dungeons & Yayos) cambian atributos, habilidades, valores fijos y daños; el Anexo Pulp es completo (umbral 16, +1D en Resistencias, proezas de sesión, tabla de salvación); los géneros activan los «hacks» del libro.
+- Combate completo: apuntar, noquear, ráfagas, cobertura, desenfundar, ataques combinados, explosivos, defensa completa, inmovilizar, zafarse, huir; iniciativa con desempate y acción extra.
+- Pánico con tarjeta de estado, habituación y duración de la crisis; pánico de PNJ; tortura; duelos; persecuciones con distancias y tabla de sucesos de 2D.
+- Nueva sesión, nuevo día y nueva aventura; Experiencia y «Mejorar»; Poder y habilidad de Magia/Psiónica; punto de guion; talentos con efecto mecánico.
+- **Panel del DJ**, asistente de creación (libre, plantilla o azar) y PNJ rápidos del anexo del SRD.
+- Compendios nuevos generados desde el SRD público (CC BY 4.0): reglas, talentos, armas, protecciones, plantillas, poderes, PNJ, tablas y macros.
+- Accesibilidad en todas las ventanas, encuadre del retrato, memoria de ventanas, modo compacto.
+- Tests de las reglas, `npm run check` y CI; publicación por etiqueta.
+
+### Cambiado
+- ApplicationV2 + DataModels (sin `template.json`); `compat.mjs` para Foundry 13 y 14. Mínimo 13, sin máximo.
+- Los **defectos los activa el DJ** sobre una tirada ya sacada (antes eran casillas del jugador).
+- Crítico: duplica solo el daño fijo (Ysystem3) en lugar de todos los dados.
+- Umbrales de Salud y Estabilidad 16-11-7-4-2 también en IMSERSO y Dungeons & Yayos (estaban corridos un punto).
+- Rediseño visual completo y diálogos de dos columnas.
+- Instalación desde las releases (`releases/latest/download/system.json`).
+
+### Corregido
+- Los umbrales de Resistencia no se reiniciaban nunca entre sesiones.
+- Defensa activa e «inconsciente a 1 de Salud» (reglas de IMSERSO) aplicados al SRD.
+- Dungeons & Yayos calculaba Nervio y Bemoles cruzados.
+- Una Resistencia fallida no se revertía al repetirla con éxito.
+- Etiquetas sin tilde y descripciones erróneas de protecciones.
+
+### Retirado
+- Compendio de reglas copiado del PDF de pago y PJ/PNJ de una aventura comercial: sustituidos por contenido del SRD público.
+- Siembra de compendios en el mundo y archivos de desarrollo del ZIP.
+
+### Migración
+- Las rutas `system.*` no cambian. Los módulos `ysystem3-cuervos` e `ysystem3-imserso` conservan sus datos, pero su interfaz usa hooks de hojas V1 y necesita adaptarse.
+
 ## [0.3.22] — 2026-06-14
 
 ### Corregido

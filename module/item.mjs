@@ -1,85 +1,56 @@
-import { IMSERSO } from "./config.mjs";
+/**
+ * Objeto de Ysystem3: armas, equipo, protecciones, poderes, talentos y arquetipos.
+ * `usar()` es el botón de dado de la hoja: ataca, lanza, activa, equipa o tira según el objeto.
+ */
+import { publicar } from "./chat.mjs";
+import { claveAutomatismo } from "./reglas.mjs";
 
-export class ImsersoItem extends Item {
+const n = (v, d = 0) => (Number.isFinite(Number(v)) ? Number(v) : d);
+
+export class ItemYsystem3 extends Item {
+  get automatismo() { return claveAutomatismo(this.system.automatismo || this.system.uso || ""); }
+
   async usar() {
-    if (this.type === "arquetipo") {
-      if (!this.actor) return this.mostrarEnChat();
-      return this.actor.applyArchetype(this.system?.arquetipoKey || this.name, this.system);
-    }
-    if (this.type === "arma") {
-      if (!this.actor) return ui.notifications.warn("Arrastra el arma a una ficha antes de usarla para atacar.");
-      return this.actor.rollAttack({ item: this });
-    }
-    if (this.type === "poder") {
-      if (!this.actor) return this.mostrarEnChat();
-      return this.actor.rollPower(this);
-    }
-    if (["armadura", "escudo"].includes(this.type)) {
-      if (!this.actor) return this.mostrarEnChat();
-      const next = !this.system.equipado;
-      await this.update({ "system.equipado": next });
-      return ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        content: `
-          <div class="ims-chat-card ims-item-card">
-            <header><img src="${this.img}" alt=""><h3>${this.name}</h3></header>
-            <p><strong>${this.actor.name}</strong> ${next ? "equipa" : "desequipa"} ${this.name}. Las protecciones se recalculan automaticamente.</p>
-          </div>`
-      });
-    }
-    if (!this.actor) return this.mostrarEnChat();
-    const automation = this._automationKey();
-    if (automation === "botiquin" || automation === "curacion") return this.actor.useHealingItem(this);
-    if (this.system?.habilidadUso) {
+    const actor = this.actor;
+    if (this.type === "arquetipo") return actor ? actor.aplicarArquetipo(this.system.arquetipoKey || this.name, this.system) : this.mostrarEnChat();
+    if (!actor) return this.type === "arma" ? ui.notifications.warn("Arrastra el arma a una ficha antes de usarla.") : this.mostrarEnChat();
+    if (this.type === "arma") return actor.atacar({ item: this });
+    if (this.type === "poder") return actor.lanzarPoder(this);
+    if (this.type === "talento") return actor.usarTalento(this);
+    if (this.type === "armadura" || this.type === "escudo") return this.alternarEquipado(true);
+    if (["botiquin", "curacion"].includes(this.automatismo)) return actor.curacionRegla();
+    if (this.system.habilidadUso) {
       await this.mostrarEnChat();
-      return this.actor.rollSkill(this.system.habilidadUso, { dificultad: Number(this.system.dificultadUso) || IMSERSO.srd.defaultDifficulty });
+      return actor.tirarHabilidad(this.system.habilidadUso, { dificultad: n(this.system.dificultadUso, 9) });
     }
     return this.mostrarEnChat();
   }
 
+  /** Equipar o desequipar. Una sola arma, una sola armadura y un solo escudo a la vez. */
+  async alternarEquipado(avisar = false) {
+    const equipar = !this.system.equipado;
+    if (equipar && this.actor && ["arma", "armadura", "escudo"].includes(this.type)) {
+      const otras = this.actor.items.filter(i => i.type === this.type && i.id !== this.id && i.system.equipado).map(i => ({ _id: i.id, "system.equipado": false }));
+      if (otras.length) await this.actor.updateEmbeddedDocuments("Item", otras);
+    }
+    await this.update({ "system.equipado": equipar });
+    if (avisar && this.actor) {
+      await publicar({
+        tono: "aviso", icono: "fa-solid fa-shield-halved", etiqueta: "Equipo", titulo: this.name, img: this.img,
+        texto: `${this.actor.name} ${equipar ? "se equipa" : "se quita"} ${this.name}. Las protecciones se recalculan solas.`
+      }, { actor: this.actor });
+    }
+  }
+
   async mostrarEnChat() {
-    const description = this.system.descripcion ?? this.system.uso ?? "";
-    const descriptionHtml = descriptionToHtml(description);
-    const content = `
-      <div class="ims-chat-card ims-item-card">
-        <header><img src="${this.img}" alt=""><h3>${this.name}</h3></header>
-        ${descriptionHtml}
-      </div>`;
-    return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), content });
+    const s = this.system;
+    const lineas = [];
+    if (this.type === "armadura") lineas.push({ texto: `Nivel ${s.nivel}: resta ${s.nivel} al daño y penaliza ${Math.floor(s.nivel / 2)} a las habilidades afectadas.` });
+    if (this.type === "escudo") lineas.push({ texto: `Nivel ${s.nivel}: suma ${s.nivel} a la Agilidad y penaliza ${s.nivel} a las habilidades afectadas.` });
+    if (this.type === "poder") lineas.push({ texto: `Dificultad ${s.dificultad}${s.contra ? ` · contra ${s.contra}` : ""}` });
+    return publicar({
+      tono: "item", icono: "fa-solid fa-suitcase", etiqueta: game.i18n.localize(`TYPES.Item.${this.type}`), titulo: this.name, img: this.img,
+      texto: s.descripcion || s.uso || s.talento || "", lineas
+    }, { actor: this.actor ?? undefined });
   }
-
-  _automationKey() {
-    const raw = this.system?.automatismo || this.system?.uso || this.name || "";
-    return String(raw)
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
-  }
-}
-
-function descriptionToHtml(value) {
-  const raw = decodeHtmlEntities(String(value ?? "").trim());
-  if (!raw) return "";
-  if (/<[a-z][\s\S]*>/i.test(raw)) return raw;
-  return raw
-    .split(/\n{2,}/)
-    .map((paragraph) => `<p>${escapeHtml(paragraph.trim()).replace(/\n/g, "<br>")}</p>`)
-    .join("");
-}
-
-function decodeHtmlEntities(value) {
-  if (!String(value).includes("&") || !globalThis.document) return String(value ?? "");
-  const div = document.createElement("div");
-  div.innerHTML = value;
-  return div.textContent ?? div.innerText ?? String(value ?? "");
-}
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
 }

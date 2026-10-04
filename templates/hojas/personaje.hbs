@@ -1,0 +1,216 @@
+<div class="ys-ficha">
+  {{> "systems/ysystem3-srd/templates/partes/cabecera.hbs"}}
+
+  <section class="ys-vitales">
+    <div class="ys-tarjeta ys-salud" data-tooltip="{{ayuda.salud}}">
+      <div class="ys-tarjeta-cab">
+        <span class="ys-rotulo">Salud</span>
+        {{#if penalizador}}<span class="ys-chip aviso">−{{penalizador}}D a habilidades y {{etiquetaRF}}</span>{{else}}<span class="ys-chip">Sin penalizador</span>{{/if}}
+      </div>
+      <div class="ys-num-fila">
+        {{#if editable}}<button type="button" class="ys-mini" data-action="saludMenos" aria-label="Pierde 1 de Salud">−</button>{{/if}}
+        <span class="ys-grande">
+          {{#if editando}}<input type="number" name="system.salud.valor" value="{{system.salud.valor}}" min="0" aria-label="Salud actual">/<input type="number" name="system.salud.max" value="{{system.salud.max}}" min="1" aria-label="Salud inicial">{{else}}<b>{{system.salud.valor}}</b><small>/ {{system.salud.max}}</small>{{/if}}
+        </span>
+        {{#if editable}}<button type="button" class="ys-mini" data-action="saludMas" aria-label="Recupera 1 de Salud">+</button>
+        <button type="button" class="ys-mini" data-action="saludOtra" data-tooltip="Daño o curación de varios puntos"><i class="fa-solid fa-ellipsis"></i></button>{{/if}}
+      </div>
+      {{> "systems/ysystem3-srd/templates/partes/barra.hbs" segs=segmentos etiqueta="Salud" valor=system.salud.valor max=system.salud.max}}
+    </div>
+
+    {{#if conPanico}}
+    <div class="ys-tarjeta ys-estabilidad" data-tooltip="{{ayuda.estabilidad}}">
+      <div class="ys-tarjeta-cab">
+        <span class="ys-rotulo">Estabilidad</span>
+        {{#if system.estado.crisisMental}}<span class="ys-chip aviso">Crisis mental</span>{{/if}}
+      </div>
+      <div class="ys-num-fila">
+        {{#if editable}}<button type="button" class="ys-mini" data-action="estabilidadMenos" aria-label="Pierde 1 de Estabilidad">−</button>{{/if}}
+        <span class="ys-grande">
+          {{#if editando}}<input type="number" name="system.estabilidad.valor" value="{{system.estabilidad.valor}}" min="0" aria-label="Estabilidad actual">/<input type="number" name="system.estabilidad.max" value="{{system.estabilidad.max}}" min="1" aria-label="Estabilidad inicial">{{else}}<b>{{system.estabilidad.valor}}</b><small>/ {{system.estabilidad.max}}</small>{{/if}}
+        </span>
+        {{#if editable}}<button type="button" class="ys-mini" data-action="estabilidadMas" aria-label="Recupera 1 de Estabilidad">+</button>
+        <button type="button" class="ys-mini" data-action="estabilidadOtra" data-tooltip="Pérdida o recuperación de varios puntos"><i class="fa-solid fa-ellipsis"></i></button>{{/if}}
+      </div>
+      {{> "systems/ysystem3-srd/templates/partes/barra.hbs" segs=estabilidadSeg etiqueta="Estabilidad" valor=system.estabilidad.valor max=system.estabilidad.max}}
+    </div>
+    {{/if}}
+  </section>
+
+  <section class="ys-valores">
+    <div class="ys-tarjeta ys-proezas" data-tooltip="{{ayuda.proezas}}">
+      <div class="ys-tarjeta-cab">
+        <span class="ys-rotulo">{{tituloProezas}}</span>
+        <span class="ys-chip">{{system.proezas.valor}} / {{#if editando}}<input type="number" name="system.proezas.inicial" value="{{system.proezas.inicial}}" min="0">{{else}}{{system.proezas.inicial}}{{/if}}</span>
+      </div>
+      <div class="ys-pastillas">
+        {{#each proezasPips}}<span class="pastilla {{#if lleno}}llena{{/if}}{{#if extra}} extra{{/if}}"></span>{{/each}}
+        {{#unless proezasPips.length}}<span class="vacio">Ninguna</span>{{/unless}}
+      </div>
+      {{#if editable}}<div class="ys-pm"><button type="button" class="ys-mini" data-action="proezaMenos" aria-label="Gasta 1">−</button><button type="button" class="ys-mini" data-action="proezaMas" aria-label="Gana 1">+</button>
+        {{#if editando}}<button type="button" class="ys-mini" data-action="proezasLibres" data-tooltip="Restaurar a {{system.proezasLibres}} (según FUE e INT)"><i class="fa-solid fa-rotate-left"></i></button>{{/if}}</div>{{/if}}
+    </div>
+
+    {{#each fijos}}
+    <div class="ys-fijo {{#if cambia}}cambia{{/if}}" data-tooltip="{{ayuda}}">
+      <span class="ys-rotulo">{{etiqueta}}</span>
+      <b>{{valor}}</b>
+      {{#if cambia}}<small class="base">base {{base}}</small>{{/if}}
+      {{#each chips}}<em class="chip-temp">{{this}}</em>{{/each}}
+      {{#if refuerzo}}<em class="chip-temp refuerzo">+{{refuerzo}}</em>{{#if @root.editable}}<button type="button" class="ys-mini peligro" data-action="quitarRefuerzo" data-rol="{{rol}}" data-tooltip="Quitar el refuerzo (dura un turno de combate)"><i class="fa-solid fa-xmark"></i></button>{{/if}}{{/if}}
+      {{#if @root.editable}}<button type="button" class="ys-mini" data-action="reforzar" data-rol="{{rol}}" data-tooltip="Gastar proezas: +3 cada una durante un turno"><i class="fa-solid fa-star"></i></button>{{/if}}
+      {{#if @root.editando}}<input class="manual" type="number" name="system.valoresManual.{{rol}}" value="{{#if manual}}{{base}}{{/if}}" placeholder="auto" aria-label="Valor manual de {{etiqueta}}">{{/if}}
+    </div>
+    {{/each}}
+
+    <div class="ys-fijo res" data-tooltip="{{ayuda.rf}}">
+      <span class="ys-rotulo">{{etiquetaRF}}</span><b>{{rf}}</b>
+      {{#if editable}}<button type="button" class="ys-mini" data-action="tirarRF" data-tooltip="Tirar {{etiquetaRF}} (3D6)"><i class="fa-solid fa-heart-pulse"></i></button>{{/if}}
+    </div>
+    {{#if conPanico}}
+    <div class="ys-fijo res" data-tooltip="{{ayuda.rm}}">
+      <span class="ys-rotulo">{{etiquetaRM}}</span><b>{{rm}}</b>
+      {{#if editable}}<button type="button" class="ys-mini" data-action="tirarRM" data-tooltip="Tirar {{etiquetaRM}} (3D6)"><i class="fa-solid fa-brain"></i></button>{{/if}}
+    </div>
+    {{/if}}
+  </section>
+
+  <section class="ys-estados" aria-label="Recursos de la sesión">
+    <button type="button" class="ys-estado {{#if system.recuerdo.usado}}usado{{/if}}" data-action="alternar" data-campo="system.recuerdo.usado" data-tooltip="{{ayuda.recuerdo}}">
+      <i class="fa-solid fa-clock-rotate-left"></i> {{textoRecuerdo}} {{#if system.recuerdo.usado}}usado{{else}}disponible{{#if recuerdoMax}}{{#if (gt recuerdoMax 1)}} ({{recuerdoUsos}}/{{recuerdoMax}}){{/if}}{{/if}}{{/if}}
+    </button>
+    <button type="button" class="ys-estado {{#if system.defectos.leveUsado}}usado{{/if}}" data-action="alternar" data-campo="system.defectos.leveUsado" data-tooltip="{{ayuda.defectos}}">
+      <i class="fa-solid fa-bandage"></i> {{cj.defectoLeve}} {{#if system.defectos.leveUsado}}usado{{else}}disponible{{/if}}
+    </button>
+    {{#if conGuion}}<button type="button" class="ys-estado {{#if system.puntoGuion.usado}}usado{{/if}}" data-action="guion" data-tooltip="{{ayuda.guion}}"><i class="fa-solid fa-feather-pointed"></i> Punto de guion {{system.puntoGuion.valor}}/{{system.puntoGuion.max}}</button>{{/if}}
+    {{#if conPulp}}<button type="button" class="ys-estado {{#unless system.salvacionPulp}}usado{{/unless}}" data-action="salvacion" data-tooltip="Anexo Pulp: 3D6 en la tabla de salvación in extremis, una vez por aventura"><i class="fa-solid fa-hands-praying"></i> Salvación ¡PULP! {{#if system.salvacionPulp}}disponible{{else}}usada{{/if}}</button>{{/if}}
+    {{#if system.xpDisponible}}<button type="button" class="ys-estado xp" data-action="mejorar" data-tooltip="{{ayuda.xp}}"><i class="fa-solid fa-arrow-up-right-dots"></i> {{system.xpDisponible}} XP · mejorar</button>{{/if}}
+    {{#if conPoder}}<span class="ys-estado poder {{#if system.penalizadorPoder}}agotado{{/if}}" data-tooltip="{{ayuda.poder}}"><i class="fa-solid fa-wand-sparkles"></i> Poder
+      {{#if editable}}<button type="button" class="ys-mini" data-action="poderMenos" aria-label="Gasta 1 de Poder">−</button>{{/if}}
+      <b>{{#if editando}}<input type="number" name="system.poder.valor" value="{{system.poder.valor}}" min="0"> / <input type="number" name="system.poder.max" value="{{system.poder.max}}" min="0">{{else}}{{system.poder.valor}} / {{system.poder.max}}{{/if}}</b>
+      {{#if editable}}<button type="button" class="ys-mini" data-action="poderMas" aria-label="Recupera 1 de Poder">+</button><button type="button" class="ys-mini" data-action="descansar" data-tooltip="Dormir: recupera Poder"><i class="fa-solid fa-moon"></i></button>{{/if}}</span>{{/if}}
+  </section>
+
+  <nav class="tabs ys-pestanas" aria-label="Secciones">
+    <button type="button" data-action="tab" data-group="primary" data-tab="habilidades" class="{{#if (eq pestana 'habilidades')}}active{{/if}}"><i class="fa-solid fa-dice-six"></i> Habilidades</button>
+    <button type="button" data-action="tab" data-group="primary" data-tab="combate" class="{{#if (eq pestana 'combate')}}active{{/if}}"><i class="fa-solid fa-shield-halved"></i> Combate</button>
+    <button type="button" data-action="tab" data-group="primary" data-tab="equipo" class="{{#if (eq pestana 'equipo')}}active{{/if}}"><i class="fa-solid fa-suitcase"></i> Equipo</button>
+    <button type="button" data-action="tab" data-group="primary" data-tab="ficha" class="{{#if (eq pestana 'ficha')}}active{{/if}}"><i class="fa-solid fa-id-card"></i> Personaje</button>
+    {{#if esGM}}<button type="button" data-action="tab" data-group="primary" data-tab="mesa" class="{{#if (eq pestana 'mesa')}}active{{/if}}"><i class="fa-solid fa-crown"></i> DJ</button>{{/if}}
+    {{#if editable}}<span class="ys-rapidas">
+      <button type="button" data-action="iniciativa" data-tooltip="Iniciativa: 1D6 + {{iniciativa}}"><i class="fa-solid fa-forward"></i></button>
+      <button type="button" data-action="ataque" data-tooltip="Atacar al objetivo marcado"><i class="fa-solid fa-burst"></i></button>
+      <button type="button" data-action="defensaCompleta" data-tooltip="Defenderse completamente: +1D de Agilidad este turno"><i class="fa-solid fa-shield"></i></button>
+      <button type="button" data-action="perseguir" data-tooltip="Persecución"><i class="fa-solid fa-person-running"></i></button>
+    </span>{{/if}}
+  </nav>
+
+  <div class="ys-cuerpo">
+    <section class="tab {{#if (eq pestana 'habilidades')}}active{{/if}}" data-group="primary" data-tab="habilidades">
+      {{> "systems/ysystem3-srd/templates/partes/habilidades.hbs"}}
+      {{#if mods.length}}<p class="ys-nota"><i class="fa-solid fa-shirt"></i> Equipado: {{#each mods}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</p>{{/if}}
+      <div class="ys-defectos" data-tooltip="{{ayuda.defectos}}">
+        <label class="grave"><span><i class="fa-solid fa-heart-crack"></i> {{cj.defectoGrave}} <small>−1D y +1 proeza para ti · sin límite</small></span>
+          <input type="text" name="system.defectos.grave" value="{{system.defectos.grave}}" placeholder="Dolor de espalda…"></label>
+        <label class="leve"><span><i class="fa-solid fa-bandage"></i> {{cj.defectoLeve}} <small>repetición normal · una vez por sesión</small></span>
+          <input type="text" name="system.defectos.leve" value="{{system.defectos.leve}}" placeholder="Reuma…"></label>
+      </div>
+    </section>
+
+    <section class="tab {{#if (eq pestana 'combate')}}active{{/if}}" data-group="primary" data-tab="combate">
+      <div class="ys-ataque-activo" data-tooltip="{{ayuda.ataque}}">
+        <div class="info">
+          <b>{{ataqueActivo.nombre}}</b>
+          <small>{{ataqueActivo.fuente}} · {{ataqueActivo.habilidad}} · daño {{ataqueActivo.daño}} (incluye {{ataqueActivo.atributo}})</small>
+        </div>
+        <button type="button" class="ys-boton principal" data-action="ataque"><i class="fa-solid fa-burst"></i> Atacar</button>
+      </div>
+      <div class="ys-acciones grande">
+        <button type="button" data-action="iniciativa" data-tooltip="{{ayuda.iniciativa}}"><i class="fa-solid fa-forward"></i> Iniciativa</button>
+        <button type="button" data-action="defensaCompleta"><i class="fa-solid fa-shield"></i> Defensa completa</button>
+        <button type="button" data-action="inmovilizar"><i class="fa-solid fa-hand"></i> Inmovilizar</button>
+        <button type="button" data-action="zafarse"><i class="fa-solid fa-link-slash"></i> Zafarse</button>
+        <button type="button" data-action="huir"><i class="fa-solid fa-person-walking-arrow-right"></i> Huir</button>
+        <button type="button" data-action="perseguir"><i class="fa-solid fa-person-running"></i> Persecución</button>
+      </div>
+      <div class="ys-fila-estados">
+        <button type="button" class="ys-estado {{#if system.combate.sorprendido}}activo{{/if}}" data-action="alternar" data-campo="system.combate.sorprendido" data-tooltip="Sin acción en el primer turno, Agilidad a la mitad y pierde la iniciativa"><i class="fa-solid fa-eye-slash"></i> Sorprendido</button>
+        <button type="button" class="ys-estado {{#if system.combate.inmovilizado}}activo{{/if}}" data-action="alternar" data-campo="system.combate.inmovilizado" data-tooltip="Agilidad a la mitad; solo puede zafarse"><i class="fa-solid fa-hand"></i> Inmovilizado</button>
+        <button type="button" class="ys-estado {{#if system.combate.resguardado}}activo{{/if}}" data-action="alternar" data-campo="system.combate.resguardado" data-tooltip="Renuncia a atacar y se resguarda: la cobertura vale el doble"><i class="fa-solid fa-person-shelter"></i> Se resguarda</button>
+        {{#if system.combate.ignoraPenalizador}}<button type="button" class="ys-estado activo" data-action="alternar" data-campo="system.combate.ignoraPenalizador" data-tooltip="Retroceder nunca, rendirse jamás"><i class="fa-solid fa-person-rays"></i> Sin penalizador de Salud</button>{{/if}}
+      </div>
+      <div class="ys-segmentado" role="group" aria-label="Cobertura frente a ataques a distancia">
+        <span class="ys-rotulo">Cobertura</span>
+        {{#each coberturas}}<button type="button" class="{{#if activo}}activo{{/if}}" data-action="cobertura" data-nivel="{{valor}}">{{etiqueta}}</button>{{/each}}
+      </div>
+      <h3 class="ys-seccion">Armas y protecciones</h3>
+      <ul class="ys-objetos">
+        {{#each grupos.arma}}{{> "systems/ysystem3-srd/templates/partes/objeto-fila.hbs"}}{{/each}}
+        {{#each grupos.proteccion}}{{> "systems/ysystem3-srd/templates/partes/objeto-fila.hbs"}}{{/each}}
+      </ul>
+      {{#unless grupos.arma.length}}{{#unless grupos.proteccion.length}}<p class="ys-vacio">Sin armas ni protecciones. Arrástralas desde un compendio o créalas en la pestaña Equipo.</p>{{/unless}}{{/unless}}
+    </section>
+
+    <section class="tab {{#if (eq pestana 'equipo')}}active{{/if}}" data-group="primary" data-tab="equipo">
+      {{#each grupos}}
+      {{#if this.length}}
+      <h3 class="ys-seccion">{{lookup @root.titulosGrupos @key}}</h3>
+      <ul class="ys-objetos">
+        {{#each this}}{{> "systems/ysystem3-srd/templates/partes/objeto-fila.hbs"}}{{/each}}
+      </ul>
+      {{/if}}
+      {{/each}}
+      {{#if sinObjetos}}<p class="ys-vacio">Arrastra aquí armas, equipo, talentos y poderes.</p>{{/if}}
+      {{#if editable}}
+      <div class="ys-anadir">
+        <button type="button" data-action="itemNuevo" data-tipo="arma"><i class="fa-solid fa-plus"></i> Arma</button>
+        <button type="button" data-action="itemNuevo" data-tipo="armadura"><i class="fa-solid fa-plus"></i> Armadura</button>
+        <button type="button" data-action="itemNuevo" data-tipo="escudo"><i class="fa-solid fa-plus"></i> Escudo</button>
+        <button type="button" data-action="itemNuevo" data-tipo="equipo"><i class="fa-solid fa-plus"></i> Equipo</button>
+        <button type="button" data-action="itemNuevo" data-tipo="talento"><i class="fa-solid fa-plus"></i> Talento</button>
+        {{#if conPoder}}<button type="button" data-action="itemNuevo" data-tipo="poder"><i class="fa-solid fa-plus"></i> Poder</button>{{/if}}
+      </div>
+      {{/if}}
+      <label class="ys-campo"><span>Notas de pertenencias</span><textarea name="system.datos.pertenencias" rows="3">{{system.datos.pertenencias}}</textarea></label>
+    </section>
+
+    <section class="tab {{#if (eq pestana 'ficha')}}active{{/if}}" data-group="primary" data-tab="ficha">
+      <div class="ys-datos">
+        <label class="ys-campo"><span>Jugador</span><input type="text" name="system.datos.jugador" value="{{system.datos.jugador}}"></label>
+        <label class="ys-campo"><span>Edad</span><input type="text" name="system.datos.edad" value="{{system.datos.edad}}"></label>
+        <label class="ys-campo"><span>Lugar de nacimiento</span><input type="text" name="system.datos.lugarNacimiento" value="{{system.datos.lugarNacimiento}}"></label>
+        <label class="ys-campo"><span>{{cj.profesion}} <small>(+3 si la acción se relaciona)</small></span><input type="text" name="system.datos.profesion" value="{{system.datos.profesion}}"></label>
+        <label class="ys-campo"><span>Perfil o ambientación</span><input type="text" name="system.datos.perfil" value="{{system.datos.perfil}}"></label>
+        <label class="ys-campo arquetipo"><span>Plantilla</span>
+          <span class="ys-fila-sel"><select name="system.datos.arquetipo"><option value="">Libre / sin plantilla</option>{{selectOptions arquetipos selected=system.datos.arquetipo valueAttr="valor" labelAttr="etiqueta"}}</select>
+          {{#if editable}}<button type="button" data-action="arquetipo" data-tooltip="Aplicar esta plantilla a la ficha"><i class="fa-solid fa-stamp"></i> Aplicar</button><button type="button" data-action="creador" data-tooltip="Asistente de creación"><i class="fa-solid fa-wand-magic-sparkles"></i> Asistente</button>{{/if}}</span></label>
+      </div>
+      <label class="ys-campo"><span>Cita del personaje</span><input type="text" name="system.datos.cita" value="{{system.datos.cita}}" placeholder="«…»"></label>
+      <label class="ys-campo"><span>Motivación</span><textarea name="system.datos.motivacion" rows="2">{{system.datos.motivacion}}</textarea></label>
+      <label class="ys-campo"><span>Talento</span><textarea name="system.datos.talento" rows="2">{{system.datos.talento}}</textarea></label>
+      <label class="ys-campo"><span>Descripción física</span><textarea name="system.datos.descripcionFisica" rows="2">{{system.datos.descripcionFisica}}</textarea></label>
+      <label class="ys-campo"><span>Situación familiar</span><textarea name="system.datos.situacionFamiliar" rows="2">{{system.datos.situacionFamiliar}}</textarea></label>
+      <label class="ys-campo"><span>Historia</span><textarea name="system.datos.historia" rows="5">{{system.datos.historia}}</textarea></label>
+      <label class="ys-campo"><span>Relaciones</span><textarea name="system.datos.relaciones" rows="2">{{system.datos.relaciones}}</textarea></label>
+      <label class="ys-campo"><span>{{textoRecuerdo}}: nota del flashback</span><textarea name="system.recuerdo.nota" rows="2">{{system.recuerdo.nota}}</textarea></label>
+      <label class="ys-campo"><span>Notas de estado</span><textarea name="system.estado.notas" rows="2">{{system.estado.notas}}</textarea></label>
+      <p class="ys-nota">Reglas: <b>{{#if (eq cj.id 'srd')}}{{edicionNombre}}{{else}}{{cj.titulo}}{{/if}}</b> · ambientación <b>{{variante.label}}</b>. Experiencia: {{system.experiencia.total}} ganada, {{system.experiencia.gastada}} gastada.</p>
+    </section>
+
+    {{#if esGM}}
+    <section class="tab {{#if (eq pestana 'mesa')}}active{{/if}}" data-group="primary" data-tab="mesa">
+      <h3 class="ys-seccion">Acciones del DJ</h3>
+      <div class="ys-acciones grande">
+        <button type="button" data-action="danoRegla"><i class="fa-solid fa-triangle-exclamation"></i> Otras fuentes de daño</button>
+        <button type="button" data-action="curacion"><i class="fa-solid fa-briefcase-medical"></i> Curación reglada</button>
+        <button type="button" data-action="premiar"><i class="fa-solid fa-star"></i> Premiar {{cj.recursoUno}}</button>
+        <button type="button" data-action="xp"><i class="fa-solid fa-arrow-up-right-dots"></i> Dar Experiencia</button>
+        <button type="button" data-action="nuevaSesion"><i class="fa-solid fa-play"></i> Nueva sesión</button>
+        <button type="button" data-action="nuevaAventura"><i class="fa-solid fa-flag-checkered"></i> Nueva aventura</button>
+      </div>
+      <p class="ys-nota">Nueva sesión devuelve las proezas iniciales y el defecto leve; nueva aventura renueva además el Recuerdo y el punto de guion. Las acciones de mesa para todo el grupo están en el Panel del DJ.</p>
+      {{#if editando}}<p class="ys-nota">Valores manuales activos: {{#each fijos}}{{#if manual}}{{etiqueta}} {{/if}}{{/each}}— deja el campo vacío para volver al cálculo automático.</p>{{/if}}
+    </section>
+    {{/if}}
+  </div>
+</div>

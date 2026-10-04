@@ -1,0 +1,55 @@
+<div class="ys-ficha ys-panel-director">
+  <header class="ys-cab ys-cab-director">
+    <div class="ys-cab-main">
+      <p class="ys-nombre-fijo">Mesa de juego</p>
+      <p class="ys-sub">{{variante}}{{#if conPanico}} · {{edicion}}{{/if}} · día {{dias}}</p>
+    </div>
+    <div class="ys-cab-botones">
+      <button type="button" class="ys-ico" data-action="xpTodos" data-tooltip="Dar Experiencia a todos los PJ"><i class="fa-solid fa-arrow-up-right-dots"></i></button>
+    </div>
+  </header>
+
+  <div class="ys-cuerpo">
+    <div class="ys-acciones grande">
+      <button type="button" data-action="panico"><i class="fa-solid fa-ghost"></i> {{#if conPanico}}Pánico{{else}}Miedo{{/if}}</button>
+      {{#if conPanico}}<button type="button" data-action="panicoPnj"><i class="fa-solid fa-person-running"></i> Pánico de PNJ</button>{{/if}}
+      <button type="button" data-action="sesion"><i class="fa-solid fa-play"></i> Nueva sesión</button>
+      <button type="button" data-action="dia"><i class="fa-solid fa-sun"></i> Nuevo día</button>
+      <button type="button" data-action="aventura"><i class="fa-solid fa-flag-checkered"></i> Nueva aventura</button>
+      <button type="button" data-action="danoRegla"><i class="fa-solid fa-triangle-exclamation"></i> Daño reglado</button>
+      <button type="button" data-action="curacion"><i class="fa-solid fa-briefcase-medical"></i> Curación reglada</button>
+      <button type="button" data-action="tortura"><i class="fa-solid fa-hand-fist"></i> Tortura</button>
+      <button type="button" data-action="duelo"><i class="fa-solid fa-khanda"></i> Duelo</button>
+    </div>
+    <p class="ys-nota">Pánico y tortura actúan sobre los tokens <b>marcados como objetivo</b>; daño reglado, curación y tortura (verdugo) sobre el token <b>seleccionado</b>.</p>
+
+    {{#if vacio}}<p class="ys-vacio">Todavía no hay PJ. Crea uno con el asistente del directorio de Actores.</p>{{/if}}
+    <ul class="ys-lista-pj">
+      {{#each pjs}}
+      <li class="ys-pj {{#if estados.length}}con-estado{{/if}}">
+        <button type="button" class="ys-retrato-btn" data-action="abrir" data-id="{{id}}" data-tooltip="Abrir la ficha"><img class="ys-retrato" src="{{img}}" alt="" data-retrato="{{id}}"></button>
+        <div class="ys-pj-main">
+          <b>{{nombre}}</b><small>{{jugador}}</small>
+          <div class="ys-mini-barra salud" role="img" aria-label="Salud {{salud}} de {{max}}"><i style="width: {{pct}}%"></i><span>{{salud}}/{{max}}{{#if penal}} · −{{penal}}D{{/if}}</span></div>
+          {{#if maxE}}<div class="ys-mini-barra estab" role="img" aria-label="Estabilidad {{estabilidad}} de {{maxE}}"><i style="width: {{pctE}}%"></i><span>{{estabilidad}}/{{maxE}}</span></div>{{/if}}
+          {{#each estados}}<em class="ys-etiqueta-estado">{{this}}</em>{{/each}}
+        </div>
+        <div class="ys-pj-datos">
+          <span data-tooltip="Agilidad">AGI <b>{{agilidad}}</b></span>
+          <span data-tooltip="Aplomo">APL <b>{{aplomo}}</b></span>
+          {{#if perspicacia}}<span data-tooltip="Perspicacia">PER <b>{{perspicacia}}</b></span>{{/if}}
+          <span class="ys-chip" data-tooltip="Proezas">★ {{proezas}}/{{inicial}}</span>
+          {{#if xp}}<span class="ys-chip xp" data-tooltip="Experiencia por gastar">{{xp}} XP</span>{{/if}}
+          {{#if leve}}<span class="ys-chip usado" data-tooltip="Defecto leve usado">leve ✓</span>{{/if}}
+          {{#if recuerdo}}<span class="ys-chip usado" data-tooltip="Recuerdo usado">recuerdo ✓</span>{{/if}}
+        </div>
+        <div class="ys-pj-botones">
+          <button type="button" class="ys-mini" data-action="premiar" data-id="{{id}}" data-tooltip="Premiar con una proeza (buena interpretación)"><i class="fa-solid fa-star"></i></button>
+          <button type="button" class="ys-mini" data-action="cita" data-id="{{id}}" data-tooltip="La cita en el momento justo: +1 proeza"><i class="fa-solid fa-quote-left"></i></button>
+          <button type="button" class="ys-mini" data-action="xp" data-id="{{id}}" data-tooltip="Dar Experiencia"><i class="fa-solid fa-arrow-up-right-dots"></i></button>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

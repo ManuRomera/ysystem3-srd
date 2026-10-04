@@ -1,0 +1,11 @@
+<li class="{{#if equipado}}equipado{{/if}}" data-item-id="{{id}}">
+  <img src="{{img}}" alt="">
+  <span class="nom">{{nombre}}{{#if sub}}<small>{{sub}}</small>{{/if}}</span>
+  <span class="bot">
+    {{#if usable}}<button type="button" class="ys-mini" data-action="itemUsar" data-tooltip="Usar"><i class="fa-solid fa-dice-six"></i></button>{{/if}}
+    {{#if equipable}}<button type="button" class="ys-mini {{#if equipado}}activo{{/if}}" data-action="itemEquipar" data-tooltip="{{#if equipado}}Quitar{{else}}Equipar{{/if}}"><i class="fa-solid fa-shirt"></i></button>{{/if}}
+    <button type="button" class="ys-mini" data-action="itemChat" data-tooltip="Mostrar en el chat"><i class="fa-solid fa-comment"></i></button>
+    <button type="button" class="ys-mini" data-action="itemEditar" data-tooltip="Editar"><i class="fa-solid fa-pen"></i></button>
+    {{#if @root.editando}}<button type="button" class="ys-mini peligro" data-action="itemBorrar" data-tooltip="Borrar"><i class="fa-solid fa-trash"></i></button>{{/if}}
+  </span>
+</li>

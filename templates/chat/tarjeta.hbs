@@ -1,0 +1,34 @@
+<div class="ysystem3 ys-tc ys-tono-{{tono}}">
+  <header class="ys-tc-cabecera">
+    {{#if img}}<img class="ys-tc-img" src="{{img}}" alt="">{{/if}}
+    <div class="ys-tc-rotulo">
+      <span class="ys-cinta">{{#if icono}}<i class="{{icono}}"></i> {{/if}}{{etiqueta}}</span>
+      {{#if subtitulo}}<span class="ys-tc-sub">{{subtitulo}}</span>{{/if}}
+    </div>
+    {{#if resultado}}<span class="ys-tc-resultado">{{resultado}}</span>{{/if}}
+  </header>
+
+  {{#if titulo}}<h3 class="ys-tc-titulo">{{titulo}}</h3>{{/if}}
+
+  {{#if conTotal}}
+  <div class="ys-tc-tirada" aria-label="Total {{total}}">
+    {{#if dados.length}}<span class="ys-dados">{{#each dados}}<span class="ys-dado ys-dado-{{c}}{{#if seis}} seis{{/if}}">{{v}}</span>{{/each}}</span>{{else}}<span class="ys-dados sin">Sin dados: solo el bonificador</span>{{/if}}
+    <span class="ys-total">{{total}}<small>{{#if dificultad}} / {{dificultad}}{{/if}}</small></span>
+  </div>
+  {{#if formula}}<p class="ys-tc-formula">{{formula}}</p>{{/if}}
+  {{/if}}
+
+  {{#if texto}}<p class="ys-tc-texto">{{texto}}</p>{{/if}}
+  {{#each lineas}}<p class="ys-tc-linea">{{#if icono}}<i class="{{icono}}"></i> {{/if}}{{{texto}}}</p>{{/each}}
+
+  {{#if botones}}
+  <footer class="ys-tc-botones">
+    {{#each botones}}
+    <button type="button" class="ys-boton {{#if principal}}principal{{/if}}" data-ys-accion="{{accion}}" data-quien="{{quien}}" {{{attrs}}}>
+      {{#if icono}}<i class="{{icono}}"></i> {{/if}}{{etiqueta}}
+    </button>
+    {{/each}}
+  </footer>
+  {{/if}}
+  {{#if pie}}<p class="ys-tc-pie">{{pie}}</p>{{/if}}
+</div>

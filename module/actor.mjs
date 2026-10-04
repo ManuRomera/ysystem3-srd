@@ -1,1395 +1,960 @@
-import {
-  IMSERSO,
-  normalizeSkills,
-  labelForAttribute,
-  labelForSkill,
-  attackConfig,
-  attackTypesForRuleset,
-  attributesForRuleset,
-  attackAttributeDamage,
-  resolveAttackType,
-  allSkillKeys,
-  skillConfig,
-  saludUmbralesForRuleset,
-  estabilidadUmbralesForRuleset,
-  currentRuleset
-} from "./config.mjs";
+/**
+ * Actor de Ysystem3 (personajes y PNJ). Los cálculos están en reglas.mjs; las tarjetas con estado, en flujos.mjs.
+ * Todo lo que cambia con la ambientación (conjunto de reglas, edición, reglas opcionales) llega por `contexto()`.
+ */
+import { ID, CLAVES_ATRIBUTO, CLAVES_HABILIDAD, etiquetaHabilidad, etiquetaAtributo, tipoAtaque } from "./config.mjs";
+import * as R from "./reglas.mjs";
+import { contexto } from "./ajustes.mjs";
+import { efectosDe, aplica, clave as claveTalento } from "./talentos.mjs";
+import { lanzar, publicarEfecto, publicarUmbrales, publicarPersecucion, mostrar } from "./flujos.mjs";
+import { publicar } from "./chat.mjs";
+import { pedirDatos, confirmar } from "./dialogos.mjs";
 import { arquetipoByKey, archetypeSystem, archetypeTalentItem } from "./arquetipos-data.mjs";
-import { rollYayo, simpleDialog, rollFlavorForSkill } from "./dice.mjs";
 
-function number(value, fallback = 0) {
-  const n = Number(value);
-  return Number.isFinite(n) ? n : fallback;
-}
+const esc = foundry.utils.escapeHTML;
+const n = (v, d = 0) => (Number.isFinite(Number(v)) ? Number(v) : d);
+const dado = x => Math.min(3, Math.max(1, n(x, 1)));
+const objetivoActual = () => game.user.targets.first() ?? null;
+const sig = v => (v > 0 ? `+${v}` : `${v}`);
 
-function numberOrFallback(value, fallback = 0) {
-  if (value === "" || value === null || value === undefined) return fallback;
-  return number(value, fallback);
-}
+export class ActorYsystem3 extends Actor {
+  get esPJ() { return this.type === "personaje"; }
+  get ctx() { return contexto(); }
 
-function finiteNumber(value, fallback = 0) {
-  if (value === null || value === undefined || value === "") return fallback;
-  const n = Number(value?.dados ?? value);
-  return Number.isFinite(n) ? n : fallback;
-}
+  /** Efectos de los talentos del actor (se recalcula con los datos derivados). */
+  get fx() { return (this._fx ??= efectosDe(this)); }
 
-function healthPenalty(salud) {
-  const value = number(salud, 0);
-  if (value < 4) return 3;
-  if (value < 7) return 2;
-  if (value < 11) return 1;
-  return 0;
-}
-
-function calcAplomo(system) {
-  return number(system.atributos?.car, 0) + number(system.atributos?.int, 0) + 5;
-}
-
-function calcAgilidad(system) {
-  const atletismo = finiteNumber(system.habilidades?.atletismo?.dados, 1);
-  return (atletismo * 3) + number(system.atributos?.des, 0);
-}
-
-function calcPerspicacia(system) {
-  return number(system.atributos?.int, 0) + number(system.atributos?.per, 0) + 5;
-}
-
-function calcResistenciaFisica(system) {
-  return 12 - number(system.atributos?.fue, 0);
-}
-
-function calcResistenciaMental(system) {
-  return 12 - number(system.atributos?.car, 0);
-}
-
-function calcBemoles(system) {
-  return number(system.atributos?.int, 0) + 7;
-}
-
-function calcNervio(system) {
-  const atletismo = finiteNumber(system.habilidades?.atletismo?.dados, 1);
-  return (atletismo * 3) + number(system.atributos?.des, 0);
-}
-
-function calcYayopoints(system) {
-  return Math.floor((number(system.atributos?.int, 0) + number(system.atributos?.fue, 0)) / 2) + 2;
-}
-
-function manualValue(resource, fallback) {
-  const raw = typeof resource === "object" ? resource?.valor : resource;
-  if (raw === "" || raw === null || raw === undefined) return fallback;
-  return number(raw, fallback);
-}
-
-function legacyDungeonsBemoles(system) {
-  return Math.floor((number(system.atributos?.int, 0) + number(system.atributos?.fue, 0)) / 2) + 2;
-}
-
-function legacyDungeonsNervio(system) {
-  return number(system.atributos?.int, 0) + number(system.atributos?.car, 0) + 5;
-}
-
-function dungeonsManualValue(resource, fallback, legacy) {
-  const raw = typeof resource === "object" ? resource?.valor : resource;
-  if (raw === "" || raw === null || raw === undefined) return fallback;
-  const value = number(raw, fallback);
-  if (value === legacy && value !== fallback) return fallback;
-  return value;
-}
-
-function ensureThresholds(target, thresholds = [16, 11, 7, 4, 2]) {
-  target.umbrales ??= {};
-  for (const threshold of thresholds) target.umbrales[threshold] ??= false;
-}
-
-function prepareResource(resource, { valor = 0, max = valor } = {}) {
-  const out = resource && typeof resource === "object" ? resource : {};
-  out.max = numberOrFallback(out.max, max);
-  out.valor = numberOrFallback(out.valor, out.max);
-  return out;
-}
-
-function prepareResistance(resource, fallback) {
-  const out = resource && typeof resource === "object" ? resource : {};
-  out.valor = numberOrFallback(out.valor, fallback);
-  out.primeraTirada = !!out.primeraTirada;
-  ensureThresholds(out);
-  return out;
-}
-
-function clampDice(value) {
-  return Math.min(3, Math.max(1, number(value, 1)));
-}
-
-function skillDice(actor, skillKey) {
-  const candidates = [
-    actor.system?.efectivos?.habilidades?.[skillKey]?.dados,
-    actor.system?.habilidades?.[skillKey]?.dados,
-    actor.system?.habilidades?.[skillKey],
-    1
-  ];
-  for (const candidate of candidates) {
-    const n = finiteNumber(candidate, NaN);
-    if (Number.isFinite(n)) return Math.min(3, Math.max(1, n));
-  }
-  return 1;
-}
-
-function attributeValue(actor, attrKey) {
-  return finiteNumber(
-    actor.system?.efectivos?.atributos?.[attrKey],
-    finiteNumber(actor.system?.atributos?.[attrKey], 0)
-  );
-}
-
-async function rollExplodingD6(count) {
-  const safeCount = Math.max(0, number(count, 0));
-  if (!safeCount) return { total: 0, rolls: [], formula: "0", faces: [] };
-
-  let total = 0;
-  const rolls = [];
-  const faces = [];
-  let pending = safeCount;
-  while (pending > 0) {
-    const roll = await new Roll(`${pending}d6`).evaluate({ async: true });
-    rolls.push(roll);
-    const currentFaces = roll.dice.flatMap((die) => die.results).map((result) => result.result);
-    faces.push(...currentFaces);
-    total += roll.total;
-    pending = currentFaces.filter((face) => face === 6).length;
-  }
-  return { total, rolls, formula: `${safeCount}d6x`, faces };
-}
-
-function automationKey(item) {
-  const raw = item?.system?.automatismo || item?.system?.uso || item?.name || "";
-  return String(raw)
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function equippedItems(actor) {
-  return actor.items?.filter((item) => item.system?.equipado) ?? [];
-}
-
-function equippedWeapon(actor) {
-  return actor.items?.find((item) => item.type === "arma" && item.system?.equipado) ?? null;
-}
-
-function hasEquippedShield(actor) {
-  return actor?.items?.some((item) => item.type === "escudo" && item.system?.equipado) ?? false;
-}
-
-function activeDefenseDifficulty({ target, attackTipo, fallback }) {
-  if (currentRuleset() !== "dungeonsYayos") return fallback;
-  const hasShield = hasEquippedShield(target);
-  if (attackTipo === "distancia") return hasShield ? 15 : 20;
-  if (["desarmado", "cuerpoUnaMano", "cuerpoDosManos"].includes(attackTipo)) return hasShield ? 10 : 15;
-  return fallback;
-}
-
-function resourceLabel() {
-  const key = globalThis.game?.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
-  return IMSERSO.variants[key]?.resource ?? "Proezas";
-}
-
-function variantTerm(key, fallback) {
-  const variantKey = globalThis.game?.settings?.get?.(IMSERSO.ID, "variant") ?? "base";
-  return IMSERSO.variants[variantKey]?.[key] ?? fallback;
-}
-
-function hasTalent(actor, talentName) {
-  const normalized = String(talentName ?? "").toLowerCase();
-  return String(actor.system?.datos?.talento ?? "").toLowerCase().includes(normalized)
-    || actor.items?.some((item) => item.type === "talento" && String(item.name ?? "").toLowerCase() === normalized);
-}
-
-function emptyModifiers() {
-  return {
-    atributos: {},
-    habilidadesAdd: {},
-    habilidadesMin: {},
-    nervioMin: 0,
-    sinArmasDano: null,
-    proteccionDano: 0,
-    proteccionAgilidad: 0,
-    proteccionPenalizacion: 0,
-    notas: []
-  };
-}
-
-function addAttr(mods, key, value) {
-  mods.atributos[key] = number(mods.atributos[key], 0) + value;
-}
-
-function addSkill(mods, key, value) {
-  mods.habilidadesAdd[key] = number(mods.habilidadesAdd[key], 0) + value;
-}
-
-function minSkill(mods, key, value) {
-  mods.habilidadesMin[key] = Math.max(number(mods.habilidadesMin[key], 0), value);
-}
-
-function modifiersForItem(item) {
-  const mods = emptyModifiers();
-  if (item?.system?.equipado && item.type === "armadura") {
-    const level = Math.max(0, number(item.system.nivel, 0));
-    mods.proteccionDano += level;
-    mods.proteccionPenalizacion += Math.floor(level / 2);
-    mods.notas.push(`${item.name}: armadura ${level}, penalizador ${Math.floor(level / 2)}`);
-  }
-  if (item?.system?.equipado && item.type === "escudo") {
-    const level = Math.max(0, number(item.system.nivel, 0));
-    mods.proteccionAgilidad += level;
-    mods.proteccionPenalizacion += level;
-    mods.notas.push(`${item.name}: escudo +${level} Agilidad, penalizador ${level}`);
-  }
-  return mods;
-}
-
-function mergeModifiers(actor) {
-  const merged = emptyModifiers();
-  for (const item of equippedItems(actor)) {
-    const mods = modifiersForItem(item);
-    for (const [key, value] of Object.entries(mods.atributos)) addAttr(merged, key, value);
-    for (const [key, value] of Object.entries(mods.habilidadesAdd)) addSkill(merged, key, value);
-    for (const [key, value] of Object.entries(mods.habilidadesMin)) minSkill(merged, key, value);
-    merged.nervioMin = Math.max(merged.nervioMin, mods.nervioMin);
-    if (mods.sinArmasDano !== null) merged.sinArmasDano = Math.max(number(merged.sinArmasDano, 0), mods.sinArmasDano);
-    merged.proteccionDano += number(mods.proteccionDano, 0);
-    merged.proteccionAgilidad += number(mods.proteccionAgilidad, 0);
-    merged.proteccionPenalizacion += number(mods.proteccionPenalizacion, 0);
-    merged.notas.push(...mods.notas);
-  }
-  return merged;
-}
-
-function effectiveSystem(actor) {
-  const base = actor.system;
-  const mods = mergeModifiers(actor);
-  const atributos = foundry.utils.deepClone(base.atributos ?? {});
-  for (const [key, value] of Object.entries(mods.atributos)) atributos[key] = number(atributos[key], 0) + value;
-  const habilidades = foundry.utils.deepClone(base.habilidades ?? {});
-  for (const key of allSkillKeys()) {
-    const current = clampDice(habilidades[key]?.dados ?? 1);
-    const added = current + number(mods.habilidadesAdd[key], 0);
-    habilidades[key] = { dados: Math.max(clampDice(added), number(mods.habilidadesMin[key], 0)) };
-    habilidades[key].dados = clampDice(habilidades[key].dados);
-  }
-  return { atributos, habilidades, mods };
-}
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
-function firstTargetToken(actor = null) {
-  const targeted = game.user.targets.first();
-  if (targeted) return targeted;
-  const controlled = canvas?.tokens?.controlled?.[0] ?? null;
-  if (!controlled) return null;
-  if (actor && controlled.actor?.uuid === actor.uuid) return null;
-  return controlled;
-}
-
-function fixedValue(actor, key) {
-  if (!actor || !key) return null;
-  const value = actor.system?.[key];
-  const fixed = typeof value === "object" ? value?.valor : value;
-  const n = Number(fixed);
-  return Number.isFinite(n) ? n : null;
-}
-
-function stepper(name, value, { min = 0, max = 99, step = 1 } = {}) {
-  return `
-    <div class="ims-stepper" data-min="${min}" data-max="${max}" data-step="${step}">
-      <button type="button" data-ims-step="-1"><i class="fas fa-minus"></i></button>
-      <input type="number" name="${name}" value="${value}" min="${min}" max="${max}" step="${step}" readonly>
-      <button type="button" data-ims-step="1"><i class="fas fa-plus"></i></button>
-    </div>`;
-}
-
-function actorAgilidad(actor) {
-  if (!actor) return 8;
-  const base = actor.type === "pnj" ? number(actor.system.agilidad?.valor, 8) : number(actor.system.agilidad, 8);
-  const shield = number(actor.system.efectivos?.mods?.proteccionAgilidad, 0);
-  const value = base + shield;
-  return actor.system.combate?.sorprendido ? Math.ceil(value / 2) : value;
-}
-
-function damageCard(data) {
-  const status = data.applied ? "Daño aplicado" : data.defended ? "Defensa conseguida" : "Impacto pendiente";
-  const hasLinkedTarget = !!(data.targetUuid || data.targetTokenUuid);
-  const buttons = data.applied || data.defended || !hasLinkedTarget ? "" : `
-    <div class="ims-chat-actions">
-      <button type="button" class="ims-chat-action" data-ims-action="active-defense">Defensa activa</button>
-      <button type="button" class="ims-chat-action" data-ims-action="apply-damage">Aplicar daño</button>
-      <button type="button" class="ims-chat-action secondary" data-ims-action="cancel-damage">Cancelar</button>
-    </div>`;
-  return `
-    <div class="ims-chat-card ims-damage-card">
-      <header><h3>${escapeHtml(data.attackLabel)}</h3><strong>${status}</strong></header>
-      <p><strong>${escapeHtml(data.attackerName)}</strong> impacta a <strong>${escapeHtml(data.targetName)}</strong>.</p>
-      <p>Daño calculado: <strong>${data.damage}</strong> (${escapeHtml(data.formulaText)})</p>
-      ${hasLinkedTarget ? "" : "<p>Sin token vinculado: aplica el daño manualmente si procede.</p>"}
-      ${data.defenseText ? `<p>${escapeHtml(data.defenseText)}</p>` : `<p>Defensa activa: Atletismo contra dificultad ${data.defenseDifficulty}.</p>`}
-      ${buttons}
-    </div>`;
-}
-
-function hazardCard(data) {
-  const status = data.applied ? "Daño aplicado" : data.damage > 0 ? "Daño pendiente" : "Sin daño";
-  const buttons = data.applied || data.damage <= 0 ? "" : `
-    <div class="ims-chat-actions">
-      <button type="button" class="ims-chat-action" data-ims-action="apply-hazard-damage">Aplicar daño</button>
-    </div>`;
-  return `
-    <div class="ims-chat-card ims-damage-card">
-      <header><h3>${escapeHtml(data.label)}</h3><strong>${status}</strong></header>
-      <p><strong>${escapeHtml(data.targetName)}</strong>: ${escapeHtml(data.summary)}</p>
-      ${data.details ? `<p>${escapeHtml(data.details)}</p>` : ""}
-      ${data.damage > 0 ? `<p>Daño calculado: <strong>${data.damage}</strong> Salud.</p>` : "<p>No pierde Salud por esta resolución.</p>"}
-      ${buttons}
-    </div>`;
-}
-
-export class ImsersoActor extends Actor {
-  prepareBaseData() {
-    super.prepareBaseData();
-    const sys = this.system;
-    sys.habilidades = normalizeSkills(sys.habilidades);
-    if (this.type === "personaje") {
-      sys.atributos ??= {};
-      sys.valoresManual ??= {};
-      sys.salud = prepareResource(sys.salud, { valor: 18, max: 18 });
-      sys.estabilidad = prepareResource(sys.estabilidad, { valor: 18, max: 18 });
-      sys.resistenciaFisica = prepareResistance(sys.resistenciaFisica, calcResistenciaFisica(sys));
-      sys.resistenciaMental = prepareResistance(sys.resistenciaMental, calcResistenciaMental(sys));
-      const ruleset = currentRuleset();
-      const resourceDefault = ruleset === "dungeonsYayos" ? calcYayopoints(sys) : 4;
-      sys.proezas = prepareResource(sys.proezas, { valor: resourceDefault, max: number(sys.proezas?.inicial, resourceDefault) });
-      sys.proezas.inicial = numberOrFallback(sys.proezas.inicial, sys.proezas.max);
-      sys.puntoGuion = prepareResource(sys.puntoGuion, { valor: 1, max: 1 });
-    }
-    if (this.type === "pnj") {
-      sys.atributos ??= {};
-      sys.salud = prepareResource(sys.salud, { valor: 10, max: 10 });
-      sys.resistenciaFisica ??= {};
-      sys.resistenciaFisica.valor = numberOrFallback(sys.resistenciaFisica.valor, calcResistenciaFisica(sys));
-    }
-  }
+  /* ---------------- Datos derivados ---------------- */
 
   prepareDerivedData() {
     super.prepareDerivedData();
-    const sys = this.system;
-    if (this.type === "personaje") this._preparePersonaje(sys);
-    if (this.type === "pnj") this._preparePnj(sys);
-  }
+    this._fx = null;
+    const s = this.system;
+    const ctx = contexto();
+    const cj = ctx.conjunto;
+    const ef = this._efectivos();
+    s.efectivos = ef;
+    s.salud.value = s.salud.valor;        // las barras de token leen `value`; la escritura pasa por modifyTokenAttribute
+    if (this.esPJ) s.estabilidad.value = s.estabilidad.valor;
+    const a = ef.atributos;
+    const dAtl = ef.habilidades.atletismo.dados;
+    s.proteccion = { dano: ef.mods.proteccionDano, agilidad: ef.mods.proteccionAgilidad, penalizacion: ef.mods.penalizacion };
+    s.penalizadorDados = s.combate?.ignoraPenalizador ? 0 : R.penalizadorSalud(s.salud.valor);
+    s.conPanico = cj.tienePanico && this.esPJ;
 
-  _preparePersonaje(sys) {
-    const ruleset = currentRuleset();
-    const effective = effectiveSystem(this);
-    const derived = { ...sys, atributos: effective.atributos, habilidades: effective.habilidades };
-    sys.efectivos = effective;
-    const autoAgilidad = ruleset === "dungeonsYayos" ? calcBemoles(derived) : (ruleset === "imserso" ? calcNervio(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0)));
-    const autoAplomo = ruleset === "dungeonsYayos" ? calcNervio(derived) : (ruleset === "imserso" ? calcBemoles(derived) : calcAplomo(derived));
-    sys.agilidad = ruleset === "dungeonsYayos" || ruleset === "imserso" ? dungeonsManualValue(sys.valoresManual?.agilidad, autoAgilidad, legacyDungeonsBemoles(derived)) : autoAgilidad;
-    sys.aplomo = ruleset === "dungeonsYayos" || ruleset === "imserso" ? dungeonsManualValue(sys.valoresManual?.aplomo, autoAplomo, legacyDungeonsNervio(derived)) : autoAplomo;
-    sys.perspicacia = ruleset === "imserso" ? "" : calcPerspicacia(derived);
-    sys.resistenciaFisica ??= {};
-    if (!sys.resistenciaFisica?.valor) sys.resistenciaFisica.valor = calcResistenciaFisica(derived);
-    sys.resistenciaFisica.efectivo = calcResistenciaFisica(derived);
-    sys.resistenciaMental ??= {};
-    if (!sys.resistenciaMental?.valor) sys.resistenciaMental.valor = calcResistenciaMental(derived);
-    sys.resistenciaMental.efectivo = calcResistenciaMental(derived);
-    sys.proteccion = {
-      dano: number(effective.mods.proteccionDano, 0),
-      agilidad: number(effective.mods.proteccionAgilidad, 0),
-      penalizacion: number(effective.mods.proteccionPenalizacion, 0)
-    };
-    sys.proezas ??= { valor: 0, inicial: 0 };
-    if (!sys.proezas.inicial) sys.proezas.inicial = ruleset === "dungeonsYayos" ? calcYayopoints(sys) : Math.floor((number(sys.atributos?.fue, 0) + number(sys.atributos?.int, 0)) / 2) + 3;
-    sys.puntoGuion ??= { valor: 1, max: 1, usado: false, nota: "" };
-    sys.penalizadorDados = healthPenalty(sys.salud?.valor);
-    sys.inconscienteAuto = number(sys.salud?.valor, 0) === 1;
-    sys.muertoAuto = number(sys.salud?.valor, 0) <= 0;
-  }
-
-  _preparePnj(sys) {
-    const ruleset = currentRuleset();
-    const effective = effectiveSystem(this);
-    const derived = { ...sys, atributos: effective.atributos, habilidades: effective.habilidades };
-    sys.efectivos = effective;
-    if (!sys.agilidad?.manual) sys.agilidad.valor = ruleset === "dungeonsYayos" ? calcBemoles(derived) : (ruleset === "imserso" ? calcNervio(derived) : Math.max(calcAgilidad(derived), number(effective.mods.nervioMin, 0)));
-    if (!sys.aplomo?.manual) sys.aplomo.valor = ruleset === "dungeonsYayos" ? calcNervio(derived) : (ruleset === "imserso" ? calcBemoles(derived) : calcAplomo(derived));
-    if (!sys.perspicacia?.manual) sys.perspicacia.valor = ruleset === "imserso" ? "" : calcPerspicacia(derived);
-    if (!sys.resistenciaFisica?.manual) sys.resistenciaFisica.valor = calcResistenciaFisica(derived);
-    sys.proteccion = {
-      dano: number(effective.mods.proteccionDano, 0),
-      agilidad: number(effective.mods.proteccionAgilidad, 0),
-      penalizacion: number(effective.mods.proteccionPenalizacion, 0)
-    };
-    sys.penalizadorDados = healthPenalty(sys.salud?.valor);
-    sys.inconscienteAuto = number(sys.salud?.valor, 0) === 1;
-    sys.muertoAuto = number(sys.salud?.valor, 0) <= 0;
-  }
-
-  async applyArchetype(key, itemSystem = null) {
-    if (this.type !== "personaje") {
-      ui.notifications.warn("Los arquetipos solo se aplican a fichas de PJ.");
-      return null;
-    }
-    const baseArquetipo = arquetipoByKey(key);
-    const arquetipo = this._archetypeFromItemSystem(baseArquetipo, itemSystem, key);
-    if (!arquetipo) {
-      ui.notifications.warn("Selecciona un arquetipo valido antes de aplicarlo.");
-      return null;
-    }
-    const confirmed = await Dialog.confirm({
-      title: `Aplicar arquetipo: ${arquetipo.name}`,
-      content: `
-        <form class="ims-dialog">
-          <p>Esto ajustara atributos, habilidades, perfil, talento, Proezas, Salud y Resistencias segun la plantilla SRD.</p>
-          <p>No cambia el nombre del PJ, jugador, fotografia ni biografia.</p>
-        </form>`,
-      yes: "Aplicar arquetipo",
-      no: "Cancelar",
-      defaultYes: false
-    });
-    if (!confirmed) return null;
-
-    const healthRoll = await new Roll("1d6").evaluate({ async: true });
-    await this.update(archetypeSystem(arquetipo, healthRoll.total));
-    const existingTalent = this.items.find((item) => item.type === "talento" && item.name === arquetipo.talentName);
-    if (!existingTalent) await this.createEmbeddedDocuments("Item", [archetypeTalentItem(arquetipo)]);
-    const skills3 = arquetipo.d3.map((key) => labelForSkill(key)).join(", ");
-    const skills2 = arquetipo.d2.map((key) => labelForSkill(key)).join(", ");
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      rolls: [healthRoll],
-      content: `
-        <div class="ims-chat-card">
-          <header><h3>Arquetipo aplicado</h3><strong>${escapeHtml(arquetipo.name)}</strong></header>
-          <p><strong>${escapeHtml(this.name)}</strong> adopta el arquetipo <strong>${escapeHtml(arquetipo.name)}</strong>.</p>
-          <p>Salud inicial: ${arquetipo.saludBase} + 1d6 (${healthRoll.total}) = <strong>${arquetipo.saludBase + healthRoll.total}</strong>. Proezas: <strong>${arquetipo.yayos}</strong>. Resistencia fisica: <strong>${arquetipo.jamacuco}</strong>.</p>
-          <p><strong>3D:</strong> ${escapeHtml(skills3)}.</p>
-          <p><strong>2D:</strong> ${escapeHtml(skills2)}.</p>
-          <p><strong>Talento:</strong> ${escapeHtml(arquetipo.talentName)}. ${escapeHtml(arquetipo.talent)}</p>
-        </div>`
-    });
-  }
-
-  _archetypeFromItemSystem(baseArquetipo, itemSystem, key) {
-    if (!itemSystem && baseArquetipo) {
-      return {
-        ...baseArquetipo,
-        partido: baseArquetipo.perfil || baseArquetipo.partido || "",
-        yayos: baseArquetipo.proezas ?? baseArquetipo.yayos ?? 0,
-        jamacuco: baseArquetipo.resistenciaFisica ?? baseArquetipo.jamacuco ?? 10
-      };
-    }
-    if (!itemSystem) return null;
-    const attrs = itemSystem.atributos && Object.keys(itemSystem.atributos).length
-      ? foundry.utils.deepClone(itemSystem.atributos)
-      : foundry.utils.deepClone(baseArquetipo?.attrs ?? {});
-    const d3 = Array.isArray(itemSystem.habilidades3d) && itemSystem.habilidades3d.length
-      ? itemSystem.habilidades3d
-      : (baseArquetipo?.d3 ?? []);
-    const d2 = Array.isArray(itemSystem.habilidades2d) && itemSystem.habilidades2d.length
-      ? itemSystem.habilidades2d
-      : (baseArquetipo?.d2 ?? []);
-    if (!baseArquetipo && !Object.keys(attrs).length) return null;
-    return {
-      key: itemSystem.arquetipoKey || baseArquetipo?.key || key,
-      name: baseArquetipo?.name || key,
-      genero: itemSystem.genero || baseArquetipo?.genero || "",
-      perfil: itemSystem.perfil || itemSystem.partido || baseArquetipo?.perfil || baseArquetipo?.partido || "",
-      partido: itemSystem.partido || itemSystem.perfil || baseArquetipo?.perfil || baseArquetipo?.partido || "",
-      attrs,
-      proezas: number(itemSystem.proezas ?? itemSystem.yayopoints, baseArquetipo?.proezas ?? baseArquetipo?.yayos ?? 0),
-      yayos: number(itemSystem.proezas ?? itemSystem.yayopoints, baseArquetipo?.proezas ?? baseArquetipo?.yayos ?? 0),
-      resistenciaFisica: number(itemSystem.resistenciaFisica ?? itemSystem.jamacuco, baseArquetipo?.resistenciaFisica ?? baseArquetipo?.jamacuco ?? 10),
-      jamacuco: number(itemSystem.resistenciaFisica ?? itemSystem.jamacuco, baseArquetipo?.resistenciaFisica ?? baseArquetipo?.jamacuco ?? 10),
-      saludBase: number(itemSystem.saludBase, baseArquetipo?.saludBase ?? 10),
-      d3,
-      d2,
-      talentName: itemSystem.talentoNombre || baseArquetipo?.talentName || "Talento",
-      talent: itemSystem.talento || baseArquetipo?.talent || "",
-      description: itemSystem.descripcion || baseArquetipo?.description || ""
-    };
-  }
-
-  async rollSkill(skillKey, options = {}) {
-    const skill = skillConfig(skillKey);
-    if (!skill) return;
-    const resource = resourceLabel();
-    const attrKey = skill.atributo;
-    const targetToken = firstTargetToken(this);
-    const target = targetToken?.actor ?? null;
-    const opposedDifficulty = skill.oposicion ? fixedValue(target, skill.oposicion) : null;
-    if (skill.oposicion && !target && !options.skipDialog) {
-      ui.notifications.info("Esta acción funciona mejor con un token seleccionado o tarjeteado; puedes resolverla sin token ajustando la dificultad manualmente.");
-    }
-    let attr = attributeValue(this, attrKey);
-    if (["des", "fue"].includes(attrKey)) attr -= number(this.system.efectivos?.mods?.proteccionPenalizacion, 0);
-    const baseDice = skillDice(this, skillKey);
-    const defaults = {
-      dificultad: options.dificultad ?? opposedDifficulty ?? IMSERSO.srd.defaultDifficulty,
-      extraDados: options.extraDados ?? 0,
-      bonus: options.bonus ?? 0,
-      profesion: options.profesion ?? false,
-      proezaDado: options.proezaDado ?? options.yayoDado ?? false,
-      recuerdo: options.recuerdo ?? options.flashback ?? false,
-      defectoGrave: options.defectoGrave ?? options.achaqueMayor ?? false,
-      defectoLeve: options.defectoLeve ?? options.achaqueMenor ?? false,
-      dadosSacrificados: options.dadosSacrificados ?? 0,
-      oppositionText: opposedDifficulty ? `${target.name}: ${skill.oposicion} ${opposedDifficulty}` : ""
-    };
-    const data = options.skipDialog ? defaults : await this._skillDialog(skillKey, defaults);
-    if (!data) return;
-
-    let bonus = number(data.bonus, 0) + (data.profesion ? 3 : 0);
-    const usesProezaDado = this.type === "personaje" && (data.proezaDado || data.yayoDado);
-    let extraDice = number(data.extraDados, 0) + (usesProezaDado ? 1 : 0) + (data.recuerdo || data.flashback ? 2 : 0);
-    let dice = baseDice + extraDice - number(data.dadosSacrificados, 0);
-    dice -= number(this.system.penalizadorDados, 0);
-    if (data.defectoGrave || data.achaqueMayor) dice -= 1;
-    dice = Math.min(IMSERSO.srd.maxDicePool, Math.max(0, dice));
-
-    if (usesProezaDado && (data.recuerdo || data.flashback)) {
-      ui.notifications.warn(`SRD: no puedes combinar +1D de ${resource} con Recuerdo cuando... en la misma tirada.`);
-      return null;
-    }
-    if (usesProezaDado && !this.canSpendProezas(1)) return null;
-    if (usesProezaDado) await this.spendProezas(1);
-    if (data.recuerdo || data.flashback) await this.update({ "system.recuerdo.usado": true });
-    if (data.defectoGrave || data.achaqueMayor) await this.gainProezas(1);
-    if (data.defectoLeve || data.achaqueMenor) await this.update({ "system.defectos.leveUsado": true });
-
-    const result = await rollYayo({
-      actor: this,
-      label: labelForSkill(skillKey),
-      dice,
-      atributo: attr,
-      bonus,
-      dificultad: number(data.dificultad, IMSERSO.srd.defaultDifficulty),
-      flavor: `${rollFlavorForSkill(skillKey, attrKey)} · ${baseDice}D base`,
-      tipo: "habilidad",
-      proezaSpent: usesProezaDado,
-      allowYayoReroll: !(data.defectoGrave || data.defectoLeve || data.achaqueMayor || data.achaqueMenor)
-    });
-
-    if (result.critico && this.type === "personaje") {
-      const points = hasTalent(this, "Carpe diem") ? 2 : 1;
-      await this.gainProezas(points, false);
-    }
-    return result;
-  }
-
-  async rollResistenciaFisica(options = {}) {
-    const term = variantTerm("resistancePhysical", "Resistencia fisica");
-    const defaults = { dificultad: this.system.resistenciaFisica?.efectivo ?? this.system.resistenciaFisica?.valor ?? calcResistenciaFisica(this.system), extraDados: 0, recuerdo: false };
-    const data = options.skipDialog ? defaults : await simpleDialog({
-      title: `${term}: ${this.name}`,
-      content: `
-        <form class="ims-dialog">
-          <p>Hay que igualar o superar el valor de ${term}. Si falla, el personaje cae inconsciente.</p>
-          <label>Valor de ${term} ${stepper("dificultad", defaults.dificultad, { min: 1, max: 30 })}</label>
-          <label>Dados extra ${stepper("extraDados", 0, { min: -3, max: 3 })}</label>
-          <label class="check"><input type="checkbox" name="recuerdo" ${this.system.recuerdo?.usado ? "disabled" : ""}> Recuerdo cuando... (+2D)</label>
-          <p class="notes">SRD: 3D sin atributo. ${resourceLabel()} puede repetir dados; Recuerdo cuando... puede añadir +2D.</p>
-        </form>`
-    });
-    if (!data) return;
-    let dice = 3 + number(data.extraDados, 0) + (data.recuerdo ? 2 : 0) - number(this.system.penalizadorDados, 0);
-    dice = Math.min(IMSERSO.srd.maxDicePool, Math.max(0, dice));
-    const updates = {};
-    if (!options.reason) updates["system.resistenciaFisica.primeraTirada"] = true;
-    if (data.recuerdo) updates["system.recuerdo.usado"] = true;
-    if (Object.keys(updates).length) await this.update(updates);
-    const result = await rollYayo({
-      actor: this,
-      label: term,
-      dice,
-      atributo: 0,
-      bonus: 0,
-      dificultad: number(data.dificultad, defaults.dificultad),
-      flavor: options.reason ? `3D6 modificado por Salud · ${options.reason}` : "3D6 modificado por Salud",
-      tipo: "resistenciaFisica"
-    });
-    if (!result.exito) await this.update({ "system.estado.inconsciente": true });
-    return result;
-  }
-
-  async rollJamacuco(options = {}) {
-    return this.rollResistenciaFisica(options);
-  }
-
-  async rollResistenciaMental(options = {}) {
-    const term = variantTerm("resistanceMental", "Resistencia mental");
-    const defaults = { dificultad: this.system.resistenciaMental?.efectivo ?? this.system.resistenciaMental?.valor ?? calcResistenciaMental(this.system), extraDados: 0, recuerdo: false };
-    const data = options.skipDialog ? defaults : await simpleDialog({
-      title: `${term}: ${this.name}`,
-      content: `
-        <form class="ims-dialog">
-          <p>Hay que igualar o superar el valor de ${term}. Si falla, el PJ sufre una crisis temporal.</p>
-          <label>Valor de ${term} ${stepper("dificultad", defaults.dificultad, { min: 1, max: 30 })}</label>
-          <label>Dados extra ${stepper("extraDados", 0, { min: -3, max: 3 })}</label>
-          <label class="check"><input type="checkbox" name="recuerdo" ${this.system.recuerdo?.usado ? "disabled" : ""}> Recuerdo cuando... (+2D)</label>
-          <p class="notes">SRD: 3D sin atributo. Sin critico ni pifia; ${resourceLabel()} puede repetir dados.</p>
-        </form>`
-    });
-    if (!data) return;
-    let dice = 3 + number(data.extraDados, 0) + (data.recuerdo ? 2 : 0);
-    dice = Math.min(IMSERSO.srd.maxDicePool, Math.max(0, dice));
-    const updates = {};
-    if (!options.reason) updates["system.resistenciaMental.primeraTirada"] = true;
-    if (data.recuerdo) updates["system.recuerdo.usado"] = true;
-    if (Object.keys(updates).length) await this.update(updates);
-    const result = await rollYayo({
-      actor: this,
-      label: term,
-      dice,
-      atributo: 0,
-      bonus: 0,
-      dificultad: number(data.dificultad, defaults.dificultad),
-      flavor: options.reason ? `3D6 · ${options.reason}` : "3D6",
-      tipo: "resistenciaMental"
-    });
-    if (!result.exito) await this.update({ "system.estado.crisisMental": true });
-    return result;
-  }
-
-  async applyStabilityDamage(amount) {
-    if (this.type !== "personaje") return;
-    const current = number(this.system.estabilidad?.valor, 0);
-    const next = Math.max(0, current - number(amount, 0));
-    const crossed = estabilidadUmbralesForRuleset(currentRuleset()).filter((t) => current >= t && next < t && !this.system.resistenciaMental?.umbrales?.[t]);
-    const updates = { "system.estabilidad.valor": next };
-    for (const t of crossed) updates[`system.resistenciaMental.umbrales.${t}`] = true;
-    if (next <= 0) updates["system.estado.crisisMental"] = true;
-    await this.update(updates);
-    if (!crossed.length) return;
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      flags: {
-        [IMSERSO.ID]: {
-          resistenciaMentalWorkflow: {
-            actorUuid: this.uuid,
-            actorName: this.name,
-            thresholds: crossed,
-            rolled: []
-          }
-        }
-      },
-      content: `
-        <div class="ims-chat-card ims-jamacuco-card">
-          <header><h3>Umbrales de Resistencia mental</h3><strong>${this.name}</strong></header>
-          <p>Cruza por primera vez: <strong>${crossed.join(", ")}</strong>. Hay que resolver una tirada de Resistencia mental por cada umbral.</p>
-          <div class="ims-chat-actions">
-            ${crossed.map((threshold) => `<button type="button" class="ims-chat-action" data-ims-action="roll-resistencia-mental-threshold" data-threshold="${threshold}">Tirar umbral ${threshold}</button>`).join("")}
-          </div>
-        </div>`
-    });
-  }
-
-  async rollInitiativeYayo(options = {}) {
-    if (this.system.combate?.sorprendido) {
-      const content = `
-        <div class="ims-chat-card">
-          <header><h3>Iniciativa</h3><strong>Pillado por sorpresa</strong></header>
-          <p><strong>${escapeHtml(this.name)}</strong> pierde la iniciativa y no puede actuar en este primer turno. Su Agilidad cuenta a la mitad hasta que deje de estar sorprendido.</p>
-        </div>`;
-      await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content });
-      const combatant = game.combat?.combatants?.find((c) => c.actor?.id === this.id);
-      if (combatant) await game.combat.setInitiative(combatant.id, -999);
-      return null;
-    }
-    const weapon = equippedWeapon(this);
-    const attackTypeCfg = attackConfig(options.tipo ?? weapon?.system?.tipo ?? "desarmado");
-    const des = number(this.system.efectivos?.atributos?.des, this.system.atributos?.des);
-    const int = number(this.system.efectivos?.atributos?.int, this.system.atributos?.int);
-    const roll = await new Roll(`1d6 + ${des} + ${int}`).evaluate({ async: true });
-    const die = roll.dice[0]?.results[0]?.result ?? 0;
-    const content = await renderTemplate(`systems/${IMSERSO.ID}/templates/chat/initiative-card.hbs`, {
-      actor: this,
-      roll,
-      die,
-      extraAction: die === 6,
-      type: weapon?.name ?? attackTypeCfg.label,
-      total: roll.total
-    });
-    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), rolls: [roll], content });
-    const combatant = game.combat?.combatants?.find((c) => c.actor?.id === this.id);
-    if (combatant) await game.combat.setInitiative(combatant.id, roll.total);
-    return roll;
-  }
-
-  async rollAttack(attackOptions = {}) {
-    const targetToken = firstTargetToken(this);
-    const target = targetToken?.actor ?? null;
-    if (!target) {
-      ui.notifications.info("El ataque funciona mejor con un token seleccionado o tarjeteado para automatizar impacto, defensa y daño; se resolverá en modo manual.");
-    }
-    const item = attackOptions.item ?? equippedWeapon(this) ?? null;
-    const ruleset = currentRuleset();
-    const attackTypes = attackTypesForRuleset(ruleset);
-    const currentType = item?.system?.tipo ?? "desarmado";
-    const resolvedType = attackTypes[currentType] ? currentType : resolveAttackType(currentType);
-    const typeOptions = Object.entries(attackTypes).map(([key, value]) => `<option value="${key}" ${key === resolvedType ? "selected" : ""}>${value.label}</option>`).join("");
-    const resource = resourceLabel();
-    const defenseLabel = ruleset === "dungeonsYayos" ? "Bemoles objetivo" : (ruleset === "imserso" ? "Nervio objetivo" : "Agilidad objetivo");
-    const targetName = target?.name ?? "Objetivo manual";
-    const targetAgilidad = target ? actorAgilidad(target) : 9;
-    const data = await simpleDialog({
-      title: item ? `Ataque: ${item.name}` : `Ataque: ${this.name}`,
-      content: `
-        <form class="ims-dialog ims-attack-dialog">
-          <div class="ims-dialog-summary">
-            <p>${target ? "Objetivo tarjeteado" : "Objetivo manual"}: <strong>${escapeHtml(targetName)}</strong>.</p>
-            ${item ? `<p>Objeto usado: <strong>${escapeHtml(item.name)}</strong>.</p>` : ""}
-          </div>
-          <div class="ims-dialog-grid">
-            ${target ? "" : `<label><span>Nombre del objetivo</span><input name="targetName" value="${escapeHtml(targetName)}"></label>`}
-            <label><span>Tipo de ataque</span><select name="tipo">${typeOptions}</select></label>
-            <label><span>${defenseLabel}</span>${stepper("dificultad", targetAgilidad, { min: 1, max: 30 })}</label>
-            ${target ? "" : `<label><span>Armadura/protección objetivo</span>${stepper("armadura", 0, { min: 0, max: 30 })}</label>`}
-            <label><span>Dados sacrificados para apuntar</span>${stepper("dadosSacrificados", 0, { min: 0, max: 2 })}</label>
-            <label><span>Dados extra/al alimón</span>${stepper("extraDados", 0, { min: -3, max: 3 })}</label>
-            <label><span>${resource} a daño</span>${stepper("proezasDano", 0, { min: 0, max: 3 })}</label>
-          </div>
-          <div class="ims-dialog-checks">
-            <label class="check"><input type="checkbox" name="proezaDado"> Gastar 1 ${resource} para +1D a impactar</label>
-            <label class="check"><input type="checkbox" name="profesion"> Antigua profesión relacionada (+3)</label>
-          </div>
-        </form>`
-    });
-    if (!data) return;
-    const baseAttack = attackConfig(data.tipo);
-    const maxDamageProezas = number(baseAttack.maxProezasDano, 2);
-    const yays = this.type === "personaje" ? Math.min(maxDamageProezas, Math.max(0, number(data.proezasDano ?? data.yayoDano, 0))) : 0;
-    const declaredYayos = yays + (this.type === "personaje" && (data.proezaDado || data.yayoDado) ? 1 : 0);
-    if (declaredYayos && !this.canSpendProezas(declaredYayos)) return null;
-    const itemSkill = skillConfig(item?.system?.habilidad) ? item.system.habilidad : null;
-    const itemDamageAttr = IMSERSO.atributos[item?.system?.atributoDano] ? item.system.atributoDano : null;
-    const baseDamageDefault = data.tipo === "desarmado" && this.system.efectivos?.mods?.sinArmasDano != null
-      ? this.system.efectivos.mods.sinArmasDano
-      : baseAttack.dano;
-    const attack = {
-      ...baseAttack,
-      label: item?.name ?? baseAttack.label,
-      tipo: data.tipo ?? baseAttack.tipo,
-      habilidad: itemSkill ?? baseAttack.habilidad,
-      dano: number(item?.system?.danoBase, baseDamageDefault),
-      atributo: itemDamageAttr ?? baseAttack.atributo,
-    };
-    const result = await this.rollSkill(attack.habilidad, {
-      skipDialog: true,
-      dificultad: number(data.dificultad, targetAgilidad),
-      dadosSacrificados: number(data.dadosSacrificados, 0),
-      extraDados: number(data.extraDados, 0),
-      proezaDado: !!(data.proezaDado || data.yayoDado),
-      profesion: !!data.profesion
-    });
-    const attackContext = {
-      attackerUuid: this.uuid,
-      targetUuid: target?.uuid ?? "",
-      targetTokenUuid: targetToken?.document?.uuid ?? "",
-      targetName: target?.name ?? data.targetName ?? targetName,
-      attack,
-      attackData: {
-        dadosSacrificados: number(data.dadosSacrificados, 0),
-        proezasDano: yays,
-        yayoDano: yays
-      },
-      difficulty: number(data.dificultad, targetAgilidad),
-      defenseDifficulty: activeDefenseDifficulty({
-        target,
-        attackTipo: data.tipo,
-        fallback: number(data.dificultad, targetAgilidad)
-      })
-    };
-    if (result?.message) {
-      const rollData = foundry.utils.deepClone(result.message.getFlag(IMSERSO.ID, "rollData") ?? {});
-      rollData.attackContext = attackContext;
-      await result.message.setFlag(IMSERSO.ID, "rollData", rollData);
-    }
-    if (!result?.exito) return result;
-    if (yays && !(await this.spendProezas(yays))) return result;
-
-    const rawAttrDamage = number(this.system.efectivos?.atributos?.[attack.atributo], this.system.atributos?.[attack.atributo]);
-    const attrDamage = attackAttributeDamage(baseAttack, rawAttrDamage, ruleset);
-    const aimedDice = number(data.dadosSacrificados, 0) * (attack.apuntar === "2d6" ? 2 : 1);
-    const proezaDamage = await rollExplodingD6(yays);
-    const aimedRoll = aimedDice > 0 ? await new Roll(`${aimedDice}d6`).evaluate({ async: true }) : null;
-    const armorReduction = result.critico ? 0 : target
-      ? number(target.system.efectivos?.mods?.proteccionDano, target.system.proteccion?.dano)
-      : number(data.armadura, 0);
-    const extraDamage = proezaDamage.total + (aimedRoll?.total ?? 0);
-    const subtotal = Math.max(0, attack.dano + attrDamage + extraDamage - armorReduction);
-    const totalDamage = result.critico ? subtotal * 2 : subtotal;
-    const defenseDifficulty = activeDefenseDifficulty({
-      target,
-      attackTipo: data.tipo,
-      fallback: number(data.dificultad, targetAgilidad)
-    });
-    const workflow = {
-      attackerUuid: this.uuid,
-      targetUuid: target?.uuid ?? "",
-      targetTokenUuid: targetToken?.document?.uuid ?? "",
-      attackerName: this.name,
-      targetName: target?.name ?? data.targetName ?? targetName,
-      attackLabel: attack.label,
-      attackSkill: attack.habilidad,
-      attackTipo: data.tipo,
-      damage: totalDamage,
-      originalDamage: totalDamage,
-      formulaText: `${attack.dano} + ${attack.atributo.toUpperCase()} ${attrDamage}${proezaDamage.total ? ` + ${resource} ${proezaDamage.total}` : ""}${aimedRoll ? ` + apuntar ${aimedRoll.total}` : ""}${armorReduction ? ` - armadura ${armorReduction}` : ""}${result.critico ? " x2 crítico e ignora armadura" : ""}`,
-      defenseDifficulty,
-      applied: false,
-      defended: false,
-      defenseText: ""
-    };
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      rolls: [...proezaDamage.rolls, ...(aimedRoll ? [aimedRoll] : [])],
-      flags: { [IMSERSO.ID]: { attackWorkflow: workflow } },
-      content: damageCard(workflow)
-    });
-    return result;
-  }
-
-  async rollPower(item) {
-    if (!item) return null;
-    const ruleset = currentRuleset();
-    const skillKey = skillConfig(item.system?.habilidad) ? item.system.habilidad : (ruleset === "dungeonsYayos" ? "magiaPotagia" : "cultura");
-    if (ruleset === "dungeonsYayos" && skillKey === "magiaPotagia" && skillDice(this, "magiaPotagia") < 2) {
-      ui.notifications.warn("Magia Potagia solo puede usarse con 2D o 3D en la habilidad.");
-      return null;
-    }
-    const difficulty = number(item.system?.dificultad, IMSERSO.srd.mediaDifficulty);
-    const result = await this.rollSkill(skillKey, { dificultad: difficulty, skipDialog: false });
-    if (!result) return null;
-    const details = [
-      item.system?.tipo ? `<li><strong>Tipo:</strong> ${escapeHtml(item.system.tipo)}</li>` : "",
-      item.system?.preparacion ? `<li><strong>Preparacion:</strong> ${escapeHtml(item.system.preparacion)}</li>` : "",
-      item.system?.lanzamiento ? `<li><strong>Lanzamiento:</strong> ${escapeHtml(item.system.lanzamiento)}</li>` : "",
-      item.system?.duracion ? `<li><strong>Duracion:</strong> ${escapeHtml(item.system.duracion)}</li>` : "",
-      item.system?.caducidad ? `<li><strong>Caducidad:</strong> ${escapeHtml(item.system.caducidad)}</li>` : ""
-    ].filter(Boolean).join("");
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `
-        <div class="ims-chat-card ims-item-card">
-          <header><img src="${item.img}" alt=""><h3>${escapeHtml(item.name)}</h3></header>
-          <p><strong>${escapeHtml(this.name)}</strong> activa un poder usando ${escapeHtml(labelForSkill(skillKey))} contra dificultad ${difficulty}.</p>
-          ${details ? `<ul>${details}</ul>` : ""}
-          ${item.system?.descripcion ? `<p>${escapeHtml(item.system.descripcion)}</p>` : ""}
-        </div>`
-    });
-  }
-
-  async boostDefenseYayo() {
-    const resource = resourceLabel();
-    const data = await simpleDialog({
-      title: `${resource} defensivos: ${this.name}`,
-      content: `
-        <form class="ims-dialog">
-          <label>Valor a reforzar
-            <select name="valor"><option value="agilidad">Agilidad</option><option value="aplomo">Aplomo</option><option value="perspicacia">Perspicacia</option></select>
-          </label>
-          <label>${resource} a gastar${stepper("puntos", 1, { min: 1, max: 10 })}</label>
-        </form>`,
-      yes: "Anunciar"
-    });
-    if (!data) return;
-    const points = Math.max(1, number(data.puntos, 1));
-    if (!this.canSpendProezas(points)) return null;
-    await this.spendProezas(points);
-    const boost = points * 3;
-    const base = number(this.system[data.valor], this.system[data.valor]?.valor);
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `
-        <div class="ims-chat-card">
-          <header><h3>${resource} defensivos</h3><strong>+${boost}</strong></header>
-          <p>${this.name} gasta ${points} ${resource}: ${data.valor} pasa de ${base} a ${base + boost} durante un turno.</p>
-        </div>`
-    });
-  }
-
-  async applyDamage(amount) {
-    const current = number(this.system.salud?.valor, 0);
-    const next = Math.max(0, current - number(amount, 0));
-    const crossed = this.type === "personaje"
-      ? saludUmbralesForRuleset(currentRuleset()).filter((t) => current >= t && next < t && !this.system.resistenciaFisica?.umbrales?.[t])
-      : [];
-    const updates = { "system.salud.valor": next };
-    for (const t of crossed) updates[`system.resistenciaFisica.umbrales.${t}`] = true;
-    if (next <= 0) updates["system.estado.muerto"] = true;
-    if (next === 1) updates["system.estado.inconsciente"] = true;
-    await this.update(updates);
-    if (crossed.length) {
-      ui.notifications.warn(`${this.name} cruza umbral(es) de Resistencia fisica: ${crossed.join(", ")}.`);
-      await ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: this }),
-        flags: {
-          [IMSERSO.ID]: {
-            resistenciaFisicaWorkflow: {
-              actorUuid: this.uuid,
-              actorName: this.name,
-              thresholds: crossed,
-              rolled: []
-            }
-          }
-        },
-        content: `
-          <div class="ims-chat-card ims-jamacuco-card">
-            <header><h3>Umbrales de Resistencia fisica</h3><strong>${this.name}</strong></header>
-            <p>Cruza por primera vez: <strong>${crossed.join(", ")}</strong>. Hay que resolver una tirada de Resistencia fisica por cada umbral.</p>
-            <div class="ims-chat-actions">
-              ${crossed.map((threshold) => `<button type="button" class="ims-chat-action" data-ims-action="roll-jamacuco-threshold" data-threshold="${threshold}">Tirar umbral ${threshold}</button>`).join("")}
-            </div>
-          </div>`
-      });
+    const autoAgi = R.agilidad(dAtl, a.des);
+    const autoApl = cj.id === "srd" ? R.aplomo(a.car, a.int) : R.bemoles(a.int);
+    const autoPer = cj.fijos.perspicacia ? R.perspicacia(a.int, a.per) : "";
+    if (this.esPJ) {
+      const m = s.valoresManual ?? {};
+      const manual = (v, auto) => (v === undefined || v === null || v === "" ? auto : n(v, auto));
+      s.agilidad = manual(m.agilidad, autoAgi);
+      s.aplomo = manual(m.aplomo, autoApl);
+      s.perspicacia = autoPer === "" ? "" : manual(m.perspicacia, autoPer);
+      s.rf = manual(m.resistenciaFisica, R.resistenciaFisica(a.fue));
+      s.rm = manual(m.resistenciaMental, R.resistenciaMental(a.car));
+      s.proezasLibres = R.proezasIniciales(a.fue, a.int, cj.id === "srd" ? 3 : 2);
+      s.reparto = R.repartoLibre(s._source.atributos, s._source.habilidades, cj);
+      s.penalizadorPoder = ctx.poderes && s.poder.valor <= 0 ? 1 : 0;
+      s.poderLibre = R.poderInicial(s.poder.dados, a.int, a.per);
+      s.xpDisponible = n(s.experiencia.total) - n(s.experiencia.gastada);
+      s.salvacionPulp = ctx.pulp && !s.pulp.salvacionUsada;
+    } else {
+      if (!s.agilidad.manual) s.agilidad.valor = autoAgi;
+      if (!s.aplomo.manual) s.aplomo.valor = autoApl;
+      if (!s.perspicacia.manual) s.perspicacia.valor = autoPer === "" ? 0 : autoPer;
+      if (!s.resistenciaFisica.manual) s.resistenciaFisica.valor = R.resistenciaFisica(a.fue);
+      s.rf = s.resistenciaFisica.valor;
     }
   }
 
-  async heal(amount) {
-    const current = number(this.system.salud?.valor, 0);
-    const max = number(this.system.salud?.max, current);
-    return this.update({ "system.salud.valor": Math.min(max, current + number(amount, 0)) });
-  }
-
-  async healStability(amount) {
-    if (this.type !== "personaje") return null;
-    const current = number(this.system.estabilidad?.valor, 0);
-    const max = number(this.system.estabilidad?.max, current);
-    const next = Math.min(max, current + number(amount, 0));
-    const updates = { "system.estabilidad.valor": next };
-    if (next > 0) updates["system.estado.crisisMental"] = false;
-    return this.update(updates);
-  }
-
-  async useHealingItem(item) {
-    const targetToken = firstTargetToken();
-    const target = targetToken?.actor ?? this;
-    if (!targetToken) ui.notifications.info("La curación funciona mejor con un token seleccionado o tarjeteado; sin objetivo se aplicará al actor que usa el objeto.");
-    const result = await this.rollSkill(currentRuleset() === "dungeonsYayos" ? "medicina" : "auxilio", { dificultad: 10 });
-    if (!result) return null;
-    const amount = result.critico ? 4 : result.exito ? 2 : 0;
-    const workflow = {
-      healerUuid: this.uuid,
-      targetUuid: target.uuid,
-      targetTokenUuid: targetToken?.document?.uuid ?? "",
-      healerName: this.name,
-      targetName: target.name,
-      itemName: item.name,
-      amount,
-      applied: false,
-      failed: !result.exito
-    };
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      flags: { [IMSERSO.ID]: { healingWorkflow: workflow } },
-      content: this._renderHealingCard(workflow)
-    });
-    return result;
-  }
-
-  async rollRulesHealing() {
-    const targetToken = firstTargetToken();
-    const target = targetToken?.actor ?? this;
-    if (!targetToken) ui.notifications.info("La curación reglada funciona mejor con un token seleccionado o tarjeteado; sin objetivo se preparará sobre el actor actual.");
-    const sources = {
-      hospital: { label: "Hospital / centro medico", amount: 2, skill: "" },
-      reposo: { label: "Reposo confortable", amount: 1, skill: "" },
-      auxilio: { label: currentRuleset() === "dungeonsYayos" ? "Medicina DF 10" : (currentRuleset() === "imserso" ? "Ambulatorio DF 10" : "Auxilio DF 10"), amount: 2, critAmount: 4, fumbleDamage: 2, skill: currentRuleset() === "dungeonsYayos" ? "medicina" : "auxilio", difficulty: 10 },
-      dormir: { label: "Dormir mas de 8 horas", amount: 1, skill: "" },
-      contacto: { label: "Contacto fisico prolongado", amount: 1, skill: "" },
-      actividad: { label: "Actividad relajante", amount: 1, skill: "" }
-    };
-    const options = Object.entries(sources).map(([key, source]) => `<option value="${key}">${source.label}</option>`).join("");
-    const data = await simpleDialog({
-      title: `Curacion reglada: ${this.name}`,
-      content: `
-        <form class="ims-dialog">
-          <p>Objetivo: <strong>${escapeHtml(target.name)}</strong>.</p>
-          <label>Fuente de curacion<select name="source">${options}</select></label>
-          <label>Dificultad si requiere tirada${stepper("difficulty", 10, { min: 1, max: 30 })}</label>
-        </form>`,
-      yes: "Preparar"
-    });
-    if (!data) return null;
-    const source = sources[data.source] ?? sources.casa;
-    let amount = source.amount;
-    let failed = false;
-    if (source.skill) {
-      const result = await this.rollSkill(source.skill, { dificultad: number(data.difficulty, source.difficulty), skipDialog: false });
-      if (!result) return null;
-      failed = !result.exito;
-      if (result.pifia && source.fumbleDamage) {
-        await target.applyDamage(source.fumbleDamage);
-        failed = true;
+  /** Atributos, dados de habilidad y protecciones tras el equipo. */
+  _efectivos() {
+    const s = this.system;
+    const ed = contexto().edicion;
+    const atributos = Object.fromEntries(CLAVES_ATRIBUTO.map(k => [k, n(s.atributos[k])]));
+    const habilidades = Object.fromEntries(CLAVES_HABILIDAD.map(k => [k, { dados: dado(s.habilidades[k]?.dados) }]));
+    const mods = { proteccionDano: 0, proteccionAgilidad: 0, penalizacion: 0, notas: [] };
+    for (const item of this.items ?? []) {
+      if (!item.system?.equipado) continue;
+      const nivel = Math.max(0, n(item.system.nivel));
+      if (item.type === "armadura") {
+        mods.proteccionDano += nivel; mods.penalizacion += R.penalizacionArmadura(nivel);
+        mods.notas.push(`${item.name}: −${nivel} al daño, −${R.penalizacionArmadura(nivel)} a ${ed.protecciones === "todas" ? "todas las habilidades" : "DES y FUE"}`);
+      } else if (item.type === "escudo") {
+        mods.proteccionAgilidad += nivel; mods.penalizacion += R.penalizacionEscudo(nivel);
+        mods.notas.push(`${item.name}: +${nivel} a la Agilidad, −${R.penalizacionEscudo(nivel)} a ${ed.protecciones === "todas" ? "todas las habilidades" : "DES y FUE"}`);
       }
-      amount = result.critico ? (source.critAmount ?? source.amount) : source.amount;
     }
-    const workflow = {
-      healerUuid: this.uuid,
-      targetUuid: target.uuid,
-      targetTokenUuid: targetToken?.document?.uuid ?? "",
-      healerName: this.name,
-      targetName: target.name,
-      itemName: source.label,
-      amount: failed ? 0 : amount,
-      applied: false,
-      failed
-    };
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      flags: { [IMSERSO.ID]: { healingWorkflow: workflow } },
-      content: this._renderHealingCard(workflow)
+    return { atributos, habilidades, mods };
+  }
+
+  /**
+   * Valor fijo efectivo en este momento: protecciones, refuerzos con proezas, defensa completa,
+   * cobertura (solo frente a ataques a distancia), sorpresa e inmovilización.
+   */
+  valorFijo(rol, { distancia = false, rafagaBlancos = 0 } = {}) {
+    const s = this.system;
+    const base = this.esPJ ? n(s[rol]) : n(s[rol]?.valor);
+    const c = s.combate ?? {};
+    const refuerzo = n(c[`refuerzo${rol[0].toUpperCase()}${rol.slice(1)}`]);
+    if (rol !== "agilidad") return base + R.refuerzoFijo(refuerzo);
+    return R.agilidadEfectiva({
+      base, escudo: n(s.proteccion?.agilidad), refuerzos: refuerzo, defensa: n(c.defensaCompleta),
+      cobertura: distancia ? R.bonoCobertura(c.cobertura, c.resguardado) : 0, rafagaBlancos,
+      edicion: contexto().edicion, sorprendido: Boolean(c.sorprendido), inmovilizado: Boolean(c.inmovilizado)
     });
   }
 
-  async rollHazardDamage() {
-    const strengthSkill = currentRuleset() === "dungeonsYayos" ? "mulaParda" : "fuerzaBruta";
-    const sources = {
-      asfixia: "Asfixia",
-      electrochoque: "Electrochoque",
-      caida: "Caida",
-      congelacion: "Congelacion",
-      deslomarse: "Deslomarse",
-      veneno: "Veneno",
-      hambre: "Hambre",
-      sed: "Sed",
-      cogorza: "Cogorza",
-      quemadura: "Quemadura"
-    };
-    const options = Object.entries(sources).map(([key, label]) => `<option value="${key}">${label}</option>`).join("");
-    const data = await simpleDialog({
-      title: `Otras cosas que hacen daño: ${this.name}`,
-      content: `
-        <form class="ims-dialog">
-          <label>Fuente de daño<select name="source">${options}</select></label>
-          <label>Metros de caída${stepper("metros", 1, { min: 0, max: 50 })}</label>
-          <label>Daño / gravedad / horas${stepper("amount", 1, { min: 0, max: 30 })}</label>
-          <label>Potencia o dificultad${stepper("difficulty", 10, { min: 1, max: 30 })}</label>
-          <label>Daño menor${stepper("minorDamage", 0, { min: 0, max: 30 })}</label>
-          <label>Daño mayor${stepper("majorDamage", 3, { min: 0, max: 30 })}</label>
-        </form>`,
-      yes: "Resolver"
-    });
-    if (!data) return null;
+  tieneTalento(nombre) { return this.fx.nombres.includes(claveTalento(nombre)); }
 
-    const source = data.source;
-    let damage = 0;
-    let summary = "";
-    let details = "";
-    let roll = null;
-    if (source === "asfixia") {
-      roll = await this.rollSkill(strengthSkill, { dificultad: 15 });
-      damage = roll?.exito ? 0 : 3;
-      summary = "tras agotar FUE + 5 turnos sin respirar, tira Fuerza bruta a dificultad 15.";
-      details = roll?.exito ? "Aguanta un turno mas." : "Falla: empieza a perder 3 puntos de Salud por turno.";
-    } else if (source === "electrochoque") {
-      const per = number(this.system.efectivos?.atributos?.per, this.system.atributos?.per);
-      damage = 1 + Math.floor(per / 2);
-      roll = await this.rollSkill(strengthSkill, { dificultad: 20 });
-      summary = "arma de electrochoque: 1 + PER/2 de dano y Fuerza bruta DF 20.";
-      details = roll?.exito ? "Resiste la incapacitacion." : "Falla: queda incapacitado 3D minutos y sufre -1D durante una hora.";
-    } else if (source === "caida") {
-      const metros = Math.max(0, number(data.metros, 1));
-      damage = Math.max(0, metros - 2) * 3;
-      roll = await this.rollSkill("atletismo", { dificultad: 12 });
-      summary = `${metros} metro(s) de caída libre: 3 Salud por metro a partir de los dos metros.`;
-      details = roll?.exito ? "Supera Atletismo dificultad 12: reduce el daño total en 3." : "Falla Atletismo dificultad 12: recibe todo el daño de la caída.";
-      if (roll?.exito) damage = Math.max(0, damage - 3);
-    } else if (source === "congelacion") {
-      damage = Math.max(0, number(data.amount, 1));
-      summary = "frío intenso: normalmente 1 Salud por cada quince minutos de tiempo de juego.";
-    } else if (source === "deslomarse") {
-      roll = await this.rollSkill(strengthSkill, { dificultad: 15 });
-      damage = roll?.exito ? 0 : 2;
-      summary = "esfuerzo físico extraordinario: Fuerza bruta dificultad 15.";
-      details = roll?.exito ? "Aguanta el esfuerzo." : "El sobreesfuerzo causa 2 puntos de daño.";
-    } else if (source === "veneno") {
-      const difficulty = Math.max(1, number(data.difficulty, 10));
-      roll = await this.rollSkill(strengthSkill, { dificultad: difficulty });
-      damage = roll?.exito ? number(data.minorDamage, 0) : number(data.majorDamage, 3);
-      summary = `veneno POT ${difficulty}: Fuerza bruta contra la potencia.`;
-      details = roll?.exito ? "Supera la tirada: sufre el daño menor." : "Falla la tirada: sufre el daño mayor.";
-    } else if (source === "hambre") {
-      damage = Math.floor(number(data.amount, 24) / 24);
-      summary = `${number(data.amount, 24)} hora(s) sin comer: 1 Salud por cada 24 horas.`;
-    } else if (source === "sed") {
-      damage = Math.floor(number(data.amount, 6) / 6);
-      summary = `${number(data.amount, 6)} hora(s) sin beber: 1 Salud por cada 6 horas.`;
-    } else if (source === "cogorza") {
-      const difficulty = Math.max(10, number(data.difficulty, 10));
-      const byDifficulty = difficulty >= 20 ? 3 : difficulty >= 15 ? 2 : 1;
-      roll = await this.rollSkill("fuerzaBruta", { dificultad: difficulty });
-      damage = roll?.exito ? 0 : byDifficulty;
-      summary = `intoxicacion etilica: Fuerza bruta dificultad ${difficulty}.`;
-      details = roll?.exito ? "Aguanta la borrachera." : "Pierde Salud y sufre -1D a todas las tiradas durante 6 horas; anotalo en estado si procede.";
-    } else if (source === "quemadura") {
-      damage = Math.max(0, number(data.amount, 3));
-      summary = "fuego abierto suele causar 3 Salud por turno; sol sin crema causa 1 Salud cada par de horas.";
-    }
+  /* ---------------- Proezas ---------------- */
 
-    const workflow = {
-      targetUuid: this.uuid,
-      targetName: this.name,
-      label: sources[source] ?? "Daño reglado",
-      summary,
-      details,
-      damage,
-      applied: false
-    };
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      rolls: roll?.roll ? [roll.roll] : [],
-      flags: { [IMSERSO.ID]: { hazardWorkflow: workflow } },
-      content: hazardCard(workflow)
-    });
-  }
-
-  async worsenAttribute() {
-    if (this.type !== "personaje") return ui.notifications.warn("El empeoramiento solo se aplica a PJ.");
-    const attrs = Object.entries(attributesForRuleset())
-      .filter(([key]) => number(this.system.atributos?.[key], 0) > 0)
-      .map(([key, cfg]) => `<option value="${key}">${cfg.label} (${cfg.short}) ${number(this.system.atributos?.[key], 0)} → ${number(this.system.atributos?.[key], 0) - 1}</option>`)
-      .join("");
-    if (!attrs) return ui.notifications.warn(`${this.name} no tiene atributos por encima de 0.`);
-    const data = await simpleDialog({
-      title: `Empeoramiento: ${this.name}`,
-      content: `<form class="ims-dialog"><label>Atributo a rebajar<select name="attr">${attrs}</select></label></form>`,
-      yes: "Empeorar"
-    });
-    if (!data?.attr) return null;
-    const before = number(this.system.atributos?.[data.attr], 0);
-    const after = Math.max(0, before - 1);
-    await this.update({ [`system.atributos.${data.attr}`]: after });
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `
-        <div class="ims-chat-card">
-          <header><h3>Empeoramiento</h3><strong>${escapeHtml(labelForAttribute(data.attr))}</strong></header>
-          <p><strong>${escapeHtml(this.name)}</strong> termina la aventura con vida y rebaja ${escapeHtml(labelForAttribute(data.attr))}: ${before} → ${after}.</p>
-        </div>`
-    });
-  }
-
-  async rollPursuit() {
-    const targetToken = firstTargetToken(this);
-    const target = targetToken?.actor;
-    if (!target) {
-      ui.notifications.info("La persecución funciona mejor con un token seleccionado o tarjeteado; se resolverá con una referencia manual.");
-    }
-    const difficulty = target ? actorAgilidad(target) : 9;
-    const ruleset = currentRuleset();
-    const pursuitOptions = ruleset === "dungeonsYayos"
-      ? `<option value="atletismo">Atletismo</option><option value="lanzamiento">Lanzamiento</option><option value="mulaParda">Mula Parda</option>`
-      : (ruleset === "imserso"
-        ? `<option value="atletismo">Gimnasia</option><option value="mecanica">Archiperres</option>`
-        : `<option value="atletismo">Atletismo</option><option value="conducir">Conducir</option>`);
-    const data = await simpleDialog({
-      title: `Persecucion: ${this.name}`,
-      content: `
-        <form class="ims-dialog">
-          <p>Referencia: <strong>${escapeHtml(target?.name ?? "manual")}</strong>, Agilidad ${difficulty}.</p>
-          ${target ? "" : `<label>Nombre de referencia<input name="targetName" value="Referencia manual"></label>`}
-          <label>Habilidad
-            <select name="skill">
-              ${pursuitOptions}
-            </select>
-          </label>
-          <label>Dificultad${stepper("difficulty", difficulty, { min: 1, max: 30 })}</label>
-        </form>`,
-      yes: "Tirar"
-    });
-    if (!data) return null;
-    const result = await this.rollSkill(data.skill, { dificultad: number(data.difficulty, difficulty), skipDialog: false });
-    if (!result) return null;
-    const title = result.critico ? "Exito critico" : result.pifia ? "Pifia" : result.exito ? "Exito" : "Fallo";
-    const outcome = result.critico ? "exito critico: gana una distancia adicional."
-      : result.pifia ? "pifia: se produce un percance o accidente."
-        : result.exito ? "exito: mejora su posicion en la persecucion."
-          : "fallo: pierde posicion en la persecucion.";
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `
-        <div class="ims-chat-card">
-          <header><h3>Persecucion</h3><strong>${title}</strong></header>
-          <p><strong>${escapeHtml(this.name)}</strong> resuelve persecucion contra <strong>${escapeHtml(target?.name ?? data.targetName ?? "referencia manual")}</strong>: ${outcome}</p>
-        </div>`
-    });
-  }
-
-  async reserveAction() {
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `
-        <div class="ims-chat-card">
-          <header><h3>Defensa completa</h3><strong>+1D Agilidad</strong></header>
-          <p><strong>${escapeHtml(this.name)}</strong> se defiende completamente: aumenta su Agilidad durante este turno y asciende una posicion en iniciativa a partir del siguiente.</p>
-        </div>`
-    });
-  }
-
-  _renderHealingCard(data) {
-    const status = data.failed ? "Sin efecto" : data.applied ? "Curacion aplicada" : "Curacion pendiente";
-    const buttons = data.failed || data.applied ? "" : `
-      <div class="ims-chat-actions">
-        <button type="button" class="ims-chat-action" data-ims-action="apply-healing">Aplicar curacion</button>
-      </div>`;
-    return `
-      <div class="ims-chat-card ims-healing-card">
-        <header><h3>${escapeHtml(data.itemName)}</h3><strong>${status}</strong></header>
-        <p><strong>${escapeHtml(data.healerName)}</strong> prepara curacion sobre <strong>${escapeHtml(data.targetName)}</strong>.</p>
-        ${data.failed ? "<p>La tirada requerida falla: no se recupera Salud.</p>" : `<p>Recuperacion calculada: <strong>${data.amount}</strong> de Salud.</p>`}
-        ${buttons}
-      </div>`;
-  }
-
-  canSpendProezas(amount = 1) {
-    if (this.type !== "personaje") return true;
-    const current = number(this.system.proezas?.valor, 0);
-    if (current >= amount) return true;
-    ui.notifications.warn(`${this.name} no tiene ${resourceLabel()} suficientes (${current}/${amount}).`);
+  puedeGastarProeza(cantidad = 1, { aviso = true } = {}) {
+    if (!this.esPJ) return true;
+    const tiene = n(this.system.proezas.valor);
+    if (tiene >= cantidad) return true;
+    if (aviso) ui.notifications.warn(`${this.name} no tiene ${contexto().conjunto.recurso.toLowerCase()} suficientes (${tiene}/${cantidad}).`);
     return false;
   }
 
-  async spendProezas(amount = 1) {
-    if (this.type !== "personaje") return;
-    const current = number(this.system.proezas?.valor, 0);
-    if (current < amount) {
-      ui.notifications.warn(`${this.name} no tiene ${resourceLabel()} suficientes (${current}/${amount}).`);
-      return false;
+  async gastarProeza(cantidad = 1, { silencioso = false } = {}) {
+    if (!this.esPJ || cantidad <= 0) return true;
+    if (!this.puedeGastarProeza(cantidad)) return false;
+    const antes = n(this.system.proezas.valor);
+    await this.update({ "system.proezas.valor": antes - cantidad });
+    if (!silencioso) await this._avisoProezas("gasta", cantidad, antes, antes - cantidad);
+    return true;
+  }
+
+  async ganarProeza(cantidad = 1, { silencioso = false } = {}) {
+    if (!this.esPJ || cantidad <= 0) return;
+    const antes = n(this.system.proezas.valor);
+    await this.update({ "system.proezas.valor": antes + cantidad });
+    if (!silencioso) await this._avisoProezas("gana", cantidad, antes, antes + cantidad);
+  }
+
+  _avisoProezas(verbo, cantidad, antes, despues) {
+    const cj = contexto().conjunto;
+    return publicar({ tono: verbo === "gana" ? "exito" : "aviso", icono: "fa-solid fa-star", etiqueta: cj.recurso, titulo: `${antes} → ${despues}`, texto: `${this.name} ${verbo} ${cantidad} ${cantidad > 1 ? cj.recurso.toLowerCase() : cj.recursoUno}.` }, { actor: this });
+  }
+
+  /** Gastar proezas para sumar +3 a Agilidad, Aplomo o Perspicacia durante un turno completo (cap. 3). */
+  async reforzar(rol) {
+    if (!this.esPJ) return null;
+    const cj = contexto().conjunto;
+    const nombre = cj.fijos[rol];
+    const datos = await pedirDatos({
+      titulo: `Reforzar ${nombre}: ${this.name}`,
+      intro: `<p>Cada ${cj.recursoUno} suma +3 durante un turno completo, sin límite. Se declara antes de la tirada.</p>`,
+      filas: [{ nombre: "puntos", tipo: "num", etiqueta: `${cj.recurso} (tiene ${this.system.proezas.valor})`, valor: 1, min: 1 }],
+      ok: "Gastar"
+    });
+    const puntos = n(datos?.puntos);
+    if (puntos < 1 || !(await this.gastarProeza(puntos, { silencioso: true }))) return null;
+    const campo = `system.combate.refuerzo${rol[0].toUpperCase()}${rol.slice(1)}`;
+    await this.update({ [campo]: n(foundry.utils.getProperty(this, campo)) + puntos });
+    await publicar({ tono: "aviso", icono: "fa-solid fa-star", etiqueta: cj.recurso, titulo: `+${R.refuerzoFijo(puntos)} a ${nombre}`, texto: `${this.name} gasta ${puntos} ${puntos > 1 ? cj.recurso.toLowerCase() : cj.recursoUno}: ${nombre} ${this.valorFijo(rol)} durante el turno.` }, { actor: this });
+    return puntos;
+  }
+
+  /* ---------------- Tiradas de habilidad ---------------- */
+
+  /**
+   * Tirada de habilidad. Sin `datos` abre el diálogo; con `datos` las opciones ya vienen dadas
+   * (ataques, defensa, persecución). Devuelve {mensaje, estado, resultado} o null si se cancela.
+   */
+  async tirarHabilidad(clave, { dificultad, dialogo = true, datos = null, notas = [], ataque = null, atributoPoder = "" } = {}) {
+    const ctx = contexto();
+    const cj = ctx.conjunto;
+    const etiqueta = k => (k === "magia" ? (ctx.poderes === "psionica" ? "Psiónica" : "Magia") : etiquetaHabilidad(k, cj));
+    const hab = cj.habilidades[clave] ?? (clave === "magia" ? { label: etiqueta("magia"), atributo: atributoPoder, oposicion: "" } : null);
+    if (!hab) return ui.notifications.warn(`La habilidad «${clave}» no existe en esta ambientación.`) && null;
+    const s = this.system;
+    const ef = s.efectivos;
+    const fx = this.fx;
+    const ed = ctx.edicion;
+    if (clave === "idiomaExtranjero2" && cj.id === "srd" && !R.idiomaDisponible(ef.habilidades.idiomaExtranjero1.dados, clave)) {
+      return ui.notifications.warn("No se puede usar el segundo idioma sin 2D o 3D en el primero.") && null;
     }
-    const next = Math.max(0, current - amount);
-    await this.update({ "system.proezas.valor": next });
-    return this._announceProezas("gasta", amount, current, next);
-  }
-
-  async gainProezas(amount = 1, notify = true) {
-    if (this.type !== "personaje") return;
-    const current = number(this.system.proezas?.valor, 0);
-    if (notify) ui.notifications.info(`${this.name} gana ${amount} ${resourceLabel()}.`);
-    const next = current + amount;
-    await this.update({ "system.proezas.valor": next });
-    return this._announceProezas("gana", amount, current, next);
-  }
-
-  canSpendYayopoints(amount = 1) {
-    return this.canSpendProezas(amount);
-  }
-
-  async spendYayopoints(amount = 1) {
-    return this.spendProezas(amount);
-  }
-
-  async gainYayopoints(amount = 1, notify = true) {
-    return this.gainProezas(amount, notify);
-  }
-
-  async spendPuntoGuion(amount = 1) {
-    if (this.type !== "personaje") return;
-    const current = number(this.system.puntoGuion?.valor, 0);
-    if (current < amount) {
-      ui.notifications.warn(`${this.name} no tiene puntos de guion suficientes (${current}/${amount}).`);
-      return false;
+    const objetivo = objetivoActual()?.actor;
+    let porDefecto = dificultad;
+    let ayuda = "";
+    if (porDefecto == null) {
+      porDefecto = cj.dificultadBase;
+      if (objetivo && hab.oposicion && cj.fijos[hab.oposicion]) {
+        porDefecto = objetivo.valorFijo(hab.oposicion);
+        ayuda = `${objetivo.name}: ${cj.fijos[hab.oposicion]} ${porDefecto}`;
+      }
     }
-    const next = Math.max(0, current - amount);
-    await this.update({
-      "system.puntoGuion.valor": next,
-      "system.puntoGuion.usado": next <= 0
-    });
-    return this._announcePuntoGuion("gasta", amount, current, next);
-  }
+    const pj = this.esPJ;
+    const pen = n(s.penalizadorDados);
+    const baseDados = clave === "magia" ? n(s.poder.dados) : ef.habilidades[clave]?.dados ?? 1;
+    const atributoBase = hab.atributo ? n(ef.atributos[hab.atributo]) : 0;
+    const dobla = fx.atributoDoble && fx.atributoDoble.atributo === hab.atributo && fx.atributoDoble.habilidades.includes(clave);
+    const atributo = dobla ? atributoBase * 2 : atributoBase;
+    const penProt = hab.atributo && clave !== "magia" && R.penalizaHabilidad(hab.atributo, ed) ? n(s.proteccion.penalizacion) : 0;
+    const profesionOk = pj || ed.profesionPNJ;
+    const recuerdoMax = n(fx.recuerdoUsos, 1);
+    const recuerdoLibre = pj && n(s.recuerdo.usos) < recuerdoMax;
+    const oscuridadPosible = R.modificadorOscuridad(clave, ed) !== 0;
 
-  async gainPuntoGuion(amount = 1) {
-    if (this.type !== "personaje") return;
-    const current = number(this.system.puntoGuion?.valor, 0);
-    const max = Math.max(1, number(this.system.puntoGuion?.max, 1));
-    const next = Math.min(max, current + amount);
-    if (next === current) {
-      ui.notifications.info(`${this.name} ya tiene el punto de guion al maximo (${current}/${max}).`);
-      return false;
+    let d = datos;
+    if (!d && dialogo) {
+      const resumen = `${baseDados}D6 ${sig(atributo)} (${etiquetaAtributo(hab.atributo, cj) || "sin atributo"})`;
+      d = await pedirDatos({
+        titulo: `${etiqueta(clave)} · ${this.name}`,
+        intro: `<p>${resumen}${pen ? ` · <b>−${pen}D por Salud</b>` : ""}${penProt ? ` · <b>−${penProt} por protecciones</b>` : ""}</p>`,
+        filas: [
+          { nombre: "dificultad", tipo: "num", etiqueta: "Dificultad", valor: porDefecto, min: 1, max: 40, ayuda },
+          ...(oscuridadPosible ? [{ nombre: "oscuridad", tipo: "check", etiqueta: `Sin luz (${sig(R.modificadorOscuridad(clave, ed))} a la dificultad)`, valor: false }] : []),
+          ...(profesionOk ? [{ nombre: "profesion", tipo: "check", etiqueta: `${cj.profesion}: la acción encaja (+3)`, valor: false }] : []),
+          ...(pj ? [
+            { nombre: "proeza", tipo: "check", etiqueta: `Gastar 1 ${cj.recursoUno} antes de tirar: +1D${fx.proezaDoble && aplica(fx.proezaDoble, clave) ? " (+2D con tu talento)" : ""}`, valor: false, desactivado: s.proezas.valor < 1 },
+            { nombre: "recuerdo", tipo: "check", etiqueta: `${cj.recuerdo}: +2D${recuerdoMax > 1 ? ` (${recuerdoMax - n(s.recuerdo.usos)} libres)` : ""}`, valor: false, desactivado: !recuerdoLibre, ayuda: "No se combina con el +1D de una proeza en la misma tirada." }
+          ] : []),
+          ...(fx.dadoOpcional ? [{ nombre: "opcional", tipo: "check", etiqueta: fx.dadoOpcional.etiqueta, valor: false }] : []),
+          { nombre: "colaboradores", tipo: "num", etiqueta: "Colaboradores en acción combinada (+2 c/u, máx. +10)", valor: 0, min: 0, max: 9 },
+          { nombre: "recibidos", tipo: "num", etiqueta: "Dados recibidos por ayuda (+1D c/u)", valor: 0, min: 0, max: 5 },
+          { nombre: "prestados", tipo: "num", etiqueta: "Dados que cedo para ayudar (−1D c/u)", valor: 0, min: 0, max: 3, desactivado: !pj },
+          { nombre: "bonus", tipo: "num", etiqueta: "Modificador fijo", valor: 0, min: -20, max: 20 }
+        ],
+        ok: "Tirar"
+      });
     }
-    await this.update({
-      "system.puntoGuion.valor": next,
-      "system.puntoGuion.usado": next <= 0
+    if (!d) return null;
+    d = { dificultad: porDefecto, ...d };
+    if (d.proeza && d.recuerdo) return ui.notifications.warn("El Recuerdo cuando… no se combina con el +1D de una proeza en la misma tirada.") && null;
+    if (pj && d.proeza && !(await this.gastarProeza(1, { silencioso: true }))) return null;
+    if (pj && d.recuerdo) await this.update({ "system.recuerdo.usos": n(s.recuerdo.usos) + 1, "system.recuerdo.usado": n(s.recuerdo.usos) + 1 >= recuerdoMax });
+
+    const lista = [...notas];
+    const extra = (fx.dadoFijo?.habilidades?.includes(clave) ? 1 : 0) + (d.opcional ? 1 : 0)
+      + (d.proeza && fx.proezaDoble && aplica(fx.proezaDoble, clave) ? 1 : 0) - (d.menos ? n(d.menos) : 0);
+    const colab = R.combinadas(d.colaboradores, fx.combinadas);
+    const bonus = n(d.bonus) + (d.profesion ? 3 : 0) + colab - penProt + (d.proeza && fx.proezaMas2 ? 2 : 0) + n(d.bonoExtra);
+    if (d.profesion) lista.push(`${cj.profesion} +3`);
+    if (d.proeza) lista.push(`${cj.recursoUno[0].toUpperCase()}${cj.recursoUno.slice(1)}: +1D${fx.proezaDoble && aplica(fx.proezaDoble, clave) ? " extra por talento" : ""}`);
+    if (d.recuerdo) lista.push(`${cj.recuerdo}: +2D`);
+    if (d.opcional) lista.push(`${fx.dadoOpcional.etiqueta.split(":")[0]}: +1D`);
+    if (colab) lista.push(`Acción combinada: +${colab}`);
+    if (n(d.recibidos)) lista.push(`Ayuda recibida: +${d.recibidos}D`);
+    if (n(d.prestados)) lista.push(`Ayuda prestada: −${d.prestados}D`);
+    if (n(d.sacrificados)) lista.push(`Apunta: sacrifica ${d.sacrificados}D`);
+    if (pen) lista.push(`−${pen}D por Salud`);
+    if (penProt) lista.push(`−${penProt} por protecciones`);
+    if (dobla) lista.push("Bonificador doble por talento");
+    if (d.proeza && fx.proezaMas2) lista.push("«Dejadme hacerlo a mí»: +2");
+    let difFinal = n(d.dificultad, porDefecto);
+    if (d.oscuridad) { const m = R.modificadorOscuridad(clave, ed); difFinal += m; lista.push(`Sin luz: ${sig(m)} a la dificultad`); }
+
+    const dados = R.dadosDeTirada({
+      base: baseDados, extra, proeza: Boolean(d.proeza), recuerdo: Boolean(d.recuerdo), recibidos: n(d.recibidos),
+      sacrificados: n(d.sacrificados), penalizador: pen, prestados: n(d.prestados), tope: ed.topeDados
     });
-    return this._announcePuntoGuion("recupera", next - current, current, next);
+    if (Number.isFinite(ed.topeDados) && baseDados + extra + (d.proeza ? 1 : 0) + (d.recuerdo ? 2 : 0) + n(d.recibidos) - pen > ed.topeDados) lista.push(`Tope de ${ed.topeDados}D`);
+
+    const resultado = await lanzar({
+      actor: this, token: this.token?.object, clave, etiqueta: etiqueta(clave), dados, atributo, bonus, dificultad: difFinal,
+      flavor: `${etiqueta(clave)} (${etiquetaAtributo(hab.atributo, cj) || "sin atributo"})`, notas: lista, ataque, opciones: { dadoProeza: Boolean(d.proeza) }
+    });
+    // «La experiencia es un grado»: un Recuerdo con éxito se conserva.
+    if (pj && d.recuerdo && fx.recuerdoRepite && resultado.resultado.exito) {
+      await this.update({ "system.recuerdo.usos": Math.max(0, n(this.system.recuerdo.usos) - 1), "system.recuerdo.usado": false });
+    }
+    return resultado;
   }
 
-  async _announcePuntoGuion(verb, amount, before, after) {
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `
-        <div class="ims-chat-card">
-          <header><h3>Punto de guion</h3><strong>${after}</strong></header>
-          <p><strong>${this.name}</strong> ${verb} ${amount} punto(s) de guion: ${before} → ${after}.</p>
-        </div>`
+  /* ---------------- Resistencias (caps. 5 y 6) ---------------- */
+
+  /** Tirada de Resistencia física o mental: 3D sin atributo contra el valor del personaje. */
+  async tirarResistencia(tipo, { motivo = "", umbral = false, perdida = 0, dadosMenos = 0, dialogo = true } = {}) {
+    const ctx = contexto();
+    const cj = ctx.conjunto;
+    const fisica = tipo === "fisica";
+    if (!fisica && !cj.tienePanico) return ui.notifications.warn("Esta ambientación no tiene Resistencia mental.") && null;
+    if (!fisica && !this.esPJ) return null;
+    const s = this.system;
+    const fx = this.fx;
+    const nombre = fisica ? cj.rf : cj.rm;
+    const valor = fisica ? n(s.rf) : n(s.rm);
+    const hasta = ctx.opciones.panicoAmpliado && !fisica;
+    const pen = fisica ? n(s.penalizadorDados) : hasta ? R.penalizadorSalud(s.estabilidad.valor) : 0;
+    const tipoRoll = fisica ? "resistenciaFisica" : "resistenciaMental";
+    const proezaPermitida = this.esPJ && (ctx.pulp || fx.resistenciaProeza);
+    const fijo = fx.dadoFijo?.resistencias?.includes(tipo === "fisica" ? "fisica" : "mental") ? 1 : 0;
+    const recuerdoMax = n(fx.recuerdoUsos, 1);
+    const recuerdoLibre = this.esPJ && n(s.recuerdo.usos) < recuerdoMax;
+    let d = { dificultad: valor, recuerdo: false, proeza: false };
+    if (dialogo) {
+      d = await pedirDatos({
+        titulo: `${nombre} · ${this.name}`,
+        intro: `<p>3D6 contra el valor de ${esc(nombre)}${pen ? ` · <b>−${pen}D</b>` : ""}${fisica ? "" : " · sin penalizador de Salud"}. ${fisica ? "Si falla, cae inconsciente." : "Si falla, sufre una crisis de locura temporal."}${motivo ? ` (${esc(motivo)})` : ""}</p>`,
+        filas: [
+          { nombre: "dificultad", tipo: "num", etiqueta: `Valor de ${nombre}`, valor, min: 1, max: 30 },
+          ...(this.esPJ ? [{ nombre: "recuerdo", tipo: "check", etiqueta: `${cj.recuerdo}: +2D`, valor: false, desactivado: !recuerdoLibre }] : []),
+          ...(proezaPermitida ? [{ nombre: "proeza", tipo: "check", etiqueta: `Gastar 1 ${cj.recursoUno} antes de tirar: +1D (${ctx.pulp ? "Anexo Pulp" : "Duro de pelar"})`, valor: false, desactivado: s.proezas.valor < 1 }] : [])
+        ],
+        ok: "Tirar"
+      });
+      if (!d) return null;
+    }
+    if (d.proeza && !(await this.gastarProeza(1, { silencioso: true }))) return null;
+    if (d.recuerdo) await this.update({ "system.recuerdo.usos": n(s.recuerdo.usos) + 1, "system.recuerdo.usado": n(s.recuerdo.usos) + 1 >= recuerdoMax });
+    const notas = [];
+    if (d.recuerdo) notas.push(`${cj.recuerdo}: +2D`);
+    if (d.proeza) notas.push(`${cj.recursoUno}: +1D`);
+    if (fijo) notas.push("Talento: +1D");
+    if (dadosMenos) notas.push(`−${dadosMenos}D (${motivo || "efecto"})`);
+    if (pen) notas.push(`−${pen}D por ${fisica ? "Salud" : "Estabilidad"}`);
+    if (umbral) notas.push(`Umbral de ${fisica ? "Salud" : "Estabilidad"}`);
+    const dados = R.dadosDeTirada({ base: 3, extra: fijo - dadosMenos, proeza: Boolean(d.proeza), recuerdo: Boolean(d.recuerdo), penalizador: pen, tope: ctx.edicion.topeDados });
+    return lanzar({
+      actor: this, token: this.token?.object, etiqueta: nombre, dados, atributo: 0, bonus: 0, dificultad: n(d.dificultad, valor), tipo: tipoRoll,
+      flavor: motivo || "3D6 contra el valor", notas, umbral, perdida, opciones: { dadoProeza: false }
     });
   }
 
-  async _announceProezas(verb, amount, before, after) {
-    const resource = resourceLabel();
-    return ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content: `
-        <div class="ims-chat-card">
-          <header><h3>${resource}</h3><strong>${after}</strong></header>
-          <p><strong>${this.name}</strong> ${verb} ${amount} ${resource}: ${before} → ${after}.</p>
-        </div>`
-    });
+  /* ---------------- Iniciativa ---------------- */
+
+  get armaEquipada() { return this.items.find(i => i.type === "arma" && i.system.equipado) ?? null; }
+
+  /** Bonificador de iniciativa por arma (solo YayoSystem de IMSERSO). */
+  bonoIniciativaArma() {
+    const cj = contexto().conjunto;
+    if (!cj.iniciativaArma) return 0;
+    const arma = this.armaEquipada;
+    const tipo = tipoAtaque(arma?.system.tipo ?? this.system.combate?.armaIniciativa ?? this.system.ataque?.tipo ?? "sinArmas", cj);
+    return n(arma ? arma.system.iniciativa : 0, cj.ataques[tipo]?.iniciativa ?? 0) || (cj.ataques[tipo]?.iniciativa ?? 0);
   }
 
-  async _skillDialog(skillKey, defaults) {
-    const skill = skillConfig(skillKey);
-    const op = skill.oposicion ? `<option value="${skill.oposicion}">Contra ${skill.oposicion}</option>` : "";
-    const resource = resourceLabel();
-    const ruleset = currentRuleset();
-    const professionLabel = ruleset === "dungeonsYayos" ? "Antigua profesión (+3)" : (ruleset === "imserso" ? "Antiguo oficio (+3)" : "Profesion/perfil (+3)");
-    const majorDefectLabel = ruleset === "dungeonsYayos" || ruleset === "imserso" ? `Achaque mayor (-1D, +1 ${resource})` : `Defecto grave (-1D, +1 ${resource})`;
-    const minorDefectLabel = ruleset === "dungeonsYayos" || ruleset === "imserso" ? "Achaque menor (repeticion normal)" : "Defecto leve (repeticion normal)";
-    return simpleDialog({
-      title: `Tirada: ${labelForSkill(skillKey)}`,
-      content: `
-        <form class="ims-dialog">
-          <div class="ims-dialog-grid">
-            <label><span>Dificultad</span>
-              ${stepper("dificultad", defaults.dificultad, { min: 1, max: 30 })}
-            </label>
-            <label><span>Dados extra / al alimón</span>
-              ${stepper("extraDados", 0, { min: -3, max: 3 })}
-            </label>
-            <label><span>Modificador fijo</span>
-              ${stepper("bonus", 0, { min: -20, max: 20 })}
-            </label>
-            <label><span>Dados sacrificados</span>
-              ${stepper("dadosSacrificados", 0, { min: 0, max: 2 })}
-            </label>
-          </div>
-          ${defaults.oppositionText ? `<p class="notes">Oposicion detectada: ${escapeHtml(defaults.oppositionText)}.</p>` : ""}
-          <div class="ims-dialog-checks">
-            <label class="check"><input type="checkbox" name="profesion"> ${professionLabel}</label>
-            <label class="check"><input type="checkbox" name="proezaDado"> ${resource} antes de tirar (+1D)</label>
-            <label class="check"><input type="checkbox" name="recuerdo" ${this.system.recuerdo?.usado ? "disabled" : ""}> Recuerdo cuando... (+2D)</label>
-            <label class="check"><input type="checkbox" name="defectoGrave"> ${majorDefectLabel}</label>
-            <label class="check"><input type="checkbox" name="defectoLeve" ${this.system.defectos?.leveUsado ? "disabled" : ""}> ${minorDefectLabel}</label>
-          </div>
-          <select name="oposicion" hidden><option value="">Dificultad fija</option>${op}</select>
-        </form>`
-    });
+  /** Valor de iniciativa de este personaje: DES + INT (YayoSystem: PRE + arma). */
+  get valorIniciativa() {
+    const a = this.system.efectivos.atributos;
+    const cj = contexto().conjunto;
+    return cj.id === "srd" ? R.iniciativa(a.des, a.int) : a.des + this.bonoIniciativaArma();
   }
+
+  /* ---------------- Ataque (cap. 5) ---------------- */
+
+  /** Daño base a usar para una ficha de arma: la tabla de la edición salvo que el arma lo fije a mano. */
+  _danoBaseArma(arma, tipo) {
+    if (!arma) return null;
+    const v = n(arma.system.danoBase, null);
+    if (v === null || v === 0) return null;
+    const y3 = R.EDICIONES.y3.dano[tipo], er = R.EDICIONES.er.dano[tipo];
+    return v === y3 || v === er ? null : v;
+  }
+
+  async atacar({ item = null } = {}) {
+    const ctx = contexto();
+    const cj = ctx.conjunto;
+    const ed = ctx.edicion;
+    const fx = this.fx;
+    const marcas = [...game.user.targets];
+    const marca = marcas[0] ?? null;
+    const objetivo = marca?.actor ?? null;
+    const arma = item ?? this.armaEquipada;
+    const tipoInicial = tipoAtaque(arma?.system.tipo ?? (this.esPJ ? this.system.combate.ataque : this.system.ataque.tipo), cj);
+    const cfgInicial = cj.ataques[tipoInicial];
+    const opcionesTipo = Object.entries(cj.ataques).map(([valor, v]) => ({ valor, etiqueta: v.label }));
+    const rolFijo = cj.fijos.agilidad;
+    const agilObj = objetivo ? objetivo.valorFijo("agilidad", { distancia: Boolean(cfgInicial?.distancia) }) : 9;
+    const pj = this.esPJ;
+    const maxPZ = cfgInicial?.maxProezas ?? 2;
+    const intro = `<p>${objetivo ? `Objetivo: <strong>${esc(objetivo.name)}</strong> (${esc(rolFijo)} ${agilObj}${objetivo.system.combate?.sorprendido ? ", sorprendido" : ""}${objetivo.system.combate?.inmovilizado ? ", inmovilizado" : ""}).` : "Sin objetivo marcado: se resuelve a mano."}${arma ? ` Arma: <strong>${esc(arma.name)}</strong>.` : ""}${marcas.length > 1 ? ` Hay ${marcas.length} objetivos marcados (ráfaga con armas automáticas).` : ""}</p>`;
+    const d = await pedirDatos({
+      titulo: `Ataque · ${this.name}`, intro,
+      filas: [
+        { nombre: "tipo", tipo: "sel", etiqueta: "Tipo de ataque", valor: tipoInicial, opciones: opcionesTipo },
+        ...(objetivo ? [] : [{ nombre: "nombreObjetivo", tipo: "texto", etiqueta: "Nombre del objetivo", valor: "Objetivo" }]),
+        { nombre: "dificultad", tipo: "num", etiqueta: `${rolFijo} del objetivo`, valor: agilObj, min: 1, max: 60 },
+        ...(objetivo ? [] : [{ nombre: "armadura", tipo: "num", etiqueta: "Armadura del objetivo", valor: 0, min: 0, max: 20 }]),
+        { nombre: "sacrificados", tipo: "num", etiqueta: "Dados que sacrifica para apuntar", valor: 0, min: 0, max: 3, ayuda: "Cada dado: +1D6 de daño cuerpo a cuerpo, +2D6 a distancia (no explotan)" },
+        ...(ctx.opciones.noquear ? [{ nombre: "noquear", tipo: "check", etiqueta: "Noquear (solo cuerpo a cuerpo): apunta con 1D, daño a la mitad y Resistencia física con 1D menos", valor: false }] : []),
+        { nombre: "desenfundar", tipo: "check", etiqueta: "Desenfunda o cambia de arma en este turno (−1D)", valor: false },
+        ...(pj ? [
+          { nombre: "proezasDano", tipo: "num", etiqueta: `${cj.recurso} al daño (máx. ${maxPZ}, 1D explosivo cada una)`, valor: 0, min: 0, max: 3 },
+          { nombre: "proeza", tipo: "check", etiqueta: `Gastar 1 ${cj.recursoUno}: +1D a impactar`, valor: false }
+        ] : []),
+        { nombre: "profesion", tipo: "check", etiqueta: `${cj.profesion} (+3)`, valor: false },
+        { nombre: "colaboradores", tipo: "num", etiqueta: "Colaboradores en un ataque combinado (+2 cada uno, máx. 5)", valor: 0, min: 0, max: 5 },
+        ...(fx.primerTurnoDano ? [{ nombre: "primerTurno", tipo: "check", etiqueta: "Primer turno del combate y actúas antes: 1D extra de daño (talento)", valor: false }] : []),
+        { nombre: "oscuridad", tipo: "check", etiqueta: "Sin luz (+5 a la dificultad)", valor: false }
+      ],
+      ok: "Atacar"
+    });
+    if (!d) return null;
+    const tipo = d.tipo;
+    const cfg = cj.ataques[tipo];
+    if (d.noquear && cfg.distancia) return ui.notifications.warn("No se puede noquear con armas a distancia.") && null;
+    const habilidad = arma?.system.habilidad && cj.habilidades[arma.system.habilidad] ? arma.system.habilidad : cfg.habilidad;
+    const atrDano = cfg.atributo;
+    const atrValor = n(this.system.efectivos.atributos[arma?.system.atributoDano && cj.atributos[arma.system.atributoDano] ? arma.system.atributoDano : atrDano]);
+    const base = this._danoBaseArma(arma, tipo) ?? (fx.danoFuego?.[tipo] ?? null);
+    const propio = !arma && !pj ? this.system.ataque : null;
+    const baseFinal = propio && n(propio.dano, 0) ? n(propio.dano) : base;
+    const fijo = R.danoFijo({ edicion: ed, tipo, config: cfg, atributo: atrValor, base: baseFinal });
+    const rafaga = Boolean(cfg.auto) && marcas.length > 1;
+    const blancos = rafaga ? marcas.slice(0, ed.rafaga.maxBlancos) : [marca];
+    if (rafaga && marcas.length > ed.rafaga.maxBlancos) ui.notifications.warn(`Una ráfaga alcanza como máximo a ${ed.rafaga.maxBlancos} blancos.`);
+
+    const proezasDano = pj ? R.topeProezasDano(d.proezasDano, maxPZ) : 0;
+    const gasto = proezasDano + (d.proeza ? 1 : 0);
+    if (gasto && !this.puedeGastarProeza(gasto)) return null;
+    const sacrificados = n(d.sacrificados) + (d.noquear ? 1 : 0);
+    const porDado = (cfg.apuntar ?? 1) * (fx.apuntar?.mult && cfg.distancia ? fx.apuntar.mult / (cfg.apuntar ?? 1) : 1);
+    const dadosApuntar = d.noquear ? Math.max(0, n(d.sacrificados)) * (cfg.apuntar ?? 1) : R.dadosApuntar(sacrificados, porDado);
+    const rafagaBlancos = rafaga ? blancos.length : 0;
+    const resultados = [];
+    let primero = true;
+    for (const t of blancos) {
+      const obj = t?.actor ?? null;
+      const dificultad = rafaga ? obj.valorFijo("agilidad", { distancia: true, rafagaBlancos }) : n(d.dificultad, agilObj);
+      const fuego = Boolean(cfg.fuego);
+      const ataque = {
+        etiqueta: arma?.name ?? propio?.nombre ?? cfg.label, tipo, habilidad, fijo, formulaFijo: `(${cj.atributos[atrDano]?.short ?? atrDano} ${atrValor})`,
+        dadosApuntar, proezasDano: primero ? proezasDano : 0, explotaCon: fx.explotaCon ?? 6,
+        dadoExtra: (fx.danoExtraDado?.includes(tipo) ? 1 : 0) + (fx.primerTurnoDano && d.primerTurno ? 1 : 0),
+        objetivoUuid: obj?.uuid ?? "", tokenUuid: t?.document?.uuid ?? "", objetivoNombre: obj?.name ?? d.nombreObjetivo ?? "Objetivo",
+        valor: rolFijo, fuego, noquear: Boolean(d.noquear), armadura: obj ? undefined : n(d.armadura),
+        dobla: cj.id === "srd" ? "fijo" : "todo"
+      };
+      if (cj.defensaActiva && obj) {
+        ataque.defensa = { dificultad: R.dificultadDefensa({ conjunto: cj.id, fuego, distancia: Boolean(cfg.distancia), apuntado: sacrificados > 0, escudo: obj.items.some(i => i.type === "escudo" && i.system.equipado) }) };
+      }
+      const bonoExtra = (fx.apuntar?.mas3 && sacrificados > 0 ? 3 : 0);
+      const res = await this.tirarHabilidad(habilidad, {
+        dificultad, ataque, dialogo: false,
+        datos: {
+          dificultad, profesion: d.profesion, proeza: primero && d.proeza, colaboradores: d.colaboradores, sacrificados,
+          menos: d.desenfundar ? 1 : 0, oscuridad: d.oscuridad, bonoExtra
+        },
+        notas: [
+          ...(proezasDano && primero ? [`${proezasDano} ${proezasDano > 1 ? cj.recurso.toLowerCase() : cj.recursoUno} al daño`] : []),
+          ...(rafaga ? [`Ráfaga a ${blancos.length} blancos: +${blancos.length * ed.rafaga.porBlanco} a su ${rolFijo}`] : []),
+          ...(d.desenfundar ? ["Desenfunda o cambia de arma: −1D"] : []),
+          ...(d.noquear ? ["Noquear"] : [])
+        ]
+      });
+      if (!res) return null;
+      resultados.push(res);
+      primero = false;
+    }
+    if (rafaga) {
+      const roll = await new Roll("1d6").evaluate();
+      await mostrar(roll);
+      const vacia = R.rafagaVacia(roll.total, ed);
+      await publicar({
+        tono: vacia ? "pifia" : "aviso", icono: "fa-solid fa-gun", etiqueta: "Ráfaga", subtitulo: this.name, resultado: vacia ? "Cargador vacío" : "Aún queda munición",
+        lineas: [{ texto: `1D = ${roll.total}: ${vacia ? `con 1${ed.rafaga.vaciaCon > 1 ? " o 2" : ""} el cargador se vacía y recargar ocupa todo el turno siguiente.` : "el cargador aguanta."}` }]
+      }, { actor: this, rolls: [roll] });
+    }
+    return resultados[0];
+  }
+
+  /* ---------------- Acciones de combate (cap. 5) ---------------- */
+
+  /** Defenderse completamente: +1D a la Agilidad este turno y sube una posición en la iniciativa. */
+  async defensaCompleta() {
+    const roll = await new Roll("1d6").evaluate();
+    await mostrar(roll);
+    await this.update({ "system.combate.defensaCompleta": roll.total });
+    await publicar({
+      tono: "aviso", icono: "fa-solid fa-shield-halved", etiqueta: "Defensa completa", titulo: `+${roll.total} a la Agilidad`,
+      texto: `${this.name} renuncia a atacar: 1D = ${roll.total} (Agilidad ${this.valorFijo("agilidad")}) y asciende una posición en el orden de iniciativa a partir del turno siguiente. Las proezas se pueden gastar además.`
+    }, { actor: this, rolls: [roll] });
+    const c = game.combat?.combatants.find(x => x.actorId === this.id);
+    if (c) await c.setFlag(ID, "asciende", true);
+  }
+
+  /** Inmovilizar: Lucha contra la Agilidad del oponente + 3. */
+  async inmovilizar() {
+    const marca = objetivoActual();
+    const objetivo = marca?.actor;
+    if (!objetivo) return ui.notifications.warn("Marca como objetivo al personaje que quieres inmovilizar.");
+    const res = await this.tirarHabilidad("lucha", { dificultad: objetivo.valorFijo("agilidad") + 3, notas: ["Inmovilizar: Agilidad del oponente + 3"] });
+    if (res?.resultado.exito) {
+      await objetivo.update({ "system.combate.inmovilizado": true });
+      await publicar({ tono: "exito", icono: "fa-solid fa-hand", etiqueta: "Inmovilizado", titulo: objetivo.name, texto: `${objetivo.name} tiene la mitad de Agilidad (${objetivo.valorFijo("agilidad")}) y solo puede intentar zafarse. Se le puede desplazar 1 metro por turno.` }, { actor: this });
+    }
+    return res;
+  }
+
+  /** Zafarse: Fuerza bruta contra la Agilidad del agarrador + 3. */
+  async zafarse() {
+    const marca = objetivoActual();
+    const rival = marca?.actor;
+    const dif = rival ? rival.valorFijo("agilidad") + 3 : 12;
+    const clave = contexto().conjunto.habilidades.fuerzaBruta ? "fuerzaBruta" : "mulaParda";
+    const res = await this.tirarHabilidad(clave, { dificultad: dif, notas: ["Zafarse: Agilidad del oponente + 3"] });
+    if (res?.resultado.exito) {
+      await this.update({ "system.combate.inmovilizado": false });
+      await publicar({ tono: "exito", icono: "fa-solid fa-person-running", etiqueta: "Se zafa", titulo: this.name, texto: "No podrá ser inmovilizado de nuevo por el mismo enemigo en este turno ni en el siguiente." }, { actor: this });
+    }
+    return res;
+  }
+
+  async huir() {
+    return publicar({
+      tono: "aviso", icono: "fa-solid fa-person-walking-arrow-right", etiqueta: "Huir", titulo: this.name,
+      texto: "Da la espalda al oponente: este gana un ataque de oportunidad (solo uno por turno). Después, el DJ decide si lo deja escapar o empieza una persecución a distancia corta."
+    }, { actor: this });
+  }
+
+  async alternarCobertura(nivel) {
+    return this.update({ "system.combate.cobertura": nivel });
+  }
+
+  /* ---------------- Salud y Estabilidad ---------------- */
+
+  async modifyTokenAttribute(atributo, valor, esDelta = false, esBarra = true) {
+    if (atributo !== "salud") return super.modifyTokenAttribute(atributo, valor, esDelta, esBarra);
+    const actual = n(this.system.salud.valor);
+    const nuevo = Math.max(0, Math.min(n(this.system.salud.max), esDelta ? actual + n(valor) : n(valor)));
+    return nuevo < actual ? this.aplicarDano(actual - nuevo) : nuevo > actual ? this.curar(nuevo - actual) : this;
+  }
+
+  _umbralesSalud() {
+    const ctx = contexto();
+    const u = ctx.conjunto.umbralesSalud;
+    return ctx.pulp && this.esPJ ? R.umbralesPulp(u) : u;
+  }
+
+  async aplicarDano(cantidad, { sinUmbrales = false } = {}) {
+    const s = this.system;
+    const ctx = contexto();
+    const antes = n(s.salud.valor);
+    const despues = Math.max(0, antes - n(cantidad));
+    const cambios = { "system.salud.valor": despues };
+    if (despues <= 0) {
+      if (ctx.opciones.noMorir && this.esPJ) { cambios["system.estado.fueraDeJuego"] = true; }
+      else cambios["system.estado.muerto"] = true;
+    }
+    if (ctx.conjunto.id === "imserso" && despues === 1) cambios["system.estado.inconsciente"] = true;
+    const cruzados = sinUmbrales || despues <= 0 ? [] : R.umbralesCruzados(antes, despues, this._umbralesSalud(), s.resistenciaFisica.umbrales);
+    for (const u of cruzados) cambios[`system.resistenciaFisica.umbrales.${u}`] = true;
+    await this.update(cambios);
+    if (cruzados.length) await publicarUmbrales(this, cruzados, "salud");
+  }
+
+  async curar(cantidad) {
+    const s = this.system;
+    const valor = Math.min(n(s.salud.max), n(s.salud.valor) + n(cantidad));
+    const cambios = { "system.salud.valor": valor };
+    if (valor > 0 && s.estado.fueraDeJuego) cambios["system.estado.fueraDeJuego"] = false;
+    return this.update(cambios);
+  }
+
+  async perderEstabilidad(cantidad, { sinUmbrales = false } = {}) {
+    if (!this.esPJ || !contexto().conjunto.tienePanico) return null;
+    const s = this.system;
+    const antes = n(s.estabilidad.valor);
+    const despues = Math.max(0, antes - n(cantidad));
+    const u = contexto().pulp ? R.umbralesPulp(contexto().conjunto.umbralesEstabilidad) : contexto().conjunto.umbralesEstabilidad;
+    const cruzados = sinUmbrales || despues <= 0 ? [] : R.umbralesCruzados(antes, despues, u, s.resistenciaMental.umbrales);
+    const cambios = { "system.estabilidad.valor": despues };
+    for (const x of cruzados) cambios[`system.resistenciaMental.umbrales.${x}`] = true;
+    if (despues <= 0) cambios["system.estado.crisisMental"] = true;
+    await this.update(cambios);
+    if (despues <= 0) await publicar({ tono: "pifia", icono: "fa-solid fa-brain", etiqueta: "Locura", titulo: this.name, texto: "Pierde el último punto de Estabilidad: enloquece para siempre." }, { actor: this });
+    if (cruzados.length) await publicarUmbrales(this, cruzados, "estabilidad", n(cantidad));
+  }
+
+  async recuperarEstabilidad(cantidad) {
+    if (!this.esPJ) return null;
+    const s = this.system;
+    const valor = Math.min(n(s.estabilidad.max), n(s.estabilidad.valor) + n(cantidad));
+    const cambios = { "system.estabilidad.valor": valor };
+    if (valor > 0) cambios["system.estado.crisisMental"] = false;
+    return this.update(cambios);
+  }
+
+  /* ---------------- Curación reglada (cap. 6) ---------------- */
+
+  _fuentesCuracion() {
+    const ctx = contexto();
+    return ctx.conjunto.id === "imserso" ? R.CURACION_IMSERSO : R.fuentesCuracion(ctx.edicion);
+  }
+
+  async curacionRegla() {
+    const ctx = contexto();
+    const cj = ctx.conjunto;
+    const marca = objetivoActual();
+    const objetivo = marca?.actor ?? this;
+    const fuentes = this._fuentesCuracion();
+    const usadas = objetivo.esPJ ? objetivo.system.curaciones : {};
+    const entradas = Object.entries(fuentes);
+    const ok = entradas.filter(([k]) => R.curacionDisponible(fuentes, k, usadas).ok);
+    const fuera = entradas.filter(([k]) => !R.curacionDisponible(fuentes, k, usadas).ok);
+    if (!ok.length) return ui.notifications.warn("No queda ninguna fuente de curación disponible.");
+    const etiquetaFrec = { dia: "al día", dia3: "cada 3 días", sesion: "por sesión", herida: "por herida" };
+    const d = await pedirDatos({
+      titulo: `Curación · ${objetivo.name}`,
+      intro: `<p>Salud ${objetivo.system.salud.valor}/${objetivo.system.salud.max}${objetivo.esPJ && cj.tienePanico ? ` · Estabilidad ${objetivo.system.estabilidad.valor}/${objetivo.system.estabilidad.max}` : ""}. No se supera lo que se tenía al empezar la aventura.${fuera.length ? ` <small>Ahora no: ${fuera.map(([, f]) => esc(f.etiqueta)).join("; ")}.</small>` : ""}</p>`,
+      filas: [
+        { nombre: "fuente", tipo: "sel", etiqueta: "Fuente", valor: ok[0][0], opciones: ok.map(([valor, f]) => ({ valor, etiqueta: `${f.etiqueta} · ${R.convalecencia(f.cantidad, ctx.opciones.convalecencias && f.frecuencia === "dia")}${f.critico ? `/${f.critico}` : ""} (${etiquetaFrec[f.frecuencia]})` })) },
+        ...(objetivo.esPJ && cj.tienePanico ? [{ nombre: "recurso", tipo: "sel", etiqueta: "Recupera", valor: "salud", opciones: [{ valor: "salud", etiqueta: "Salud" }, { valor: "estabilidad", etiqueta: "Estabilidad" }] }] : [])
+      ],
+      ok: "Preparar"
+    });
+    if (!d?.fuente) return null;
+    const f = fuentes[d.fuente];
+    const recurso = f.aplica.includes(d.recurso ?? "salud") ? (d.recurso ?? "salud") : f.aplica[0];
+    let cantidad = R.convalecencia(f.cantidad, ctx.opciones.convalecencias && f.frecuencia === "dia");
+    const lineas = [];
+    if (f.habilidad) {
+      const res = await this.tirarHabilidad(f.habilidad, { dificultad: f.dificultad });
+      if (!res) return null;
+      const mano = this.fx.auxilioCura;
+      if (!res.resultado.exito) {
+        cantidad = 0; lineas.push("La tirada falla: no se recupera nada.");
+        if (res.resultado.pifia && (f.pifiaDano || mano)) {
+          const dano = mano?.pifia !== undefined && f.habilidad === "auxilio" ? 0 : f.pifiaDano;
+          if (dano) { await (recurso === "estabilidad" ? objetivo.perderEstabilidad(dano) : objetivo.aplicarDano(dano)); lineas.push(`Pifia: ${dano} puntos de pérdida.`); }
+        }
+      } else if (res.resultado.critico && f.critico) cantidad = mano && f.habilidad === "auxilio" ? mano.critico : f.critico;
+      else if (mano && f.habilidad === "auxilio") cantidad = mano.normal;
+    }
+    if (objetivo.esPJ && f.frecuencia !== "herida") {
+      await objetivo.update({ [`system.curaciones.${f.frecuencia}`]: [...objetivo.system.curaciones[f.frecuencia], d.fuente] });
+    }
+    return publicarEfecto({
+      clase: "cura", recurso, objetivoUuid: objetivo.uuid, tokenUuid: marca?.document?.uuid ?? "", objetivo: objetivo.name,
+      cantidad, original: cantidad, etiqueta: f.etiqueta, lineas, estado: cantidad ? "pendiente" : "cancelado"
+    }, { actor: this });
+  }
+
+  /* ---------------- Otras fuentes de daño (cap. 5) ---------------- */
+
+  async danoRegla() {
+    const ctx = contexto();
+    const cj = ctx.conjunto;
+    const ed = ctx.edicion;
+    const yayo = cj.id !== "srd";
+    const fuerza = cj.habilidades.fuerzaBruta ? "fuerzaBruta" : "mulaParda";
+    const ingesta = cj.habilidades.ingesta ? "ingesta" : cj.id === "imserso" ? "conducir" : fuerza;
+    const fuentes = { asfixia: "Asfixia", caida: "Caída", congelacion: "Congelación", electrochoque: "Electrochoque", sobreesfuerzo: "Sobreesfuerzo", veneno: "Envenenamiento", hambre: "Hambre", sed: "Sed", borrachera: "Borrachera", quemadura: "Quemadura" };
+    const a = await pedirDatos({
+      titulo: `Daño reglado · ${this.name}`,
+      filas: [{ nombre: "fuente", tipo: "sel", etiqueta: "Qué le ocurre", valor: "caida", opciones: Object.entries(fuentes).map(([valor, etiqueta]) => ({ valor, etiqueta })) }],
+      ok: "Siguiente"
+    });
+    if (!a) return null;
+    const f = a.fuente;
+    const fue = this.system.efectivos.atributos.fue;
+    const preguntas = {
+      asfixia: [{ nombre: "turnos", tipo: "num", etiqueta: `Turnos sin respirar (aguanta ${R.aguanteRespiracion(fue)} sin tirar)`, valor: 1, min: 0 }],
+      caida: [{ nombre: "metros", tipo: "num", etiqueta: `Metros de caída libre (hace daño desde ${ed.caida.desde} m)`, valor: 3, min: 0 }],
+      congelacion: [{ nombre: "minutos", tipo: "num", etiqueta: `Minutos de frío intenso (1 punto cada ${ed.congelacionMinutos})`, valor: 30, min: 0 }],
+      veneno: [{ nombre: "pot", tipo: "num", etiqueta: "Potencia (POT)", valor: 10, min: 1 }, { nombre: "menor", tipo: "num", etiqueta: "Daño menor", valor: 0, min: 0 }, { nombre: "mayor", tipo: "num", etiqueta: "Daño mayor", valor: 3, min: 0 }],
+      hambre: [{ nombre: "horas", tipo: "num", etiqueta: `Horas sin comer (1 punto cada ${ed.hambreHoras})`, valor: ed.hambreHoras, min: 0 }],
+      sed: [{ nombre: "horas", tipo: "num", etiqueta: `Horas sin beber (1 punto cada ${ed.sedHoras})`, valor: ed.sedHoras, min: 0 }],
+      borrachera: [{ nombre: "pot", tipo: "sel", etiqueta: "Gravedad", valor: 10, opciones: R.BORRACHERAS }],
+      quemadura: [{ nombre: "turnos", tipo: "num", etiqueta: "Turnos en fuego abierto (3 por turno)", valor: 1, min: 0 }, { nombre: "sol", tipo: "check", etiqueta: "Es sol sin protección (1 de Salud)", valor: false }]
+    };
+    const b = preguntas[f] ? await pedirDatos({ titulo: fuentes[f], filas: preguntas[f], ok: "Resolver" }) : {};
+    if (!b) return null;
+    let cantidad = 0, resumen = "";
+    const tirar = (clave, dificultad, nota) => this.tirarHabilidad(clave, { dificultad, dialogo: false, datos: { dificultad }, notas: [nota] });
+    if (f === "asfixia") {
+      if (n(b.turnos) <= R.aguanteRespiracion(fue)) resumen = `Aguanta: tiene ${R.aguanteRespiracion(fue)} turnos sin tirar.`;
+      else { const res = await tirar(fuerza, 15, "Asfixia"); cantidad = res?.resultado.exito ? 0 : 3; resumen = res?.resultado.exito ? "Aguanta otro turno." : "Falla: pierde 3 de Salud por turno."; }
+    } else if (f === "caida") {
+      const res = await tirar("atletismo", 12, "Caída: rodar reduce 3");
+      cantidad = yayo ? Math.max(0, R.danoYayo.caida(b.metros) - (res?.resultado.exito ? 3 : 0)) : R.danoCaida(b.metros, ed, Boolean(res?.resultado.exito));
+      resumen = res?.resultado.exito ? "Supera Atletismo 12: cae rodando y reduce el daño en 3." : "Falla Atletismo 12: recibe todo el daño.";
+    } else if (f === "congelacion") cantidad = R.danoFrio(b.minutos, ed);
+    else if (f === "electrochoque") {
+      cantidad = R.danoElectrochoque(this.system.efectivos.atributos.per);
+      const res = await tirar(fuerza, 20, "Electrochoque");
+      resumen = res?.resultado.exito ? "Resiste la descarga." : "Falla: queda incapacitado 3D minutos, sin poder hablar, y −1D a todo durante la hora siguiente.";
+    } else if (f === "sobreesfuerzo") { const res = await tirar(fuerza, 15, "Sobreesfuerzo"); cantidad = res?.resultado.exito ? 0 : 2; }
+    else if (f === "veneno") { const res = await tirar(ingesta, n(b.pot), `Veneno POT ${b.pot}`); cantidad = res?.resultado.exito ? n(b.menor) : n(b.mayor); }
+    else if (f === "hambre") cantidad = yayo ? R.danoYayo.hambre(b.horas) : R.danoHambre(b.horas, ed);
+    else if (f === "sed") cantidad = yayo ? R.danoYayo.sed(b.horas) : R.danoSed(b.horas, ed);
+    else if (f === "borrachera") {
+      const res = await tirar(ingesta, n(b.pot), "Borrachera");
+      if (res && !res.resultado.exito) { cantidad = yayo ? R.danoYayo.cogorza(n(b.pot)) : R.danoBorrachera(n(b.pot)); resumen = "Borrachera: −1D a todas las tiradas durante 6 horas."; }
+    } else if (f === "quemadura") cantidad = b.sol ? 1 : 3 * n(b.turnos);
+    return publicarEfecto({
+      clase: "dano", objetivoUuid: this.uuid, objetivo: this.name, cantidad, original: cantidad, etiqueta: fuentes[f], texto: resumen,
+      estado: cantidad > 0 ? "pendiente" : "resistido"
+    }, { actor: this });
+  }
+
+  /* ---------------- Persecuciones y pánico ---------------- */
+
+  async perseguir() {
+    const objetivo = objetivoActual()?.actor;
+    const cj = contexto().conjunto;
+    const d = await pedirDatos({
+      titulo: `Persecución · ${this.name}`,
+      filas: [
+        { nombre: "perseguidor", tipo: "sel", etiqueta: "Papel", valor: "si", opciones: [{ valor: "si", etiqueta: "Persigue" }, { valor: "no", etiqueta: "Huye" }] },
+        { nombre: "agilidad", tipo: "num", etiqueta: `${cj.fijos.agilidad} del otro${objetivo ? ` (${objetivo.name})` : ""}`, valor: objetivo?.valorFijo("agilidad") ?? 10, min: 1, max: 60 }
+      ],
+      ok: "Empezar"
+    });
+    if (!d) return null;
+    return publicarPersecucion(this, { objetivo: objetivo?.name ?? "su objetivo", agilidad: d.agilidad, perseguidor: d.perseguidor === "si" });
+  }
+
+  /* ---------------- Poder: magia y psiónica ---------------- */
+
+  async lanzarPoder(item) {
+    const ctx = contexto();
+    if (ctx.conjunto.id === "dungeonsYayos") {
+      // Magia Potagia: solo con 2D o 3D; sin puntos de Poder (los hechizos al día los lleva la mesa).
+      if (n(this.system.efectivos.habilidades.magiaPotagia.dados) < 2) return ui.notifications.warn("Magia Potagia solo puede usarse con 2D o 3D en la habilidad.");
+      let dificultad = n(item.system.dificultad, 12);
+      const obj = objetivoActual()?.actor;
+      if (obj && item.system.contra) dificultad = Math.max(dificultad, obj.valorFijo(item.system.contra));
+      return this.tirarHabilidad("magiaPotagia", { dificultad, notas: [`Hechizo: ${item.name}`] });
+    }
+    if (!ctx.poderes) return ui.notifications.warn("La magia o psiónica no está activa en esta ambientación (Ajustes del sistema).");
+    const s = this.system;
+    const etiq = ctx.poderes === "psionica" ? "Psiónica" : "Magia";
+    if (!this.esPJ && s.poder.valor <= 0) return ui.notifications.warn(`${this.name} se ha quedado sin puntos de Poder.`);
+    const dif = n(item.system.dificultad, 8);
+    const coste = R.costePoder(dif, item.system.costeExtra);
+    const atributo = item.system.atributo && ctx.conjunto.atributos[item.system.atributo] ? item.system.atributo : "int";
+    const marca = objetivoActual();
+    const obj = marca?.actor;
+    let dificultad = dif;
+    const notas = [`${etiq}: ${dif} · cuesta ${coste} de Poder, salga o no`];
+    if (obj && item.system.contra) {
+      const valor = obj.valorFijo(item.system.contra);
+      if (valor > dif) { dificultad = valor; notas.push(`Contra ${ctx.conjunto.fijos[item.system.contra]} de ${obj.name}: ${valor}`); }
+    }
+    const pen = n(s.poder.valor) <= 0 ? 1 : 0;
+    const res = await this.tirarHabilidad("magia", { dificultad, notas: pen ? [...notas, "Sin Poder: mareado, −1D"] : notas, atributoPoder: atributo });
+    if (!res) return null;
+    const gasto = Math.min(n(s.poder.valor), coste);
+    await this.update({ "system.poder.valor": Math.max(0, n(s.poder.valor) - coste) });
+    const lineas = [
+      item.system.tipo && { texto: `<strong>Tipo:</strong> ${esc(item.system.tipo)}` },
+      item.system.preparacion && { texto: `<strong>Preparación:</strong> ${esc(item.system.preparacion)}` },
+      item.system.lanzamiento && { texto: `<strong>Lanzamiento:</strong> ${esc(item.system.lanzamiento)}` },
+      item.system.duracion && { texto: `<strong>Duración:</strong> ${esc(item.system.duracion)}` },
+      item.system.caducidad && { texto: `<strong>Caducidad:</strong> ${esc(item.system.caducidad)}` },
+      { texto: `Poder: ${n(s.poder.valor)} → ${Math.max(0, n(s.poder.valor) - coste)}${gasto < coste ? " (agotado)" : ""}` }
+    ].filter(Boolean);
+    return publicar({ tono: res.resultado.exito ? "exito" : "fallo", icono: "fa-solid fa-wand-sparkles", etiqueta: item.name, subtitulo: this.name, resultado: res.resultado.exito ? "Funciona" : "Fracasa", texto: item.system.descripcion, lineas, img: item.img }, { actor: this });
+  }
+
+  /** Ocho horas de sueño reparador devuelven todo el Poder; menos, la parte proporcional. */
+  async descansarPoder() {
+    const d = await pedirDatos({ titulo: `Descanso · ${this.name}`, filas: [{ nombre: "horas", tipo: "num", etiqueta: "Horas de sueño reparador", valor: 8, min: 1, max: 12 }], ok: "Descansar" });
+    if (!d) return null;
+    const s = this.system;
+    const nuevo = Math.min(n(s.poder.max), n(s.poder.valor) + R.recuperaPoder(s.poder.max, d.horas));
+    await this.update({ "system.poder.valor": nuevo });
+    return publicar({ tono: "exito", icono: "fa-solid fa-moon", etiqueta: "Descanso", titulo: `Poder ${nuevo}/${s.poder.max}`, texto: `${this.name} duerme ${d.horas} horas.` }, { actor: this });
+  }
+
+  /* ---------------- Talentos, XP y mejora ---------------- */
+
+  async usarTalento(item) {
+    const clave = claveTalento(item.name);
+    const s = item.system;
+    const limitado = n(s.usos.max) > 0;
+    const tarjeta = (texto, extra = {}) => publicar({ tono: "aviso", icono: "fa-solid fa-star", etiqueta: "Talento", titulo: item.name, texto, img: item.img, ...extra }, { actor: this });
+    if (limitado && n(s.usos.valor) < 1) return ui.notifications.warn(`${item.name} ya se ha usado (${s.frecuencia === "escena" ? "en esta escena" : "en esta sesión"}).`);
+    if (clave === "afortunado") {
+      if (n(this.system.proezas.valor) >= n(this.system.proezas.inicial)) return ui.notifications.info("No hay ninguna proeza gastada que recuperar.");
+      await this.ganarProeza(1, { silencioso: true });
+    }
+    if (clave === "retroceder-nunca-rendirse-jamas") {
+      if (!(await this.gastarProeza(1, { silencioso: true }))) return null;
+      await this.update({ "system.combate.ignoraPenalizador": true });
+      await tarjeta(`${this.name} gasta una proeza e ignora los penalizadores por pérdida de Salud durante todo este combate.`);
+      return;
+    }
+    if (clave === "meditacion") {
+      if (!(await this.gastarProeza(1, { silencioso: true }))) return null;
+    }
+    if (clave === "cinturon-de-herramientas" || clave === "damisela-en-apuros") {
+      if (!(await this.gastarProeza(1, { silencioso: true }))) return null;
+    }
+    if (limitado) await item.update({ "system.usos.valor": n(s.usos.valor) - 1 });
+    return tarjeta(s.descripcion || "Usa el talento.");
+  }
+
+  async ganarXP(puntos, motivo = "") {
+    if (!this.esPJ) return null;
+    await this.update({ "system.experiencia.total": n(this.system.experiencia.total) + n(puntos) });
+    return publicar({ tono: "exito", icono: "fa-solid fa-arrow-up-right-dots", etiqueta: "Experiencia", titulo: `+${puntos}`, texto: `${this.name} gana ${puntos} ${puntos === 1 ? "punto" : "puntos"} de Experiencia${motivo ? ` (${motivo})` : ""}.` }, { actor: this });
+  }
+
+  /** Gastar Experiencia: habilidad 1→2D = 5, 2→3D = 10; atributo: nuevo bonificador × 3, de uno en uno. */
+  async mejorar() {
+    if (!this.esPJ) return null;
+    const cj = contexto().conjunto;
+    const s = this.system;
+    const disponible = n(s.xpDisponible);
+    const habs = Object.entries(cj.habilidades).filter(([k]) => dado(s.habilidades[k].dados) < 3).map(([k, h]) => {
+      const dd = dado(s.habilidades[k].dados);
+      return { valor: `h:${k}`, etiqueta: `${h.label} ${dd}D → ${dd + 1}D (${R.costeHabilidad(dd)} XP)`, coste: R.costeHabilidad(dd) };
+    });
+    const atrs = Object.entries(cj.atributos).map(([k, a]) => {
+      const v = n(s.atributos[k]);
+      return { valor: `a:${k}`, etiqueta: `${a.label} ${sig(v)} → ${sig(v + 1)} (${R.costeAtributo(v + 1)} XP)`, coste: R.costeAtributo(v + 1) };
+    });
+    const opciones = [...habs, ...atrs].filter(o => o.coste <= disponible);
+    if (!opciones.length) return ui.notifications.warn(`${this.name} tiene ${disponible} XP: no alcanza para ninguna mejora.`);
+    const d = await pedirDatos({
+      titulo: `Mejorar · ${this.name}`, intro: `<p>Experiencia disponible: <strong>${disponible}</strong>. Los atributos suben de uno en uno y pueden cambiar la Salud, el Aplomo, la Perspicacia, las Resistencias y la iniciativa.</p>`,
+      filas: [{ nombre: "mejora", tipo: "sel", etiqueta: "Mejora", valor: opciones[0].valor, opciones }], ok: "Mejorar"
+    });
+    if (!d) return null;
+    const elegida = opciones.find(o => o.valor === d.mejora);
+    const [tipo, k] = d.mejora.split(":");
+    const cambios = { "system.experiencia.gastada": n(s.experiencia.gastada) + elegida.coste };
+    if (tipo === "h") cambios[`system.habilidades.${k}.dados`] = dado(s.habilidades[k].dados) + 1;
+    else cambios[`system.atributos.${k}`] = n(s.atributos[k]) + 1;
+    await this.update(cambios);
+    return publicar({ tono: "exito", icono: "fa-solid fa-arrow-up", etiqueta: "Mejora", titulo: elegida.etiqueta.replace(/ \(\d+ XP\)$/, ""), texto: `${this.name} gasta ${elegida.coste} XP.${tipo === "h" ? " Aprender de un maestro lleva 1D semanas (1→2D) o 1D meses (2→3D)." : ""}` }, { actor: this });
+  }
+
+  /** Anexo Pulp: tirada de salvación in extremis, una vez por aventura. */
+  async salvacionPulp() {
+    if (!contexto().pulp) return ui.notifications.warn("La tirada de salvación es del Anexo Pulp.");
+    if (this.system.pulp.salvacionUsada) return ui.notifications.warn(`${this.name} ya ha usado su tirada de salvación en esta aventura.`);
+    const roll = await new Roll("3d6").evaluate();
+    await mostrar(roll);
+    await this.update({ "system.pulp.salvacionUsada": true });
+    return publicar({
+      tono: "critico", icono: "fa-solid fa-hands-praying", etiqueta: "¡Salvación in extremis!", subtitulo: this.name, resultado: `${roll.total}`,
+      titulo: "Lo logro o lo evito gracias a…", texto: R.TABLA_PULP[roll.total], pie: "Describe la escena a partir del resultado."
+    }, { actor: this, rolls: [roll] });
+  }
+
+  /* ---------------- Sesión, día y aventura ---------------- */
+
+  /** Nueva sesión: proezas a las iniciales, defecto leve, umbrales, usos de talentos y efectos de combate (cap. 3 y 5). */
+  async nuevaSesion() {
+    const s = this.system;
+    const ctx = contexto();
+    const cambios = {
+      "system.resistenciaFisica.umbrales": Object.fromEntries(R.UMBRALES.map(u => [u, false])),
+      "system.combate.sorprendido": false, "system.combate.inmovilizado": false, "system.combate.defensaCompleta": 0,
+      "system.combate.refuerzoAgilidad": 0, "system.combate.refuerzoAplomo": 0, "system.combate.refuerzoPerspicacia": 0,
+      "system.combate.ignoraPenalizador": false, "system.combate.cobertura": "ninguna", "system.combate.resguardado": false
+    };
+    let sobran = 0, extra = 0, roll = null;
+    if (this.esPJ) {
+      sobran = R.proezasSobrantes(s.proezas.valor, s.proezas.inicial);
+      if (ctx.pulp) { roll = await new Roll("1d6").evaluate(); await mostrar(roll); extra = R.proezasExtraPulp(roll.total); }
+      Object.assign(cambios, {
+        "system.proezas.valor": n(s.proezas.inicial) + extra, "system.defectos.leveUsado": false,
+        "system.resistenciaMental.umbrales": Object.fromEntries(R.UMBRALES.map(u => [u, false])),
+        "system.curaciones.sesion": [], "system.usosTalentos": {}
+      });
+    }
+    await this.update(cambios);
+    const usos = this.items.filter(i => i.type === "talento" && i.system.usos.max > 0 && i.system.frecuencia !== "aventura").map(i => ({ _id: i.id, "system.usos.valor": i.system.usos.max }));
+    if (usos.length) await this.updateEmbeddedDocuments("Item", usos);
+    return { sobran, extra, roll };
+  }
+
+  /** Nuevo día: Salud (y Estabilidad cada tres) por recuperación natural y fuentes que se reponen (cap. 6). */
+  async nuevoDia({ tercerDia = false } = {}) {
+    const s = this.system;
+    const a = s.efectivos.atributos;
+    const lineas = [];
+    const cambios = {};
+    if (this.esPJ) {
+      cambios["system.curaciones.dia"] = [];
+      const salud = R.convalecencia(R.recuperacionNatural(a.fue), contexto().opciones.convalecencias);
+      if (salud && s.salud.valor < s.salud.max && s.salud.valor > 0) { cambios["system.salud.valor"] = Math.min(s.salud.max, s.salud.valor + salud); lineas.push(`+${salud} de Salud (FUE ${sig(a.fue)})`); }
+      if (tercerDia) {
+        cambios["system.curaciones.dia3"] = [];
+        const est = R.recuperacionNatural(a.car);
+        if (est && contexto().conjunto.tienePanico && s.estabilidad.valor < s.estabilidad.max && s.estabilidad.valor > 0) { cambios["system.estabilidad.valor"] = Math.min(s.estabilidad.max, s.estabilidad.valor + est); lineas.push(`+${est} de Estabilidad (CAR ${sig(a.car)})`); }
+      }
+      await this.update(cambios);
+    }
+    return lineas;
+  }
+
+  /** Nueva aventura: Recuerdo, punto de guion, salvación Pulp, estados y curaciones (cap. 3). */
+  async nuevaAventura({ restaurar = false } = {}) {
+    if (!this.esPJ) return null;
+    const s = this.system;
+    const cambios = {
+      "system.recuerdo.usado": false, "system.recuerdo.usos": 0, "system.puntoGuion.valor": s.puntoGuion.max, "system.puntoGuion.usado": false,
+      "system.pulp.salvacionUsada": false, "system.curaciones.dia": [], "system.curaciones.dia3": [], "system.curaciones.sesion": [],
+      "system.estado.inconsciente": false, "system.estado.crisisMental": false, "system.estado.fueraDeJuego": false
+    };
+    if (restaurar) { cambios["system.salud.valor"] = s.salud.max; cambios["system.estabilidad.valor"] = s.estabilidad.max; }
+    await this.update(cambios);
+    return this.nuevaSesion();
+  }
+
+  /** Punto de guion (cap. 3): crear un contacto, un recurso dramático o un objeto útil. */
+  async usarPuntoGuion() {
+    if (!this.esPJ || !contexto().edicion.puntoGuion) return ui.notifications.warn("El punto de guion es de Ysystem3; la Edición Revisada no lo tiene.");
+    const g = this.system.puntoGuion;
+    if (n(g.valor) < 1) return ui.notifications.warn(`${this.name} ya ha gastado su punto de guion.`);
+    await this.update({ "system.puntoGuion.valor": n(g.valor) - 1, "system.puntoGuion.usado": n(g.valor) - 1 <= 0 });
+    return publicar({
+      tono: "aviso", icono: "fa-solid fa-feather-pointed", etiqueta: "Punto de guion", titulo: this.name,
+      texto: "Crea un contacto útil, un recurso dramático ambiental o un objeto físico útil en las inmediaciones. El DJ supervisa que sea lógico y plausible."
+    }, { actor: this });
+  }
+
+  /* ---------------- Arquetipos ---------------- */
+
+  async aplicarArquetipo(clave, sistema = null) {
+    if (!this.esPJ) return ui.notifications.warn("Los arquetipos solo se aplican a PJ.");
+    const base = arquetipoByKey(clave);
+    const a = sistema ? { ...base, ...this._arquetipoDeItem(base, sistema, clave) } : base;
+    if (!a?.attrs) return ui.notifications.warn("Elige un arquetipo válido.");
+    const si = await confirmar({
+      titulo: `Aplicar arquetipo: ${a.name}`,
+      contenido: "<p>Ajusta atributos, habilidades, perfil, talento, proezas, Salud y Resistencias a la plantilla. No cambia nombre, jugador, retrato ni biografía.</p>",
+      si: "Aplicar"
+    });
+    if (!si) return null;
+    const roll = await new Roll("2d6").evaluate();
+    const [tSalud, tEst] = roll.dice[0].results.map(r => r.result);
+    await this.update(archetypeSystem(a, tSalud, tEst));
+    if (!this.items.some(i => i.type === "talento" && i.name === a.talentName)) await this.createEmbeddedDocuments("Item", [archetypeTalentItem(a)]);
+    return publicar({
+      tono: "aviso", icono: "fa-solid fa-stamp", etiqueta: "Arquetipo", titulo: a.name,
+      lineas: [
+        { texto: `Salud inicial: ${a.saludBase} + 1D6 (${tSalud}) = <strong>${a.saludBase + tSalud}</strong> · Proezas <strong>${a.proezas}</strong> · Resistencia física <strong>${a.resistenciaFisica}</strong>` },
+        { texto: `<strong>${esc(a.talentName)}.</strong> ${esc(a.talent)}` }
+      ]
+    }, { actor: this, rolls: [roll] });
+  }
+
+  _arquetipoDeItem(base, s, clave) {
+    const llena = (v, alt) => ((Array.isArray(v) ? v.length : v && Object.keys(v).length) ? foundry.utils.deepClone(v) : alt);
+    return {
+      key: s.arquetipoKey || base?.key || clave, name: base?.name || clave, perfil: s.perfil || base?.perfil || "",
+      attrs: llena(s.atributos, base?.attrs), d3: llena(s.habilidades3d, base?.d3 ?? []), d2: llena(s.habilidades2d, base?.d2 ?? []),
+      proezas: n(s.proezas, base?.proezas), resistenciaFisica: n(s.resistenciaFisica, base?.resistenciaFisica ?? 10), saludBase: n(s.saludBase, base?.saludBase ?? 10),
+      talentName: s.talentoNombre || base?.talentName || "Talento", talent: s.talento || base?.talent || ""
+    };
+  }
+
+  /* ---------------- Nombres de la versión 0.x (macros y módulos existentes) ---------------- */
+
+  rollSkill(...a) { return this.tirarHabilidad(...a); }
+  rollAttack(...a) { return this.atacar(...a); }
+  rollResistenciaFisica(o) { return this.tirarResistencia("fisica", o); }
+  rollResistenciaMental(o) { return this.tirarResistencia("mental", o); }
+  rollJamacuco(o) { return this.tirarResistencia("fisica", o); }
+  applyDamage(c) { return this.aplicarDano(c); }
+  heal(c) { return this.curar(c); }
+  healStability(c) { return this.recuperarEstabilidad(c); }
+  applyStabilityDamage(c) { return this.perderEstabilidad(c); }
+  spendProezas(c) { return this.gastarProeza(c, { silencioso: false }); }
+  gainProezas(c, notify = true) { return this.ganarProeza(c, { silencioso: !notify }); }
+  canSpendProezas(c) { return this.puedeGastarProeza(c); }
+  spendYayopoints(c) { return this.gastarProeza(c); }
+  gainYayopoints(c) { return this.ganarProeza(c); }
+  spendPuntoGuion() { return this.usarPuntoGuion(); }
 }

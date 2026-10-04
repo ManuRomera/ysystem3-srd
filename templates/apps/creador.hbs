@@ -1,0 +1,115 @@
+<div class="ys-ficha ys-asistente">
+  <nav class="ys-pasos" aria-label="Pasos">
+    {{#each pasos}}<button type="button" data-action="paso" data-i="{{i}}" class="{{#if activo}}activo{{/if}}{{#if hecho}} hecho{{/if}}"><b>{{inc i}}</b> {{etiqueta}}</button>{{/each}}
+  </nav>
+
+  <div class="ys-cuerpo">
+    {{#if (eq paso 'modo')}}
+    <h2 class="ys-titulo-paso">¿Cómo quieres crear el personaje?</h2>
+    <div class="ys-modos">
+      <label class="ys-modo {{#if (eq e.modo 'libre')}}activo{{/if}}"><input type="radio" name="modo" value="libre" {{#if (eq e.modo 'libre')}}checked{{/if}}>
+        <i class="fa-solid fa-sliders"></i><b>Creación libre</b><span>Reparte tú los bonificadores y las habilidades, como en el capítulo 7 del SRD.</span></label>
+      {{#unless sinArquetipos}}<label class="ys-modo {{#if (eq e.modo 'arquetipo')}}activo{{/if}}"><input type="radio" name="modo" value="arquetipo" {{#if (eq e.modo 'arquetipo')}}checked{{/if}}>
+        <i class="fa-solid fa-stamp"></i><b>Plantilla</b><span>Cuatro plantillas listas, cada una con su talento del SRD.</span></label>{{/unless}}
+      <button type="button" class="ys-modo" data-action="modo" data-modo="aleatorio"><i class="fa-solid fa-dice"></i><b>Al azar</b><span>Un PJ completo y legal en un clic; luego lo retocas.</span></button>
+    </div>
+    {{#if (eq e.modo 'arquetipo')}}
+    <div class="ys-plantillas">
+      {{#each arquetipos}}
+      <label class="ys-plantilla {{#if activo}}activo{{/if}}"><input type="radio" name="arquetipoKey" value="{{key}}" {{#if activo}}checked{{/if}}>
+        <b>{{name}}</b><small>{{perfil}}</small>
+        <span><em>3D:</em> {{d3t}}</span><span><em>2D:</em> {{d2t}}</span>
+        <span class="talento"><em>Talento:</em> {{talentName}}</span>
+      </label>
+      {{/each}}
+    </div>
+    {{/if}}
+    {{/if}}
+
+    {{#if (eq paso 'datos')}}
+    <div class="ys-fila-titulo"><h2 class="ys-titulo-paso">Quién es</h2><button type="button" data-action="datos"><i class="fa-solid fa-dice"></i> Rellenar al azar</button></div>
+    <div class="ys-datos">
+      <label class="ys-campo ancho"><span>Nombre del PJ</span><input type="text" name="nombre" value="{{e.nombre}}" placeholder="Nombre"></label>
+      <label class="ys-campo"><span>Jugador</span><input type="text" name="datos.jugador" value="{{e.datos.jugador}}"></label>
+      <label class="ys-campo"><span>Edad</span><input type="text" name="datos.edad" value="{{e.datos.edad}}"></label>
+      <label class="ys-campo"><span>Lugar de nacimiento</span><input type="text" name="datos.lugarNacimiento" value="{{e.datos.lugarNacimiento}}"></label>
+      <label class="ys-campo"><span>{{etiquetaProfesion}} <small>(+3 a sus tiradas relacionadas)</small></span><input type="text" name="datos.profesion" value="{{e.datos.profesion}}"></label>
+    </div>
+    <label class="ys-campo"><span>Cita que lo define</span><input type="text" name="datos.cita" value="{{e.datos.cita}}" placeholder="«…»"></label>
+    <label class="ys-campo"><span>Motivación vital <small>(mejor en segunda persona)</small></span><textarea name="datos.motivacion" rows="2">{{e.datos.motivacion}}</textarea></label>
+    <label class="ys-campo"><span>Descripción física</span><textarea name="datos.descripcionFisica" rows="2">{{e.datos.descripcionFisica}}</textarea></label>
+    <label class="ys-campo"><span>Situación familiar</span><textarea name="datos.situacionFamiliar" rows="2">{{e.datos.situacionFamiliar}}</textarea></label>
+    {{/if}}
+
+    {{#if (eq paso 'reglas')}}
+    {{#if libre}}
+    <h2 class="ys-titulo-paso">Atributos y habilidades</h2>
+    <p class="ys-nota">Cada bonificador se usa una sola vez. Si eliges uno que ya tiene otro atributo, se intercambian.</p>
+    <div class="ys-atributos">
+      {{#each atributos}}
+      <label class="ys-atributo"><span><b>{{label}}</b> <small>{{short}}</small></span>
+        <select name="atributos.{{k}}">{{#each opciones}}<option value="{{this}}" {{#if (eq this ../valor)}}selected{{/if}}>{{#if this}}+{{/if}}{{this}}</option>{{/each}}</select></label>
+      {{/each}}
+    </div>
+    <p class="ys-contador">3D: <b class="{{#if (eq cuentas.d3 4)}}ok{{/if}}">{{cuentas.d3}}/4</b> · 2D: <b class="{{#if (eq cuentas.d2 objetivo2)}}ok{{/if}}">{{cuentas.d2}}/{{objetivo2}}</b> · el resto a 1D</p>
+    <div class="ys-lista-hab">
+      {{#each habilidades}}
+      <label class="ys-hab-fila"><span>{{etiqueta}} <small>{{atr}}</small></span>
+        <select name="habilidades.{{k}}">
+          <option value="1" {{#if (eq dados 1)}}selected{{/if}}>1D</option>
+          <option value="2" {{#if (eq dados 2)}}selected{{/if}} {{#if bloq2}}disabled{{/if}}>2D</option>
+          <option value="3" {{#if (eq dados 3)}}selected{{/if}} {{#if bloq3}}disabled{{/if}}>3D</option>
+        </select></label>
+      {{/each}}
+    </div>
+    {{else}}
+    <h2 class="ys-titulo-paso">{{elegido.name}}</h2>
+    <p class="ys-nota">{{elegido.description}}</p>
+    <ul class="ys-resumen-lista">
+      <li><b>3D:</b> {{elegido.d3t}}</li><li><b>2D:</b> {{elegido.d2t}}</li>
+      <li><b>Talento:</b> {{elegido.talentName}}. {{elegido.talent}}</li>
+    </ul>
+    {{/if}}
+    <div class="ys-derivados">
+      {{#each fijos}}<span class="ys-chip">{{etiqueta}} <b>{{valor}}</b></span>{{/each}}
+      <span class="ys-chip">{{etiquetaRecurso}} <b>{{c.proezas}}</b></span>
+      <span class="ys-chip">{{etiquetaRF}} <b>{{c.rf}}</b></span>
+      {{#if conPanico}}<span class="ys-chip">{{etiquetaRM}} <b>{{c.rm}}</b></span>{{/if}}
+      <span class="ys-chip">Iniciativa <b>+{{c.iniciativa}}</b></span>
+    </div>
+    {{/if}}
+
+    {{#if (eq paso 'defectos')}}
+    <div class="ys-fila-titulo"><h2 class="ys-titulo-paso">Defectos y puntos de partida</h2><button type="button" data-action="defectos"><i class="fa-solid fa-dice"></i> Al azar</button></div>
+    <p class="ys-nota">Conviene que los dos sean muy distintos, a ser posible uno físico y otro de personalidad. El DJ los activa para que repitas una tirada.</p>
+    <label class="ys-campo"><span>{{etiquetaGrave}} <small>(−1D y +1 proeza para ti)</small></span><input type="text" name="defectos.grave" value="{{e.defectos.grave}}"></label>
+    <label class="ys-campo"><span>{{etiquetaLeve}} <small>(una vez por sesión, sin proeza)</small></span><input type="text" name="defectos.leve" value="{{e.defectos.leve}}"></label>
+    <div class="ys-tiradas">
+      <button type="button" data-action="salud" class="{{#if e.tiradaSalud}}hecho{{/if}}"><i class="fa-solid fa-dice-d6"></i> {{#if e.tiradaSalud}}Tirado{{else}}Tirar{{/if}} Salud{{#if conPanico}} y Estabilidad{{/if}}</button>
+      <span>Salud <b>{{c.saludBase}}{{#if e.tiradaSalud}} + {{e.tiradaSalud}} = {{c.salud}}{{else}} + 1D6{{/if}}</b></span>
+      {{#if conPanico}}<span>Estabilidad <b>{{c.estBase}}{{#if e.tiradaEstabilidad}} + {{e.tiradaEstabilidad}} = {{c.estabilidad}}{{else}} + 1D6{{/if}}</b></span>{{/if}}
+    </div>
+    {{/if}}
+
+    {{#if (eq paso 'resumen')}}
+    <h2 class="ys-titulo-paso">{{#if e.nombre}}{{e.nombre}}{{else}}Sin nombre{{/if}}</h2>
+    <ul class="ys-resumen-lista">
+      <li><b>Atributos:</b> {{#each atributos}}{{short}} {{valor}} · {{/each}}</li>
+      <li><b>3D:</b> {{resumenHabilidades.d3}}</li>
+      <li><b>2D:</b> {{resumenHabilidades.d2}}</li>
+      <li>{{#each fijos}}<b>{{etiqueta}}</b> {{valor}} · {{/each}}<b>{{etiquetaRecurso}}</b> {{c.proezas}} · <b>Salud</b> {{c.salud}}{{#if conPanico}} · <b>Estabilidad</b> {{c.estabilidad}}{{/if}} · <b>{{etiquetaRF}}</b> {{c.rf}}</li>
+      <li><b>{{etiquetaGrave}}:</b> {{e.defectos.grave}} · <b>{{etiquetaLeve}}:</b> {{e.defectos.leve}}</li>
+    </ul>
+    {{#if avisos.length}}<div class="ys-avisos"><b>Antes de crear:</b><ul>{{#each avisos}}<li>{{this}}</li>{{/each}}</ul></div>{{/if}}
+    {{/if}}
+  </div>
+
+  <footer class="ys-pie-crear">
+    <span class="ys-acciones"><button type="button" data-action="anterior" {{#if primero}}disabled{{/if}}><i class="fa-solid fa-arrow-left"></i> Anterior</button></span>
+    {{#if ultimo}}
+    <button type="button" class="principal" data-action="aplicar" {{#unless listo}}disabled{{/unless}}><i class="fa-solid fa-check"></i> {{#if actorExistente}}Aplicar a la ficha{{else}}Crear PJ{{/if}}</button>
+    {{else}}
+    <button type="button" class="principal" data-action="siguiente">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+    {{/if}}
+  </footer>
+</div>

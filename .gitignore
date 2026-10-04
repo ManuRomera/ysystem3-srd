@@ -1,8 +1,10 @@
+node_modules/
+dist/
+packs/
+_old/
 .DS_Store
 ._*
 __MACOSX/
 Thumbs.db
 *.log
 *.zip
-dist/
-node_modules/

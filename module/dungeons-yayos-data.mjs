@@ -44,7 +44,7 @@ function pj({ name, raza, edad, profesion, alineamiento, attrs, salud, jamacuco,
 }
 
 function item(type, name, system) {
-  return { name, type, img: IMG, system };
+  return { name, type, img: `systems/ysystem3-srd/assets/iconos/${type}.svg`, system };
 }
 
 export const DUNGEONS_YAYOS_PACKS = [

@@ -1,0 +1,39 @@
+name: Publicar
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Validar etiqueta, manifiesto y código
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: npm run check
+      - run: npm test
+      - name: Compilar compendios
+        run: npm run build
+      - name: Empaquetar
+        run: |
+          mkdir -p dist
+          zip -r dist/ysystem3-srd.zip system.json module templates styles lang assets packs LICENSE.md README.md CHANGELOG.md
+          cp system.json dist/system.json
+          unzip -l dist/ysystem3-srd.zip | tail -1
+      - name: Notas de la versión
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v v="## [$version]" 'index($0,v)==1{p=1;next} /^## \[/{p=0} p' CHANGELOG.md > dist/notas.md
+          test -s dist/notas.md || echo "Versión $version." > dist/notas.md
+          printf '\n---\nInstalación: `https://github.com/ManuRomera/ysystem3-srd/releases/latest/download/system.json`\n\n> Sistema no oficial. No está afiliado ni aprobado por Walhalla Ediciones.\n' >> dist/notas.md
+      - name: Publicar release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/ysystem3-srd.zip dist/system.json --title "MR- Ysystem3 SRD $GITHUB_REF_NAME" --notes-file dist/notas.md

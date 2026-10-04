@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12162b">
+<title>Ysystem3 SRD para Foundry VTT</title>
+<meta name="description" content="Todo el reglamento de Ysystem3 automatizado en Foundry VTT: proezas, defectos, combate, pánico, persecuciones y más. Dos ediciones y nueve ambientaciones. Gratis.">
+<meta property="og:title" content="Ysystem3 SRD para Foundry VTT">
+<meta property="og:description" content="El reglamento genérico de Walhalla Ediciones, listo para jugar en Foundry. Gratis y abierto.">
+<meta property="og:image" content="https://manuromera.github.io/ysystem3-srd/img/ficha-oscuro.png">
+<link rel="icon" href="../assets/favicon-32.png">
+<style>
+:root{--navy:#2a3b78;--ink:#0d1124;--ink2:#151b36;--gold:#e0a526;--cream:#f6f1e3;--muted:#a9b1cf;--line:#2b3560}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;color:var(--cream);background:radial-gradient(1000px 520px at 85% -5%,#2a3b7866,transparent 60%),radial-gradient(700px 400px at 5% 30%,#e0a52618,transparent 60%),var(--ink);font:16px/1.6 ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}.wrap{width:min(1160px,calc(100% - 36px));margin:auto}
+.top{position:sticky;top:0;z-index:9;background:#0d1124e6;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.04em;text-decoration:none}.brand img{width:30px;height:30px}.brand b{color:var(--gold)}
+nav{display:flex;gap:20px;color:var(--muted);font-size:14px}nav a{text-decoration:none}nav a:hover{color:var(--gold)}
+.hero{padding:70px 0 40px}.hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:5%;align-items:center}
+.eyebrow{color:var(--gold);font:800 12px/1.4 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+h1{font-size:clamp(2.8rem,6vw,5.4rem);letter-spacing:-.05em;line-height:1;margin:18px 0 22px}h1 em{font-style:normal;color:var(--gold)}
+.lead{font-size:clamp(1.1rem,2vw,1.4rem);color:#cfd6ee;max-width:560px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 20px;border:1px solid var(--line);border-radius:12px;text-decoration:none;font-weight:800;background:var(--ink2)}
+.btn.primary{color:#171714;background:var(--gold);border-color:var(--gold)}.btn:hover{filter:brightness(1.1)}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;color:var(--muted);font-size:13px}.badges span{padding:3px 11px;border:1px solid var(--line);border-radius:999px}
+.shot{border-radius:18px;border:1px solid var(--line);box-shadow:0 40px 90px #0009;width:100%;display:block}
+.hero-art{position:relative}.hero-art .shot2{position:absolute;width:44%;right:-4%;bottom:-8%;transform:rotate(2.5deg)}
+section.content{padding:70px 0}.sectionhead{max-width:760px;margin-bottom:30px}.sectionhead h2{font-size:clamp(2rem,4vw,3.1rem);letter-spacing:-.04em;line-height:1.08;margin:10px 0}.sectionhead p{color:var(--muted);font-size:1.1rem;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{border:1px solid var(--line);border-radius:16px;padding:22px;background:linear-gradient(150deg,#1a2144,#111631)}
+.card .n{font:800 12px ui-monospace,monospace;color:var(--gold)}.card h3{margin:18px 0 8px;font-size:1.15rem}.card p{margin:0;color:var(--muted)}
+.band{background:#0a0e1e;border-block:1px solid var(--line)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6%;align-items:center}
+.two img{width:100%;border-radius:16px;border:1px solid var(--line)}
+.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.themes figure{margin:0}.themes img{width:100%;border-radius:12px;border:1px solid var(--line);aspect-ratio:1/1;object-fit:cover;object-position:top}.themes figcaption{color:var(--muted);font-size:.85rem;text-align:center;margin-top:6px}
+.tag{display:inline-block;margin:3px 3px 3px 0;padding:2px 10px;border-radius:999px;background:#2a3b7855;border:1px solid var(--line);font-size:.8rem;color:#cfd6ee}
+.install{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}.box{border:1px solid var(--line);border-radius:18px;padding:26px;background:var(--ink2)}.box h3{margin:0 0 10px;font-size:1.35rem}.box p{color:var(--muted)}
+.manifest{background:#080b18;border:1px solid var(--line);padding:14px 16px;border-radius:10px;color:var(--gold);font:13px/1.6 ui-monospace,monospace;overflow-wrap:anywhere;user-select:all}
+ol.pasos{padding-left:20px;color:var(--muted)}ol.pasos li{margin:6px 0}
+footer{padding:36px 0 56px;color:#8f98bb;font-size:.88rem;border-top:1px solid var(--line)}.foot{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}
+@media(max-width:860px){.hero-grid,.two,.install{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.hero-art .shot2{display:none}}
+@media(max-width:560px){nav a:not(:last-child){display:none}.grid,.themes{grid-template-columns:1fr}.hero{padding:40px 0}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#"><img src="../assets/ysystem-icon.svg" alt=""><span><b>MR</b> / Ysystem3 SRD</span></a>
+  <nav><a href="#funciones">Funciones</a><a href="#ediciones">Ediciones</a><a href="#dj">Para el DJ</a><a href="#instalar">Instalar</a><a href="https://github.com/ManuRomera/ysystem3-srd">GitHub</a></nav>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <div class="eyebrow">Foundry VTT 13+ · Sistema no oficial</div>
+    <h1>Ysystem3,<br><em>listo para jugar</em>.</h1>
+    <p class="lead">El reglamento genérico de Walhalla Ediciones, automatizado en Foundry: proezas, defectos, combate, pánico y persecuciones. Una ficha pensada para la mesa, no para rellenar.</p>
+    <div class="actions">
+      <a class="btn primary" href="#instalar">⬇ Instalar en Foundry</a>
+      <a class="btn" href="https://github.com/ManuRomera/ysystem3-srd/releases/latest">Última versión</a>
+      <a class="btn" href="https://walhallaediciones.gitlab.io/ysystem/srd/">Leer el SRD</a>
+    </div>
+    <div class="badges"><span>Gratis y abierto</span><span>2 ediciones</span><span>9 ambientaciones</span><span>SRD completo incluido</span></div>
+  </div>
+  <div class="hero-art">
+    <img class="shot" src="img/ficha-oscuro.png" alt="Ficha de personaje en tema oscuro" loading="eager">
+    <img class="shot shot2" src="img/chat.png" alt="Tarjetas de chat con tiradas" loading="lazy">
+  </div>
+</div></section>
+
+<section class="content" id="funciones"><div class="wrap">
+  <div class="sectionhead"><div class="eyebrow">Lo que trae</div><h2>Todo el capítulo de reglas, hecho botón.</h2><p>Cada regla del SRD, comprobada contra el texto oficial y cubierta por pruebas automáticas.</p></div>
+  <div class="grid">
+    <article class="card"><span class="n">01</span><h3>Tiradas con criterio</h3><p>Pulsa una habilidad: el diálogo suma profesión, proeza, Recuerdo cuando…, acciones combinadas, ayudas y oscuridad, aplica el tope de 5D y toma la dificultad del token marcado.</p></article>
+    <article class="card"><span class="n">02</span><h3>Proezas y defectos</h3><p>Repite los dados que quieras (sin crítico), +1D, refuerza un valor fijo o convierte un crítico en contra en fallo. Los defectos los activa el DJ con un clic.</p></article>
+    <article class="card"><span class="n">03</span><h3>Combate completo</h3><p>Apuntar, noquear, ráfagas, cobertura, ataques combinados, críticos que ignoran armadura, defensa completa, inmovilizar y zafarse. Iniciativa con desempate y acción extra.</p></article>
+    <article class="card"><span class="n">04</span><h3>Salud y Estabilidad</h3><p>Barras por zonas, penalizadores y una tarjeta de umbrales con un botón de Resistencia por cada uno que se cruza. Pánico con crisis de locura y habituación.</p></article>
+    <article class="card"><span class="n">05</span><h3>La mesa entera</h3><p>Persecuciones con distancias y tabla de sucesos, curación reglada, otras fuentes de daño, Experiencia, magia y psiónica, tortura y duelos.</p></article>
+    <article class="card"><span class="n">06</span><h3>Compendios</h3><p>Los 8 capítulos del SRD, 64 talentos, armas y protecciones, plantillas, poderes, PNJ del anexo, tablas y macros.</p></article>
+  </div>
+</div></section>
+
+<section class="content band"><div class="wrap two">
+  <div><div class="eyebrow">Diseño</div><h2 style="font-size:clamp(1.9rem,3.4vw,2.8rem);letter-spacing:-.035em;line-height:1.1;margin:10px 0 14px">Mucho en poco espacio.</h2>
+  <p style="color:var(--muted)">Salud, Estabilidad, proezas y los cinco valores fijos caben en la cabecera. Las 24 habilidades se reparten en columnas sin huecos. Modo compacto de 340 px para tener cuatro fichas abiertas, candado de edición y ventanas que recuerdan dónde las dejaste.</p>
+  <p style="color:var(--muted)">Claro y oscuro, alto contraste, fuente de alta legibilidad, texto escalable y encuadre del retrato: accesibilidad en todas las ventanas.</p>
+  <div><span class="tag">Tema claro y oscuro</span><span class="tag">Modo compacto</span><span class="tag">Accesibilidad</span><span class="tag">Memoria de ventanas</span></div></div>
+  <img src="img/ficha-claro.png" alt="Ficha de personaje en tema claro" loading="lazy">
+</div></section>
+
+<section class="content" id="ediciones"><div class="wrap">
+  <div class="sectionhead"><div class="eyebrow">Una mesa, tu forma de jugar</div><h2>Dos ediciones y nueve ambientaciones.</h2><p>Elige entre <b>Ysystem3 (2026)</b> y la <b>Edición Revisada (2023)</b>: cambian el daño, los explosivos, la curación, el tope de dados y más. Y viste la partida de lo que toque.</p></div>
+  <div class="themes">
+    <figure><img src="img/tema-lovecraft.png" alt="" loading="lazy"><figcaption>Horror lovecraftiano</figcaption></figure>
+    <figure><img src="img/tema-ciberpunk.png" alt="" loading="lazy"><figcaption>Ciberpunk</figcaption></figure>
+    <figure><img src="img/tema-capaEspada.png" alt="" loading="lazy"><figcaption>Capa y espada</figcaption></figure>
+    <figure><img src="img/tema-pulp.png" alt="" loading="lazy"><figcaption>Anexo Pulp</figcaption></figure>
+    <figure><img src="img/tema-fantasiaHeroica.png" alt="" loading="lazy"><figcaption>Fantasía heroica</figcaption></figure>
+    <figure><img src="img/tema-imserso.png" alt="" loading="lazy"><figcaption>IMSERSO to the Limit</figcaption></figure>
+  </div>
+  <p style="color:var(--muted);margin-top:18px">Además: ciencia ficción, terror contemporáneo y Dungeons &amp; Yayos. Las variantes de YayoSystem cambian las reglas de verdad (atributos, habilidades, Nervio, Bemoles, Jamacuco); las de género activan los <i>hacks</i> que recomienda el libro (pánico ampliado, duelos, superpuntería…).</p>
+</div></section>
+
+<section class="content band" id="dj"><div class="wrap two">
+  <img src="img/panel-dj.png" alt="Panel del DJ" loading="lazy">
+  <div><div class="eyebrow">Para el DJ</div><h2 style="font-size:clamp(1.9rem,3.4vw,2.8rem);letter-spacing:-.035em;line-height:1.1;margin:10px 0 14px">La mesa bajo control.</h2>
+  <p style="color:var(--muted)">Un panel con todos los PJ (Salud, Estabilidad, proezas, estados) y las acciones que el reglamento reparte por capítulos: pánico, nueva sesión, nuevo día, nueva aventura, Experiencia, daño y curación reglados, tortura y duelos.</p>
+  <p style="color:var(--muted)">Los botones de las tarjetas del chat respetan los permisos: el jugador aplica su daño, el DJ activa los defectos.</p></div>
+</div></section>
+
+<section class="content" id="instalar"><div class="wrap">
+  <div class="sectionhead"><div class="eyebrow">Ponlo en marcha</div><h2>Instalar en veinte segundos.</h2></div>
+  <div class="install">
+    <div class="box"><h3>URL del manifiesto</h3>
+      <div class="manifest">https://github.com/ManuRomera/ysystem3-srd/releases/latest/download/system.json</div>
+      <ol class="pasos"><li>En Foundry: <b>Sistemas de juego → Instalar sistema</b>.</li><li>Pega la URL y pulsa <b>Instalar</b>.</li><li>Crea un mundo con el sistema. Al crear tu primer PJ se abre el asistente.</li></ol>
+      <div class="actions"><a class="btn primary" href="https://github.com/ManuRomera/ysystem3-srd/releases/latest">Descargar el ZIP</a><a class="btn" href="https://github.com/ManuRomera/ysystem3-srd#readme">Documentación</a></div>
+    </div>
+    <div class="box"><h3>Créditos y licencia</h3>
+      <p><b>Ysystem3</b> es obra de Ignacio Sánchez Aranda y Jorge Carrero Roig, publicado por <b>Walhalla Ediciones</b>. Su SRD se distribuye con licencia <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a> y este paquete lo reproduce con atribución.</p>
+      <p>Código y recursos originales © 2026 Manu Romera (MIT). Sistema <b>no oficial</b>: no está afiliado ni aprobado por Walhalla Ediciones. Si te gusta, compra el libro.</p>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap foot"><span>Ysystem3 SRD · Manu Romera</span><a href="https://manuromera.github.io/ManuRomera/">Todos los proyectos de rol ↗</a></div></footer>
+</body>
+</html>
