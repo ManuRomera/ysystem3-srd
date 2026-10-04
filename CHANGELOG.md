@@ -7,7 +7,7 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
-## [1.0.1] — 2026-10-04
+## [1.0.2] — 2026-10-04
 
 Corrige la compilación de compendios en la publicación automática (sin cambios funcionales).
 

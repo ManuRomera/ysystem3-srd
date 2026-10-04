@@ -2,7 +2,7 @@
   "id": "ysystem3-srd",
   "title": "MR- Ysystem3 SRD (no oficial)",
   "description": "Sistema NO OFICIAL para jugar Ysystem3 en Foundry VTT: tiradas con proezas, defectos y Recuerdo cuando…, combate completo (apuntar, ráfagas, noquear, cobertura), Salud y Estabilidad con umbrales, pánico, persecuciones, curación, experiencia y magia. Incluye la Edición Revisada, el Anexo Pulp, nueve ambientaciones (con IMSERSO to the Limit y Dungeons & Yayos) y el SRD completo en compendios. Basado en el SRD de Walhalla Ediciones (CC BY 4.0); este paquete no está afiliado ni aprobado por Walhalla Ediciones.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "url": "https://github.com/ManuRomera/ysystem3-srd",
   "manifest": "https://github.com/ManuRomera/ysystem3-srd/releases/latest/download/system.json",
   "download": "https://github.com/ManuRomera/ysystem3-srd/releases/latest/download/ysystem3-srd.zip",
