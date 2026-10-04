@@ -41,7 +41,7 @@ async function comprobarCerrados(packs) {
     try { await db.open(); await db.close(); }
     catch (error) {
       if ((error.cause?.code ?? error.code) === "LEVEL_LOCKED") bloqueados.push(pack.name);
-      else throw error;
+      else if ((error.cause?.code ?? error.code) !== "LEVEL_IO_ERROR" && error.code !== "LEVEL_DATABASE_NOT_OPEN") throw error; // packs viejos o a medias: se reconstruyen
     }
   }
   if (bloqueados.length) throw new Error(`Foundry tiene abiertos estos packs: ${bloqueados.join(", ")}.\nCierra el mundo (o Foundry) antes de compilar.`);
