@@ -112,3 +112,15 @@ npm run build   # compila los compendios a packs/ (cerrar Foundry antes)
 ## Créditos y licencia
 
 **Ysystem3** es obra de **Ignacio Sánchez Aranda** y **Jorge Carrero Roig**, publicado por **Walhalla Ediciones**. El [SRD](https://walhallaediciones.gitlab.io/ysystem/srd/) se distribuye bajo [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es); este paquete reproduce y adapta parte de ese material (ver [`LICENSE.md`](LICENSE.md)). Código y recursos originales © 2026 Manu Romera, licencia MIT. IMSERSO to the Limit y Dungeons & Yayos pertenecen a sus autores.
+
+---
+
+<p align="center">
+  <a href="https://github.com/ManuRomera">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ManuRomera/ManuRomera/main/brand/MR_09_Monograma_Marfil_Transparente.png">
+      <img src="https://raw.githubusercontent.com/ManuRomera/ManuRomera/main/brand/MR_10_Monograma_Negro_Transparente.png" alt="MR · Manu Romera" height="56">
+    </picture>
+  </a><br>
+  <sub>Hecho por <a href="https://github.com/ManuRomera"><b>Manu Romera</b></a> · Digital RPG Design</sub>
+</p>
