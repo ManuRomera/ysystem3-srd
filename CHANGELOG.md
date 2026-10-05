@@ -7,6 +7,10 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.0.3] — 2026-10-05
+
+- Añadido el botón «Créditos» en los ajustes del paquete (Manu Romera · Digital RPG Design). No cambia el juego.
+
 ## [1.0.2] — 2026-10-04
 
 Corrige la compilación de compendios en la publicación automática (sin cambios funcionales).
