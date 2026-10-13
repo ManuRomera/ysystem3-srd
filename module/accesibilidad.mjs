@@ -8,6 +8,7 @@ import { ID } from "./config.mjs";
 import { ApplicationV2 } from "./compat.mjs";
 
 const CAJAS = [
+  ["a11yOscuro", "Hojas en modo oscuro", "Fichas, diálogos y tarjetas en oscuro aunque Foundry esté en claro."],
   ["a11yContraste", "Alto contraste", "Texto y bordes más marcados, sin matices."],
   ["a11yLegible", "Fuente de alta legibilidad", "Letra más espaciada y de formas claras."],
   ["a11yMovimiento", "Reducir movimiento", "Sin transiciones ni animaciones en las ventanas del sistema."],
@@ -17,6 +18,7 @@ const CAJAS = [
 export function aplicarAccesibilidad() {
   const g = k => game.settings.get(ID, k);
   document.documentElement.style.setProperty("--ys-escala", String(g("a11yEscala") / 100));
+  document.body.classList.toggle("ys-oscuro", g("a11yOscuro"));
   document.body.classList.toggle("ys-contraste", g("a11yContraste"));
   document.body.classList.toggle("ys-legible", g("a11yLegible"));
   document.body.classList.toggle("ys-sin-movimiento", g("a11yMovimiento"));
@@ -28,10 +30,11 @@ export function aplicarAccesibilidad() {
 export function registrarAccesibilidad() {
   const reg = (clave, datos) => game.settings.register(ID, clave, { scope: "client", config: true, onChange: () => { aplicarAccesibilidad(); repintar(); }, ...datos });
   reg("a11yEscala", { name: "Accesibilidad · Tamaño del texto (%)", hint: "Escala el texto de las fichas, diálogos y tarjetas de Ysystem3 SRD. Ajuste de este navegador.", type: Number, default: 100, range: { min: 85, max: 160, step: 5 } });
-  reg("a11yContraste", { name: "Accesibilidad · Alto contraste", hint: CAJAS[0][2], type: Boolean, default: false });
-  reg("a11yLegible", { name: "Accesibilidad · Fuente de alta legibilidad", hint: CAJAS[1][2], type: Boolean, default: false });
-  reg("a11yMovimiento", { name: "Accesibilidad · Reducir movimiento", hint: CAJAS[2][2], type: Boolean, default: false });
-  reg("a11yAyuda", { name: "Accesibilidad · Ayuda inmediata", hint: CAJAS[3][2], type: Boolean, default: true });
+  reg("a11yOscuro", { name: "Hojas en modo oscuro", hint: CAJAS[0][2], type: Boolean, default: false });
+  reg("a11yContraste", { name: "Accesibilidad · Alto contraste", hint: CAJAS[1][2], type: Boolean, default: false });
+  reg("a11yLegible", { name: "Accesibilidad · Fuente de alta legibilidad", hint: CAJAS[2][2], type: Boolean, default: false });
+  reg("a11yMovimiento", { name: "Accesibilidad · Reducir movimiento", hint: CAJAS[3][2], type: Boolean, default: false });
+  reg("a11yAyuda", { name: "Accesibilidad · Ayuda inmediata", hint: CAJAS[4][2], type: Boolean, default: true });
   Hooks.once("ready", aplicarAccesibilidad);
 }
 
@@ -67,7 +70,7 @@ export class PanelAccesibilidad extends ApplicationV2 {
     }));
     contenido.querySelector("input[type=range]")?.addEventListener("input", ev => { ev.target.closest("label").querySelector("b").textContent = `${ev.target.value}%`; });
     contenido.querySelector("[data-restablecer]")?.addEventListener("click", async () => {
-      for (const k of ["a11yEscala", "a11yContraste", "a11yLegible", "a11yMovimiento", "a11yAyuda"]) await game.settings.set(ID, k, game.settings.settings.get(`${ID}.${k}`).default);
+      for (const k of ["a11yEscala", "a11yOscuro", "a11yContraste", "a11yLegible", "a11yMovimiento", "a11yAyuda"]) await game.settings.set(ID, k, game.settings.settings.get(`${ID}.${k}`).default);
     });
   }
 }

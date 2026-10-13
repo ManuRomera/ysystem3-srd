@@ -35,7 +35,7 @@ body[data-ys-tema], body[data-ys-tema] .theme-light {
   --ys-z0: #3f8f4e; --ys-z1: #c98a12; --ys-z2: #d9622b; --ys-z3: #c0342b;
   --ys-sombra: 0 1px 2px rgb(0 0 0 / .08), 0 4px 14px rgb(0 0 0 / .06);
 }
-body[data-ys-tema].theme-dark, body[data-ys-tema] .theme-dark {
+body[data-ys-tema].theme-dark, body[data-ys-tema] .theme-dark, body.ys-oscuro[data-ys-tema] {
   --ys-fondo: var(--ys-tinta);
   --ys-panel: color-mix(in oklab, var(--ys-tinta) 90%, #fff 10%);
   --ys-panel-2: color-mix(in oklab, var(--ys-tinta) 82%, #fff 18%);
@@ -376,8 +376,14 @@ span.ys-retrato-btn { cursor: default; }
 
 body.ys-legible .ysystem3, body.ys-legible .ys-tc, body.ys-legible .ys-rules-journal { --ys-fuente: "Atkinson Hyperlegible", "Lexend", Verdana, Tahoma, system-ui, sans-serif; letter-spacing: .02em; word-spacing: .08em; line-height: 1.55; }
 body.ys-contraste[data-ys-tema], body.ys-contraste[data-ys-tema] .theme-light { --ys-texto: #000; --ys-suave: #1b1b1b; --ys-borde: #2a2a2a; --ys-panel: #fff; --ys-panel-2: #ececec; --ys-fondo: #fff; --ys-prim: #12285f; --ys-prim-osc: #0a1738; --ys-prim-claro: #dfe6fa; --ys-acento: #7a4a00; --ys-aviso: #7a3d00; --ys-peligro: #8c0000; --ys-ok: #0b5a1b; }
-body.ys-contraste[data-ys-tema].theme-dark, body.ys-contraste[data-ys-tema] .theme-dark { --ys-texto: #fff; --ys-suave: #eaeaea; --ys-borde: #d0d0d0; --ys-panel: #000; --ys-panel-2: #1a1a1a; --ys-fondo: #000; --ys-prim: #b9c9ff; --ys-prim-osc: #0d1b45; --ys-prim-claro: #121c3a; --ys-acento: #ffd27a; --ys-aviso: #ffd27a; --ys-peligro: #ff9d94; --ys-ok: #8dff9f; }
+body.ys-contraste[data-ys-tema].theme-dark, body.ys-contraste.ys-oscuro[data-ys-tema], body.ys-contraste[data-ys-tema] .theme-dark { --ys-texto: #fff; --ys-suave: #eaeaea; --ys-borde: #d0d0d0; --ys-panel: #000; --ys-panel-2: #1a1a1a; --ys-fondo: #000; --ys-prim: #b9c9ff; --ys-prim-osc: #0d1b45; --ys-prim-claro: #121c3a; --ys-acento: #ffd27a; --ys-aviso: #ffd27a; --ys-peligro: #ff9d94; --ys-ok: #8dff9f; }
 body.ys-contraste .ysystem3 :is(input, select, textarea, button, .ys-tarjeta, .ys-grupo, .ys-fijo, .ys-objetos li, .ys-pj), body.ys-contraste .ys-tc { border-width: 2px; }
 body.ys-contraste .ysystem3 :is(button, a, input, select, textarea):focus-visible { outline-width: 3px; }
 body.ys-sin-movimiento .ysystem3 *, body.ys-sin-movimiento .ys-tc * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 @media (prefers-reduced-motion: reduce) { .ysystem3 * { transition: none !important; animation: none !important; } }
+
+/* Lupa: la imagen, grande, junto a su miniatura. */
+.ys-lupa { position: fixed; z-index: 99999; pointer-events: none; animation: ys-lupa-entra .16s ease-out; }
+.ys-lupa img { width: 100%; height: 100%; object-fit: contain; border-radius: 16px; filter: drop-shadow(0 18px 40px rgba(0, 0, 0, .8)) drop-shadow(0 0 2px rgba(0, 0, 0, .9)); }
+@keyframes ys-lupa-entra { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+body.ys-sin-movimiento .ys-lupa { animation: none !important; }

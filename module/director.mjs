@@ -97,19 +97,25 @@ export class PanelDirector extends ConMemoria(HandlebarsApplicationMixin(Applica
   static async #panico() {
     const ctx = contexto();
     const cj = ctx.conjunto;
-    const dianas = objetivos().filter(a => a.type === "personaje");
-    if (!dianas.length) return ui.notifications.warn("Marca como objetivo a uno o varios PJ.");
+    const pjs = game.actors.filter(a => a.type === "personaje" && a.isOwner);
+    if (!pjs.length) return ui.notifications.warn("No hay personajes jugadores.");
+    // Marcados de antemano: los objetivos señalados; si no hay, todos.
+    const marcados = new Set(objetivos().filter(a => a.type === "personaje").map(a => a.id));
+    if (!marcados.size) pjs.forEach(a => marcados.add(a.id));
     const max = cj.miedo?.max ?? (ctx.opciones.panicoAmpliado ? 10 : 7);
     const d = await pedirDatos({
       titulo: cj.tienePanico ? "Tirada de pánico" : "Tirada de miedo",
-      intro: `<p>Gravedad de 1 (algo siniestro) a ${max} (absolutamente aterrador). Se tiran tantos D6 contra el ${esc(cj.fijos.aplomo)} de cada PJ; si lo igualan o superan, pierde ${cj.tienePanico ? "Estabilidad" : "Salud"} igual al número de dados. Sin críticos ni pifias.</p>`,
+      intro: `<p>Gravedad de 1 (algo siniestro) a ${max} (absolutamente aterrador). Elige a quién afecta: se tiran tantos D6 contra el ${esc(cj.fijos.aplomo)} de cada PJ marcado; si lo igualan o superan, pierde ${cj.tienePanico ? "Estabilidad" : "Salud"} igual al número de dados. Sin críticos ni pifias.</p>`,
       filas: [
         { nombre: "dados", tipo: "num", etiqueta: "Gravedad (dados)", valor: 1, min: 1, max },
+        ...pjs.map(a => ({ nombre: `pj_${a.id}`, tipo: "check", etiqueta: a.name, ayuda: `${cj.fijos.aplomo} ${a.valorFijo("aplomo")}`, valor: marcados.has(a.id) })),
         ...(cj.tienePanico ? [{ nombre: "habituado", tipo: "check", etiqueta: "Habituado por su profesión (+3 al Aplomo)", valor: false }] : []),
         ...(ctx.opciones.habituarse ? [{ nombre: "repeticiones", tipo: "num", etiqueta: "Veces que ya se han enfrentado a este horror", valor: 0, min: 0, max: 7 }] : [])
       ],
       ok: "Lanzar"
     });
+    const dianas = d ? pjs.filter(a => d[`pj_${a.id}`]) : [];
+    if (d && !dianas.length) return ui.notifications.warn("Elige al menos un personaje.");
     if (d) await lanzarPanico(dianas, { dados: Math.max(1, Math.min(max, d.dados)), habituado: Boolean(d.habituado), repeticiones: n(d.repeticiones) });
   }
 

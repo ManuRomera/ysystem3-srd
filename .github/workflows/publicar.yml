@@ -23,8 +23,7 @@ jobs:
         run: npm run build
       - name: Empaquetar
         run: |
-          mkdir -p dist
-          zip -r dist/ysystem3-srd.zip system.json module templates styles lang assets packs LICENSE.md README.md CHANGELOG.md
+          node scripts/zip.mjs
           cp system.json dist/system.json
           unzip -l dist/ysystem3-srd.zip | tail -1
       - name: Notas de la versión

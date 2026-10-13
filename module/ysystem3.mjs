@@ -16,6 +16,7 @@ import { PanelDirector, repintarPanel } from "./director.mjs";
 import { escucharChat, publicar } from "./chat.mjs";
 import { lanzarPanico } from "./flujos.mjs";
 import { registrarAccesibilidad } from "./accesibilidad.mjs";
+import { registrarLupa } from "./lupa.mjs";
 import { pintarRetratos, repintarRetratos } from "./retrato.mjs";
 import { ARQUETIPOS } from "./arquetipos-data.mjs";
 
@@ -40,6 +41,7 @@ Hooks.once("init", () => {
 
   registrarAjustes();
   registrarAccesibilidad();
+  registrarLupa();
 
   Handlebars.registerHelper("inc", v => Number(v) + 1);
   loadTemplates([`${RUTA}/templates/partes/cabecera.hbs`, `${RUTA}/templates/partes/habilidades.hbs`, `${RUTA}/templates/partes/barra.hbs`, `${RUTA}/templates/partes/objeto-fila.hbs`]);

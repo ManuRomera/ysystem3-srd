@@ -7,6 +7,14 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.1.0] — 2026-10-13
+
+### Añadido
+- **Pánico del DJ con selector de personajes:** el diálogo lista a los PJ (con su Aplomo) y marca a quién afecta, sin tener que señalarlos antes en la escena. Cada uno recibe su carta, con la tirada contra su Aplomo y el refuerzo por proezas.
+- **Modo oscuro propio** para fichas, diálogos y tarjetas (Accesibilidad y Ajustes), independiente del tema de Foundry.
+- **Lupa:** al pasar el cursor sobre un retrato o imagen se muestra en grande (ajuste de cada navegador).
+- Empaquetado por `scripts/zip.mjs` (igual en local y en la publicación), que comprueba que el zip lleva el sistema y todos los compendios.
+
 ## [1.0.3] — 2026-10-05
 
 - Añadido el botón «Créditos» en los ajustes del paquete (Manu Romera · Digital RPG Design). No cambia el juego.
