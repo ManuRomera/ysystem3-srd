@@ -149,3 +149,11 @@ Hooks.on("getSceneControlButtons", controles => {
   if (!game.user.isGM) return;
   anadirHerramienta(controles, "tokens", { name: "ysDirector", title: "Panel del DJ", icon: "fa-solid fa-crown", onChange: () => PanelDirector.abrir() });
 });
+
+/** Foundry ignora los botones de herramienta mientras no hay escena activa (`canvas.ready`): el DJ pulsaba la corona y no pasaba nada. */
+Hooks.on("renderSceneControls", (app, html) => {
+  const boton = (html instanceof HTMLElement ? html : html[0])?.querySelector('[data-tool="ysDirector"]');
+  if (!boton || boton.dataset.ysSinEscena) return;
+  boton.dataset.ysSinEscena = "1";
+  boton.addEventListener("click", () => { if (!canvas?.ready) PanelDirector.abrir(); });
+});

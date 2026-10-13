@@ -7,6 +7,11 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.1.1] — 2026-10-13
+
+### Corregido
+- El botón del Panel del DJ (corona, en los controles de escena) no hacía nada cuando el mundo no tenía una escena activa, porque Foundry ignora entonces las herramientas. Ahora abre el panel también sin escena.
+
 ## [1.1.0] — 2026-10-13
 
 ### Añadido
