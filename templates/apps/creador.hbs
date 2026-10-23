@@ -44,7 +44,7 @@
     {{#if (eq paso 'reglas')}}
     {{#if libre}}
     <h2 class="ys-titulo-paso">Atributos y habilidades</h2>
-    <p class="ys-nota">Cada bonificador se usa una sola vez. Si eliges uno que ya tiene otro atributo, se intercambian.</p>
+    <p class="ys-nota">Reparte {{#each cj.bonificadores}}{{#if this}}+{{/if}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}: uno por atributo. Si eliges uno que ya está usado, se intercambia con ese atributo.</p>
     <div class="ys-atributos">
       {{#each atributos}}
       <label class="ys-atributo"><span><b>{{label}}</b> <small>{{short}}</small></span>

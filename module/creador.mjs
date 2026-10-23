@@ -169,7 +169,10 @@ export class Creador extends ConMemoria(HandlebarsApplicationMixin(ApplicationV2
       const antes = e.atributos[k];
       const otro = Object.keys(e.atributos).find(o => o !== k && e.atributos[o] === n(v));
       e.atributos[k] = n(v);
-      if (otro) e.atributos[otro] = antes;
+      if (otro) {
+        e.atributos[otro] = antes;
+        ui.notifications.info(`${cj.atributos[k].label} y ${cj.atributos[otro].label} intercambian su bonificador.`);
+      }
     }
     const objetivo2 = cj.id === "srd" ? 8 : 6;
     for (const [k, v] of Object.entries(d.habilidades ?? {})) {

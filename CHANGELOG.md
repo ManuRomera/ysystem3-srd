@@ -7,6 +7,11 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.1.4] — 2026-10-23
+
+### Cambiado
+- Asistente de creación: aviso más claro del reparto de bonificadores (uno por atributo, como manda el SRD) y un mensaje breve cuando dos atributos intercambian el suyo.
+
 ## [1.1.3] — 2026-10-23
 
 ### Corregido
