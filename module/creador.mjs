@@ -41,7 +41,10 @@ function desdeActor(actor) {
   const s = actor?.system ?? {};
   const arq = arquetipoByKey(s.datos?.arquetipo);
   const base = Object.fromEntries(Object.keys(cj.atributos).map((k, i) => [k, cj.bonificadores[i] ?? 0]));
-  const atributos = actor && s.atributos ? Object.fromEntries(Object.keys(cj.atributos).map(k => [k, n(s.atributos[k])])) : base;
+  const deActor = actor && s.atributos ? Object.fromEntries(Object.keys(cj.atributos).map(k => [k, n(s.atributos[k])])) : null;
+  // Cada bonificador se usa una vez: una ficha vacía (todo a 0) o repartida a medias no es un reparto válido y se parte del reparto base.
+  const valido = deActor && new Set(Object.values(deActor)).size === Object.keys(deActor).length && Object.values(deActor).every(v => cj.bonificadores.includes(v));
+  const atributos = valido ? deActor : base;
   return {
     modo: arq ? "arquetipo" : "libre", paso: 0, nombre: actor && !nombreVacio(actor.name) ? actor.name : "", img: actor?.img ?? "icons/svg/mystery-man.svg",
     arquetipoKey: arq?.key ?? "", tiradaSalud: 0, tiradaEstabilidad: 0,
@@ -158,7 +161,11 @@ export class Creador extends ConMemoria(HandlebarsApplicationMixin(ApplicationV2
     if (d.arquetipoKey !== undefined) e.arquetipoKey = d.arquetipoKey;
     Object.assign(e.datos, d.datos ?? {});
     Object.assign(e.defectos, d.defectos ?? {});
+    // Solo el atributo que se acaba de tocar: el formulario envía todos, y procesarlos todos deshacía el intercambio
+    // (el 0 «no se podía cambiar») o lo repetía sobre los atributos que no se habían movido.
+    const tocado = /^atributos\.(.+)$/.exec(event?.target?.name ?? "")?.[1];
     for (const [k, v] of Object.entries(d.atributos ?? {})) {
+      if (tocado && k !== tocado) continue;
       const antes = e.atributos[k];
       const otro = Object.keys(e.atributos).find(o => o !== k && e.atributos[o] === n(v));
       e.atributos[k] = n(v);

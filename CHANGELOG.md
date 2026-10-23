@@ -7,6 +7,11 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.1.3] — 2026-10-23
+
+### Corregido
+- **Asistente de creación libre:** al elegir el valor de un atributo solo se intercambia con el atributo que ya lo tenía. Antes se reprocesaban todos los atributos del formulario, así que el 0 «no se dejaba cambiar» o el intercambio se deshacía, y una ficha vacía (todo a 0) arrancaba con valores repetidos. Ahora siempre se parte de un reparto válido.
+
 ## [1.1.2] — 2026-10-23
 
 ### Corregido
