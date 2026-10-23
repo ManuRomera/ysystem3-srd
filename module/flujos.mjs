@@ -7,7 +7,7 @@
 import { ID, etiquetaHabilidad } from "./config.mjs";
 import * as R from "./reglas.mjs";
 import { contexto } from "./ajustes.mjs";
-import { publicar, guardar, registrarVista, registrarAccion } from "./chat.mjs";
+import { publicar, guardar, modificar, registrarMutador, registrarVista, registrarAccion } from "./chat.mjs";
 import { pedirDatos } from "./dialogos.mjs";
 import { aplica } from "./talentos.mjs";
 
@@ -402,84 +402,111 @@ registrarAccion("umbral", async ({ mensaje, estado: s, datos }) => {
 /* Pánico (cap. 6) y miedo de YayoSystem                              */
 /* ------------------------------------------------------------------ */
 
+const eliminaMayor = (caras, sin) => (sin && caras.length > 1 ? caras.reduce((t, v) => t + v, 0) - Math.max(...caras) : caras.reduce((t, v) => t + v, 0));
+
 function vistaPanico(s) {
+  s.objetivos ??= []; // tarjetas antiguas (un solo personaje): se muestran vacías en lugar de romper el chat
   const botones = [];
   const pierde = s.pierde === "salud" ? "Salud" : "Estabilidad";
-  if (s.estado === "espera") {
-    botones.push({ accion: "panico-reforzar", etiqueta: `Reforzar ${s.etiquetaAplomo} (proezas)`, icono: "fa-solid fa-star", quien: "dueno", uuid: s.objetivoUuid });
-    botones.push({ accion: "panico-tirar", etiqueta: "Tirar pánico", icono: "fa-solid fa-dice", quien: "gm", principal: true });
+  const tirado = s.caras !== undefined;
+  if (!tirado) {
+    for (const o of s.objetivos) botones.push({ accion: "panico-reforzar", etiqueta: `Reforzar ${s.etiquetaAplomo} · ${o.nombre}`, icono: "fa-solid fa-star", quien: "dueno", uuid: o.uuid });
+    botones.push({ accion: "panico-tirar", etiqueta: "Tirar pánico (una tirada para todos)", icono: "fa-solid fa-dice", quien: "gm", principal: true });
+  } else {
+    for (const o of s.objetivos) if (o.estado === "pendiente") botones.push({ accion: "panico-aplicar", etiqueta: `Aplicar pérdida de ${pierde} · ${o.nombre}`, icono: "fa-solid fa-ghost", quien: "dueno", uuid: o.uuid, principal: true });
   }
-  if (s.estado === "pendiente") botones.push({ accion: "panico-aplicar", etiqueta: `Aplicar pérdida de ${pierde}`, icono: "fa-solid fa-ghost", quien: "dueno", uuid: s.objetivoUuid, principal: true });
   const lineas = [];
-  if (s.habituado) lineas.push({ texto: "Habituado por su profesión: +3 al Aplomo." });
-  if (s.proezas) lineas.push({ texto: `${s.proezas} ${s.proezas > 1 ? "proezas gastadas" : "proeza gastada"}: +${R.refuerzoFijo(s.proezas)} a ${esc(s.etiquetaAplomo)}.` });
+  if (s.habituado) lineas.push({ texto: "Habituados por su profesión: +3 al Aplomo." });
   if (s.texto) lineas.push({ texto: esc(s.texto) });
+  for (const o of s.objetivos) {
+    const extra = [o.habituado || s.habituado ? "habituado +3" : "", o.proezas ? `${o.proezas} ${o.proezas > 1 ? "proezas" : "proeza"}: +${R.refuerzoFijo(o.proezas)}` : ""].filter(Boolean).join(", ");
+    const base = `<strong>${esc(o.nombre)}</strong>: ${esc(s.etiquetaAplomo)} ${o.aplomoTotal}${extra ? ` (${extra})` : ""}`;
+    const fin = { espera: "", resistido: ` → aguanta el susto (${o.total}).`, pendiente: ` → ${o.total} lo iguala o supera: pierde ${o.cantidad} de ${pierde}.`, aplicado: ` → perdió ${o.cantidad} de ${pierde}.` }[o.estado];
+    lineas.push({ texto: base + (tirado ? fin : "") , icono: !tirado ? "fa-solid fa-user" : o.estado === "resistido" ? "fa-solid fa-shield-heart" : "fa-solid fa-ghost" });
+  }
+  const caen = s.objetivos.some(o => o.estado === "pendiente" || o.estado === "aplicado");
   return {
-    tono: s.estado === "resistido" ? "exito" : s.estado === "espera" ? "aviso" : "pifia", icono: "fa-solid fa-ghost", etiqueta: "Pánico", subtitulo: s.objetivo,
-    resultado: { espera: "Sin tirar", resistido: "Resistido", pendiente: "Pánico", aplicado: "Aplicado" }[s.estado],
-    titulo: s.estado === "espera" ? `${s.dados}D6 contra ${s.etiquetaAplomo} ${s.aplomoTotal}` : undefined,
-    conTotal: s.total !== undefined, dados: s.caras?.map(v => ({ v, c: "n" })), total: s.total, dificultad: s.aplomoTotal, lineas, botones
+    tono: !tirado ? "aviso" : caen ? "pifia" : "exito", icono: "fa-solid fa-ghost", etiqueta: "Pánico",
+    subtitulo: s.objetivos.length === 1 ? s.objetivos[0].nombre : `${s.objetivos.length} personajes`,
+    resultado: !tirado ? "Sin tirar" : caen ? "Hay pánico" : "Todos resisten",
+    titulo: !tirado ? `${s.dados}D6 contra el ${s.etiquetaAplomo} de cada uno` : undefined,
+    conTotal: tirado, dados: s.caras?.map(v => ({ v, c: "n" })), total: s.total, lineas, botones
   };
 }
 registrarVista("panico", vistaPanico);
 
-/** El DJ tira 1-7D contra el Aplomo de cada objetivo. `opciones`: dados, habituado, repeticiones. */
+/** El DJ tira 1-7D UNA sola vez; cada personaje se compara con su propio Aplomo. `opciones`: dados, habituado, repeticiones. */
 export async function lanzarPanico(objetivos, { dados, habituado = false, repeticiones = 0 }) {
   const ctx = contexto();
   const cj = ctx.conjunto;
   const reducidos = ctx.opciones.habituarse ? R.gravedadHabituada(dados, repeticiones) : dados;
   if (!reducidos) return ui.notifications.info("Se han acostumbrado al horror: ya no hace falta tirar.");
-  for (const o of objetivos) {
-    const etiqueta = cj.fijos.aplomo;
-    const estado = {
-      estado: "espera", objetivoUuid: o.uuid, objetivo: o.name, dados: reducidos, habituado, proezas: 0, etiquetaAplomo: etiqueta,
-      aplomoBase: o.valorFijo("aplomo"), aplomoTotal: R.aplomoPanico({ aplomo: o.valorFijo("aplomo"), habituado }),
-      pierde: cj.miedo?.pierde ?? "estabilidad", ampliado: ctx.opciones.panicoAmpliado
-    };
-    await publicar(vistaPanico(estado), { alias: "DJ", flujo: { tipo: "panico", estado } });
-  }
+  const estado = {
+    dados: reducidos, habituado, etiquetaAplomo: cj.fijos.aplomo, pierde: cj.miedo?.pierde ?? "estabilidad", ampliado: ctx.opciones.panicoAmpliado,
+    objetivos: objetivos.map(o => {
+      const aplomoBase = o.valorFijo("aplomo");
+      return { uuid: o.uuid, nombre: o.name, aplomoBase, proezas: 0, aplomoTotal: R.aplomoPanico({ aplomo: aplomoBase, habituado }), estado: "espera" };
+    })
+  };
+  await publicar(vistaPanico(estado), { alias: "DJ", flujo: { tipo: "panico", estado } });
 }
 
-registrarAccion("panico-reforzar", async ({ mensaje, estado: s }) => {
-  const o = await fromUuid(s.objetivoUuid);
+registrarMutador("panico-refuerzo", (s, { uuid, puntos }) => {
+  const o = s.objetivos.find(x => x.uuid === uuid);
+  if (!o || s.caras) return;
+  o.proezas += puntos;
+  o.aplomoTotal = R.aplomoPanico({ aplomo: o.aplomoBase, habituado: s.habituado, proezas: o.proezas });
+});
+
+registrarAccion("panico-reforzar", async ({ mensaje, estado: s, datos }) => {
+  if (s.caras) return ui.notifications.warn("El pánico ya se ha tirado.");
+  const o = await fromUuid(datos.uuid);
+  if (!o) return;
   const cj = contexto().conjunto;
+  const tiene = o.esPJ ? n(o.system.proezas.valor) : 0;
+  const ya = s.objetivos.find(x => x.uuid === datos.uuid)?.proezas ?? 0;
   const d = await pedirDatos({
-    titulo: `Reforzar ${s.etiquetaAplomo}: ${o.name}`, intro: "<p>Cada proeza suma +3 al valor. Se declara antes de la tirada.</p>",
-    filas: [{ nombre: "puntos", tipo: "num", etiqueta: `${cj.recurso} (tiene ${o.system.proezas.valor})`, valor: 1, min: 1 }], ok: "Gastar"
+    titulo: `Reforzar ${s.etiquetaAplomo}: ${o.name}`,
+    intro: `<p>Cada ${cj.recursoUno} suma +3 al ${esc(s.etiquetaAplomo)}; puedes gastar <strong>todas las que quieras</strong> (tienes ${tiene}). Se declara antes de la tirada.${ya ? ` Ya has gastado ${ya} en este susto.` : ""}</p>`,
+    filas: [{ nombre: "puntos", tipo: "num", etiqueta: `${cj.recurso} a gastar`, valor: Math.min(1, tiene), min: 1, max: Math.max(1, tiene) }], ok: "Gastar"
   });
   const puntos = n(d?.puntos);
   if (puntos < 1 || !(await o.gastarProeza(puntos))) return;
-  s.proezas += puntos;
-  s.aplomoTotal = R.aplomoPanico({ aplomo: s.aplomoBase, habituado: s.habituado, proezas: s.proezas });
-  await guardar(mensaje, s);
+  await modificar(mensaje, "panico-refuerzo", { uuid: datos.uuid, puntos });
 });
 
 registrarAccion("panico-tirar", async ({ mensaje, estado: s }) => {
-  const o = await fromUuid(s.objetivoUuid);
+  if (s.caras) return;
   const roll = await new Roll(`${s.dados}d6`).evaluate();
   await mostrar(roll);
   s.caras = roll.dice[0].results.map(r => r.result);
   s.total = roll.total;
-  const fx = o?.fx ?? {};
-  if (fx.panico?.sinMayor && s.caras.length > 1) {
-    // «Curado de espanto»: no se suma el dado de mayor valor.
-    s.total -= Math.max(...s.caras);
-    s.texto = "«Curado de espanto»: no se suma el dado de mayor valor.";
+  for (const o of s.objetivos) {
+    const actor = await fromUuid(o.uuid);
+    // «Curado de espanto»: a ese personaje no se le suma el dado de mayor valor.
+    const sin = Boolean(actor?.fx?.panico?.sinMayor);
+    o.total = eliminaMayor(s.caras, sin);
+    if (sin && s.caras.length > 1) o.curado = true;
+    const cae = o.total >= o.aplomoTotal;
+    o.cantidad = cae ? R.perdidaPanico(s.dados, s.ampliado) : 0;
+    o.estado = cae ? "pendiente" : "resistido";
+    await actor?.update({ "system.combate.refuerzoAplomo": 0 });
   }
-  const cae = s.total >= s.aplomoTotal;
-  s.cantidad = cae ? R.perdidaPanico(s.dados, s.ampliado) : 0;
-  s.estado = cae ? "pendiente" : "resistido";
-  s.texto = [s.texto, cae ? `${s.total} iguala o supera ${s.aplomoTotal}: pierde ${s.cantidad} de ${s.pierde === "salud" ? "Salud" : "Estabilidad"}.` : `${s.total} no llega a ${s.aplomoTotal}: aguanta el susto.`].filter(Boolean).join(" ");
-  await o?.update({ "system.combate.refuerzoAplomo": 0 });
+  if (s.objetivos.some(o => o.curado)) s.texto = "«Curado de espanto»: a quien lo tiene no se le suma el dado de mayor valor.";
   await guardar(mensaje, s);
 });
 
-registrarAccion("panico-aplicar", async ({ mensaje, estado: s }) => {
-  const o = await fromUuid(s.objetivoUuid);
-  if (s.estado !== "pendiente" || !o) return;
-  if (s.pierde === "salud") await o.aplicarDano(s.cantidad); else await o.perderEstabilidad(s.cantidad);
-  s.estado = "aplicado";
-  await guardar(mensaje, s);
+registrarMutador("panico-aplicado", (s, { uuid }) => {
+  const o = s.objetivos.find(x => x.uuid === uuid);
+  if (o?.estado === "pendiente") o.estado = "aplicado";
+});
+
+registrarAccion("panico-aplicar", async ({ mensaje, estado: s, datos }) => {
+  const o = s.objetivos.find(x => x.uuid === datos.uuid);
+  const actor = await fromUuid(datos.uuid);
+  if (o?.estado !== "pendiente" || !actor) return;
+  if (s.pierde === "salud") await actor.aplicarDano(o.cantidad); else await actor.perderEstabilidad(o.cantidad);
+  await modificar(mensaje, "panico-aplicado", { uuid: datos.uuid });
 });
 
 /* ------------------------------------------------------------------ */

@@ -56,14 +56,33 @@ export async function guardar(mensaje, estado) {
   await mensaje.update({ content, [`flags.${ID}.estado`]: estado });
 }
 
+const MUTADORES = {};
+/** Cambio atómico sobre el estado más reciente de una tarjeta: `fn(estado, args)` lo muta. Lo aplica el GM. */
+export const registrarMutador = (nombre, fn) => { MUTADORES[nombre] = fn; };
+
+/**
+ * Como `guardar`, pero enviando solo el cambio (no el estado entero): si dos jugadores pulsan a la vez,
+ * el GM los aplica uno tras otro sobre el estado vigente y ninguno pisa al otro.
+ */
+export async function modificar(mensaje, nombre, args) {
+  if (!mensaje.canUserModify(game.user, "update")) {
+    game.socket.emit(SOCKET, { op: "modificar", id: mensaje.id, nombre, args });
+    return;
+  }
+  const estado = foundry.utils.deepClone(mensaje.getFlag(ID, "estado") ?? {});
+  MUTADORES[nombre]?.(estado, args);
+  await guardar(mensaje, estado);
+}
+
 /** El GM recibe lo que un jugador no puede escribir. */
 export function escucharSocket() {
   game.socket.on(SOCKET, async datos => {
-    if (datos.op !== "estado") return;
     const gm = game.users.activeGM;
     if (gm?.id !== game.user.id) return;
     const mensaje = game.messages.get(datos.id);
-    if (mensaje) await guardar(mensaje, datos.estado);
+    if (!mensaje) return;
+    if (datos.op === "estado") await guardar(mensaje, datos.estado);
+    else if (datos.op === "modificar") await modificar(mensaje, datos.nombre, datos.args);
   });
 }
 

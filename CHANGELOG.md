@@ -7,6 +7,13 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.1.2] — 2026-10-23
+
+### Corregido
+- **Pánico: una sola tirada para todos.** El DJ lanza el pánico una vez y la misma tirada se compara con el Aplomo de cada personaje, todo en una única tarjeta.
+- **Proezas ilimitadas:** cada jugador puede gastar tantas proezas como tenga en su Aplomo (el diálogo lo indica y se puede repetir); la tarjeta muestra el Aplomo de cada uno.
+- **El refuerzo de un jugador ya se aplica bien:** el cambio viaja al GM como una modificación sobre el estado vigente, de modo que dos jugadores que refuerzan a la vez no se pisan.
+
 ## [1.1.1] — 2026-10-13
 
 ### Corregido
