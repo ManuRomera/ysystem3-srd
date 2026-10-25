@@ -102,6 +102,27 @@ export class Creador extends ConMemoria(HandlebarsApplicationMixin(ApplicationV2
     };
   }
 
+  /** Problemas del reparto libre de atributos y habilidades (paso «Reglas»), con las claves de atributo repetidas. */
+  _avisosReglas(c) {
+    const cj = contexto().conjunto;
+    const av = [];
+    const signo = b => (b > 0 ? `+${b}` : `${b}`);
+    const valores = Object.entries(this.e.atributos);
+    const repetidos = new Set();
+    for (const b of new Set(valores.map(([, v]) => v))) {
+      const con = valores.filter(([, v]) => v === b);
+      if (con.length > 1) { con.forEach(([k]) => repetidos.add(k)); av.push(`${con.map(([k]) => cj.atributos[k].label).join(" y ")} tienen ${signo(b)}: cada bonificador se usa una sola vez.`); }
+    }
+    const sinUsar = cj.bonificadores.filter(b => !valores.some(([, v]) => v === b));
+    if (sinUsar.length) av.push(`Falta por usar: ${sinUsar.map(signo).join(", ")}.`);
+    if (valores.some(([, v]) => !cj.bonificadores.includes(v))) av.push(`Los bonificadores válidos son ${cj.bonificadores.map(signo).join(", ")}.`);
+    const r = R.repartoLibre(c.atributos, c.habilidades, cj);
+    if (r.d3 !== r.objetivo3) av.push(`Hacen falta exactamente ${r.objetivo3} habilidades a 3D (ahora ${r.d3}).`);
+    if (r.d2 !== r.objetivo2) av.push(`Hacen falta exactamente ${r.objetivo2} habilidades a 2D (ahora ${r.d2}).`);
+    if (!r.idiomaOk) av.push("El segundo idioma exige 2D o 3D en el primero.");
+    return { av, repetidos };
+  }
+
   _avisos(c) {
     const cj = contexto().conjunto;
     const e = this.e;
@@ -130,15 +151,17 @@ export class Creador extends ConMemoria(HandlebarsApplicationMixin(ApplicationV2
     const cuentas = { d3: Object.keys(cj.habilidades).filter(k => dados(k) === 3).length, d2: Object.keys(cj.habilidades).filter(k => dados(k) === 2).length };
     const objetivo2 = cj.id === "srd" ? 8 : 6;
     const avisos = this._avisos(c);
+    const { av: avisosReglas, repetidos } = e.modo !== "arquetipo" ? this._avisosReglas(c) : { av: [], repetidos: new Set() };
     const arquetipos = yayo() ? [] : ARQUETIPOS.map(a => ({ ...a, activo: a.key === e.arquetipoKey, d3t: a.d3.map(k => etiquetaHabilidad(k, cj)).join(", "), d2t: a.d2.map(k => etiquetaHabilidad(k, cj)).join(", ") }));
     return {
       e, c, cj, actorExistente: Boolean(this.actor), paso: PASOS[e.paso].id, pasos: PASOS.map((p, i) => ({ ...p, i, activo: i === e.paso, hecho: i < e.paso })),
       primero: e.paso === 0, ultimo: e.paso === PASOS.length - 1, arquetipos, sinArquetipos: yayo(),
       elegido: c.arq && { ...c.arq, d3t: c.arq.d3.map(k => etiquetaHabilidad(k, cj)).join(", "), d2t: c.arq.d2.map(k => etiquetaHabilidad(k, cj)).join(", ") },
       libre: e.modo !== "arquetipo", conPanico: cj.tienePanico,
-      atributos: Object.entries(cj.atributos).map(([k, a]) => ({ k, ...a, valor: n(e.atributos[k]), opciones: cj.bonificadores })),
+      atributos: Object.entries(cj.atributos).map(([k, a]) => ({ k, ...a, valor: n(e.atributos[k]), opciones: cj.bonificadores, mal: repetidos.has(k) })),
+      avisosReglas, bloqueado: PASOS[e.paso].id === "reglas" && avisosReglas.length > 0,
       habilidades: Object.entries(cj.habilidades).sort(([, a], [, b]) => a.label.localeCompare(b.label, "es")).map(([k, h]) => ({
-        k, etiqueta: h.label, atr: etiquetaAtributo(h.atributo, cj), dados: dados(k), bloq3: cuentas.d3 >= 4 && dados(k) !== 3, bloq2: cuentas.d2 >= objetivo2 && dados(k) !== 2
+        k, etiqueta: h.label, atr: etiquetaAtributo(h.atributo, cj), dados: dados(k)
       })),
       cuentas, objetivo2, avisos, listo: avisos.length === 0,
       resumenHabilidades: {
@@ -161,34 +184,22 @@ export class Creador extends ConMemoria(HandlebarsApplicationMixin(ApplicationV2
     if (d.arquetipoKey !== undefined) e.arquetipoKey = d.arquetipoKey;
     Object.assign(e.datos, d.datos ?? {});
     Object.assign(e.defectos, d.defectos ?? {});
-    // Solo el atributo que se acaba de tocar: el formulario envía todos, y procesarlos todos deshacía el intercambio
-    // (el 0 «no se podía cambiar») o lo repetía sobre los atributos que no se habían movido.
-    const tocado = /^atributos\.(.+)$/.exec(event?.target?.name ?? "")?.[1];
-    for (const [k, v] of Object.entries(d.atributos ?? {})) {
-      if (tocado && k !== tocado) continue;
-      const antes = e.atributos[k];
-      const otro = Object.keys(e.atributos).find(o => o !== k && e.atributos[o] === n(v));
-      e.atributos[k] = n(v);
-      if (otro) {
-        e.atributos[otro] = antes;
-        ui.notifications.info(`${cj.atributos[k].label} y ${cj.atributos[otro].label} intercambian su bonificador.`);
-      }
-    }
-    const objetivo2 = cj.id === "srd" ? 8 : 6;
-    for (const [k, v] of Object.entries(d.habilidades ?? {})) {
-      const antes = n(e.habilidades[k].dados, 1), nuevo = n(v, 1);
-      const cuenta = x => Object.keys(cj.habilidades).filter(h => n(e.habilidades[h]?.dados) === x).length;
-      e.habilidades[k] = { dados: nuevo };
-      if ((nuevo === 3 && antes !== 3 && cuenta(3) > 4) || (nuevo === 2 && antes !== 2 && cuenta(2) > objetivo2)) {
-        e.habilidades[k] = { dados: antes };
-        ui.notifications.warn(`Ya hay ${nuevo === 3 ? "4 habilidades a 3D" : `${objetivo2} habilidades a 2D`}: baja otra antes.`);
-      }
-    }
+    // Se acepta cualquier valor: lo que esté mal se indica en el paso (`_avisosReglas`) y no deja avanzar hasta corregirlo.
+    for (const [k, v] of Object.entries(d.atributos ?? {})) e.atributos[k] = n(v);
+    for (const [k, v] of Object.entries(d.habilidades ?? {})) e.habilidades[k] = { dados: n(v, 1) };
     this.render();
   }
 
-  static #paso(ev, b) { this.e.paso = n(b.dataset.i); this.render(); }
-  static #siguiente() { this.e.paso = Math.min(PASOS.length - 1, this.e.paso + 1); this.render(); }
+  /** No se sale del paso «Reglas» hacia delante con el reparto mal hecho. */
+  _puedeAvanzar(destino) {
+    if (destino <= this.e.paso || PASOS[this.e.paso].id !== "reglas" || this.e.modo === "arquetipo") return true;
+    if (!this._avisosReglas(this._construir()).av.length) return true;
+    ui.notifications.warn("Corrige el reparto de atributos y habilidades antes de seguir.");
+    return false;
+  }
+
+  static #paso(ev, b) { const i = n(b.dataset.i); if (this._puedeAvanzar(i)) { this.e.paso = i; this.render(); } }
+  static #siguiente() { const i = Math.min(PASOS.length - 1, this.e.paso + 1); if (this._puedeAvanzar(i)) { this.e.paso = i; this.render(); } }
   static #anterior() { this.e.paso = Math.max(0, this.e.paso - 1); this.render(); }
   static #modo(ev, b) { this.e.modo = b.dataset.modo; if (b.dataset.modo === "aleatorio") return Creador.#aleatorio.call(this); this.render(); }
 

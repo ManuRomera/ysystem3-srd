@@ -44,21 +44,22 @@
     {{#if (eq paso 'reglas')}}
     {{#if libre}}
     <h2 class="ys-titulo-paso">Atributos y habilidades</h2>
-    <p class="ys-nota">Reparte {{#each cj.bonificadores}}{{#if this}}+{{/if}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}: uno por atributo. Si eliges uno que ya está usado, se intercambia con ese atributo.</p>
+    <p class="ys-nota">Reparte {{#each cj.bonificadores}}{{#if this}}+{{/if}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}: uno por atributo. Pon los que quieras; si algo no cuadra, te lo indico debajo antes de seguir.</p>
     <div class="ys-atributos">
       {{#each atributos}}
-      <label class="ys-atributo"><span><b>{{label}}</b> <small>{{short}}</small></span>
+      <label class="ys-atributo{{#if mal}} mal{{/if}}"><span><b>{{label}}</b> <small>{{short}}</small></span>
         <select name="atributos.{{k}}">{{#each opciones}}<option value="{{this}}" {{#if (eq this ../valor)}}selected{{/if}}>{{#if this}}+{{/if}}{{this}}</option>{{/each}}</select></label>
       {{/each}}
     </div>
+    {{#if avisosReglas.length}}<div class="ys-avisos" role="alert"><b>Corrige esto para continuar:</b><ul>{{#each avisosReglas}}<li>{{this}}</li>{{/each}}</ul></div>{{/if}}
     <p class="ys-contador">3D: <b class="{{#if (eq cuentas.d3 4)}}ok{{/if}}">{{cuentas.d3}}/4</b> · 2D: <b class="{{#if (eq cuentas.d2 objetivo2)}}ok{{/if}}">{{cuentas.d2}}/{{objetivo2}}</b> · el resto a 1D</p>
     <div class="ys-lista-hab">
       {{#each habilidades}}
       <label class="ys-hab-fila"><span>{{etiqueta}} <small>{{atr}}</small></span>
         <select name="habilidades.{{k}}">
           <option value="1" {{#if (eq dados 1)}}selected{{/if}}>1D</option>
-          <option value="2" {{#if (eq dados 2)}}selected{{/if}} {{#if bloq2}}disabled{{/if}}>2D</option>
-          <option value="3" {{#if (eq dados 3)}}selected{{/if}} {{#if bloq3}}disabled{{/if}}>3D</option>
+          <option value="2" {{#if (eq dados 2)}}selected{{/if}}>2D</option>
+          <option value="3" {{#if (eq dados 3)}}selected{{/if}}>3D</option>
         </select></label>
       {{/each}}
     </div>
@@ -109,7 +110,7 @@
     {{#if ultimo}}
     <button type="button" class="principal" data-action="aplicar" {{#unless listo}}disabled{{/unless}}><i class="fa-solid fa-check"></i> {{#if actorExistente}}Aplicar a la ficha{{else}}Crear PJ{{/if}}</button>
     {{else}}
-    <button type="button" class="principal" data-action="siguiente">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+    <button type="button" class="principal" data-action="siguiente" {{#if bloqueado}}disabled{{/if}}>Siguiente <i class="fa-solid fa-arrow-right"></i></button>
     {{/if}}
   </footer>
 </div>

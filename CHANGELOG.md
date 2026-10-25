@@ -7,6 +7,11 @@ El versionado sigue [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.1.5] — 2026-10-25
+
+### Cambiado
+- **Asistente de creación libre sin intercambios automáticos:** se puede poner cualquier valor en atributos y habilidades. Lo que esté mal (bonificadores repetidos o sin usar, habilidades a 3D/2D que no suman, idioma) se lista bajo el reparto, los atributos repetidos se marcan en rojo y «Siguiente» no deja avanzar hasta corregirlo.
+
 ## [1.1.4] — 2026-10-23
 
 ### Cambiado
