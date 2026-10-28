@@ -7,6 +7,7 @@
 **Todo el reglamento de Ysystem3 automatizado: proezas, defectos, Recuerdo cuando…, combate con ráfagas y noquear, Salud y Estabilidad con umbrales, pánico, persecuciones, curación, Experiencia y magia.**
 Dos ediciones (Ysystem3 y Edición Revisada), nueve ambientaciones y el SRD completo en el compendio.
 
+  <a href="https://github.com/ManuRomera"><img alt="Manu Romera · Digital RPG Design" src="https://raw.githubusercontent.com/ManuRomera/ManuRomera/main/badges/mr-firma.svg" height="28"></a>
   <a href="https://github.com/ManuRomera/ysystem3-srd/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/ManuRomera/ysystem3-srd?include_prereleases&style=for-the-badge&color=2a3b78&label=release"></a>
   <a href="https://foundryvtt.com"><img alt="Foundry VTT V13" src="https://img.shields.io/badge/Foundry%20VTT-V13-57d8c8?style=for-the-badge"></a>
   <a href="https://github.com/ManuRomera/ysystem3-srd/releases"><img alt="Downloads" src="https://raw.githubusercontent.com/ManuRomera/ManuRomera/main/badges/descargas/ysystem3-srd.svg"></a>
